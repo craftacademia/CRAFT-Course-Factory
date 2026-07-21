@@ -1,133 +1,75 @@
-/**
- * CRAFT Course Factory - Dual SCORM 1.2 / 2004 Engine
- */
-class SCORMAdapter {
-  constructor() {
-    this.version = null; // '1.2' | '2004' | 'standalone'
-    this.api = null;
-    this.state = {
-      currentScreen: 'S01',
-      visitedScreens: [],
-      score: 0,
-      maxPossibleScore: 0,
-      quizAnswers: {}
-    };
+(function () {
+  let scormVersion = '1.2';
+  let isInitialized = false;
+
+  function initSCORM() {
+    if (typeof pipwerks !== 'undefined' && pipwerks.SCORM) {
+      isInitialized = pipwerks.SCORM.init();
+      if (isInitialized) {
+        scormVersion = pipwerks.SCORM.version;
+        console.log(`✅ SCORM Engine Active (${scormVersion})`);
+      }
+    }
   }
 
-  init() {
-    this.api = this.findAPI(window);
-    if (this.api) {
-      if (typeof this.api.LMSInitialize === 'function') {
-        this.version = '1.2';
-        this.api.LMSInitialize('');
-      } else if (typeof this.api.Initialize === 'function') {
-        this.version = '2004';
-        this.api.Initialize('');
-      }
+  function recordAnswer(questionId, score, maxScore) {
+    if (!isInitialized) return;
+    
+    if (scormVersion === '1.2') {
+      pipwerks.SCORM.set('cmi.core.score.raw', score.toString());
+      pipwerks.SCORM.set('cmi.core.score.max', maxScore.toString());
     } else {
-      this.version = 'standalone';
+      pipwerks.SCORM.set('cmi.score.raw', score.toString());
+      pipwerks.SCORM.set('cmi.score.max', maxScore.toString());
+      pipwerks.SCORM.set('cmi.score.scaled', (score / maxScore).toFixed(2));
     }
-    console.log(`[SCORM] Initialized in ${this.version.toUpperCase()} mode.`);
-    this.loadState();
+    pipwerks.SCORM.save();
   }
 
-  findAPI(win) {
-    let retries = 0;
-    while (win && retries < 10) {
-      if (win.API) return win.API;                 // SCORM 1.2
-      if (win.API_1484_11) return win.API_1484_11; // SCORM 2004
-      if (win.parent && win.parent !== win) win = win.parent;
-      else if (win.opener) win = win.opener;
-      else break;
-      retries++;
-    }
-    return null;
-  }
+  function recordInteraction(id, responseText, isCorrect, points) {
+    if (!isInitialized) return;
 
-  // --- BOOKMARKING & SUSPEND DATA ---
-  saveBookmark(screenId) {
-    this.state.currentScreen = screenId;
-    if (!this.state.visitedScreens.includes(screenId)) {
-      this.state.visitedScreens.push(screenId);
-    }
-
-    const payload = JSON.stringify(this.state);
-
-    if (this.version === '1.2') {
-      this.api.LMSSetValue('cmi.core.lesson_location', screenId);
-      this.api.LMSSetValue('cmi.suspend_data', payload);
-      this.api.LMSCommit('');
-    } else if (this.version === '2004') {
-      this.api.SetValue('cmi.location', screenId);
-      this.api.SetValue('cmi.suspend_data', payload);
-      this.api.Commit('');
-    }
-  }
-
-  loadState() {
     try {
-      let rawData = null;
-      if (this.version === '1.2') {
-        rawData = this.api.LMSGetValue('cmi.suspend_data');
-      } else if (this.version === '2004') {
-        rawData = this.api.GetValue('cmi.suspend_data');
-      }
+      const count = parseInt(pipwerks.SCORM.get('cmi.interactions._count') || '0', 10);
+      const prefix = `cmi.interactions.${count}.`;
 
-      if (rawData && rawData !== '') {
-        this.state = Object.assign(this.state, JSON.parse(rawData));
-        console.log('[SCORM] Restored state:', this.state);
+      if (scormVersion === '1.2') {
+        pipwerks.SCORM.set(`${prefix}id`, id);
+        pipwerks.SCORM.set(`${prefix}type`, 'fill-in');
+        pipwerks.SCORM.set(`${prefix}student_response`, responseText.substring(0, 255));
+        pipwerks.SCORM.set(`${prefix}result`, isCorrect ? 'correct' : 'wrong');
+      } else {
+        pipwerks.SCORM.set(`${prefix}id`, id);
+        pipwerks.SCORM.set(`${prefix}type`, 'long-fill-in');
+        pipwerks.SCORM.set(`${prefix}learner_response`, responseText);
+        pipwerks.SCORM.set(`${prefix}result`, isCorrect ? 'correct' : 'incorrect');
       }
+      pipwerks.SCORM.save();
     } catch (e) {
-      console.warn('[SCORM] Unable to parse suspend_data:', e);
+      console.warn('⚠️ Interaction logging warning:', e);
     }
   }
 
-  // --- QUIZ SCORING ---
-  recordAnswer(questionId, pointsEarned, maxPoints) {
-    // Avoid double counting if already answered
-    if (!this.state.quizAnswers[questionId]) {
-      this.state.maxPossibleScore += maxPoints;
-    }
+  function completeCourse(passed) {
+    if (!isInitialized) return;
     
-    // Update question state
-    this.state.quizAnswers[questionId] = { points: pointsEarned, max: maxPoints };
-    
-    // Recalculate total score
-    this.state.score = Object.values(this.state.quizAnswers).reduce((acc, q) => acc + q.points, 0);
-    this.state.maxPossibleScore = Object.values(this.state.quizAnswers).reduce((acc, q) => acc + q.max, 0);
-  }
-
-  // --- AUTOMATED LMS REPORTING ---
-  submitFinalResults(passingPercentage = 80) {
-    const totalPossible = this.state.maxPossibleScore || 100;
-    const rawPercentage = Math.round((this.state.score / totalPossible) * 100);
-    const isPassed = rawPercentage >= passingPercentage;
-
-    console.log(`[SCORM] Reporting Score: ${rawPercentage}% (${isPassed ? 'PASS' : 'FAIL'})`);
-
-    if (this.version === '1.2') {
-      this.api.LMSSetValue('cmi.core.score.raw', rawPercentage.toString());
-      this.api.LMSSetValue('cmi.core.score.max', '100');
-      this.api.LMSSetValue('cmi.core.score.min', '0');
-      this.api.LMSSetValue('cmi.core.lesson_status', isPassed ? 'passed' : 'failed');
-      this.api.LMSCommit('');
-    } else if (this.version === '2004') {
-      this.api.SetValue('cmi.score.raw', rawPercentage.toString());
-      this.api.SetValue('cmi.score.scaled', (rawPercentage / 100).toFixed(2));
-      this.api.SetValue('cmi.success_status', isPassed ? 'passed' : 'failed');
-      this.api.SetValue('cmi.completion_status', 'completed');
-      this.api.Commit('');
+    const status = passed ? 'passed' : 'failed';
+    if (scormVersion === '1.2') {
+      pipwerks.SCORM.set('cmi.core.lesson_status', status);
+    } else {
+      pipwerks.SCORM.set('cmi.completion_status', 'completed');
+      pipwerks.SCORM.set('cmi.success_status', status);
     }
-
-    return { percentage: rawPercentage, passed: isPassed };
+    pipwerks.SCORM.save();
+    pipwerks.SCORM.quit();
   }
 
-  finish() {
-    if (this.version === '1.2') this.api.LMSFinish('');
-    if (this.version === '2004') this.api.Terminate('');
-  }
-}
+  window.scormEngine = {
+    init: initSCORM,
+    recordAnswer: recordAnswer,
+    recordInteraction: recordInteraction,
+    completeCourse: completeCourse
+  };
 
-if (typeof module !== 'undefined') {
-  module.exports = SCORMAdapter;
-}
+  document.addEventListener('DOMContentLoaded', initSCORM);
+})();
