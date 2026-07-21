@@ -1,71 +1,58 @@
 const fs = require('fs-extra');
 const path = require('path');
 
-const MANIFEST_PATH = path.join(__dirname, '../output/manifests/manifest.json');
-const AUDIO_CACHE_DIR = path.join(__dirname, '../audio_cache');
-const PUBLIC_INDEX_PATH = path.join(__dirname, '../public/index.html');
-const DIST_BASE_DIR = path.join(__dirname, '../output/dist');
+async function buildPlayer() {
+  const outputDir = path.join(__dirname, '../output');
+  const scormEngineSrc = path.join(__dirname, 'scormEngine.js');
+  const resultsTemplateSrc = path.join(__dirname, 'resultsTemplate.html');
 
-function generateScorm12Manifest(title = "Loan Officer Training Course") {
-  return `<?xml version="1.0" standalone="no" ?>
-<manifest identifier="CraftCourseFactory_Course" version="1.0"
-          xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
-          xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
-  <metadata><schema>ADL SCORM</schema><schemaversion>1.2</schemaversion></metadata>
-  <organizations default="default_org">
-    <organization identifier="default_org"><title>${title}</title><item identifier="item_1" identifierref="resource_1"><title>${title}</title></item></organization>
-  </organizations>
-  <resources>
-    <resource identifier="resource_1" type="webcontent" adlcp:scormtype="sco" href="index.html"><file href="index.html" /></resource>
-  </resources>
-</manifest>`;
-}
+  console.log('🔄 Building SCORM Player packages...');
 
-function generateScorm2004Manifest(title = "Loan Officer Training Course") {
-  return `<?xml version="1.0" encoding="UTF-8"?>
-<manifest identifier="CraftCourseFactory_Course" version="1.0"
-          xmlns="http://www.imsglobal.org/xsd/imscp_v1p1"
-          xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_v13"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://www.imsglobal.org/xsd/imscp_v1p1 http://www.imsglobal.org/xsd/imscp_v1p1.xsd http://www.adlnet.org/xsd/adlcp_v13 http://www.adlnet.org/xsd/adlcp_v13.xsd">
-  <metadata><schema>ADL SCORM</schema><schemaversion>2004 4th Edition</schemaversion></metadata>
-  <organizations default="default_org">
-    <organization identifier="default_org"><title>${title}</title><item identifier="item_1" identifierref="resource_1"><title>${title}</title></item></organization>
-  </organizations>
-  <resources>
-    <resource identifier="resource_1" type="webcontent" adlcp:scormtype="sco" href="index.html"><file href="index.html" /></resource>
-  </resources>
-</manifest>`;
-}
+  // Ensure SCORM Engine and Results Template exist
+  if (!await fs.pathExists(scormEngineSrc) || !await fs.pathExists(resultsTemplateSrc)) {
+    throw new Error('Missing scormEngine.js or resultsTemplate.html in src/ directory.');
+  }
 
-async function buildDistributablePackages() {
-  const targets = [
-    { name: 'SCORM 1.2', dir: path.join(DIST_BASE_DIR, 'scorm12'), manifestGen: generateScorm12Manifest },
-    { name: 'SCORM 2004 4th Edition', dir: path.join(DIST_BASE_DIR, 'scorm2004'), manifestGen: generateScorm2004Manifest }
-  ];
+  const scormScript = await fs.readFile(scormEngineSrc, 'utf8');
+  const resultsHTML = await fs.readFile(resultsTemplateSrc, 'utf8');
+
+  const targets = ['scorm12', 'scorm2004'];
 
   for (const target of targets) {
-    await fs.emptyDir(target.dir);
-    const audioDistDir = path.join(target.dir, 'audio');
-    await fs.ensureDir(audioDistDir);
+    const targetDir = path.join(outputDir, target);
+    await fs.ensureDir(targetDir);
 
-    if (await fs.pathExists(AUDIO_CACHE_DIR)) {
-      await fs.copy(AUDIO_CACHE_DIR, audioDistDir);
+    // 1. Write scormEngine.js directly into the output directory
+    await fs.writeFile(path.join(targetDir, 'scormEngine.js'), scormScript);
+
+    // 2. Inject SCORM engine script tag and Results modal HTML into index.html
+    const htmlPath = path.join(targetDir, 'index.html');
+    if (await fs.pathExists(htmlPath)) {
+      let htmlContent = await fs.readFile(htmlPath, 'utf8');
+
+      if (!htmlContent.includes('scormEngine.js')) {
+        htmlContent = htmlContent.replace(
+          '</head>',
+          '  <script src="scormEngine.js"></script>\n</head>'
+        );
+      }
+
+      if (!htmlContent.includes('id="results-screen"')) {
+        htmlContent = htmlContent.replace('</body>', `${resultsHTML}\n</body>`);
+      }
+
+      await fs.writeFile(htmlPath, htmlContent);
     }
-
-    if (await fs.pathExists(PUBLIC_INDEX_PATH)) {
-      await fs.copy(PUBLIC_INDEX_PATH, path.join(target.dir, 'index.html'));
-    }
-
-    await fs.writeFile(path.join(target.dir, 'imsmanifest.xml'), target.manifestGen());
-    console.log(`✅ Package Prepared -> ${target.name}`);
   }
+
+  console.log('✅ Integrated SCORM Engine & Results Modal into SCORM packages!');
 }
 
 if (require.main === module) {
-  buildDistributablePackages();
+  buildPlayer().catch(err => {
+    console.error('❌ Build failed:', err);
+    process.exit(1);
+  });
 }
 
-module.exports = { buildDistributablePackages };
+module.exports = buildPlayer;
