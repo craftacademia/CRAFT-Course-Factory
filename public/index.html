@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRAFT Course Factory 2.0</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 40px; background: #f4f5f7; color: #333; }
+    .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    h1 { margin-top: 0; color: #111; }
+    .section { margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
+    .drop-grid { display: grid; grid-template-columns: 1px 1px; gap: 20px; margin-top: 15px; }
+    .drop-grid { display: flex; gap: 20px; }
+    .drop-zone { flex: 1; border: 2px dashed #ccc; padding: 25px; text-align: center; border-radius: 6px; background: #fafafa; cursor: pointer; transition: 0.2s; }
+    .drop-zone.hover { border-color: #0066cc; background: #eef6ff; }
+    .drop-zone p { margin: 0; font-weight: 500; color: #666; }
+    .drop-zone input { display: none; }
+    .file-list { margin-top: 10px; font-size: 0.85em; color: #444; text-align: left; max-height: 100px; overflow-y: auto; }
+    button { background: #0066cc; color: white; border: none; padding: 12px 24px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; margin-right: 10px; }
+    button:disabled { background: #ccc; cursor: not-allowed; }
+    button.secondary { background: #28a745; }
+    .status-box { margin-top: 15px; padding: 12px; border-radius: 6px; background: #f8f9fa; border: 1px solid #ddd; display: none; }
+    .error { color: #d9534f; }
+    .success { color: #28a745; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>CRAFT Course Factory 2.0</h1>
+  <p>Upload your script document and media assets below to compile your SCORM package.</p>
+
+  <!-- Step 1: Script Upload -->
+  <div class="section">
+    <h3>1. Upload Course Script (.docx)</h3>
+    <input type="file" id="scriptInput" accept=".docx" />
+    <button onclick="uploadScript()" style="margin-top: 10px;">Process Script</button>
+    <div id="scriptStatus" class="status-box"></div>
+  </div>
+
+  <!-- Step 2: Assets Drop Zones -->
+  <div class="section" id="assetsSection" style="opacity: 0.5; pointer-events: none;">
+    <h3>2. Drag & Drop Media Assets</h3>
+    <div class="drop-grid">
+      <div class="drop-zone" id="audioZone" onclick="document.getElementById('audioInput').click()">
+        <p>🎵 Drop Voiceover Audio (.mp3)</p>
+        <input type="file" id="audioInput" multiple accept=".mp3" onchange="handleFileSelect('audio', this.files)">
+        <div class="file-list" id="audioList"></div>
+      </div>
+      <div class="drop-zone" id="imageZone" onclick="document.getElementById('imageInput').click()">
+        <p>🖼️ Drop Slide Images (.png, .jpg)</p>
+        <input type="file" id="imageInput" multiple accept=".png,.jpg,.jpeg" onchange="handleFileSelect('images', this.files)">
+        <div class="file-list" id="imageList"></div>
+      </div>
+    </div>
+    <button onclick="uploadAssets()" style="margin-top: 15px;">Upload Assets & Validate</button>
+    <div id="assetsStatus" class="status-box"></div>
+  </div>
+
+  <!-- Step 3: Build & Download -->
+  <div class="section" id="buildSection" style="opacity: 0.5; pointer-events: none;">
+    <h3>3. Build SCORM Package</h3>
+    <button onclick="buildSCORM('1.2')">Build SCORM 1.2</button>
+    <button class="secondary" onclick="buildSCORM('2004')">Build SCORM 2004</button>
+    <div id="buildStatus" class="status-box"></div>
+  </div>
+</div>
+
+<script>
+  let currentJobId = null;
+  const selectedFiles = { audio: [], images: [] };
+
+  // Setup Drag and Drop event listeners
+  ['audioZone', 'imageZone'].forEach(id => {
+    const zone = document.getElementById(id);
+    const type = id === 'audioZone' ? 'audio' : 'images';
+
+    zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('hover'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('hover'));
+    zone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      zone.classList.remove('hover');
+      handleFileSelect(type, e.dataTransfer.files);
+    });
+  });
+
+  function handleFileSelect(type, files) {
+    for (let file of files) {
+      if (!selectedFiles[type].some(f => f.name === file.name)) {
+        selectedFiles[type].push(file);
+      }
+    }
+    renderFileList(type);
+  }
+
+  function renderFileList(type) {
+    const listEl = document.getElementById(type + 'List');
+    listEl.innerHTML = selectedFiles[type].map(f => `<div>• ${f.name}</div>`).join('');
+  }
+
+  async function uploadScript() {
+    const input = document.getElementById('scriptInput');
+    const status = document.getElementById('scriptStatus');
+    if (!input.files.length) return alert('Please select a .docx file.');
+
+    const formData = new FormData();
+    formData.append('script', input.files[0]);
+
+    status.style.display = 'block';
+    status.innerText = 'Parsing script...';
+
+    try {
+      const res = await fetch('/api/upload-script', { method: 'POST', body: formData });
+      const data = await res.json();
+
+      if (data.success) {
+        currentJobId = data.jobId;
+        status.className = 'status-box success';
+        status.innerText = `Script Parsed Successfully! Job ID: ${data.jobId} (${data.slidesCount} slides detected)`;
+        document.getElementById('assetsSection').style.opacity = '1';
+        document.getElementById('assetsSection').style.pointerEvents = 'auto';
+      } else {
+        throw new Error(data.error);
+      }
+    } catch (err) {
+      status.className = 'status-box error';
+      status.innerText = 'Error: ' + err.message;
+    }
+  }
+
+  async function uploadAssets() {
+    if (!currentJobId) return alert('Upload a script first.');
+    const status = document.getElementById('assetsStatus');
+    
+    const formData = new FormData();
+    selectedFiles.audio.forEach(file => formData.append('audio', file));
+    selectedFiles.images.forEach(file => formData.append('images', file));
+
+    status.style.display = 'block';
+    status.innerText = 'Uploading assets and checking missing files...';
+
+    try {
+      await fetch(`/api/jobs/${currentJobId}/assets`, { method: 'POST', body: formData });
+      
+      const valRes = await fetch(`/api/jobs/${currentJobId}/validate`);
+      const valData = await valRes.json();
+
+      if (valData.isReady) {
+        status.className = 'status-box success';
+        status.innerText = 'All required assets detected! Ready to build SCORM package.';
+        document.getElementById('buildSection').style.opacity = '1';
+        document.getElementById('buildSection').style.pointerEvents = 'auto';
+      } else {
+        status.className = 'status-box error';
+        let msg = 'Missing Assets Detected:\n';
+        if (valData.missingVOs.length) msg += `Audio Missing: ${valData.missingVOs.map(m=>m.requiredFile).join(', ')}\n`;
+        if (valData.missingImages.length) msg += `Images Missing: ${valData.missingImages.map(m=>m.requiredFile).join(', ')}`;
+        status.innerText = msg;
+      }
+    } catch (err) {
+      status.className = 'status-box error';
+      status.innerText = 'Asset Validation Error: ' + err.message;
+    }
+  }
+
+  async function buildSCORM(scormType) {
+    if (!currentJobId) return alert('No active job found.');
+    const status = document.getElementById('buildStatus');
+
+    status.style.display = 'block';
+    status.className = 'status-box';
+    status.innerText = `Building SCORM ${scormType} package... Please wait.`;
+
+    try {
+      const res = await fetch(`/api/jobs/${currentJobId}/build`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ scormType })
+      });
+
+      const data = await res.json();
+
+      if (data.success && data.downloadUrl) {
+        status.className = 'status-box success';
+        status.innerText = 'SCORM Build Complete! Downloading file directly...';
+
+        // Direct Download Trigger: Append hidden anchor link to trigger browser native download
+        const a = document.createElement('a');
+        a.href = data.downloadUrl;
+        a.download = data.fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      } else {
+        throw new Error(data.error || 'Build failed.');
+      }
+    } catch (err) {
+      status.className = 'status-box error';
+      status.innerText = 'Build Error: ' + err.message;
+    }
+  }
+</script>
+
+</body>
+</html>

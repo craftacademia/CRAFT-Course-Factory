@@ -1,113 +1,117 @@
+import fs from 'fs';
 import path from 'path';
-import fs from 'fs-extra';
-import { exec } from 'child_process';
-import { promisify } from 'util';
 import { createRequire } from 'module';
-import { parseCourse } from './parser.js';
-import { generateAudioForCourse } from './audioGenerator.js';
+import { parseScript } from './parser.js';
 
-const execAsync = promisify(exec);
+// Resolve CommonJS / ESM interop for 'archiver'
 const require = createRequire(import.meta.url);
+const rawArchiver = require('archiver');
 
-async function zipDirectory(sourceDir, outPath) {
-  // Attempt using node archiver first, fallback to native zip on macOS/Linux
-  try {
-    const archiverModule = require('archiver');
-    const archiverFunc = typeof archiverModule === 'function' 
-      ? archiverModule 
-      : (archiverModule.default || archiverModule.create);
-
-    if (typeof archiverFunc === 'function') {
-      return new Promise((resolve, reject) => {
-        const output = fs.createWriteStream(outPath);
-        const archive = archiverFunc('zip', { zlib: { level: 9 } });
-
-        output.on('close', () => resolve());
-        archive.on('error', (err) => reject(err));
-
-        archive.pipe(output);
-        archive.directory(sourceDir, false);
-        archive.finalize();
-      });
-    }
-  } catch (err) {
-    // If archiver fails to load or run, fall through to native zip
+/**
+ * Normalizes 'archiver' initialization regardless of module structure
+ */
+function createZipArchive(options) {
+  if (typeof rawArchiver === 'function') {
+    return rawArchiver('zip', options);
   }
-
-  // Native CLI zip fallback (macOS / Linux)
-  const sourceName = path.basename(sourceDir);
-  const parentDir = path.dirname(sourceDir);
-  await execAsync(`zip -r "${outPath}" "${sourceName}"`, { cwd: parentDir });
+  if (typeof rawArchiver.default === 'function') {
+    return rawArchiver.default('zip', options);
+  }
+  if (typeof rawArchiver.create === 'function') {
+    return rawArchiver.create('zip', options);
+  }
+  if (rawArchiver.ZipArchive) {
+    return new rawArchiver.ZipArchive(options);
+  }
+  throw new Error(`Unable to resolve archiver module instance. Received: ${JSON.stringify(Object.keys(rawArchiver))}`);
 }
 
-async function runPipeline() {
-  const args = process.argv.slice(2);
-  if (args.length === 0) {
-    console.error('Usage: node src/pipeline.js <path-to-script.docx|path-to-script.json>');
-    process.exit(1);
+/**
+ * Safely zips a folder into a destination file.
+ */
+function zipFolder(sourceFolder, outputPath) {
+  return new Promise((resolve, reject) => {
+    try {
+      const output = fs.createWriteStream(outputPath);
+      const archive = createZipArchive({ zlib: { level: 9 } });
+
+      output.on('close', () => resolve(outputPath));
+      archive.on('error', (err) => reject(err));
+
+      archive.pipe(output);
+      archive.directory(sourceFolder, false);
+      archive.finalize();
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
+
+/**
+ * Helper to safely copy files without trying to read directories as files.
+ */
+function copyDirectoryContents(sourceDir, targetDir) {
+  if (!fs.existsSync(targetDir)) {
+    fs.mkdirSync(targetDir, { recursive: true });
   }
 
-  const inputFile = path.resolve(args[0]);
-  if (!await fs.pathExists(inputFile)) {
-    console.error(`Error: File not found at ${inputFile}`);
-    process.exit(1);
+  const items = fs.readdirSync(sourceDir);
+
+  for (const item of items) {
+    if (item.startsWith('.')) continue;
+
+    const srcPath = path.join(sourceDir, item);
+    const destPath = path.join(targetDir, item);
+    const stat = fs.statSync(srcPath);
+
+    if (stat.isDirectory()) {
+      copyDirectoryContents(srcPath, destPath);
+    } else if (stat.isFile()) {
+      fs.copyFileSync(srcPath, destPath);
+    }
   }
+}
 
-  const jobId = `job_${Date.now()}_${Math.random().toString(36).substring(2, 10)}`;
-  const jobDir = path.resolve('./output/jobs', jobId);
-  await fs.ensureDir(jobDir);
-
-  console.log(`\n🚀 Starting pipeline run for Job: ${jobId}`);
-  console.log(`📁 Job Directory: ${jobDir}\n`);
+/**
+ * Runs the SCORM packaging pipeline.
+ */
+export async function runPipeline(jobDir, scormType = '1.2', outputDir) {
+  const scriptPath = path.join(jobDir, 'script.docx');
+  if (!fs.existsSync(scriptPath)) {
+    throw new Error(`Script file not found at ${scriptPath}`);
+  }
 
   // 1. Parse Script
-  console.log(`[1/3] Parsing script: ${inputFile}...`);
-  const parsedData = await parseCourse(inputFile);
-  const parsedJsonPath = path.join(jobDir, 'parsed_course.json');
-  await fs.writeJson(parsedJsonPath, parsedData, { spaces: 2 });
-  console.log(`✓ Parsed course: "${parsedData.title || 'Untitled Course'}"`);
+  const parsedData = await parseScript(scriptPath);
 
-  // 2. Generate Audio Assets
-  console.log(`\n[2/3] Generating audio assets...`);
-  const audioResult = await generateAudioForCourse(parsedData, jobDir);
-  console.log(`✓ Audio processing complete. Total tracks: ${audioResult.totalGenerated}`);
+  // 2. Prepare temporary build staging folder
+  const buildStageDir = path.join(jobDir, 'build_stage');
+  if (fs.existsSync(buildStageDir)) {
+    fs.rmSync(buildStageDir, { recursive: true, force: true });
+  }
+  fs.mkdirSync(buildStageDir, { recursive: true });
 
-  // 3. Build SCORM Package Payload
-  console.log(`\n[3/3] Building SCORM player package...`);
-  const payloadDir = path.join(jobDir, 'scorm_payload');
-  await fs.ensureDir(payloadDir);
+  // 3. Copy uploaded media assets safely into build staging directory
+  const filesInJob = fs.readdirSync(jobDir);
+  for (const file of filesInJob) {
+    const fullPath = path.join(jobDir, file);
+    const stat = fs.statSync(fullPath);
 
-  // Copy parsed metadata & audio into payload
-  await fs.copy(parsedJsonPath, path.join(payloadDir, 'parsed_course.json'));
-  if (await fs.pathExists(audioResult.audioDir)) {
-    await fs.copy(audioResult.audioDir, path.join(payloadDir, 'audio'));
+    // Skip subdirectories (e.g. build_stage)
+    if (stat.isFile() && !file.startsWith('.')) {
+      fs.copyFileSync(fullPath, path.join(buildStageDir, file));
+    }
   }
 
-  // Copy HTML player template
-  const playerTemplatePath = path.resolve('./templates/player.html');
-  if (await fs.pathExists(playerTemplatePath)) {
-    await fs.copy(playerTemplatePath, path.join(payloadDir, 'index.html'));
-  }
+  // 4. Generate Course HTML Data/Manifest JSON
+  const courseDataPath = path.join(buildStageDir, 'courseData.json');
+  fs.writeFileSync(courseDataPath, JSON.stringify(parsedData, null, 2), 'utf-8');
 
-  // Create SCORM 1.2 manifest
-  const imsmanifestContent = `<manifest identifier="COURSE_${jobId}" version="1.0">
-  <metadata><schema>ADL SCORM</schema><schemaversion>1.2</schemaversion></metadata>
-  <organizations default="org1"><organization identifier="org1"><title>${parsedData.title || 'Course'}</title></organization></organizations>
-  <resources><resource identifier="res1" type="webcontent" href="index.html"></resource></resources>
-</manifest>`;
-  await fs.writeFile(path.join(payloadDir, 'imsmanifest.xml'), imsmanifestContent);
+  // 5. Build Final Output Zip
+  const zipFileName = `SCORM_${scormType}_${path.basename(jobDir)}.zip`;
+  const finalZipPath = path.join(outputDir, zipFileName);
 
-  // Archive payload into final SCORM Zip file
-  const zipPath = path.join(jobDir, `${jobId}.zip`);
-  await zipDirectory(payloadDir, zipPath);
+  await zipFolder(buildStageDir, finalZipPath);
 
-  console.log(`✓ SCORM package build complete!`);
-  console.log(`\n🎉 Pipeline completed successfully!`);
-  console.log(`SCORM Zip created at: ${zipPath}`);
-  console.log(`Latest Job Output: ${jobDir}\n`);
+  return finalZipPath;
 }
-
-runPipeline().catch((err) => {
-  console.error('❌ Pipeline failed:', err);
-  process.exit(1);
-});
