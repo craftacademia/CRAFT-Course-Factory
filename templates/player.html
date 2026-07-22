@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SCORM Course Player</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    body { background-color: #f4f6f8; color: #1a1d20; display: flex; flex-direction: column; height: 100vh; }
+    header { background: #111827; color: #fff; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+    header h1 { font-size: 1.25rem; font-weight: 600; }
+    .container { display: flex; flex: 1; overflow: hidden; }
+    aside { width: 280px; background: #fff; border-right: 1px solid #e5e7eb; padding: 1rem; overflow-y: auto; }
+    aside h2 { font-size: 0.875rem; text-transform: uppercase; color: #6b7280; margin-bottom: 0.75rem; letter-spacing: 0.05em; }
+    .slide-list { list-style: none; }
+    .slide-item { padding: 0.75rem 1rem; border-radius: 6px; cursor: pointer; margin-bottom: 0.25rem; font-size: 0.95rem; color: #374151; transition: all 0.15s; }
+    .slide-item:hover { background: #f3f4f6; }
+    .slide-item.active { background: #2563eb; color: white; font-weight: 500; }
+    main { flex: 1; padding: 2.5rem; overflow-y: auto; display: flex; flex-direction: column; justify-content: space-between; }
+    .slide-content { background: #fff; padding: 2.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); flex: 1; display: flex; flex-direction: column; }
+    .slide-title { font-size: 1.75rem; margin-bottom: 1.5rem; color: #111827; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.5rem; }
+    .slide-body p { margin-bottom: 1rem; line-height: 1.6; font-size: 1.1rem; }
+    .audio-player-container { margin-top: auto; padding-top: 1.5rem; border-top: 1px solid #f3f4f6; }
+    audio { width: 100%; border-radius: 6px; }
+    footer { background: #fff; border-top: 1px solid #e5e7eb; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+    button { background: #2563eb; color: #fff; border: none; padding: 0.6rem 1.25rem; border-radius: 6px; font-weight: 500; cursor: pointer; transition: background 0.15s; }
+    button:hover { background: #1d4ed8; }
+    button:disabled { background: #9ca3af; cursor: not-allowed; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 id="courseTitle">Loading Course...</h1>
+    <span id="scormStatus" style="font-size: 0.85rem; color: #9ca3af;">SCORM: Connecting...</span>
+  </header>
+
+  <div class="container">
+    <aside>
+      <h2>Modules & Slides</h2>
+      <ul class="slide-list" id="slideList"></ul>
+    </aside>
+
+    <main>
+      <div class="slide-content">
+        <h2 class="slide-title" id="slideTitle">...</h2>
+        <div class="slide-body" id="slideBody"></div>
+        <div class="audio-player-container">
+          <audio id="audioPlayer" controls></audio>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <button id="prevBtn" onclick="navigate(-1)">← Previous</button>
+    <span id="slideIndicator" style="font-weight: 500;">Slide 1 of 1</span>
+    <button id="nextBtn" onclick="navigate(1)">Next →</button>
+  </footer>
+
+  <script>
+    let courseData = null;
+    let currentIndex = 0;
+
+    async function init() {
+      try {
+        const response = await fetch('parsed_course.json');
+        courseData = await response.json();
+        document.getElementById('courseTitle').textContent = courseData.title || 'Course Player';
+        renderSidebar();
+        loadSlide(0);
+        initSCORM();
+      } catch (err) {
+        console.error('Failed to load course data:', err);
+      }
+    }
+
+    function renderSidebar() {
+      const list = document.getElementById('slideList');
+      list.innerHTML = '';
+      courseData.slides.forEach((slide, idx) => {
+        const li = document.createElement('li');
+        li.className = `slide-item ${idx === currentIndex ? 'active' : ''}`;
+        li.textContent = slide.title || `Slide ${idx + 1}`;
+        li.onclick = () => loadSlide(idx);
+        list.appendChild(li);
+      });
+    }
+
+    function loadSlide(index) {
+      if (!courseData || index < 0 || index >= courseData.slides.length) return;
+      currentIndex = index;
+      const slide = courseData.slides[currentIndex];
+
+      document.getElementById('slideTitle').textContent = slide.title || `Slide ${currentIndex + 1}`;
+      
+      const bodyEl = document.getElementById('slideBody');
+      bodyEl.innerHTML = Array.isArray(slide.content) 
+        ? slide.content.map(p => `<p>${p}</p>`).join('')
+        : `<p>${slide.content || ''}</p>`;
+
+      const audioEl = document.getElementById('audioPlayer');
+      audioEl.src = `audio/${slide.id}.mp3`;
+      audioEl.play().catch(() => {}); // Auto-play if allowed by browser
+
+      document.getElementById('slideIndicator').textContent = `Slide ${currentIndex + 1} of ${courseData.slides.length}`;
+      document.getElementById('prevBtn').disabled = currentIndex === 0;
+      document.getElementById('nextBtn').disabled = currentIndex === courseData.slides.length - 1;
+
+      renderSidebar();
+    }
+
+    function navigate(direction) {
+      loadSlide(currentIndex + direction);
+    }
+
+    function initSCORM() {
+      // Basic dummy SCORM API stub hookup
+      const scormStatusEl = document.getElementById('scormStatus');
+      if (window.API || (window.parent && window.parent.API)) {
+        scormStatusEl.textContent = 'SCORM 1.2: Connected';
+      } else {
+        scormStatusEl.textContent = 'SCORM: Standalone Mode';
+      }
+    }
+
+    window.onload = init;
+  </script>
+</body>
+</html>

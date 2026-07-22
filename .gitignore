@@ -20,3 +20,6 @@ uploads/*.docx
 uploads/*.json
 .env
 dist/
+node_modules/
+output/
+.env

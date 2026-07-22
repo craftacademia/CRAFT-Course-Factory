@@ -1,156 +1,101 @@
-const fs = require('fs-extra');
-const path = require('path');
-const crypto = require('crypto');
+import path from 'path';
+import fs from 'fs-extra';
+import https from 'https';
 
-const SPEAKER_VOICE_MAP = {
-  RAV: 'amartya',
-  SUR: 'arvind',
-  SHA: 'arvind',
-  NAR: 'meera',
-  DEFAULT: 'meera'
-};
+/**
+ * Generates an audio clip using OpenAI TTS API or fallback mock audio.
+ */
+async function generateAudioFile(text, outputPath) {
+  const apiKey = process.env.OPENAI_API_KEY;
 
-const SARVAM_API_URL = 'https://api.sarvam.ai/text-to-speech';
-const UPLOAD_DIR = path.join(__dirname, '../assets/audio');
-const CACHE_DIR = path.join(__dirname, '../audio_cache');
-const MANIFEST_PATH = path.join(__dirname, '../output/manifests/manifest.json');
-
-function generateHash(voId, speaker, text) {
-  return crypto.createHash('md5').update(`${voId}_${speaker}_${text.trim()}`).digest('hex');
-}
-
-function extractAllVoiceLines(manifest) {
-  const voList = [];
-  (manifest.screens || []).forEach((screen) => {
-    (screen.dialogues || []).forEach((line) => {
-      if (line.text) {
-        voList.push({
-          voId: line.voId || `${screen.id}_line`,
-          screenId: screen.id,
-          speaker: line.speaker,
-          text: line.text
-        });
-      }
-    });
-
-    (screen.branchPoints || []).forEach((bp) => {
-      (bp.options || []).forEach((opt) => {
-        if (opt.text) {
-          voList.push({
-            voId: opt.voId || `${screen.id}_opt_${opt.letter}`,
-            screenId: screen.id,
-            speaker: 'RAV',
-            text: opt.text
-          });
-        }
+  if (apiKey) {
+    return new Promise((resolve, reject) => {
+      const payload = JSON.stringify({
+        model: 'tts-1',
+        input: text,
+        voice: 'alloy'
       });
+
+      const req = https.request(
+        'https://api.openai.com/v1/audio/speech',
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${apiKey}`,
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(payload)
+          }
+        },
+        (res) => {
+          if (res.statusCode !== 200) {
+            return reject(new Error(`OpenAI TTS Error: HTTP ${res.statusCode}`));
+          }
+          const fileStream = fs.createWriteStream(outputPath);
+          res.pipe(fileStream);
+          fileStream.on('finish', () => resolve());
+          fileStream.on('error', reject);
+        }
+      );
+
+      req.on('error', reject);
+      req.write(payload);
+      req.end();
     });
-  });
-  return voList;
+  }
+
+  // Fallback: Write a placeholder valid MP3 frame header if no API key is provided
+  const dummyHeader = Buffer.from([0xFF, 0xFB, 0x90, 0x64]);
+  await fs.writeFile(outputPath, dummyHeader);
 }
 
 /**
- * Checks assets/audio/ for uploaded VO matching voId or screenId (.mp3 / .wav)
+ * Generates audio assets for course slides.
+ * @param {object} parsedData - Parsed course structure.
+ * @param {string} outputDir - Directory to output generated audio assets.
+ * @returns {Promise<object>} Generated audio mapping metadata.
  */
-async function findCustomUploadedAudio(voId, screenId) {
-  if (!await fs.pathExists(UPLOAD_DIR)) return null;
+export async function generateAudioForCourse(parsedData, outputDir) {
+  const audioDir = path.join(outputDir, 'audio');
+  await fs.ensureDir(audioDir);
 
-  const possibleNames = [
-    `${voId}.mp3`, `${voId}.wav`,
-    `${screenId}.mp3`, `${screenId}.wav`,
-    `${voId.toLowerCase()}.mp3`, `${screenId.toLowerCase()}.mp3`
-  ];
+  const manifestFiles = [];
 
-  for (const name of possibleNames) {
-    const filePath = path.join(UPLOAD_DIR, name);
-    if (await fs.pathExists(filePath)) {
-      return filePath;
-    }
-  }
-  return null;
-}
+  for (const slide of parsedData.slides || []) {
+    const textToSynthesize = (slide.audioText || slide.content || '').trim();
 
-async function generateAudioFromSarvam(text, speaker, apiKey) {
-  const voice = SPEAKER_VOICE_MAP[speaker] || SPEAKER_VOICE_MAP.DEFAULT;
-  if (!apiKey || apiKey === 'your_sarvam_api_key_here') {
-    return Buffer.from(`MOCK_AUDIO_BUFFER_FOR: ${text}`);
-  }
-
-  const response = await fetch(SARVAM_API_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'api-subscription-key': apiKey },
-    body: JSON.stringify({
-      inputs: [text],
-      target_language_code: 'hi-IN',
-      speaker: voice,
-      pitch: 0,
-      pace: 1.0,
-      loudness: 1.5,
-      speech_sample_rate: 22050,
-      enable_preprocessing: true,
-      model: 'bulbul:v1'
-    })
-  });
-
-  if (!response.ok) throw new Error(`Sarvam API Error: ${await response.text()}`);
-  const data = await response.json();
-  return Buffer.from(data.audios[0], 'base64');
-}
-
-async function generateAudioForManifest() {
-  const apiKey = process.env.SARVAM_API_KEY;
-  await fs.ensureDir(CACHE_DIR);
-  await fs.ensureDir(UPLOAD_DIR);
-
-  if (!await fs.pathExists(MANIFEST_PATH)) {
-    console.log(`ℹ️  No manifest found at ${MANIFEST_PATH}. Skipping audio sync.`);
-    return;
-  }
-
-  const manifest = await fs.readJson(MANIFEST_PATH);
-  const voiceLines = extractAllVoiceLines(manifest);
-
-  let uploadedCount = 0;
-  let cachedCount = 0;
-  let generatedCount = 0;
-
-  for (const item of voiceLines) {
-    const hash = generateHash(item.voId, item.speaker, item.text);
-    const targetCachePath = path.join(CACHE_DIR, `${item.voId}_${hash.slice(0, 8)}.mp3`);
-
-    // 1. Priority check: Custom uploaded file in assets/audio/
-    const customUpload = await findCustomUploadedAudio(item.voId, item.screenId);
-    if (customUpload) {
-      await fs.copy(customUpload, targetCachePath);
-      uploadedCount++;
+    if (!textToSynthesize) {
       continue;
     }
 
-    // 2. Secondary check: Local MD5 cache
-    if (await fs.pathExists(targetCachePath)) {
-      cachedCount++;
-      continue;
-    }
+    const audioFilename = `${slide.id}.mp3`;
+    const audioFilePath = path.join(audioDir, audioFilename);
 
-    // 3. Fallback: Generate via Sarvam AI TTS
     try {
-      const audioBuffer = await generateAudioFromSarvam(item.text, item.speaker, apiKey);
-      await fs.writeFile(targetCachePath, audioBuffer);
-      generatedCount++;
+      await generateAudioFile(textToSynthesize, audioFilePath);
+      
+      manifestFiles.push({
+        slideId: slide.id,
+        filename: audioFilename,
+        text: textToSynthesize,
+        durationSeconds: 5
+      });
     } catch (err) {
-      console.error(`❌ Audio Gen Failed [${item.voId}]:`, err.message);
+      console.warn(`[audioGenerator] Failed to generate audio for ${slide.id}: ${err.message}`);
     }
   }
 
-  console.log(`\n🎧 AUDIO SYNC SUMMARY:`);
-  console.log(`   ├─ Custom Uploads Ingested : ${uploadedCount}`);
-  console.log(`   ├─ Cached (Skipped API)    : ${cachedCount}`);
-  console.log(`   └─ Fresh Sarvam AI Generated: ${generatedCount}\n`);
-}
+  const manifestPath = path.join(audioDir, 'audio_manifest.json');
+  const manifestData = {
+    generatedAt: new Date().toISOString(),
+    totalAudios: manifestFiles.length,
+    files: manifestFiles
+  };
 
-if (require.main === module) {
-  require('dotenv').config();
-  generateAudioForManifest();
-}
+  await fs.writeJson(manifestPath, manifestData, { spaces: 2 });
 
-module.exports = { generateAudioForManifest };
+  return {
+    audioDir,
+    manifestPath,
+    totalGenerated: manifestFiles.length
+  };
+}

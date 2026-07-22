@@ -1,52 +1,91 @@
-const fs = require('fs-extra');
-const path = require('path');
-const mammoth = require('mammoth');
+import fs from 'fs-extra';
+import path from 'path';
+import mammoth from 'mammoth';
 
-function extractTag(text, tag) {
-  const regex = new RegExp(`\\[${tag}\\]([\\s\\S]*?)(?=\\n\\[|$)`, 'i');
-  const match = text.match(regex);
-  return match ? match[1].trim() : '';
-}
+/**
+ * Parses a .docx file or JSON script into structured slide data.
+ * @param {string} filePath - Path to the file (.docx or .json)
+ * @returns {Promise<Object>} Course payload with title and slides array
+ */
+export async function parseCourse(filePath) {
+  const ext = path.extname(filePath).toLowerCase();
 
-async function parseDocxScript(filePath) {
-  const result = await mammoth.extractRawText({ path: filePath });
-  const text = result.value;
-
-  const rawScreens = text.split(/\[SCREEN:\s*(\d+)\]/i).slice(1);
-  const screens = [];
-
-  for (let i = 0; i < rawScreens.length; i += 2) {
-    const screenId = rawScreens[i];
-    const block = rawScreens[i + 1];
-
-    const type = extractTag(block, 'TYPE').toUpperCase() || 'INFO';
-    const screenData = {
-      id: `screen_${screenId}`,
-      number: parseInt(screenId, 10),
-      type: type.toLowerCase(),
-      title: extractTag(block, 'TITLE'),
-      content: extractTag(block, 'CONTENT')
-    };
-
-    // Specific parsing for REFLECTION types
-    if (type === 'REFLECTION') {
-      screenData.prompt = extractTag(block, 'PROMPT');
-      screenData.expertAnswer = extractTag(block, 'EXPERT_ANSWER');
-      screenData.minChars = parseInt(extractTag(block, 'MIN_CHARS') || '30', 10);
-      screenData.points = parseInt(extractTag(block, 'POINTS') || '10', 10);
-    } 
-    // Specific parsing for QUIZ types
-    else if (type === 'QUIZ') {
-      screenData.question = extractTag(block, 'QUESTION');
-      screenData.options = extractTag(block, 'OPTIONS').split('\n').filter(Boolean);
-      screenData.correctAnswer = extractTag(block, 'ANSWER');
-      screenData.points = parseInt(extractTag(block, 'POINTS') || '10', 10);
-    }
-
-    screens.push(screenData);
+  if (ext === '.json') {
+    const rawData = await fs.readJson(filePath);
+    return rawData;
   }
 
-  return screens;
+  if (ext !== '.docx') {
+    throw new Error(`Unsupported file type: ${ext}. Expected .docx or .json`);
+  }
+
+  const result = await mammoth.extractRawText({ path: filePath });
+  const rawText = result.value || '';
+
+  const lines = rawText.split('\n').map(l => l.trim()).filter(Boolean);
+
+  let title = path.basename(filePath, ext);
+  const slides = [];
+  let currentSlide = null;
+  let slideCounter = 1;
+
+  for (const line of lines) {
+    if (line.toLowerCase().startsWith('title:') || line.toLowerCase().startsWith('course title:')) {
+      title = line.replace(/^(course title|title):/i, '').trim();
+      continue;
+    }
+
+    if (line.toLowerCase().startsWith('module') || line.toLowerCase().startsWith('slide')) {
+      if (currentSlide) {
+        slides.push(currentSlide);
+      }
+      currentSlide = {
+        id: `slide_${slideCounter++}`,
+        title: line,
+        content: [],
+        audioText: ''
+      };
+      continue;
+    }
+
+    if (!currentSlide) {
+      currentSlide = {
+        id: `slide_${slideCounter++}`,
+        title: 'Introduction',
+        content: [],
+        audioText: ''
+      };
+    }
+
+    if (line.toLowerCase().startsWith('audio:') || line.toLowerCase().startsWith('narration:')) {
+      const audioContent = line.replace(/^(audio|narration):/i, '').trim();
+      currentSlide.audioText = currentSlide.audioText 
+        ? `${currentSlide.audioText} ${audioContent}` 
+        : audioContent;
+    } else {
+      currentSlide.content.push(line);
+      // Fallback audio text if not explicitly designated
+      if (!currentSlide.audioText) {
+        currentSlide.audioText = line;
+      }
+    }
+  }
+
+  if (currentSlide) {
+    slides.push(currentSlide);
+  }
+
+  return {
+    title,
+    slides: slides.length > 0 ? slides : [
+      {
+        id: 'slide_1',
+        title: 'Welcome',
+        content: ['Welcome to the course.'],
+        audioText: 'Welcome to the course.'
+      }
+    ]
+  };
 }
 
-module.exports = { parseDocxScript };
+export const parseDocx = parseCourse;

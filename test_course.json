@@ -1,0 +1,10 @@
+{
+  "title": "Test SCORM Course",
+  "slides": [
+    {
+      "id": "slide_1",
+      "title": "Welcome to CRAFT",
+      "content": "This is a test slide content."
+    }
+  ]
+}
