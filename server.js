@@ -1,30 +1,80 @@
-const express = require('express');
-const cors = require('cors');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 require('dotenv').config();
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+const express = require('express');
+const path = require('path');
+const scriptRoutes = require('./server/routes/scriptRoutes');
 
 const app = express();
-const PORT = process.env.PORT || 8080;
 
-app.use(cors());
+// Middleware
 app.use(express.json());
-app.use(express.static('public'));
 
-const users = [];
+const JWT_SECRET = process.env.JWT_SECRET || 'your_fallback_secret_key';
 
-app.post('/api/auth/register', async (req, res) => {
-  const { name, email, password, role } = req.body;
-  if (!name || !email || !password) return res.status(400).json({ error: 'Name, email, and password required' });
+// Middleware to protect routes with JWT verification
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
 
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const user = { id: users.length + 1, name, email, password: hashedPassword, role: role || 'creator' };
-  users.push(user);
+  if (!token) {
+    return res.status(401).json({ message: 'Access denied. No token provided.' });
+  }
 
-  const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, process.env.JWT_SECRET || 'secret');
-  res.status(201).json({ message: 'User registered', token, user: { id: user.id, name: user.name, role: user.role } });
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) {
+      return res.status(403).json({ message: 'Invalid or expired token.' });
+    }
+    
+    req.user = user;
+    next();
+  });
+};
+
+// Mount external routes if present
+if (scriptRoutes) {
+  app.use('/api', scriptRoutes);
+}
+
+// Protected Route Example
+app.get('/api/protected-route', authenticateToken, (req, res) => {
+  res.json({
+    message: 'Welcome to the protected route!',
+    user: req.user
+  });
 });
 
-app.get('/health', (req, res) => res.status(200).send('OK'));
+// Admin Login Route
+app.post('/api/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-app.listen(PORT, () => console.log(`🚀 Server active on http://localhost:${PORT}`));
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Email and password are required' });
+    }
+
+    if (email !== process.env.ADMIN_EMAIL) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    const isMatch = await bcrypt.compare(password, process.env.ADMIN_PASSWORD_HASH);
+    if (!isMatch) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    const token = jwt.sign(
+      { email: process.env.ADMIN_EMAIL },
+      JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+
+    res.json({ token });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error during login', error: err.message });
+  }
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
+});
