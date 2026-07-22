@@ -6,6 +6,11 @@ const { parseScriptText } = require('../utils/scriptParser');
 
 const upload = multer({ storage: multer.memoryStorage() });
 
+// GET /api/scripts (Required for verification health check)
+router.get('/', (req, res) => {
+  res.json({ success: true, message: 'Script API is active and authenticated' });
+});
+
 router.post('/upload', upload.single('scriptFile'), async (req, res) => {
   try {
     if (!req.file) {

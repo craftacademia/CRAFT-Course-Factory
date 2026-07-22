@@ -1,61 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import axios from 'axios';
+import { AuthContext } from '../context/AuthContext';
 
 export default function ScriptUploader({ onScriptParsed }) {
+  const { token } = useContext(AuthContext);
+  const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
 
-  const handleFileUpload = async (file) => {
-    if (!file || !file.name.endsWith('.docx')) {
-      setError('Please select a valid .docx file');
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
+      setError('');
+    }
+  };
+
+  const handleUpload = async (e) => {
+    e.preventDefault();
+    if (!file) {
+      setError('Please select a .docx file to upload.');
       return;
     }
 
     setLoading(true);
-    setError(null);
-
-    const formData = new FormData();
-    formData.append('scriptFile', file);
+    setError('');
 
     try {
-      const response = await fetch('/api/script/upload', {
-        method: 'POST',
-        body: formData,
+      const formData = new FormData();
+      formData.append('scriptFile', file);
+
+const response = await axios.post('/api/courses/upload', formData, {      const response = await axios.post('/api/scripts/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`
+        }
       });
 
-      const res = await response.json();
-      if (res.success) {
-        onScriptParsed(res);
+      if (response.data.success) {
+        onScriptParsed(response.data.data, response.data.filename);
       } else {
-        setError(res.error || 'Parsing failed');
+        setError(response.data.error || 'Failed to parse script.');
       }
     } catch (err) {
-      setError('Server connection error. Please try again.');
+      setError(err.response?.data?.error || 'Server error uploading file.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center bg-white hover:border-indigo-500 transition-colors">
-      <input
-        type="file"
-        id="docx-upload"
-        accept=".docx"
-        className="hidden"
-        onChange={(e) => handleFileUpload(e.target.files[0])}
-      />
-      <label htmlFor="docx-upload" className="cursor-pointer flex flex-col items-center">
-        <div className="w-12 h-12 mb-3 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center font-bold text-xl">
-          📄
-        </div>
-        <span className="text-lg font-semibold text-gray-800">
-          {loading ? 'Parsing Document...' : 'Upload Script (.docx)'}
-        </span>
-        <span className="text-sm text-gray-500 mt-1">
-          Drag & drop or click to select your production script
-        </span>
-      </label>
-      {error && <p className="mt-3 text-sm text-red-600 font-medium">{error}</p>}
+    <div className="upload-card">
+      <h3>Upload Course Script</h3>
+      <form onSubmit={handleUpload}>
+        <input 
+          type="file" 
+          accept=".docx" 
+          onChange={handleFileChange} 
+          disabled={loading}
+        />
+        <button type="submit" disabled={!file || loading}>
+          {loading ? 'Uploading & Parsing...' : 'Parse Script'}
+        </button>
+      </form>
+
+      {error && <p className="error-message">{error}</p>}
     </div>
   );
 }

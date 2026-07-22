@@ -33,7 +33,7 @@ const authenticateToken = (req, res, next) => {
 
 // Mount external routes if present
 if (scriptRoutes) {
-  app.use('/api', scriptRoutes);
+  app.use('/api/courses', authenticateToken, scriptRoutes);
 }
 
 // Protected Route Example
