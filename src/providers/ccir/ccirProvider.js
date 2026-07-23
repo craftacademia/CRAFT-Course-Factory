@@ -8,6 +8,7 @@ import VariableBuilder from "./builders/variableBuilder.js";
 import ScreenBuilder from "./builders/screenBuilder.js";
 import DialogueBuilder from "./builders/dialogueBuilder.js";
 import InteractionBuilder from "./builders/interactionBuilder.js";
+import AssessmentBuilder from "./builders/assessmentBuilder.js";
 
 export default class CCIRProvider extends Provider {
 
@@ -23,6 +24,7 @@ export default class CCIRProvider extends Provider {
     this.screenBuilder = new ScreenBuilder();
     this.dialogueBuilder = new DialogueBuilder();
     this.interactionBuilder = new InteractionBuilder();
+    this.assessmentBuilder = new AssessmentBuilder();
 
   }
 
@@ -38,6 +40,7 @@ export default class CCIRProvider extends Provider {
     ccir.screens = this.screenBuilder.build(ast);
     ccir.metadata.dialogues = this.dialogueBuilder.build(ast);
     ccir.interactions = this.interactionBuilder.build(ast);
+    ccir.assessments = this.assessmentBuilder.build(ast);
 
     return ccir;
 
