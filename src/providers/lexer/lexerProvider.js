@@ -1,59 +1,61 @@
 import Provider from "../../core/provider.js";
+import TagAttributeParser from "../tagParser/tagAttributeParser.js";
 
 export default class LexerProvider extends Provider {
 
   constructor() {
     super("lexer");
+    this.tagParser = new TagAttributeParser();
   }
 
   async lex(lines) {
 
     const tokens = [];
 
-    const tagRegex = /^\[(\/?)([A-Z_][A-Z0-9_]*)(.*?)\]$/;
+    const tagRegex = /^\[(\/?)[A-Z_][A-Z0-9_]*.*\]$/;
 
     for (const line of lines) {
 
-      const match = line.text.match(tagRegex);
+      const text = line.text.trim();
 
-      if (!match) {
+      if (!tagRegex.test(text)) {
+
         tokens.push({
           type: "TEXT",
           line: line.number,
           value: line.text
         });
+
         continue;
+
       }
 
-      const [, closing, tagName, attributeString] = match;
+      const closing = text.startsWith("[/");
 
-      const attributes = {};
+      if (closing) {
 
-      attributeString
-        .trim()
-        .split(/\s+/)
-        .filter(Boolean)
-        .forEach(pair => {
+        const name = text
+          .replace("[/", "")
+          .replace("]", "")
+          .trim();
 
-          const index = pair.indexOf("=");
-
-          if (index === -1) return;
-
-          const key = pair.substring(0, index);
-
-          let value = pair.substring(index + 1);
-
-          value = value.replace(/^"(.*)"$/, "$1");
-
-          attributes[key] = value;
-
+        tokens.push({
+          type: "CLOSE_TAG",
+          line: line.number,
+          name
         });
 
+        continue;
+
+      }
+
+      const parsed = this.tagParser.parse(text);
+
       tokens.push({
-        type: closing ? "CLOSE_TAG" : "OPEN_TAG",
+        type: "OPEN_TAG",
         line: line.number,
-        name: tagName,
-        attributes
+        name: parsed.tag,
+        attributes: parsed.attributes
       });
 
     }
