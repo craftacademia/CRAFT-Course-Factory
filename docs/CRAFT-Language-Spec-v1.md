@@ -690,3 +690,91 @@ A valid CCIR SHALL satisfy the following conditions:
 
 The CCIR SHALL remain immutable throughout the rendering process.
 
+
+---
+
+# 8. Rendering Requirements
+
+Rendering is the process of transforming a validated CCIR into one or more deployable output formats.
+
+Every renderer SHALL consume the CCIR and produce functionally equivalent learning experiences.
+
+The rendering process SHALL NOT modify the CCIR.
+
+---
+
+## 8.1 Renderer Responsibilities
+
+Every renderer SHALL:
+
+- Read the complete CCIR.
+- Preserve course structure.
+- Preserve navigation flow.
+- Preserve learner interactions.
+- Preserve assessment behaviour.
+- Generate platform-specific output.
+
+Renderer implementations MAY optimize generated artifacts provided learner behaviour remains unchanged.
+
+---
+
+## 8.2 Output Consistency
+
+Different renderers MAY generate different implementation artifacts.
+
+However, they SHALL produce equivalent learning behaviour.
+
+Examples include:
+
+- Screen sequence
+- Dialogue order
+- Assessment logic
+- Variable updates
+- Navigation rules
+
+The learner experience SHALL remain consistent across supported platforms.
+
+---
+
+## 8.3 Error Handling
+
+If rendering cannot be completed successfully, the renderer SHALL terminate without producing a partial output.
+
+Renderer errors SHALL clearly identify:
+
+- Object identifier
+- Object type
+- Failure reason
+- Renderer stage
+
+Compilation errors and rendering errors SHALL be reported separately.
+
+---
+
+## 8.4 Extensibility
+
+The rendering architecture SHALL support additional output formats without requiring changes to the language specification.
+
+New renderers SHALL consume the existing CCIR contract.
+
+Examples of future renderers include:
+
+- Native Mobile Applications
+- Progressive Web Applications
+- PDF Learning Guides
+- Interactive Presentations
+
+---
+
+## 8.5 Rendering Compliance
+
+A compliant renderer SHALL:
+
+- Accept valid CCIR.
+- Reject invalid CCIR.
+- Preserve semantic meaning.
+- Produce deterministic output.
+- Avoid introducing renderer-specific behaviour that alters course logic.
+
+Compliance SHALL be verified through renderer-specific validation and regression testing.
+
