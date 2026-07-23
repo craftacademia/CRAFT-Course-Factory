@@ -1,5 +1,4 @@
-const LexerProvider = require("./lexerProvider");
+import LexerProvider from "./lexerProvider.js";
 
-module.exports = {
-    LexerProvider
-};
+export { LexerProvider };
+export default LexerProvider;
