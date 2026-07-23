@@ -1,13 +1,26 @@
+import { walk } from "../utils/treeWalker.js";
+
 export default class CourseBuilder {
 
   build(ast) {
 
-    return {
-      id: ast.attributes?.ID ?? null,
-      title: ast.attributes?.TITLE ?? null,
-      description: ast.attributes?.DESCRIPTION ?? null,
-      root: ast
-    };
+    let course = null;
+
+    walk(ast, node => {
+
+      if (node.type !== "COURSE") {
+        return;
+      }
+
+      course = {
+        id: node.attributes?.id ?? null,
+        title: node.attributes?.title ?? null,
+        version: node.attributes?.version ?? null
+      };
+
+    });
+
+    return course;
 
   }
 
