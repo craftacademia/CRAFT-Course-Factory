@@ -235,3 +235,81 @@ SPEAKER="RAV"
 
 ## 10. Backward Compatibility
 
+
+---
+
+# 3. Grammar
+
+## 3.1 Lexical Rules
+
+A CRAFT document consists of a sequence of text lines.
+
+Each line SHALL be interpreted as one of the following token types:
+
+- OPEN_TAG
+- CLOSE_TAG
+- TEXT
+
+Blank lines SHALL be preserved as TEXT nodes.
+
+Whitespace outside tags SHALL be ignored during parsing.
+
+---
+
+## 3.2 Tag Grammar
+
+Opening Tag
+
+[TAG_NAME ATTRIBUTE="VALUE"]
+
+Closing Tag
+
+[/TAG_NAME]
+
+Tag names SHALL follow the naming rules defined in Section 2.3.
+
+Every opening tag MUST have one matching closing tag.
+
+Nested tags MUST be properly balanced.
+
+Crossed or overlapping tags are invalid.
+
+Example
+
+[COURSE]
+    [SCREEN ID="S01"]
+    [/SCREEN]
+[/COURSE]
+
+---
+
+## 3.3 Attribute Grammar
+
+Attributes SHALL follow the syntax:
+
+KEY="VALUE"
+
+Multiple attributes SHALL be separated by one or more spaces.
+
+Example
+
+ID="S01" TYPE="STATIC" LOCATION="LOC-01"
+
+Attribute values MAY contain spaces.
+
+Example
+
+TITLE="Branch Sales Executive"
+
+Duplicate attribute names within the same tag are invalid.
+
+---
+
+## 3.4 Text Nodes
+
+Any line that is not recognised as an opening or closing tag SHALL be treated as a TEXT node.
+
+Text nodes SHALL preserve their original content.
+
+The compiler SHALL preserve the original order of text nodes.
+
