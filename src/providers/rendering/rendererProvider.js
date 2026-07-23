@@ -13,13 +13,16 @@ export default class RendererProvider {
     this.runtimeBuilder = new RuntimeBuilder();
   }
 
-  async render(ccir, outputDirectory) {
+  async render(pir, outputDirectory) {
 
     console.log("Renderer output:", outputDirectory);
 
     await fs.mkdir(outputDirectory, { recursive: true });
 
-    await this.htmlBuilder.build(ccir, outputDirectory);
+    await this.htmlBuilder.build(
+      pir,
+      outputDirectory
+    );
 
     await this.cssBuilder.build(
       path.join(outputDirectory, "styles.css")
