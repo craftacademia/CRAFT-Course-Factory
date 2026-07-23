@@ -5,11 +5,11 @@ import CharacterBuilder from "./builders/characterBuilder.js";
 import LocationBuilder from "./builders/locationBuilder.js";
 import AssetBuilder from "./builders/assetBuilder.js";
 import VariableBuilder from "./builders/variableBuilder.js";
+import ScreenBuilder from "./builders/screenBuilder.js";
 
 export default class CCIRProvider extends Provider {
 
   constructor() {
-
     super("ccir");
 
     this.courseBuilder = new CourseBuilder();
@@ -17,7 +17,7 @@ export default class CCIRProvider extends Provider {
     this.locationBuilder = new LocationBuilder();
     this.assetBuilder = new AssetBuilder();
     this.variableBuilder = new VariableBuilder();
-
+    this.screenBuilder = new ScreenBuilder();
   }
 
   async build(ast) {
@@ -29,9 +29,9 @@ export default class CCIRProvider extends Provider {
     ccir.locations = this.locationBuilder.build(ast);
     ccir.assets = this.assetBuilder.build(ast);
     ccir.variables = this.variableBuilder.build(ast);
+    ccir.screens = this.screenBuilder.build(ast);
 
     return ccir;
-
   }
 
 }
