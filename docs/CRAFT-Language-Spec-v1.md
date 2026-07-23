@@ -423,3 +423,99 @@ Forward references are permitted.
 
 Missing references SHALL be reported during semantic validation.
 
+
+---
+
+# 5. Validation
+
+Validation ensures that a CRAFT document is complete, internally consistent, and suitable for compilation.
+
+Validation SHALL be performed after parsing and semantic analysis.
+
+If one or more validation errors are detected, the compiler SHALL terminate without generating CCIR.
+
+---
+
+## 5.1 Validation Categories
+
+The compiler SHALL perform the following categories of validation:
+
+- Structural Validation
+- Semantic Validation
+- Reference Validation
+- Attribute Validation
+- Content Validation
+
+Multiple validation errors MAY be reported in a single compilation run.
+
+---
+
+## 5.2 Structural Validation
+
+Structural validation verifies that the document conforms to the language grammar.
+
+The compiler SHALL verify:
+
+- All tags are properly closed.
+- Nested elements are correctly balanced.
+- Root elements appear only once.
+- Invalid nesting is rejected.
+- Unknown tags are rejected.
+
+Structural validation is performed before semantic validation.
+
+---
+
+## 5.3 Attribute Validation
+
+Attribute validation verifies that every attribute satisfies the specification.
+
+The compiler SHALL verify:
+
+- Mandatory attributes are present.
+- Attribute names are valid.
+- Duplicate attributes do not exist.
+- Attribute values follow the required format.
+- Enumerated attributes contain permitted values.
+
+Invalid attributes SHALL generate compilation errors.
+
+---
+
+## 5.4 Reference Validation
+
+Reference validation verifies that all referenced objects exist.
+
+Examples include:
+
+LOCATION="LOC-01"
+
+SPEAKER="RAVI"
+
+ASSET_REF="IMG-101"
+
+The compiler SHALL verify that:
+
+- Every referenced identifier exists.
+- Identifier types are compatible.
+- Duplicate identifiers are rejected.
+- Undefined identifiers are reported.
+
+Forward references are permitted.
+
+---
+
+## 5.5 Content Validation
+
+Content validation verifies the logical consistency of the document.
+
+Examples include:
+
+- Empty mandatory sections.
+- Duplicate screen identifiers.
+- Missing assessment questions.
+- Empty dialogue blocks.
+- Invalid navigation targets.
+
+Content validation rules MAY evolve in future language versions while maintaining backward compatibility.
+
