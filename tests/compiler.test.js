@@ -1,54 +1,39 @@
-import fs from "fs/promises";
 import path from "path";
-
 import Compiler from "../src/compiler/compiler.js";
 
 async function main() {
 
-    const compiler = new Compiler();
+  console.log("===================================");
+  console.log("CRA.F.T Compiler Test");
+  console.log("===================================");
 
-    const input = path.resolve(
-        "scripts",
-        "Test Script.docx"
-    );
+  const input = path.resolve("scripts/Test Script.docx");
+  const output = path.resolve("tests/output");
 
-    console.log("===================================");
-    console.log("CRA.F.T Compiler Test");
-    console.log("===================================");
-    console.log("Input :", input);
-    console.log("");
+  console.log("Input :", input);
+  console.log("Output:", output);
+  console.log("");
 
-    const ccir = await compiler.compile(input);
+  const compiler = new Compiler();
 
-    await fs.mkdir("tests/output", {
-        recursive: true
-    });
+  try {
 
-    const outputFile = path.resolve(
-        "tests/output/ccir.json"
-    );
-
-    await fs.writeFile(
-        outputFile,
-        JSON.stringify(ccir, null, 2),
-        "utf8"
-    );
+    await compiler.compile(input, output);
 
     console.log("");
     console.log("Compilation Successful");
     console.log("");
-    console.log("Output:");
-    console.log(outputFile);
+    console.log(path.join(output, "ccir.json"));
+
+  } catch (error) {
+
+    console.log("");
+    console.log("Compilation Failed");
+    console.log("");
+    console.error(error);
+
+  }
 
 }
 
-main().catch(err => {
-
-    console.error("");
-    console.error("Compilation Failed");
-    console.error("");
-    console.error(err);
-
-    process.exit(1);
-
-});
+main();

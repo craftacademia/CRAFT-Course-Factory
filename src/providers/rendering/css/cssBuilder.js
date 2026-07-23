@@ -1,26 +1,26 @@
+import fs from "fs/promises";
+
 export default class CssBuilder {
 
-  async build() {
+  async build(outputFile) {
 
-    return `
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #f5f5f5;
+    const css = `
+html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    font-family:Arial,sans-serif;
+    background:#f5f5f5;
 }
 
-.screen {
-  width: 100%;
-  min-height: 100vh;
-  box-sizing: border-box;
-  padding: 40px;
-}
-
-h1 {
-  margin: 0;
+#app{
+    width:100%;
+    min-height:100vh;
 }
 `;
+
+    await fs.writeFile(outputFile, css, "utf8");
 
   }
 

@@ -1,30 +1,24 @@
-import Navigation from "./navigation.js";
-import Variables from "./variables.js";
-import Branching from "./branching.js";
-import Assessment from "./assessment.js";
+import fs from "fs/promises";
 
 export default class RuntimeBuilder {
 
-  constructor() {
+  async build(outputFile) {
 
-    this.navigation = new Navigation();
-    this.variables = new Variables();
-    this.branching = new Branching();
-    this.assessment = new Assessment();
+    const runtime = `
+(function(){
 
-  }
+    console.log("CRA.F.T Runtime Started");
 
-  async build() {
+    console.log(window.PIR);
 
-    return `
-${this.navigation.build()}
-
-${this.variables.build()}
-
-${this.branching.build()}
-
-${this.assessment.build()}
+})();
 `;
+
+    await fs.writeFile(
+      outputFile,
+      runtime,
+      "utf8"
+    );
 
   }
 
