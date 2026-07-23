@@ -778,3 +778,70 @@ A compliant renderer SHALL:
 
 Compliance SHALL be verified through renderer-specific validation and regression testing.
 
+
+---
+
+# 9. Versioning
+
+Versioning defines how the CRAFT language, compiler, and renderers evolve while maintaining predictable behaviour.
+
+Every CRAFT document SHALL declare the language version against which it was authored.
+
+---
+
+## 9.1 Language Version
+
+The language version identifies the syntax and semantics expected by the compiler.
+
+Example:
+
+VERSION="1.0"
+
+If no version is specified, the compiler MAY assume a default version as defined by the implementation.
+
+---
+
+## 9.2 Compiler Compatibility
+
+A compiler SHALL declare the language versions it supports.
+
+The compiler SHALL:
+
+- Accept supported language versions.
+- Reject unsupported future versions.
+- Report version compatibility errors before compilation.
+
+---
+
+## 9.3 Renderer Compatibility
+
+Renderers SHALL declare the CCIR versions they support.
+
+A renderer SHALL reject unsupported CCIR versions.
+
+The compiler and renderer version numbers are independent.
+
+---
+
+## 9.4 Version Evolution
+
+Future language versions MAY introduce:
+
+- New tags
+- New attributes
+- New validation rules
+- New object types
+- New rendering capabilities
+
+Existing language constructs SHALL retain their original meaning unless explicitly deprecated.
+
+---
+
+## 9.5 Deprecation Policy
+
+Deprecated language features SHALL remain supported for at least one major language version.
+
+Compilers SHOULD emit warnings when deprecated constructs are encountered.
+
+Removal of deprecated features SHALL occur only in a subsequent major language version.
+
