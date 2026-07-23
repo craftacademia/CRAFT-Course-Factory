@@ -1,5 +1,6 @@
 import Provider from "../../core/provider.js";
 import CCIRDocument from "./model/ccirDocument.js";
+
 import CourseBuilder from "./builders/courseBuilder.js";
 import CharacterBuilder from "./builders/characterBuilder.js";
 import LocationBuilder from "./builders/locationBuilder.js";
@@ -9,6 +10,8 @@ import ScreenBuilder from "./builders/screenBuilder.js";
 import DialogueBuilder from "./builders/dialogueBuilder.js";
 import InteractionBuilder from "./builders/interactionBuilder.js";
 import AssessmentBuilder from "./builders/assessmentBuilder.js";
+
+import ReferenceResolver from "./resolver/referenceResolver.js";
 
 export default class CCIRProvider extends Provider {
 
@@ -26,6 +29,8 @@ export default class CCIRProvider extends Provider {
     this.interactionBuilder = new InteractionBuilder();
     this.assessmentBuilder = new AssessmentBuilder();
 
+    this.referenceResolver = new ReferenceResolver();
+
   }
 
   async build(ast) {
@@ -42,7 +47,7 @@ export default class CCIRProvider extends Provider {
     ccir.interactions = this.interactionBuilder.build(ast);
     ccir.assessments = this.assessmentBuilder.build(ast);
 
-    return ccir;
+    return this.referenceResolver.resolve(ccir);
 
   }
 
