@@ -1,0 +1,197 @@
+{
+  "title": "CRAFT Course Package",
+  "slides": [
+    {
+      "id": "slide_1",
+      "title": "Slide 1",
+      "content": [
+        "================================================================================",
+        "SCRIPT COMPILER PROCESSING...",
+        "Source Document: C.R.A.F.T Academia — Ravi's Biggest Week",
+        "Target Engine: Automated eLearning Build Engine (2026 Spec)",
+        "Rule Enforcement: Strict Mode (No emojis, no loose pipes/lines, clean XML-style tagging)",
+        "[CHARACTERS] [CHARACTER ID=CHAR-01 NAME=\"Ravi\" TITLE=\"Branch Sales Executive, XYZ HFC\"] [EXPRESSION ID=CHAR-01-A NAME=\"Neutral\"]Photorealistic portrait of a young Indian male in his mid-20s. Clean-shaven, short neatly combed black hair, medium complexion. Wearing a navy blue branded polo shirt with a small company logo on the left chest. Light grey trousers. Neutral calm expression — mouth closed, eyes open and attentive. Upper body visible from waist up. Plain white or very light grey background. Realistic Indian corporate photography style. No text overlays.[/EXPRESSION] [EXPRESSION ID=CHAR-01-B NAME=\"Confident\"]Same young Indian male, same clothing. Confident, professional expression — slight smile, shoulders relaxed but upright, direct eye contact with camera. Posture slightly forward. Upper body visible. Plain white background. Photorealistic.[/EXPRESSION] [EXPRESSION ID=CHAR-01-C NAME=\"Concerned\"]Same young Indian male, same clothing. Expression of mild concern — slight furrow of brow, lips pressed together, eyes slightly narrowed. Not panicking — thoughtful worry. Upper body visible. Plain white background. Photorealistic.[/EXPRESSION] [EXPRESSION ID=CHAR-01-D NAME=\"Thinking\"]Same young Indian male, same clothing. Thinking expression — eyes slightly upward and to the side, one hand raised slightly near chin as if processing information. Not puzzled, just analytical. Upper body visible. Plain white background. Photorealistic.[/EXPRESSION] [EXPRESSION ID=CHAR-01-E NAME=\"Relieved\"]Same young Indian male, same clothing. Relieved and satisfied expression — relaxed smile, shoulders dropped slightly, eyes soft. The expression of someone who has just completed something successfully. Upper body visible. Plain white background. Photorealistic.[/EXPRESSION] [EXPRESSION ID=CHAR-01-F NAME=\"Apologetic\"]Same young Indian male, same clothing. Apologetic expression — slight tilt of head, eyes slightly downcast but still making contact, lips together in a gentle closed-mouth expression of regret. Not ashamed — professionally apologetic. Upper body visible. Plain white background. Photorealistic.[/EXPRESSION] [/CHARACTER]",
+        "[CHARACTER ID=CHAR-02 NAME=\"Mr. Sharma\" TITLE=\"Grocery Shop Owner, Anand Gujarat\"] [EXPRESSION ID=CHAR-02-A NAME=\"Neutral/Welcoming\"]Photorealistic portrait of a middle-aged Indian male in his late 40s. Average to slightly stocky build. Wheatish complexion. Short black hair with slight greying at temples, naturally unstyled. Wearing a plain white cotton kurta. Warm, welcoming neutral expression — open face, slight softness around the eyes. The look of a shop owner who is comfortable receiving visitors. Upper body visible from waist up. Plain white or very light background. Realistic Indian photography style. No text overlays.[/EXPRESSION] [EXPRESSION ID=CHAR-02-B NAME=\"Interested\"]Same middle-aged Indian male, same clothing. Expression of genuine interest — eyes slightly wider, leaning slightly forward, eyebrows raised just a little. The expression of someone who has just heard something that has caught their attention. Upper body visible. Plain white background. Photorealistic.[/EXPRESSION] [EXPRESSION ID=CHAR-02-C NAME=\"Slightly Worried\"]Same middle-aged Indian male, same clothing. Expression of mild worry — brow slightly furrowed, corners of mouth slightly pulled down, eyes uncertain. Not panicking — the worry of a common man unsure if he qualifies for something important to his family. Upper body visible. Plain white background. Photorealistic.[/EXPRESSION] [EXPRESSION ID=CHAR-02-D NAME=\"Happy/Relieved\"]Same middle-aged Indian male, same clothing. Happy and relieved expression — genuine warm smile, eyes slightly crinkled, shoulders relaxed. The relief of a first-generation home buyer being told he qualifies. Upper body visible. Plain white background. Photorealistic.[/EXPRESSION] [EXPRESSION ID=CHAR-02-E NAME=\"Confused\"]Same middle-aged Indian male, same clothing. Confused expression — slight tilt of head, eyes slightly narrowed, lips parted as if about to ask a question. Not frustrated — genuinely puzzled. Upper body visible. Plain white background. Photorealistic.[/EXPRESSION] [EXPRESSION ID=CHAR-02-F NAME=\"Agreeable\"]Same middle-aged Indian male, same clothing. Agreeable, nodding expression — soft open smile, slight forward nod implied in posture, eyes warm and cooperative. Upper body visible. Plain white background. Photorealistic.[/EXPRESSION] [/CHARACTER]",
+        "[CHARACTER ID=CHAR-03 NAME=\"Mrs. Sharma\" TITLE=\"Home-Based Tailor, Anand Gujarat\"] [EXPRESSION ID=CHAR-03-A NAME=\"Uncertain/Nervous\"]Photorealistic portrait of a middle-aged Indian woman in her early 40s. Average build, medium complexion. Dark hair oiled and tied back in a simple bun. Wearing a simple muted cotton saree — light green or beige. Small earrings. Hands slightly folded in front or held together. Expression of uncertainty and nervousness — brow slightly furrowed, eyes slightly downcast but trying to make eye contact, lips together. The expression of someone who fears she may not have the right documents. Upper body visible. Plain white or light background. Photorealistic Indian photography style.[/EXPRESSION] [EXPRESSION ID=CHAR-03-B NAME=\"Relieved\"]Same middle-aged Indian woman, same clothing. Relieved expression — visible exhale of tension, soft smile, eyes open and warm. The relief of someone told their situation is not a problem. Upper body visible. Plain white background. Photorealistic.[/EXPRESSION] [EXPRESSION ID=CHAR-03-C NAME=\"Cooperative/Nodding\"]Same middle-aged Indian woman, same clothing. Cooperative, agreeable expression — gentle nod implied in posture, open face, eyes direct and helpful. The expression of someone willing to gather documents and follow instructions. Upper body visible. Plain white background. Photorealistic.[/EXPRESSION] [EXPRESSION ID=CHAR-03-D NAME=\"Grateful\"]Same middle-aged Indian woman, same clothing. Genuinely grateful expression — warm smile, eyes slightly glistening, hands slightly raised or pressed together at chest. The expression of a woman who has been treated with dignity and respect. Upper body visible. Plain white background. Photorealistic.[/EXPRESSION] [/CHARACTER]",
+        "[CHARACTER ID=CHAR-04 NAME=\"Suresh Nair\" TITLE=\"Branch Manager, XYZ HFC\"] [EXPRESSION ID=CHAR-04-A NAME=\"Neutral/Evaluating\"]Photorealistic portrait of a middle-aged South Indian male in his early 40s. Medium build, slightly darker complexion, short neatly combed black hair. Wearing a formal light blue full-sleeve shirt, top button open, no tie. Expression of calm evaluation — composed, attentive, lips neutral, eyes assessing. The look of an experienced manager reviewing information before commenting. Upper body visible. Plain white or light background. Photorealistic Indian corporate photography style. No text overlays.[/EXPRESSION] [EXPRESSION ID=CHAR-04-B NAME=\"Approving\"]Same South Indian male manager, same clothing. Expression of approval — slight nod implied in posture, corners of mouth raised in a restrained but genuine smile, eyes warm. The expression of a manager who has just received what he expected from a good employee. Upper body visible. Plain white background. Photorealistic.[/EXPRESSION] [EXPRESSION ID=CHAR-04-C NAME=\"Stern/Correcting\"]Same South Indian male manager, same clothing. Stern, correcting expression — direct eye contact, jaw set, brow slightly furrowed, lips in a firm straight line. Not angry — the composed authority of a manager correcting an avoidable mistake. Upper body visible. Plain white background. Photorealistic.[/EXPRESSION] [EXPRESSION ID=CHAR-04-D NAME=\"Coaching/Patient\"]Same South Indian male manager, same clothing. Patient coaching expression — relaxed brow, slight forward lean, open face, eyes engaged and encouraging. The expression of a manager who has seen this before and is taking time to teach. Upper body visible. Plain white background. Photorealistic.[/EXPRESSION] [/CHARACTER]",
+        "[CHARACTER ID=CHAR-05 NAME=\"Vikram Sharma\" TITLE=\"Mr. Sharma's Brother\"] [EXPRESSION ID=CHAR-05-A NAME=\"Hopeful/Expectant\"]Photorealistic portrait of a young Indian male in his mid-30s. Slim build, medium complexion. Short slightly styled hair. Wearing a plain cotton shirt or T-shirt — smart casual appearance. Expression of hopeful expectation — eyes slightly wide, eyebrows slightly raised, open small smile. The expression of someone expecting good news. Upper body visible. Plain white background. Photorealistic.[/EXPRESSION] [EXPRESSION ID=CHAR-05-B NAME=\"Disappointed/Accepting\"]Same young Indian male, same clothing. Disappointed but accepting expression — corners of mouth slightly pulled down, eyes looking slightly away, a slight resigned nod. Not angry or upset — the quiet disappointment of understanding something did not work out as hoped. Upper body visible. Plain white background. Photorealistic.[/EXPRESSION] [/CHARACTER] [/CHARACTERS]",
+        "[LOCATIONS] [LOCATION ID=LOC-01 NAME=\"XYZ HFC Branch Office — Interior, Morning\"]Wide-angle interior view of a modest Indian NBFC or small finance bank branch office in a Tier-2 town. Monday morning, early. Two wooden desks with file folders stacked on them. Plastic chairs for visitors. A notice board on the wall with printed targets, employee photos, and motivational posters. XYZ HFC branding visible on the wall — navy blue and amber logo. Fluorescent tube lights overhead. A small window letting in morning light. Clean but modest — not corporate polished. No people visible. Realistic Indian branch office photography style. Wide enough to serve as a background for character overlays.[/LOCATION] [LOCATION ID=LOC-02 NAME=\"XYZ HFC Branch Office — Manager's Desk Area\"]Interior of a small Indian NBFC branch office, focused on the branch manager's desk area. A wooden desk with a computer monitor, file folders, a stapler, and a pen holder. An office chair behind the desk. A framed branch performance chart on the wall. XYZ HFC logo visible on the wall behind. Afternoon light. Clean and organised. No people. Realistic Indian branch office photography. Suitable as background for character overlay.[/LOCATION] [LOCATION ID=LOC-03 NAME=\"Sharma Kirana Store — Interior, Morning\"]Interior of a small kirana grocery store in Anand, Gujarat. Tier-3 Indian town setting. Wooden counter with a glass top running across the width of the shop. Metal shelving units behind the counter stacked with packaged goods — biscuits, dal, rice packets, mustard oil tins, soap bars, pickles. A small weighing scale on the counter. A hand-written price list board partially visible. Warm natural light from the open shop entrance at the front. The gentle haze and colour of a small Indian town morning market. Floor is basic tile. A plastic stool visible beside the counter. No people. Realistic Indian small-business photography style. Wide angle suitable as background for character overlays.[/LOCATION] [LOCATION ID=LOC-04 NAME=\"Sharma Kirana Store — Counter Area, Close View\"]Close-angle view of the wooden counter inside a small kirana grocery store in Anand, Gujarat. Glass-top counter with some documents and two chai cups visible on the surface. The background shows shelves of packaged goods out of focus. Warm natural light. A notepad and pen on the counter edge. No people. Indian small-business photography. Suitable as background for seated conversation scene with character overlays.[/LOCATION] [LOCATION ID=LOC-05 NAME=\"Sharma Home — Living Area with Sewing Machine\"]Interior of a modest Indian home living area in Anand, Gujarat. Simple plastic chairs arranged around a low table. A manual foot-pedal sewing machine visible in the corner, with fabric and thread nearby. A small window with a cotton curtain letting in morning light. Plain walls — one with a small framed religious image. Basic tile floor. Clean but modest. No people. Realistic Indian home photography. Suitable as background for character overlays in the Mrs. Sharma scene.[/LOCATION] [LOCATION ID=LOC-06 NAME=\"XYZ HFC Branch Office — Document Review Desk\"]Interior of a small Indian NBFC branch office. A simple wooden desk with multiple documents spread out in an organised layout. A pen, a printed checklist, and a file folder visible on the desk surface. Fluorescent lighting overhead. A computer monitor partially visible at the edge. The desk of a sales executive doing a final file review. No people. Realistic Indian branch photography. Wide enough for character overlay.[/LOCATION] [/LOCATIONS]"
+      ]
+    },
+    {
+      "id": "slide_2",
+      "title": "S01",
+      "content": [
+        "[SCREEN ID=S01 TYPE=STATIC SCENE=SCENE-01 LOCATION=LOC-01] SUR:  Close 3 files this week — you earn your first performance bonus. ₹8,000.  RAV:  Sir, I have one strong lead. Mr. Sharma — grocery shop owner near the railway station. He called last week about a home loan.  SUR:  Good. But before you go — learn what to check. Six things. Miss one and the file comes back.  [/SCREEN]"
+      ]
+    },
+    {
+      "id": "slide_3",
+      "title": "S02",
+      "content": [
+        "[SCREEN ID=S02 TYPE=TAB SCENE=SCENE-01 LOCATION=LOC-01 ASSET_REF=PROP-02] SUR:  Six checkpoints. Learn all six before you walk into that shop.  [/SCREEN]"
+      ]
+    },
+    {
+      "id": "slide_4",
+      "title": "S03",
+      "content": [
+        "[SCREEN ID=S03 TYPE=TAB LOCATION=LOC-01 ASSET_REF=PROP-01] NAR:  Read this before meeting Mr. Sharma. Three rules. Property, income, and ownership. All three must pass.  [/SCREEN]"
+      ]
+    },
+    {
+      "id": "slide_5",
+      "title": "S04",
+      "content": [
+        "[SCREEN ID=S04 TYPE=BRANCHING SCENE=SCENE-02 LOCATION=LOC-03] SHA:  Beta, you called about a home loan? Come, sit down. Have some chai.  RAV:  Thank you Sharma ji. Three quick questions before we discuss anything else.  SHA:  I have already booked a 1BHK flat on the outskirts of town. Still under construction.  [BRANCH_POINT ID=BP04_1] [OPTION LETTER=A SCORE=10 NEXT=PATH_S04_A VO_ID=VO-S04-RAV-02A] What is the total cost as per the builder agreement Sharma ji — including all charges like parking and registration? [/OPTION] [OPTION LETTER=B SCORE=5 NEXT=PATH_S04_B VO_ID=VO-S04-RAV-02B] How much home loan are you looking for, Sharma ji? [/OPTION] [/BRANCH_POINT] [PATH ID=PATH_S04_A] SHA:  Total cost is ₹16 lakhs as per the agreement. That includes parking and registration charges.  [/PATH] [PATH ID=PATH_S04_B] SHA:  I was thinking around ₹12 to 13 lakhs loan. The flat costs ₹16 lakhs total.  RAV:  Understood Sharma ji. And the total cost of the flat as per the builder agreement — what is that figure including all charges?  SHA:  Oh, the total cost — that is ₹16 lakhs. Includes parking and registration as per the builder's agreement.  [/PATH] [/SCREEN]"
+      ]
+    },
+    {
+      "id": "slide_6",
+      "title": "S05",
+      "content": [
+        "[SCREEN ID=S05 TYPE=BRANCHING SCENE=SCENE-04 LOCATION=LOC-04] SHA:  So what else do you need to know beta?  [BRANCH_POINT ID=BP05_1] [OPTION LETTER=A SCORE=10 NEXT=PATH_S05_A VO_ID=VO-S05-RAV-01A] What comes into the household every month from all sources — your shop, your wife, anything else that is regular? [/OPTION] [OPTION LETTER=B SCORE=5 NEXT=PATH_S05_B VO_ID=VO-S05-RAV-01B] What is your monthly income from the shop, Sharma ji? [/OPTION] [/BRANCH_POINT] [PATH ID=PATH_S05_A] SHA:  From the shop around ₹25,000 per month. My wife also does tailoring from home — maybe ₹8,000 to ₹10,000. So together ₹33,000 to ₹35,000.  [/PATH] [PATH ID=PATH_S05_B] SHA:  Around ₹25,000 from the shop beta.  RAV:  And is there any other income in the household Sharma ji — your wife, any rent, anything else that comes in regularly?  SHA:  Yes, my wife does tailoring from home. Maybe ₹8,000 to ₹10,000 per month. I should have mentioned that.  [/PATH] [/SCREEN]"
+      ]
+    },
+    {
+      "id": "slide_7",
+      "title": "S06",
+      "content": [
+        "[SCREEN ID=S06 TYPE=BRANCHING SCENE=SCENE-04 LOCATION=LOC-04] SHA:  Is there anything else you need to know beta?  [BRANCH_POINT ID=BP06_1] [OPTION LETTER=A SCORE=10 NEXT=PATH_S06_A VO_ID=VO-S06-RAV-01A] Just one more thing Sharma ji — have you or your family ever owned a home before, or will this be your first? [/OPTION] [OPTION LETTER=B SCORE=5 NEXT=PATH_S06_B VO_ID=VO-S06-RAV-01B] Sharma ji, you do not own any property currently — right? [/OPTION] [/BRANCH_POINT] [PATH ID=PATH_S06_A] SHA:  First time beta. My father rented, I have rented all my life. This will be the first home our family has ever owned.  [/PATH] [PATH ID=PATH_S06_B] SHA:  No no beta, nothing like that. Why — is that a problem?  RAV:  Not at all Sharma ji — just a standard check I ask everyone. Is this going to be your first home?  SHA:  Yes beta, first time. My father rented, I have rented all my life. This will be our first home. I got a little worried when you asked like that.  [/PATH] [/SCREEN]"
+      ]
+    },
+    {
+      "id": "slide_8",
+      "title": "S07",
+      "content": [
+        "[SCREEN ID=S07 TYPE=STATIC ASSET_REF=PROP-18] SUR:  Eligibility confirmed. Now — is the property actually right for our product?  [/SCREEN]"
+      ]
+    },
+    {
+      "id": "slide_9",
+      "title": "S08",
+      "content": [
+        "[SCREEN ID=S08 TYPE=TAB ASSET_REF=PROP-10] NAR:  Read this before the income conversation. Three rules — household income, FOIR, and informal income. All three matter.  [/SCREEN]"
+      ]
+    },
+    {
+      "id": "slide_10",
+      "title": "S09",
+      "content": [
+        "[SCREEN ID=S09 TYPE=DRAG_DROP LOCATION=LOC-04 ASSET_REF=PROP-11] NAR:  Mr. Sharma mentioned four income figures. Not all of them count for the FOIR calculation. Drag each one to the right zone.  [/SCREEN]"
+      ]
+    },
+    {
+      "id": "slide_11",
+      "title": "S10",
+      "content": [
+        "[SCREEN ID=S10 TYPE=MCQ ASSET_REF=PROP-12] NAR:  Mr. Sharma's household income is ₹33,000. Proposed home loan EMI is ₹11,500. No existing EMIs. FOIR equals 35%. What does this mean for the file?  [BRANCH_POINT ID=BP10_1] [OPTION LETTER=A SCORE=10 NEXT=NEXT_SCREEN VO_ID=VO-S10-NAR-02A] 35% is within the 50% limit. File can proceed. [/OPTION] [OPTION LETTER=B SCORE=5 NEXT=NEXT_SCREEN VO_ID=VO-S10-NAR-02B] 35% is borderline. Ravi should reduce the loan amount to be safe. [/OPTION] [/BRANCH_POINT] [/SCREEN]"
+      ]
+    },
+    {
+      "id": "slide_12",
+      "title": "S11",
+      "content": [
+        "[SCREEN ID=S11 TYPE=BRANCHING SCENE=SCENE-05 LOCATION=LOC-05] MRS:  My husband said you need to ask me about my income beta. I don't have any paperwork — ITR or anything like that.  RAV:  No problem Mrs. Sharma. Let me ask you a couple of things.  MRS:  I do tailoring from home. I have been doing it for 12 years. But everything is cash — no records as such.  [BRANCH_POINT ID=BP11_1] [OPTION LETTER=A SCORE=10 NEXT=PATH_S11_A VO_ID=VO-S11-RAV-02A] That is completely fine Mrs. Sharma. Our product is designed for customers like you. I just need to understand what documents you do have — even if they are not formal tax returns. [/OPTION] [OPTION LETTER=B SCORE=5 NEXT=PATH_S11_B VO_ID=VO-S11-RAV-02B] Mrs. Sharma, can you get an ITR filed before we proceed? It would help the file significantly. [/OPTION] [/BRANCH_POINT] [PATH ID=PATH_S11_A] MRS:  Oh good beta. I was worried. I do have an order book where I write every customer's work. And I have a bank account — though mostly I withdraw cash. And a post office RD I have been paying for 4 years.  [/PATH] [PATH ID=PATH_S11_B] MRS:  Filing ITR will take so much time beta. But I do have an order book, a bank account, and a post office RD I have been paying for 4 years. Is that helpful?  [/PATH] [/SCREEN]"
+      ]
+    },
+    {
+      "id": "slide_13",
+      "title": "S12",
+      "content": [
+        "[SCREEN ID=S12 TYPE=BRANCHING SCENE=SCENE-05 LOCATION=LOC-05] RAV:  That is very helpful Mrs. Sharma. Let me confirm what I need to collect from you.  [BRANCH_POINT ID=BP12_1] [OPTION LETTER=A SCORE=10 NEXT=PATH_S12_A VO_ID=VO-S12-RAV-02A] The order book, bank statement, and RD passbook together are exactly what we need. Can I also get the electricity bill for this address in your name? [/OPTION] [OPTION LETTER=B SCORE=5 NEXT=PATH_S12_B VO_ID=VO-S12-RAV-02B] Please give me the order book and bank statement. That should be enough. [/OPTION] [/BRANCH_POINT] [PATH ID=PATH_S12_A] MRS:  Yes beta, I can get all of that ready. Give me one day.  [/PATH] [PATH ID=PATH_S12_B] MRS:  Yes beta, I can give you those. Should I also get the electricity bill and my RD passbook?  [/PATH] RAV:  Perfect. Your income is just as important as Sharma ji's for this file, Mrs. Sharma.  MRS:  Thank you beta. Nobody told us that before.  [/SCREEN]"
+      ]
+    },
+    {
+      "id": "slide_14",
+      "title": "S13",
+      "content": [
+        "[SCREEN ID=S13 TYPE=STATIC ASSET_REF=PROP-18] SUR:  Income picture sorted. Now collect the documents — and check every single paper before you leave that shop.  [/SCREEN]"
+      ]
+    },
+    {
+      "id": "slide_15",
+      "title": "S14",
+      "content": [
+        "[SCREEN ID=S14 TYPE=TAB ASSET_REF=PROP-13] NAR:  Read this before document collection. Three rules — KYC name match, property documents, and co-applicant eligibility.  [/SCREEN]"
+      ]
+    },
+    {
+      "id": "slide_16",
+      "title": "S15",
+      "content": [
+        "[SCREEN ID=S15 TYPE=HOTSPOT LOCATION=LOC-04 ASSET_REF=PROP-14] NAR:  Ravi goes through each document carefully. Click all four to examine them — then answer.  [BRANCH_POINT ID=BP15_1] [OPTION LETTER=A SCORE=10 NEXT=NEXT_SCREEN VO_ID=VO-S15-NAR-06A] The name on PAN (R.K. Sharma) and Aadhaar (Ramesh Kumar Sharma) do not match. This must be corrected before submission. [/OPTION] [OPTION LETTER=B SCORE=5 NEXT=NEXT_SCREEN VO_ID=VO-S15-NAR-06B] The electricity bill is not required since Aadhaar address matches. It should be removed from the file. [/OPTION] [/BRANCH_POINT] RAV:  Sharma ji, PAN shows R.K. Sharma but Aadhaar shows your full name. Please update PAN through your CA — about 7 to 10 days.  SHA:  I will go today itself beta.  [/SCREEN]"
+      ]
+    },
+    {
+      "id": "slide_17",
+      "title": "S16",
+      "content": [
+        "[SCREEN ID=S16 TYPE=DRAG_DROP LOCATION=LOC-04 ASSET_REF=PROP-15] SHA:  Here are the property papers beta — booking receipt, allotment letter, and the NOC the builder gave me last week.  NAR:  Ravi examines each document. Sort them into the correct zone.  RAV:  Sharma ji — please collect a signed stamped allotment letter from the builder's office. And ask them to reissue the NOC addressed to XYZ HFC.  SHA:  I will go to the builder's office tomorrow morning.  [/SCREEN]"
+      ]
+    },
+    {
+      "id": "slide_18",
+      "title": "S17",
+      "content": [
+        "[SCREEN ID=S17 TYPE=BRANCHING LOCATION=LOC-02] SHA:  Beta, my younger brother Vikram wants to join as co-applicant. He earns ₹20,000 from his job — it will only strengthen the file, right?  RAV:  Sharma ji, does Vikram ji currently own any residential property?  SHA:  Yes — he bought a small flat in Pune 2 years ago. He lives there.  [BRANCH_POINT ID=BP17_1] [OPTION LETTER=A SCORE=10 NEXT=PATH_S17_A VO_ID=VO-S17-RAV-02A] Sharma ji, Vikram ji owns a flat in Pune — under our AHFC product, co-applicants must also be first-time buyers. He cannot be included. But do not worry — I have already checked the FOIR on your and Mrs. Sharma's income alone and the file is perfectly strong. [/OPTION] [OPTION LETTER=B SCORE=5 NEXT=PATH_S17_B VO_ID=VO-S17-RAV-02B] Sharma ji, let me check with my manager and come back to you on whether Vikram ji can join. [/OPTION] [/BRANCH_POINT] [PATH ID=PATH_S17_A] SHA:  Oh. But the file is still okay without him beta?  RAV:  Absolutely Sharma ji. FOIR is 35% on your and Mrs. Sharma's income. The file is strong — Vikram ji's income was a bonus but you do not need it.  SHA:  Thank you for explaining beta. You handled that well.  [/PATH] [PATH ID=PATH_S17_B] SUR:  Ravi, you did not need to escalate this. The policy is clear — co-applicant owns property, they cannot join an AHFC file. Call Sharma ji back and tell him.  RAV:  Understood sir. I will call him now.  [/PATH] [/SCREEN]"
+      ]
+    },
+    {
+      "id": "slide_19",
+      "title": "S18",
+      "content": [
+        "[SCREEN ID=S18 TYPE=STATIC ASSET_REF=PROP-18] SUR:  Documents almost ready. One final check before this file lands on my desk.  [/SCREEN]"
+      ]
+    },
+    {
+      "id": "slide_20",
+      "title": "S19",
+      "content": [
+        "[SCREEN ID=S19 TYPE=TAB ASSET_REF=PROP-16] NAR:  Friday. One final check before the file moves. Name consistency, final FOIR, and file summary. All three.  [/SCREEN]"
+      ]
+    },
+    {
+      "id": "slide_21",
+      "title": "S20",
+      "content": [
+        "[SCREEN ID=S20 TYPE=HOTSPOT SCENE=SCENE-07 LOCATION=LOC-06 ASSET_REF=PROP-17] NAR:  The full file is in front of Ravi. Click each document to check for name consistency — then answer.  [BRANCH_POINT ID=BP20_1] [OPTION LETTER=A SCORE=10 NEXT=NEXT_SCREEN VO_ID=VO-S20-NAR-07A] The bank statement shows R.K. Sharma — the account name has not been updated. Ravi must get a fresh statement showing the full name or a bank-certified name correction letter. [/OPTION] [OPTION LETTER=B SCORE=5 NEXT=NEXT_SCREEN VO_ID=VO-S20-NAR-07B] The NOC must be re-dated to today's date before submission. [/OPTION] [/BRANCH_POINT] [/SCREEN]"
+      ]
+    },
+    {
+      "id": "slide_22",
+      "title": "S21",
+      "content": [
+        "[SCREEN ID=S21 TYPE=BRANCHING SCENE=SCENE-08 LOCATION=LOC-02] RAV:  Sir, Sharma ji's file. Complete.  SUR:  Two questions before I open it.  SUR:  Loan amount?  [BRANCH_POINT ID=BP21_1] [OPTION LETTER=A SCORE=10 NEXT=PATH_S21_A VO_ID=VO-S21-RAV-02A] ₹13 lakhs sir. Property is ₹16 lakhs — Mr. Sharma is contributing ₹3 lakhs as down payment from his own funds. [/OPTION] [OPTION LETTER=B SCORE=5 NEXT=PATH_S21_B VO_ID=VO-S21-RAV-02B] Around ₹13 to 14 lakhs sir. Somewhere in that range. [/OPTION] [/BRANCH_POINT] [PATH ID=PATH_S21_A] SUR:  Good. FOIR?  [/PATH] [PATH ID=PATH_S21_B] SUR:  Around is not a number Ravi. ₹13 lakhs or ₹14 lakhs — which is it?  RAV:  ₹13 lakhs sir. ₹16 lakh property, ₹3 lakh down payment from Mr. Sharma's own funds.  SUR:  FOIR?  [/PATH] [/SCREEN]"
+      ]
+    },
+    {
+      "id": "slide_23",
+      "title": "S22",
+      "content": [
+        "[SCREEN ID=S22 TYPE=BRANCHING LOCATION=LOC-02] SUR:  FOIR?  [BRANCH_POINT ID=BP22_1] [OPTION LETTER=A SCORE=10 NEXT=PATH_S22_A VO_ID=VO-S22-RAV-01A] 35% sir. Household income ₹33,000, proposed EMI ₹11,500, no existing EMIs. [/OPTION] [OPTION LETTER=B SCORE=5 NEXT=PATH_S22_B VO_ID=VO-S22-RAV-01B] It should be fine sir. Their income is good and there are no existing loans. [/OPTION] [/BRANCH_POINT] [PATH ID=PATH_S22_A] SUR:  First clean file you have brought me without me asking twice. Credit reviews this weekend.  [/PATH] [PATH ID=PATH_S22_B] SUR:  Should be fine is not a FOIR, Ravi. The number is 35%. Remember that for next time.  [/PATH] [/SCREEN]"
+      ]
+    },
+    {
+      "id": "slide_24",
+      "title": "S23",
+      "content": [
+        "[SCREEN ID=S23 TYPE=STATIC ASSET_REF=PROP-18] [/SCREEN]"
+      ]
+    },
+    {
+      "id": "slide_25",
+      "title": "S24",
+      "content": [
+        "[SCREEN ID=S24 TYPE=STATIC SCENE=SCENE-11 LOCATION=LOC-01] SUR:  File is with credit. If everything is in order — we hear back Monday.  RAV:  Two more leads to close before then, sir.  SUR:  Then stop talking and get moving.  [/SCREEN]"
+      ]
+    },
+    {
+      "id": "slide_26",
+      "title": "S25",
+      "content": [
+        "[SCREEN ID=S25 TYPE=TAB ASSET_REF=PROP-18] [/SCREEN]"
+      ]
+    }
+  ]
+}
