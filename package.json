@@ -8,7 +8,8 @@
     "start": "node server.js",
     "dev": "node server.js",
     "build": "node src/compilerRunner.js",
-    "test": "node src/compilerRunner.js"
+    "test": "node src/compilerRunner.js",
+    "test:compiler": "node tests/compiler.test.js"
   },
   "keywords": [],
   "author": "",

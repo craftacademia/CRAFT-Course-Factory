@@ -1,4 +1,5 @@
 import Provider from "../../core/provider.js";
+
 import CCIRDocument from "./model/ccirDocument.js";
 
 import CourseBuilder from "./builders/courseBuilder.js";
@@ -12,6 +13,7 @@ import InteractionBuilder from "./builders/interactionBuilder.js";
 import AssessmentBuilder from "./builders/assessmentBuilder.js";
 
 import ReferenceResolver from "./resolver/referenceResolver.js";
+import IntegrityValidator from "./validator/integrityValidator.js";
 
 export default class CCIRProvider extends Provider {
 
@@ -30,6 +32,7 @@ export default class CCIRProvider extends Provider {
     this.assessmentBuilder = new AssessmentBuilder();
 
     this.referenceResolver = new ReferenceResolver();
+    this.integrityValidator = new IntegrityValidator();
 
   }
 
@@ -47,7 +50,9 @@ export default class CCIRProvider extends Provider {
     ccir.interactions = this.interactionBuilder.build(ast);
     ccir.assessments = this.assessmentBuilder.build(ast);
 
-    return this.referenceResolver.resolve(ccir);
+    const resolved = this.referenceResolver.resolve(ccir);
+
+    return this.integrityValidator.validate(resolved);
 
   }
 
