@@ -1,6 +1,7 @@
 import Provider from "../../core/provider.js";
 import CCIRDocument from "./model/ccirDocument.js";
 import CourseBuilder from "./builders/courseBuilder.js";
+import CharacterBuilder from "./builders/characterBuilder.js";
 
 export default class CCIRProvider extends Provider {
 
@@ -9,6 +10,7 @@ export default class CCIRProvider extends Provider {
     super("ccir");
 
     this.courseBuilder = new CourseBuilder();
+    this.characterBuilder = new CharacterBuilder();
 
   }
 
@@ -17,6 +19,7 @@ export default class CCIRProvider extends Provider {
     const ccir = new CCIRDocument();
 
     ccir.course = this.courseBuilder.build(ast);
+    ccir.characters = this.characterBuilder.build(ast);
 
     return ccir;
 
