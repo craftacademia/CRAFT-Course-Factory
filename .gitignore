@@ -1,25 +1,55 @@
-node_modules/
-.env
-audio_cache/
-output/
-.DS_Store
+# ==================================
+# Dependencies
+# ==================================
 node_modules/
 **/node_modules/
-uploads/
-**/uploads/
+
+# ==================================
+# Environment
+# ==================================
 .env
+.env.*
+!.env.example
 **/.env
+
+# ==================================
+# macOS
+# ==================================
 .DS_Store
-node_modules/
-uploads/*.docx
-uploads/*.json
-.env
+
+# ==================================
+# Build & Generated Output
+# ==================================
 dist/
-node_modules/
-uploads/*.docx
-uploads/*.json
-.env
-dist/
-node_modules/
+build/
+coverage/
 output/
-.env
+uploads/
+audio_cache/
+
+# Generated previews
+public/preview/
+public/preview-build/
+
+# Generated archives
+*.zip
+
+# Logs
+*.log
+logs/
+
+# Temporary
+tmp/
+temp/
+
+# ==================================
+# Keep source assets
+# ==================================
+!assets/**
+!public/*.png
+!public/*.jpg
+!public/*.jpeg
+!public/*.svg
+!public/*.gif
+!templates/**
+!scripts/**
