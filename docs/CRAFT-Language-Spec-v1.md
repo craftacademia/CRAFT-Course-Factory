@@ -12,13 +12,11 @@ The language enables instructional designers, subject matter experts, and conten
 
 A CRAFT document is compiled into a Canonical Course Intermediate Representation (CCIR), which serves as the source for generating one or more delivery formats including HTML5, SCORM 1.2, SCORM 2004, xAPI, mobile applications, and future runtime environments.
 
-CRAFT is a declarative language. Authors describe *what* the course contains, while the compiler and runtime determine *how* it is rendered and executed.
+CRAFT is a declarative language. Authors describe what the course contains, while the compiler and runtime determine how it is rendered and executed.
 
 ---
 
 ## 1.2 Design Goals
-
-The language has been designed with the following objectives:
 
 ### Human Readability
 
@@ -67,15 +65,121 @@ These are defined in separate implementation specifications.
 
 ---
 
-## 2. Language Structure
+# 2. Language Structure
 
-### 2.1 File Structure
+## 2.1 File Structure
 
-### 2.2 Reserved Tags
+A CRAFT document is a hierarchical document composed of nested tags.
 
-### 2.3 Tag Naming Rules
+Each opening tag MUST have a corresponding closing tag.
 
-### 2.4 Attribute Rules
+Every document MUST contain exactly one root element.
+
+The compiler interprets the document from top to bottom while preserving hierarchy.
+
+---
+
+## 2.2 Reserved Tags
+
+The following top-level tags are reserved in Version 1.0.
+
+
+
+---
+
+# 2. Language Structure
+
+## 2.1 File Structure
+
+A CRAFT document is a hierarchical document composed of nested tags.
+
+Each opening tag MUST have a corresponding closing tag.
+
+Every document MUST contain exactly one root element.
+
+The compiler interprets the document from top to bottom while preserving hierarchy.
+
+---
+
+## 2.2 Reserved Tags
+
+The following top-level tags are reserved in Version 1.0.
+
+
+COURSE
+CHARACTERS
+LOCATIONS
+ASSETS
+SCREENS
+VARIABLES
+ASSESSMENTS
+
+The following entity tags are reserved.
+
+CHARACTER
+LOCATION
+ASSET
+SCREEN
+
+Future versions MAY introduce additional reserved tags.
+
+---
+
+## 2.3 Tag Naming Rules
+
+Tag names:
+
+- MUST use uppercase letters.
+- MAY contain digits.
+- MAY contain underscores (_).
+- MUST begin with an alphabetic character.
+- MUST NOT contain spaces.
+- MUST NOT contain special characters.
+
+Examples
+
+Valid
+
+SCREEN
+CHARACTER
+MCQ_SCREEN
+SCREEN2
+
+Invalid
+
+screen
+My Screen
+SCREEN-1
+1SCREEN
+
+
+---
+
+## 2.4 Attribute Rules
+
+Attributes are specified as key-value pairs.
+
+General syntax:
+
+KEY="VALUE"
+
+Rules:
+
+- Attribute names MUST be uppercase.
+- Attribute names MUST be unique within a tag.
+- Attribute values MUST be enclosed in double quotes.
+- Attribute values MAY contain spaces.
+- Attribute order is not significant.
+- Empty attribute values are permitted unless restricted by semantic rules.
+
+Example:
+
+[SCREEN
+ID="S01"
+TYPE="STATIC"
+LOCATION="LOC-01"
+SPEAKER="RAV"
+]
 
 ---
 
@@ -130,3 +234,4 @@ These are defined in separate implementation specifications.
 ---
 
 ## 10. Backward Compatibility
+
