@@ -1,3 +1,6 @@
+import fs from "fs/promises";
+import path from "path";
+
 import WordReaderProvider from "../providers/readers/word/wordReaderProvider.js";
 import DocumentFormatterProvider from "../providers/documentFormatter/documentFormatterProvider.js";
 import LexerProvider from "../providers/lexer/lexerProvider.js";
@@ -5,6 +8,8 @@ import ParserProvider from "../providers/parser/parserProvider.js";
 import ValidatorProvider from "../providers/validator/validatorProvider.js";
 import SemanticProvider from "../providers/semantic/semanticProvider.js";
 import CCIRProvider from "../providers/ccir/ccirProvider.js";
+import RendererProvider from "../providers/rendering/rendererProvider.js";
+
 import AttributeNormalizer from "./normalizers/attributeNormalizer.js";
 
 export default class Compiler {
@@ -14,44 +19,44 @@ export default class Compiler {
     this.formatter = new DocumentFormatterProvider();
     this.lexer = new LexerProvider();
     this.parser = new ParserProvider();
+    this.attributeNormalizer = new AttributeNormalizer();
     this.validator = new ValidatorProvider();
     this.semantic = new SemanticProvider();
-    this.normalizer = new AttributeNormalizer();
-    this.ccir = new CCIRProvider();
+    this.ccirProvider = new CCIRProvider();
+    this.renderer = new RendererProvider();
   }
 
-  async compile(filePath) {
+  async compile(inputFile, outputDirectory = "./build") {
 
-    const rawText = await this.reader.read(filePath);
+    const raw = await this.reader.read(inputFile);
 
-    const text = await this.formatter.format(rawText);
+    const formatted = await this.formatter.format(raw);
 
-    const lines = text
-      .split(/\r?\n/)
-      .map((line, index) => ({
-        number: index + 1,
-        text: line
-      }));
-
-    const tokens = await this.lexer.lex(lines);
+    const tokens = await this.lexer.lex(formatted);
 
     const ast = await this.parser.parse(tokens);
 
-    const normalizedAst = this.normalizer.normalize(ast);
+    this.attributeNormalizer.normalize(ast);
 
-    const syntax = await this.validator.validate(normalizedAst);
+    await this.validator.validate(ast);
 
-    if (!syntax.valid) {
-      return syntax;
-    }
+    await this.semantic.validate(ast);
 
-    const semantic = await this.semantic.validate(syntax.ast);
+    const ccir = await this.ccirProvider.build(ast);
 
-    if (!semantic.valid) {
-      return semantic;
-    }
+    await fs.mkdir(outputDirectory, { recursive: true });
 
-    return await this.ccir.build(semantic.ast);
+    await fs.writeFile(
+      path.join(outputDirectory, "ccir.json"),
+      JSON.stringify(ccir, null, 2)
+    );
+
+    await this.renderer.render(
+      ccir,
+      path.join(outputDirectory, "preview")
+    );
+
+    return ccir;
 
   }
 

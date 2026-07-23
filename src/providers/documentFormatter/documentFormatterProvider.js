@@ -8,15 +8,19 @@ export default class DocumentFormatterProvider extends Provider {
 
   async format(text) {
 
-    return text
-      // Put every tag on its own line
+    const normalized = text
       .replace(/(\[[^\]]+\])/g, "\n$1\n")
-
-      // Collapse multiple blank lines
+      .replace(/\r\n/g, "\n")
+      .replace(/\r/g, "\n")
       .replace(/\n{2,}/g, "\n")
-
-      // Trim surrounding whitespace
       .trim();
+
+    return normalized
+      .split("\n")
+      .map((line, index) => ({
+        number: index + 1,
+        text: line
+      }));
 
   }
 
