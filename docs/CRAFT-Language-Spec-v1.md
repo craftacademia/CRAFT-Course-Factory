@@ -845,3 +845,76 @@ Compilers SHOULD emit warnings when deprecated constructs are encountered.
 
 Removal of deprecated features SHALL occur only in a subsequent major language version.
 
+
+---
+
+# 10. Backward Compatibility
+
+Backward compatibility ensures that CRAFT documents created for earlier language versions continue to compile and render correctly in future compiler releases.
+
+Unless explicitly stated otherwise, newer compiler versions SHALL preserve the behavior of valid documents authored against supported earlier language versions.
+
+---
+
+## 10.1 Compatibility Principles
+
+The CRAFT language SHALL evolve without unnecessarily breaking existing content.
+
+Compiler implementations SHOULD prioritize compatibility over introducing breaking changes.
+
+Breaking changes SHALL be limited to major language version releases.
+
+---
+
+## 10.2 Supported Documents
+
+A compliant compiler SHALL:
+
+- Accept documents written for supported language versions.
+- Preserve the original semantic meaning of supported documents.
+- Report unsupported language versions before compilation.
+- Continue validating documents according to the rules of their declared language version.
+
+---
+
+## 10.3 Deprecated Constructs
+
+Deprecated constructs MAY continue to appear in existing documents.
+
+Compilers SHOULD:
+
+- Compile deprecated constructs when supported.
+- Emit compatibility warnings.
+- Recommend replacement constructs where applicable.
+
+Warnings SHALL NOT prevent successful compilation.
+
+---
+
+## 10.4 Migration
+
+When language changes require document updates, compiler implementations SHOULD provide migration guidance.
+
+Migration MAY include:
+
+- Updated tag names.
+- Updated attribute names.
+- Replacement language constructs.
+- Automated migration tools.
+
+Migration SHALL preserve the original learning behavior wherever possible.
+
+---
+
+## 10.5 Compatibility Guarantee
+
+A CRAFT language release SHALL clearly identify:
+
+- Supported language versions.
+- Supported CCIR versions.
+- Deprecated features.
+- Removed features.
+- Migration requirements.
+
+Maintaining backward compatibility is a core design principle of the CRAFT language and compiler architecture.
+
