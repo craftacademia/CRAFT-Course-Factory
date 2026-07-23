@@ -598,3 +598,95 @@ A valid AST SHALL satisfy the following conditions:
 
 The AST SHALL remain immutable after successful semantic validation.
 
+
+---
+
+# 7. CCIR Specification
+
+The CRAFT Compiler Common Intermediate Representation (CCIR) is the canonical internal representation produced after successful validation.
+
+CCIR serves as the contract between the compiler and all rendering engines.
+
+Every renderer SHALL consume CCIR rather than directly processing the source CRAFT document.
+
+---
+
+## 7.1 Purpose
+
+CCIR SHALL provide:
+
+- A normalized representation of the course.
+- Renderer-independent data structures.
+- Stable object identifiers.
+- Fully resolved references.
+- Validation-safe content.
+
+The compiler SHALL generate exactly one CCIR document for every successful compilation.
+
+---
+
+## 7.2 Object Model
+
+CCIR SHALL represent the course as a collection of typed objects.
+
+Typical object categories include:
+
+- Course
+- Character
+- Location
+- Asset
+- Variable
+- Screen
+- Dialogue
+- Interaction
+- Assessment
+- Navigation
+
+Each object SHALL contain a unique identifier.
+
+---
+
+## 7.3 Reference Resolution
+
+All references SHALL be resolved during CCIR generation.
+
+Examples include:
+
+- Character references
+- Location references
+- Asset references
+- Variable references
+- Navigation targets
+
+Renderers SHALL NOT perform reference resolution.
+
+---
+
+## 7.4 Renderer Independence
+
+CCIR SHALL contain no renderer-specific information.
+
+Examples of excluded data include:
+
+- HTML markup
+- CSS styling
+- JavaScript code
+- SCORM packaging metadata
+- LMS-specific configuration
+
+Renderer-specific artifacts SHALL be generated only during the rendering phase.
+
+---
+
+## 7.5 CCIR Integrity
+
+A valid CCIR SHALL satisfy the following conditions:
+
+- Every object has a unique identifier.
+- All references are resolved.
+- No duplicate objects exist.
+- Object ordering is deterministic.
+- The representation is complete and internally consistent.
+
+The CCIR SHALL remain immutable throughout the rendering process.
+
