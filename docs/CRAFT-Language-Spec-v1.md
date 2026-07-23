@@ -313,3 +313,113 @@ Text nodes SHALL preserve their original content.
 
 The compiler SHALL preserve the original order of text nodes.
 
+
+---
+
+# 4. Semantics
+
+Semantics define the meaning of valid CRAFT constructs after successful parsing.
+
+While grammar defines how a document is written, semantics define what the document represents.
+
+A document MAY be grammatically valid but semantically invalid.
+
+---
+
+## 4.1 Parent-Child Rules
+
+Every CRAFT element SHALL exist only within its permitted parent element.
+
+The compiler SHALL reject any element that appears outside its valid parent.
+
+Example hierarchy:
+
+COURSE
+ ├── CHARACTERS
+ │     └── CHARACTER
+ │
+ ├── LOCATIONS
+ │     └── LOCATION
+ │
+ ├── ASSETS
+ │     └── ASSET
+ │
+ ├── VARIABLES
+ │
+ ├── SCREENS
+ │     └── SCREEN
+ │
+ └── ASSESSMENTS
+
+Parent-child relationships are validated during semantic analysis.
+
+---
+
+## 4.2 Mandatory Attributes
+
+Some tags require mandatory attributes.
+
+Examples include:
+
+CHARACTER
+    ID
+    NAME
+
+LOCATION
+    ID
+    NAME
+
+ASSET
+    ID
+    TYPE
+
+SCREEN
+    ID
+    TYPE
+
+If any mandatory attribute is missing, the compiler SHALL report a semantic error.
+
+---
+
+## 4.3 Optional Attributes
+
+Tags MAY define optional attributes.
+
+Optional attributes extend the behaviour of an element without changing its identity.
+
+Examples include:
+
+TITLE
+
+DESCRIPTION
+
+LOCATION
+
+SPEAKER
+
+EXPRESSION
+
+VO_ID
+
+Optional attributes SHALL use the same syntax rules as mandatory attributes.
+
+---
+
+## 4.4 Cross References
+
+Many elements reference other elements by identifier.
+
+Examples include:
+
+LOCATION="LOC-01"
+
+ASSET_REF="PROP-18"
+
+SPEAKER="RAV"
+
+The compiler SHALL verify that every referenced identifier exists.
+
+Forward references are permitted.
+
+Missing references SHALL be reported during semantic validation.
+
