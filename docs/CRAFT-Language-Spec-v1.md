@@ -519,3 +519,82 @@ Examples include:
 
 Content validation rules MAY evolve in future language versions while maintaining backward compatibility.
 
+
+---
+
+# 6. AST Specification
+
+The Abstract Syntax Tree (AST) is the compiler's structured representation of a CRAFT document.
+
+The AST is generated immediately after successful parsing and before semantic validation.
+
+Each node in the AST represents exactly one element from the source document.
+
+The AST SHALL preserve the hierarchical structure of the original document.
+
+---
+
+## 6.1 AST Node Structure
+
+Every AST node SHALL contain the following information:
+
+- Node Type
+- Tag Name
+- Attributes
+- Text Content
+- Parent Node
+- Child Nodes
+- Source Line Number
+
+Additional metadata MAY be stored by compiler implementations.
+
+---
+
+## 6.2 Root Node
+
+Every valid CRAFT document SHALL produce exactly one root AST node.
+
+The root node represents the COURSE element.
+
+All other nodes SHALL be descendants of the root node.
+
+Multiple root nodes are invalid.
+
+---
+
+## 6.3 Child Nodes
+
+Each AST node MAY contain zero or more child nodes.
+
+Child nodes SHALL preserve the same ordering as the source document.
+
+The compiler SHALL NOT reorder child nodes during AST construction.
+
+---
+
+## 6.4 Text Nodes
+
+Text appearing between opening and closing tags SHALL be represented as TEXT nodes.
+
+TEXT nodes SHALL preserve:
+
+- Original content
+- Original order
+- Parent relationship
+
+Whitespace preservation is implementation-defined unless explicitly required by a renderer.
+
+---
+
+## 6.5 AST Integrity
+
+A valid AST SHALL satisfy the following conditions:
+
+- Every node has at most one parent.
+- Every child references its parent.
+- No circular parent-child relationships exist.
+- Node ordering matches the source document.
+- Every opening tag produces one corresponding AST node.
+
+The AST SHALL remain immutable after successful semantic validation.
+
