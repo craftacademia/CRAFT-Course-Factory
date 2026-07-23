@@ -8,6 +8,7 @@ import ParserProvider from "../providers/parser/parserProvider.js";
 import ValidatorProvider from "../providers/validator/validatorProvider.js";
 import SemanticProvider from "../providers/semantic/semanticProvider.js";
 import CCIRProvider from "../providers/ccir/ccirProvider.js";
+import PresentationProvider from "../providers/presentation/presentationProvider.js";
 import RendererProvider from "../providers/rendering/rendererProvider.js";
 
 import AttributeNormalizer from "./normalizers/attributeNormalizer.js";
@@ -23,6 +24,7 @@ export default class Compiler {
     this.validator = new ValidatorProvider();
     this.semantic = new SemanticProvider();
     this.ccirProvider = new CCIRProvider();
+    this.presentationProvider = new PresentationProvider();
     this.renderer = new RendererProvider();
   }
 
@@ -44,6 +46,8 @@ export default class Compiler {
 
     const ccir = await this.ccirProvider.build(ast);
 
+    const pir = await this.presentationProvider.build(ccir);
+
     await fs.mkdir(outputDirectory, { recursive: true });
 
     await fs.writeFile(
@@ -51,12 +55,17 @@ export default class Compiler {
       JSON.stringify(ccir, null, 2)
     );
 
+    await fs.writeFile(
+      path.join(outputDirectory, "pir.json"),
+      JSON.stringify(pir, null, 2)
+    );
+
     await this.renderer.render(
-      ccir,
+      pir,
       path.join(outputDirectory, "preview")
     );
 
-    return ccir;
+    return pir;
 
   }
 

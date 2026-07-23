@@ -1,4 +1,10 @@
+import LayerBuilder from "./layerBuilder.js";
+
 export default class PageBuilder {
+
+    constructor() {
+        this.layerBuilder = new LayerBuilder();
+    }
 
     build(ccir) {
 
@@ -10,6 +16,14 @@ export default class PageBuilder {
 
         for (const location of ccir.locations) {
 
+            const backgroundLayer = this.layerBuilder.build(
+                "BACKGROUND",
+                {
+                    id: location.id,
+                    name: location.name
+                }
+            );
+
             pages.push({
 
                 id: location.id,
@@ -20,7 +34,9 @@ export default class PageBuilder {
 
                 background: location.id,
 
-                layers: []
+                layers: [
+                    backgroundLayer
+                ]
 
             });
 
