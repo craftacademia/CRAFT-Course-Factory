@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Runtime Test</title>
@@ -16,11 +16,19 @@ const runtime = new BrowserRuntime(
     document.getElementById("app")
 );
 
-runtime.mount({
+await runtime.mount({
 
     layers: [{
         components: [{
             id: "N1",
+            type: "BACKGROUND",
+            asset: {
+                id: "BG1",
+                type: "IMAGE",
+                src: "/runtime/assets/background.jpg"
+            }
+        },{
+            id: "N2",
             type: "NARRATION",
             properties: {
                 text: "Browser Runtime Works"
@@ -28,11 +36,18 @@ runtime.mount({
         }]
     }],
 
-    timeline: [{
-        componentId: "N1",
-        start: 0,
-        duration: 3
-    }]
+    timeline: [
+        {
+            componentId: "N1",
+            start: 0,
+            duration: 5
+        },
+        {
+            componentId: "N2",
+            start: 0,
+            duration: 5
+        }
+    ]
 
 });
 

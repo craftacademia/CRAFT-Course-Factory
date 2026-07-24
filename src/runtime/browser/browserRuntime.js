@@ -1,4 +1,5 @@
 import RuntimePlayer from "../runtimePlayer.js";
+import AssetLoader from "../assetLoader.js";
 
 export default class BrowserRuntime {
 
@@ -9,10 +10,13 @@ export default class BrowserRuntime {
         }
 
         this.rootElement = rootElement;
+        this.loader = new AssetLoader();
 
     }
 
-    mount(page) {
+    async mount(page) {
+
+        await this.loadAssets(page);
 
         const player = new RuntimePlayer(page);
 
@@ -24,9 +28,28 @@ export default class BrowserRuntime {
 
     }
 
+    async loadAssets(page) {
+
+        for (const layer of page.layers ?? []) {
+
+            for (const component of layer.components ?? []) {
+
+                if (!component.asset) {
+                    continue;
+                }
+
+                component.asset.object = await this.loader.load(component.asset);
+
+            }
+
+        }
+
+    }
+
     clear() {
 
         this.rootElement.innerHTML = "";
+        this.loader.clear();
 
     }
 
