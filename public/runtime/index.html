@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Runtime Test</title>
+<meta charset="UTF-8">
+<title>Navigation Test</title>
 </head>
 <body>
 
 <div id="app"></div>
+
+<button id="next">Next</button>
 
 <script type="module">
 
@@ -18,38 +20,51 @@ const runtime = new BrowserRuntime(
 
 await runtime.mount({
 
-    layers: [{
-        components: [{
-            id: "N1",
-            type: "BACKGROUND",
-            asset: {
-                id: "BG1",
-                type: "IMAGE",
-                src: "/runtime/assets/background.jpg"
-            }
-        },{
-            id: "N2",
-            type: "NARRATION",
-            properties: {
-                text: "Browser Runtime Works"
-            }
-        }]
-    }],
+    pages: [
 
-    timeline: [
         {
-            componentId: "N1",
-            start: 0,
-            duration: 5
+            layers: [{
+                components: [{
+                    id: "N1",
+                    type: "NARRATION",
+                    properties: {
+                        text: "Page 1"
+                    }
+                }]
+            }],
+            timeline: [{
+                componentId: "N1",
+                start: 0,
+                duration: 5
+            }]
         },
+
         {
-            componentId: "N2",
-            start: 0,
-            duration: 5
+            layers: [{
+                components: [{
+                    id: "N2",
+                    type: "NARRATION",
+                    properties: {
+                        text: "Page 2"
+                    }
+                }]
+            }],
+            timeline: [{
+                componentId: "N2",
+                start: 0,
+                duration: 5
+            }]
         }
+
     ]
 
 });
+
+document
+    .getElementById("next")
+    .addEventListener("click", async () => {
+        await runtime.next();
+    });
 
 </script>
 

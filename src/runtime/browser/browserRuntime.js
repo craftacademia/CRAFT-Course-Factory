@@ -1,5 +1,6 @@
 import RuntimePlayer from "../runtimePlayer.js";
 import AssetLoader from "../assetLoader.js";
+import NavigationEngine from "../navigationEngine.js";
 
 export default class BrowserRuntime {
 
@@ -11,20 +12,43 @@ export default class BrowserRuntime {
 
         this.rootElement = rootElement;
         this.loader = new AssetLoader();
+        this.navigation = null;
 
     }
 
-    async mount(page) {
+    async mount(course) {
+
+        this.navigation = new NavigationEngine(course);
+
+        await this.renderCurrentPage();
+
+    }
+
+    async renderCurrentPage() {
+
+        const page = this.navigation.current();
 
         await this.loadAssets(page);
 
         const player = new RuntimePlayer(page);
 
-        const html = player.play();
+        this.rootElement.innerHTML = player.play();
 
-        this.rootElement.innerHTML = html;
+    }
 
-        return html;
+    async next() {
+
+        this.navigation.next();
+
+        await this.renderCurrentPage();
+
+    }
+
+    async previous() {
+
+        this.navigation.previous();
+
+        await this.renderCurrentPage();
 
     }
 
@@ -38,7 +62,8 @@ export default class BrowserRuntime {
                     continue;
                 }
 
-                component.asset.object = await this.loader.load(component.asset);
+                component.asset.object =
+                    await this.loader.load(component.asset);
 
             }
 
@@ -49,6 +74,7 @@ export default class BrowserRuntime {
     clear() {
 
         this.rootElement.innerHTML = "";
+
         this.loader.clear();
 
     }
