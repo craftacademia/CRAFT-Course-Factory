@@ -1,12 +1,18 @@
 import LayerBuilder from "./layerBuilder.js";
+import ComponentBuilder from "./componentBuilder.js";
 
 export default class PageBuilder {
 
     constructor() {
+
         this.layerBuilder = new LayerBuilder();
+        this.componentBuilder = new ComponentBuilder();
+
     }
 
     build(ccir) {
+
+        console.log("CCIR:", JSON.stringify(ccir, null, 2));
 
         const pages = [];
 
@@ -16,12 +22,20 @@ export default class PageBuilder {
 
         for (const location of ccir.locations) {
 
-            const backgroundLayer = this.layerBuilder.build(
+            const backgroundComponent = this.componentBuilder.build(
                 "BACKGROUND",
                 {
                     id: location.id,
-                    name: location.name
+                    asset: location.id,
+                    properties: {
+                        name: location.name
+                    }
                 }
+            );
+
+            const backgroundLayer = this.layerBuilder.build(
+                "BACKGROUND",
+                [backgroundComponent]
             );
 
             pages.push({

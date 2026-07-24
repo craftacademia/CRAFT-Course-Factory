@@ -1,11 +1,14 @@
+import Timeline from "./timeline.js";
+
 export default class Page {
 
     constructor() {
 
         this.id = null;
-        this.name = null;
-        this.background = null;
-        this.layers = [];
+
+        this.title = null;
+
+        this.timeline = new Timeline();
 
     }
 

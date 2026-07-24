@@ -2,12 +2,15 @@ import Layer from "../model/layer.js";
 
 export default class LayerBuilder {
 
-    build(type, component) {
+    build(type, components = []) {
 
         const layer = new Layer();
 
         layer.type = type;
-        layer.component = component;
+
+        for (const component of components) {
+            layer.addComponent(component);
+        }
 
         return layer;
 
