@@ -4,15 +4,29 @@ export default class CharacterRenderer extends ComponentRenderer {
 
     render(component, context) {
 
-        const src = component.asset?.src ?? "";
-        const x = component.properties?.x ?? 0;
-        const y = component.properties?.y ?? 0;
+        const asset = component.asset?.object;
+
+        if (!asset) {
+            return;
+        }
+
+        const position = component.properties?.position ?? "center";
 
         context.append(`
-<div class="character"
-     style="left:${x}px;top:${y}px;position:absolute;">
-    <img src="${src}" />
-</div>`);
+<div class="character character-${position}">
+    <img
+        src="${asset.src}"
+        alt=""
+        style="
+            position:fixed;
+            bottom:0;
+            max-height:90%;
+            left:50%;
+            transform:translateX(-50%);
+            z-index:10;
+        ">
+</div>
+`);
 
     }
 
