@@ -25,6 +25,24 @@ export default class MCQInteraction extends Interaction {
 
     }
 
+    bind(rootElement) {
+
+        const inputs = rootElement.querySelectorAll(
+            `input[name="${this.component.id}"]`
+        );
+
+        for (const input of inputs) {
+
+            input.addEventListener("change", (event) => {
+
+                this.collect(event.target.value);
+
+            });
+
+        }
+
+    }
+
     collect(value) {
 
         this.answer = Number(value);
