@@ -1,55 +1,46 @@
-# ==================================
+# ==========================
 # Dependencies
-# ==================================
+# ==========================
 node_modules/
-**/node_modules/
 
-# ==================================
-# Environment
-# ==================================
-.env
-.env.*
-!.env.example
-**/.env
+# ==========================
+# Build Output (project root only)
+# ==========================
+/output/
+/dist/
+/build/
+/coverage/
 
-# ==================================
-# macOS
-# ==================================
-.DS_Store
-
-# ==================================
-# Build & Generated Output
-# ==================================
-dist/
-build/
-coverage/
-output/
-uploads/
-audio_cache/
-
-# Generated previews
-public/preview/
-public/preview-build/
-
-# Generated archives
-*.zip
-
+# ==========================
 # Logs
+# ==========================
 *.log
-logs/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
 
+# ==========================
+# Environment
+# ==========================
+.env
+.env.local
+.env.*
+
+# ==========================
+# OS Files
+# ==========================
+.DS_Store
+Thumbs.db
+
+# ==========================
+# IDE
+# ==========================
+.vscode/
+.idea/
+
+# ==========================
 # Temporary
+# ==========================
 tmp/
 temp/
-
-# ==================================
-# Keep source assets
-# ==================================
-!assets/**
-!public/*.png
-!public/*.jpg
-!public/*.jpeg
-!public/*.svg
-!public/*.gif
-!templates/**
-!scripts/**
+.cache/
