@@ -20,6 +20,14 @@ export default class BrowserRuntime {
 
         this.interactionRenderer = new InteractionRenderer(this);
 
+        this.state = {
+            variables: {},
+            interactions: {},
+            score: 0,
+            completed: false,
+            currentPage: 0
+        };
+
         this.registerInteractions();
 
     }
@@ -61,6 +69,48 @@ export default class BrowserRuntime {
         interaction.bind(rootElement);
 
         return interaction;
+
+    }
+
+    setVariable(name, value) {
+
+        this.state.variables[name] = value;
+
+    }
+
+    getVariable(name) {
+
+        return this.state.variables[name];
+
+    }
+
+    saveInteraction(id, data) {
+
+        this.state.interactions[id] = data;
+
+    }
+
+    getInteraction(id) {
+
+        return this.state.interactions[id];
+
+    }
+
+    getState() {
+
+        return this.state;
+
+    }
+
+    resetState() {
+
+        this.state = {
+            variables: {},
+            interactions: {},
+            score: 0,
+            completed: false,
+            currentPage: 0
+        };
 
     }
 
