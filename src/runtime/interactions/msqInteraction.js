@@ -25,9 +25,37 @@ export default class MSQInteraction extends Interaction {
 
     }
 
+    bind(rootElement) {
+
+        const inputs = rootElement.querySelectorAll(
+            `input[name="${this.component.id}"]`
+        );
+
+        for (const input of inputs) {
+
+            input.addEventListener("change", () => {
+
+                const values = [];
+
+                for (const checkbox of inputs) {
+
+                    if (checkbox.checked) {
+                        values.push(Number(checkbox.value));
+                    }
+
+                }
+
+                this.collect(values);
+
+            });
+
+        }
+
+    }
+
     collect(values) {
 
-        this.answers = values.map(Number);
+        this.answers = [...values].sort((a, b) => a - b);
 
         return this.answers;
 
@@ -41,10 +69,14 @@ export default class MSQInteraction extends Interaction {
 
     evaluate() {
 
-        const correct = [...this.component.properties.correct].sort((a, b) => a - b);
-        const selected = [...this.answers].sort((a, b) => a - b);
+        const correct = [...this.component.properties.correct]
+            .sort((a, b) => a - b);
 
-        return JSON.stringify(correct) === JSON.stringify(selected);
+        if (correct.length !== this.answers.length) {
+            return false;
+        }
+
+        return correct.every((value, index) => value === this.answers[index]);
 
     }
 
