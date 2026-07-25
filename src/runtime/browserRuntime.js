@@ -20,6 +20,12 @@ export default class BrowserRuntime {
 
         this.interactionRenderer = new InteractionRenderer(this);
 
+        this.registerInteractions();
+
+    }
+
+    registerInteractions() {
+
         this.interactionRenderer.register("MCQ", MCQInteraction);
         this.interactionRenderer.register("MSQ", MSQInteraction);
         this.interactionRenderer.register("HOTSPOT", HotspotInteraction);
@@ -40,6 +46,21 @@ export default class BrowserRuntime {
     renderInteraction(component) {
 
         return this.interactionRenderer.render(component);
+
+    }
+
+    mountInteraction(component, rootElement) {
+
+        const interaction =
+            this.interactionRenderer.registry.create(
+                component.type,
+                component,
+                this
+            );
+
+        interaction.bind(rootElement);
+
+        return interaction;
 
     }
 
