@@ -59,16 +59,47 @@ export default class BrowserRuntime {
 
     mountInteraction(component, rootElement) {
 
-        const interaction =
-            this.interactionRenderer.registry.create(
-                component.type,
-                component,
-                this
-            );
+        const interaction = this.interactionRenderer.registry.create(
+            component.type,
+            component,
+            this
+        );
 
         interaction.bind(rootElement);
 
         return interaction;
+
+    }
+
+    nextPage() {
+
+        this.state.currentPage++;
+
+        return this.state.currentPage;
+
+    }
+
+    previousPage() {
+
+        if (this.state.currentPage > 0) {
+            this.state.currentPage--;
+        }
+
+        return this.state.currentPage;
+
+    }
+
+    goToPage(pageIndex) {
+
+        this.state.currentPage = pageIndex;
+
+        return this.state.currentPage;
+
+    }
+
+    getCurrentPage() {
+
+        return this.state.currentPage;
 
     }
 
