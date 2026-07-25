@@ -13,6 +13,12 @@ export default class Interaction {
 
     }
 
+    bind(rootElement) {
+
+        throw new Error("bind() not implemented.");
+
+    }
+
     collect() {
 
         return null;
