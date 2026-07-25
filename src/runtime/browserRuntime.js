@@ -28,6 +28,8 @@ export default class BrowserRuntime {
             currentPage: 0
         };
 
+        this.analytics = [];
+
         this.registerInteractions();
 
     }
@@ -46,6 +48,8 @@ export default class BrowserRuntime {
     }
 
     play() {
+
+        this.track("course_started");
 
         return this.player.play();
 
@@ -75,6 +79,10 @@ export default class BrowserRuntime {
 
         this.state.currentPage++;
 
+        this.track("page_next", {
+            page: this.state.currentPage
+        });
+
         return this.state.currentPage;
 
     }
@@ -85,6 +93,10 @@ export default class BrowserRuntime {
             this.state.currentPage--;
         }
 
+        this.track("page_previous", {
+            page: this.state.currentPage
+        });
+
         return this.state.currentPage;
 
     }
@@ -92,6 +104,10 @@ export default class BrowserRuntime {
     goToPage(pageIndex) {
 
         this.state.currentPage = pageIndex;
+
+        this.track("page_goto", {
+            page: pageIndex
+        });
 
         return this.state.currentPage;
 
@@ -107,6 +123,11 @@ export default class BrowserRuntime {
 
         this.state.variables[name] = value;
 
+        this.track("variable_set", {
+            name,
+            value
+        });
+
     }
 
     getVariable(name) {
@@ -119,11 +140,56 @@ export default class BrowserRuntime {
 
         this.state.interactions[id] = data;
 
+        this.track("interaction_saved", {
+            id,
+            data
+        });
+
     }
 
     getInteraction(id) {
 
         return this.state.interactions[id];
+
+    }
+
+    setScore(score) {
+
+        this.state.score = score;
+
+        this.track("score_updated", {
+            score
+        });
+
+    }
+
+    getScore() {
+
+        return this.state.score;
+
+    }
+
+    completeCourse() {
+
+        this.state.completed = true;
+
+        this.track("course_completed");
+
+    }
+
+    track(event, data = {}) {
+
+        this.analytics.push({
+            event,
+            data,
+            timestamp: Date.now()
+        });
+
+    }
+
+    getAnalytics() {
+
+        return this.analytics;
 
     }
 
@@ -142,6 +208,8 @@ export default class BrowserRuntime {
             completed: false,
             currentPage: 0
         };
+
+        this.analytics = [];
 
     }
 
