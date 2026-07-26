@@ -24,134 +24,23 @@ export default class PageBuilder {
 
             const components = [];
 
-            // Background component
-            if (screen.asset) {
-
-                components.push(
-                    this.componentBuilder.build(
-                        "BACKGROUND",
-                        {
-                            id: `BACKGROUND_${pageNo}`,
-                            asset: screen.asset
-                        }
-                    )
-                );
-
-            }
-
-            // Character component
-            if (screen.character) {
-
-                components.push(
-                    this.componentBuilder.build(
-                        "CHARACTER",
-                        {
-                            id: `CHARACTER_${pageNo}`,
-                            properties: {
-                                name: screen.character
-                            }
-                        }
-                    )
-                );
-
-            }
-
-            // Location component
-            if (screen.location) {
-
-                components.push(
-                    this.componentBuilder.build(
-                        "LOCATION",
-                        {
-                            id: `LOCATION_${pageNo}`,
-                            properties: {
-                                name: screen.location
-                            }
-                        }
-                    )
-                );
-
-            }
-
-            // Prop components
-            if (Array.isArray(screen.props)) {
-
-                for (const prop of screen.props) {
-
-                    components.push(
-                        this.componentBuilder.build(
-                            "PROP",
-                            {
-                                id: `PROP_${pageNo}_${components.length + 1}`,
-                                properties: {
-                                    name: prop
-                                }
-                            }
-                        )
-                    );
-
-                }
-
-            }
-
-            if (Array.isArray(screen.children)) {
-
-                for (const child of screen.children) {
-
-                    if (child.type === "TEXT") {
-
-                        components.push(
-                            this.componentBuilder.build(
-                                "NARRATION",
-                                {
-                                    id: `NARRATION_${pageNo}_${components.length + 1}`,
-                                    properties: {
-                                        text: child.value
-                                    }
-                                }
-                            )
-                        );
-
-                    }
-
-                    if (child.type === "DIALOGUE") {
-
-                        const dialogueText = (child.children ?? [])
-                            .filter(c => c.type === "TEXT")
-                            .map(c => c.value)
-                            .join(" ");
-
-                        components.push(
-                            this.componentBuilder.build(
-                                "DIALOGUE",
-                                {
-                                    id: `DIALOGUE_${pageNo}_${components.length + 1}`,
-                                    properties: {
-                                        text: dialogueText
-                                    }
-                                }
-                            )
-                        );
-
-                    }
-
-                }
-
-            }
-
-            const contentLayer = this.layerBuilder.build(
-                "CONTENT",
-                components
+            this.addScreenComponents(
+                screen,
+                components,
+                pageNo
             );
 
             pages.push({
 
                 id: screen.id ?? `PAGE_${pageNo}`,
-                name: screen.title,
-                title: screen.title,
+
+                title: screen.title ?? "",
 
                 layers: [
-                    contentLayer
+                    this.layerBuilder.build(
+                        "CONTENT",
+                        components
+                    )
                 ]
 
             });
@@ -161,6 +50,157 @@ export default class PageBuilder {
         }
 
         return pages;
+
+    }
+
+
+    addScreenComponents(screen, components, pageNo) {
+
+
+        if (screen.asset) {
+
+            components.push(
+                this.componentBuilder.build(
+                    "BACKGROUND",
+                    {
+                        id: `BACKGROUND_${pageNo}`,
+                        asset: screen.asset
+                    }
+                )
+            );
+
+        }
+
+
+        if (screen.character) {
+
+            components.push(
+                this.componentBuilder.build(
+                    "CHARACTER",
+                    {
+                        id: `CHARACTER_${pageNo}`,
+                        properties: {
+                            name: screen.character
+                        }
+                    }
+                )
+            );
+
+        }
+
+
+        if (screen.location) {
+
+            components.push(
+                this.componentBuilder.build(
+                    "LOCATION",
+                    {
+                        id: `LOCATION_${pageNo}`,
+                        properties: {
+                            name: screen.location
+                        }
+                    }
+                )
+            );
+
+        }
+
+
+        for (const child of screen.children ?? []) {
+
+            this.mapChild(
+                child,
+                components,
+                pageNo
+            );
+
+        }
+
+    }
+
+
+    mapChild(child, components, pageNo) {
+
+
+        if (!child) {
+            return;
+        }
+
+
+        if (
+            child.type === "TEXT" ||
+            child.type === "LINE"
+        ) {
+
+            components.push(
+                this.componentBuilder.build(
+                    "NARRATION",
+                    {
+                        id: `NARRATION_${pageNo}_${components.length + 1}`,
+                        properties: {
+                            text:
+                                child.value ??
+                                child.text ??
+                                ""
+                        }
+                    }
+                )
+            );
+
+            return;
+
+        }
+
+
+        if (child.type === "DIALOGUE") {
+
+            const text =
+                (child.children ?? [])
+                    .filter(item =>
+                        item.type === "TEXT" ||
+                        item.type === "LINE"
+                    )
+                    .map(item =>
+                        item.value ??
+                        item.text ??
+                        ""
+                    )
+                    .join(" ");
+
+
+            components.push(
+                this.componentBuilder.build(
+                    "DIALOGUE",
+                    {
+                        id: `DIALOGUE_${pageNo}_${components.length + 1}`,
+                        properties: {
+                            text
+                        }
+                    }
+                )
+            );
+
+            return;
+
+        }
+
+
+        if (child.type === "BRANCH_POINT") {
+
+            components.push(
+                this.componentBuilder.build(
+                    "INTERACTION",
+                    {
+                        id: `INTERACTION_${pageNo}_${components.length + 1}`,
+                        properties: {
+                            type: "BRANCH_POINT",
+                            data: child
+                        }
+                    }
+                )
+            );
+
+        }
 
     }
 
