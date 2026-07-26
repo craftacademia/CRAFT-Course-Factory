@@ -1,26 +1,71 @@
 import fs from "fs/promises";
+import path from "path";
 
 export default class RuntimeBuilder {
 
     async build(outputFile) {
 
+        const outputDirectory = path.dirname(outputFile);
+
+        const runtimeFiles = [
+            "browser/browserRuntime.js",
+            "runtimePlayer.js",
+            "assetLoader.js",
+            "navigationEngine.js",
+            "componentRegistry.js",
+            "eventScheduler.js",
+            "renderContext.js",
+            "registerDefaultRenderers.js",
+            "renderers/componentRenderer.js",
+            "renderers/narrationRenderer.js",
+            "renderers/dialogueRenderer.js",
+            "renderers/backgroundRenderer.js",
+            "renderers/characterRenderer.js",
+            "renderers/locationRenderer.js",
+            "renderers/propRenderer.js"
+        ];
+
+
+        for (const file of runtimeFiles) {
+
+            const source =
+                path.resolve(
+                    process.cwd(),
+                    "src/runtime",
+                    file
+                );
+
+            const target =
+                path.join(
+                    outputDirectory,
+                    file
+                );
+
+            await fs.mkdir(
+                path.dirname(target),
+                {
+                    recursive: true
+                }
+            );
+
+            await fs.copyFile(
+                source,
+                target
+            );
+
+        }
+
+
         const runtime = `
-import BrowserRuntime from "./browserRuntime.js";
+import BrowserRuntime from "./browser/browserRuntime.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
 
-    if (!window.PIR) {
-        console.error("PIR not found.");
-        return;
-    }
+    const app = document.getElementById("app");
 
-    const runtime = new BrowserRuntime(window.PIR);
+    const runtime = new BrowserRuntime(app);
 
-    runtime.play();
-
-    window.courseRuntime = runtime;
-
-    console.log("C.R.A.F.T Runtime Started");
+    await runtime.mount(window.PIR);
 
 });
 `;
