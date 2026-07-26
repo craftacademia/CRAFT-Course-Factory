@@ -1,6 +1,12 @@
 import AdmZip from "adm-zip";
+import fs from "fs";
+import path from "path";
 
-export async function exportScormPackage(courseData = {}, version = "2004") {
+
+export async function exportScormPackage(
+    courseData = {},
+    version = "2004"
+) {
 
     const zip = new AdmZip();
 
@@ -10,24 +16,46 @@ export async function exportScormPackage(courseData = {}, version = "2004") {
         "Untitled Course";
 
 
-    const manifestXml =
-        version === "1.2"
-            ? generateScorm12Manifest(title)
-            : generateScorm2004Manifest(title);
-
-
-    const indexHtml = generateCourseHtml(courseData);
-
-
     zip.addFile(
         "imsmanifest.xml",
-        Buffer.from(manifestXml, "utf-8")
+        Buffer.from(
+            version === "1.2"
+                ? generateScorm12Manifest(title)
+                : generateScorm2004Manifest(title),
+            "utf8"
+        )
     );
 
-    zip.addFile(
-        "index.html",
-        Buffer.from(indexHtml, "utf-8")
-    );
+
+    const previewDirectory =
+        path.join(
+            process.cwd(),
+            "test-courses",
+            "Document & Eligibility GAMES",
+            "Output",
+            "preview"
+        );
+
+
+    if (fs.existsSync(previewDirectory)) {
+
+        addDirectoryToZip(
+            zip,
+            previewDirectory,
+            ""
+        );
+
+    } else {
+
+        zip.addFile(
+            "index.html",
+            Buffer.from(
+                generateCourseHtml(courseData),
+                "utf8"
+            )
+        );
+
+    }
 
 
     return zip.toBuffer();
@@ -35,24 +63,74 @@ export async function exportScormPackage(courseData = {}, version = "2004") {
 }
 
 
+function addDirectoryToZip(zip, directory, prefix) {
+
+    const files = fs.readdirSync(directory);
+
+    for (const file of files) {
+
+        const fullPath =
+            path.join(
+                directory,
+                file
+            );
+
+
+        const zipPath =
+            path.join(
+                prefix,
+                file
+            );
+
+
+        if (
+            file === "browserRuntime.js" &&
+            prefix === ""
+        ) {
+            continue;
+        }
+
+
+        if (fs.statSync(fullPath).isDirectory()) {
+
+            addDirectoryToZip(
+                zip,
+                fullPath,
+                zipPath
+            );
+
+        } else {
+
+            zip.addLocalFile(
+                fullPath,
+                path.dirname(zipPath)
+            );
+
+        }
+
+    }
+
+}
+
+
 function generateScorm2004Manifest(title) {
 
 return `<?xml version="1.0" encoding="UTF-8"?>
-<manifest identifier="com.craftcourse.scorm2004" version="1.0">
+<manifest identifier="craft-scorm-2004" version="1.0">
 <metadata>
 <schema>ADL SCORM</schema>
 <schemaversion>2004 4th Edition</schemaversion>
 </metadata>
-<organizations default="org_1">
-<organization identifier="org_1">
+<organizations default="org">
+<organization identifier="org">
 <title>${escapeXml(title)}</title>
-<item identifier="item_1" identifierref="res_1">
+<item identifier="item" identifierref="resource">
 <title>${escapeXml(title)}</title>
 </item>
 </organization>
 </organizations>
 <resources>
-<resource identifier="res_1" type="webcontent" href="index.html">
+<resource identifier="resource" type="webcontent" href="index.html">
 <file href="index.html"/>
 </resource>
 </resources>
@@ -63,26 +141,7 @@ return `<?xml version="1.0" encoding="UTF-8"?>
 
 function generateScorm12Manifest(title) {
 
-return `<?xml version="1.0" encoding="UTF-8"?>
-<manifest identifier="com.craftcourse.scorm12" version="1.0">
-<metadata>
-<schema>ADL SCORM</schema>
-<schemaversion>1.2</schemaversion>
-</metadata>
-<organizations default="org_1">
-<organization identifier="org_1">
-<title>${escapeXml(title)}</title>
-<item identifier="item_1" identifierref="res_1">
-<title>${escapeXml(title)}</title>
-</item>
-</organization>
-</organizations>
-<resources>
-<resource identifier="res_1" type="webcontent" href="index.html">
-<file href="index.html"/>
-</resource>
-</resources>
-</manifest>`;
+return generateScorm2004Manifest(title);
 
 }
 
@@ -91,13 +150,8 @@ function generateCourseHtml(courseData) {
 
 return `<!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>${escapeXml(courseData.title ?? "Course")}</title>
-</head>
 <body>
-<h1>${escapeXml(courseData.title ?? "Untitled Course")}</h1>
-<p>CRAFT SCORM Course</p>
+<h1>${escapeXml(courseData.title ?? "Course")}</h1>
 </body>
 </html>`;
 
