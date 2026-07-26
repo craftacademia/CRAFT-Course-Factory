@@ -1,11 +1,7 @@
 import ComponentRegistry from "./componentRegistry.js";
 import EventScheduler from "./eventScheduler.js";
 import RenderContext from "./renderContext.js";
-
-import NarrationRenderer from "./renderers/narrationRenderer.js";
-import DialogueRenderer from "./renderers/dialogueRenderer.js";
-import BackgroundRenderer from "./renderers/backgroundRenderer.js";
-import CharacterRenderer from "./renderers/characterRenderer.js";
+import registerDefaultRenderers from "./registerDefaultRenderers.js";
 
 export default class RuntimePlayer {
 
@@ -33,10 +29,7 @@ export default class RuntimePlayer {
 
     registerDefaultRenderers() {
 
-        this.registry.register("NARRATION", new NarrationRenderer());
-        this.registry.register("DIALOGUE", new DialogueRenderer());
-        this.registry.register("BACKGROUND", new BackgroundRenderer());
-        this.registry.register("CHARACTER", new CharacterRenderer());
+        registerDefaultRenderers(this.registry);
 
     }
 
