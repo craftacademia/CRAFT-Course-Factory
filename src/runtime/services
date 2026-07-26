@@ -1,0 +1,66 @@
+import RuntimeServiceRegistry from "./RuntimeServiceRegistry.js";
+
+export default class RuntimeServiceManager {
+
+    constructor(runtime) {
+
+        this.runtime = runtime;
+        this.registry = new RuntimeServiceRegistry();
+
+    }
+
+    register(name, service) {
+
+        this.registry.register(name, service);
+
+        if (typeof service.initialize === "function") {
+            service.initialize(this.runtime);
+        }
+
+        return service;
+
+    }
+
+    get(name) {
+
+        return this.registry.get(name);
+
+    }
+
+    has(name) {
+
+        return this.registry.has(name);
+
+    }
+
+    unregister(name) {
+
+        if (!this.registry.has(name)) {
+            return;
+        }
+
+        const service = this.registry.get(name);
+
+        if (typeof service.destroy === "function") {
+            service.destroy();
+        }
+
+        this.registry.unregister(name);
+
+    }
+
+    shutdown() {
+
+        for (const name of this.registry.list()) {
+            this.unregister(name);
+        }
+
+    }
+
+    list() {
+
+        return this.registry.list();
+
+    }
+
+}
