@@ -56,6 +56,23 @@ export default class PageBuilder {
 
             }
 
+            // Location component
+            if (screen.location) {
+
+                components.push(
+                    this.componentBuilder.build(
+                        "LOCATION",
+                        {
+                            id: `LOCATION_${pageNo}`,
+                            properties: {
+                                name: screen.location
+                            }
+                        }
+                    )
+                );
+
+            }
+
             if (Array.isArray(screen.children)) {
 
                 for (const child of screen.children) {
