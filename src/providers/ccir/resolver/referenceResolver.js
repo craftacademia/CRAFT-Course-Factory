@@ -2,7 +2,7 @@ export default class ReferenceResolver {
 
   resolve(ccir) {
 
-    const index = {
+    const lookup = {
 
       characters: new Map(),
       locations: new Map(),
@@ -15,53 +15,67 @@ export default class ReferenceResolver {
     };
 
     for (const item of ccir.characters) {
-      if (item.id) index.characters.set(item.id, item);
+      if (item.id) lookup.characters.set(item.id, item);
     }
 
     for (const item of ccir.locations) {
-      if (item.id) index.locations.set(item.id, item);
+      if (item.id) lookup.locations.set(item.id, item);
     }
 
     for (const item of ccir.assets) {
-      if (item.id) index.assets.set(item.id, item);
+      if (item.id) lookup.assets.set(item.id, item);
     }
 
     for (const item of ccir.variables) {
-      if (item.id) index.variables.set(item.id, item);
+      if (item.id) lookup.variables.set(item.id, item);
     }
 
     for (const item of ccir.screens) {
-      if (item.id) index.screens.set(item.id, item);
+      if (item.id) lookup.screens.set(item.id, item);
     }
 
     for (const item of ccir.interactions) {
-      if (item.id) index.interactions.set(item.id, item);
+      if (item.id) lookup.interactions.set(item.id, item);
     }
 
     for (const item of ccir.assessments) {
-      if (item.id) index.assessments.set(item.id, item);
+      if (item.id) lookup.assessments.set(item.id, item);
     }
 
     for (const screen of ccir.screens) {
 
-      if (screen.character) {
-        screen.characterRef =
-          index.characters.get(screen.character) ?? null;
-      }
+      screen.characterRef =
+        screen.character
+          ? lookup.characters.get(screen.character) ?? null
+          : null;
 
-      if (screen.location) {
-        screen.locationRef =
-          index.locations.get(screen.location) ?? null;
-      }
+      screen.locationRef =
+        screen.location
+          ? lookup.locations.get(screen.location) ?? null
+          : null;
 
-      if (screen.asset) {
-        screen.assetRef =
-          index.assets.get(screen.asset) ?? null;
-      }
+      screen.assetRef =
+        screen.asset
+          ? lookup.assets.get(screen.asset) ?? null
+          : null;
+
+      screen.interactions = ccir.interactions.filter(
+        interaction => interaction.target === screen.id
+      );
 
     }
 
-    ccir.index = index;
+    ccir.lookup = lookup;
+
+    ccir.index = {
+      characters: Object.fromEntries(lookup.characters),
+      locations: Object.fromEntries(lookup.locations),
+      assets: Object.fromEntries(lookup.assets),
+      variables: Object.fromEntries(lookup.variables),
+      screens: Object.fromEntries(lookup.screens),
+      interactions: Object.fromEntries(lookup.interactions),
+      assessments: Object.fromEntries(lookup.assessments)
+    };
 
     return ccir;
 
