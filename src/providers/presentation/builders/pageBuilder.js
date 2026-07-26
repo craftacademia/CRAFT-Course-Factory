@@ -73,6 +73,27 @@ export default class PageBuilder {
 
             }
 
+            // Prop components
+            if (Array.isArray(screen.props)) {
+
+                for (const prop of screen.props) {
+
+                    components.push(
+                        this.componentBuilder.build(
+                            "PROP",
+                            {
+                                id: `PROP_${pageNo}_${components.length + 1}`,
+                                properties: {
+                                    name: prop
+                                }
+                            }
+                        )
+                    );
+
+                }
+
+            }
+
             if (Array.isArray(screen.children)) {
 
                 for (const child of screen.children) {

@@ -3,6 +3,7 @@ import DialogueRenderer from "./renderers/dialogueRenderer.js";
 import BackgroundRenderer from "./renderers/backgroundRenderer.js";
 import CharacterRenderer from "./renderers/characterRenderer.js";
 import LocationRenderer from "./renderers/locationRenderer.js";
+import PropRenderer from "./renderers/propRenderer.js";
 
 export default function registerDefaultRenderers(registry) {
 
@@ -15,5 +16,6 @@ export default function registerDefaultRenderers(registry) {
     registry.register("BACKGROUND", new BackgroundRenderer());
     registry.register("CHARACTER", new CharacterRenderer());
     registry.register("LOCATION", new LocationRenderer());
+    registry.register("PROP", new PropRenderer());
 
 }
