@@ -24,6 +24,28 @@ export default class IntegrityValidator {
         );
       }
 
+      if (!Array.isArray(screen.interactions)) {
+        errors.push(
+          `Screen '${screen.id}' has invalid interaction resolution.`
+        );
+      }
+
+      for (const interaction of (screen.interactions ?? [])) {
+
+        if (!interaction.id) {
+          errors.push(
+            `Screen '${screen.id}' contains an interaction without an id.`
+          );
+        }
+
+        if (!interaction.type) {
+          errors.push(
+            `Interaction '${interaction.id ?? "<unknown>"}' has no type.`
+          );
+        }
+
+      }
+
     }
 
     if (errors.length > 0) {
