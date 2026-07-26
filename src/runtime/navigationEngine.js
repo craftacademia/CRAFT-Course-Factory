@@ -15,7 +15,14 @@ export default class NavigationEngine {
         }
 
         this.course = course;
+
         this.currentPage = 0;
+
+        this.history = [0];
+
+        this.bookmarks = new Set();
+
+        this.listeners = new Map();
 
     }
 
@@ -37,9 +44,15 @@ export default class NavigationEngine {
 
     }
 
+    progress() {
+
+        return ((this.currentPage + 1) / this.totalPages()) * 100;
+
+    }
+
     hasNext() {
 
-        return this.currentPage < this.course.pages.length - 1;
+        return this.currentPage < this.totalPages() - 1;
 
     }
 
@@ -49,10 +62,71 @@ export default class NavigationEngine {
 
     }
 
+    on(event, handler) {
+
+        if (!this.listeners.has(event)) {
+            this.listeners.set(event, new Set());
+        }
+
+        this.listeners.get(event).add(handler);
+
+        return () => this.off(event, handler);
+
+    }
+
+    off(event, handler) {
+
+        const handlers = this.listeners.get(event);
+
+        if (!handlers) {
+            return;
+        }
+
+        handlers.delete(handler);
+
+    }
+
+    emit(event, payload) {
+
+        const handlers = this.listeners.get(event);
+
+        if (!handlers) {
+            return;
+        }
+
+        for (const handler of handlers) {
+            handler(payload);
+        }
+
+    }
+
+    navigate(index) {
+
+        const previousPage = this.currentPage;
+
+        this.emit("beforeNavigate", {
+            from: previousPage,
+            to: index
+        });
+
+        this.currentPage = index;
+
+        this.history.push(index);
+
+        this.emit("afterNavigate", {
+            from: previousPage,
+            to: index,
+            page: this.current()
+        });
+
+        return this.current();
+
+    }
+
     next() {
 
         if (this.hasNext()) {
-            this.currentPage++;
+            return this.navigate(this.currentPage + 1);
         }
 
         return this.current();
@@ -62,7 +136,7 @@ export default class NavigationEngine {
     previous() {
 
         if (this.hasPrevious()) {
-            this.currentPage--;
+            return this.navigate(this.currentPage - 1);
         }
 
         return this.current();
@@ -71,17 +145,13 @@ export default class NavigationEngine {
 
     first() {
 
-        this.currentPage = 0;
-
-        return this.current();
+        return this.navigate(0);
 
     }
 
     last() {
 
-        this.currentPage = this.course.pages.length - 1;
-
-        return this.current();
+        return this.navigate(this.totalPages() - 1);
 
     }
 
@@ -91,19 +161,90 @@ export default class NavigationEngine {
             throw new Error("Page index must be an integer.");
         }
 
-        if (index < 0 || index >= this.course.pages.length) {
+        if (index < 0 || index >= this.totalPages()) {
             throw new Error("Page index out of range.");
         }
 
-        this.currentPage = index;
+        return this.navigate(index);
 
-        return this.current();
+    }
+
+    bookmark(index = this.currentPage) {
+
+        if (index < 0 || index >= this.totalPages()) {
+            throw new Error("Page index out of range.");
+        }
+
+        this.bookmarks.add(index);
+
+    }
+
+    removeBookmark(index) {
+
+        this.bookmarks.delete(index);
+
+    }
+
+    isBookmarked(index = this.currentPage) {
+
+        return this.bookmarks.has(index);
+
+    }
+
+    getBookmarks() {
+
+        return [...this.bookmarks].sort((a, b) => a - b);
+
+    }
+
+    getHistory() {
+
+        return [...this.history];
+
+    }
+
+    serialize() {
+
+        return {
+            currentPage: this.currentPage,
+            history: [...this.history],
+            bookmarks: [...this.bookmarks]
+        };
+
+    }
+
+    restore(state) {
+
+        if (!state) {
+            return;
+        }
+
+        if (Number.isInteger(state.currentPage)) {
+            this.currentPage = Math.min(
+                Math.max(state.currentPage, 0),
+                this.totalPages() - 1
+            );
+        }
+
+        if (Array.isArray(state.history)) {
+            this.history = [...state.history];
+        }
+
+        if (Array.isArray(state.bookmarks)) {
+            this.bookmarks = new Set(state.bookmarks);
+        }
 
     }
 
     reset() {
 
         this.currentPage = 0;
+
+        this.history = [0];
+
+        this.bookmarks.clear();
+
+        this.listeners.clear();
 
     }
 
