@@ -2,12 +2,24 @@ export default class InteractionEngine {
 
     constructor(eventBus, runtimeState) {
 
+        if (!eventBus) {
+            throw new Error("EventBus is required.");
+        }
+
+        if (!runtimeState) {
+            throw new Error("RuntimeState is required.");
+        }
+
         this.eventBus = eventBus;
         this.runtimeState = runtimeState;
 
     }
 
     execute(interaction) {
+
+        if (!interaction || !interaction.type) {
+            throw new Error("Interaction type is required.");
+        }
 
         switch (interaction.type) {
 
@@ -23,8 +35,22 @@ export default class InteractionEngine {
             case "ADD_SCORE":
 
                 this.runtimeState.addScore(
-                    interaction.points
+                    Number(interaction.points ?? 0)
                 );
+
+                break;
+
+            case "SET_PAGE":
+
+                this.runtimeState.setPage(
+                    Number(interaction.page ?? 0)
+                );
+
+                break;
+
+            case "COMPLETE_COURSE":
+
+                this.runtimeState.complete();
 
                 break;
 
@@ -43,6 +69,20 @@ export default class InteractionEngine {
                     `Unknown interaction: ${interaction.type}`
                 );
 
+        }
+
+        return true;
+
+    }
+
+    executeAll(interactions = []) {
+
+        if (!Array.isArray(interactions)) {
+            throw new Error("Interactions must be an array.");
+        }
+
+        for (const interaction of interactions) {
+            this.execute(interaction);
         }
 
     }

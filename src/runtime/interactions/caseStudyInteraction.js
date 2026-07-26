@@ -22,6 +22,44 @@ export default class CaseStudyInteraction extends Interaction {
 
     }
 
+    bind(rootElement) {
+
+        const nextButton = rootElement.querySelector("[data-case-next]");
+        const previousButton = rootElement.querySelector("[data-case-previous]");
+        const responseInput = rootElement.querySelector("[data-case-response]");
+
+        if (responseInput) {
+
+            responseInput.addEventListener("input", (event) => {
+
+                this.collect(event.target.value);
+
+            });
+
+        }
+
+        if (nextButton) {
+
+            nextButton.addEventListener("click", () => {
+
+                this.next();
+
+            });
+
+        }
+
+        if (previousButton) {
+
+            previousButton.addEventListener("click", () => {
+
+                this.previous();
+
+            });
+
+        }
+
+    }
+
     collect(response) {
 
         this.responses[this.currentStep] = response;

@@ -19,6 +19,24 @@ export default class BranchingInteraction extends Interaction {
 
     }
 
+    bind(rootElement) {
+
+        const choices = rootElement.querySelectorAll(
+            `[data-branch-choice="${this.component.id}"]`
+        );
+
+        for (const choice of choices) {
+
+            choice.addEventListener("click", () => {
+
+                this.collect(choice.dataset.choiceId);
+
+            });
+
+        }
+
+    }
+
     collect(choiceId) {
 
         this.selection = choiceId;

@@ -18,6 +18,22 @@ export default class ClickToRevealInteraction extends Interaction {
 
     }
 
+    bind(rootElement) {
+
+        const items = rootElement.querySelectorAll("[data-reveal-id]");
+
+        for (const item of items) {
+
+            item.addEventListener("click", () => {
+
+                this.collect(item.dataset.revealId);
+
+            });
+
+        }
+
+    }
+
     collect(itemId) {
 
         this.revealed.add(itemId);

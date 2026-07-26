@@ -19,6 +19,22 @@ export default class HotspotInteraction extends Interaction {
 
     }
 
+    bind(rootElement) {
+
+        const hotspots = rootElement.querySelectorAll("[data-hotspot-id]");
+
+        for (const hotspot of hotspots) {
+
+            hotspot.addEventListener("click", () => {
+
+                this.collect(hotspot.dataset.hotspotId);
+
+            });
+
+        }
+
+    }
+
     collect(hotspotId) {
 
         this.selected = hotspotId;

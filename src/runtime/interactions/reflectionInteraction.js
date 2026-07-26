@@ -19,6 +19,24 @@ export default class ReflectionInteraction extends Interaction {
 
     }
 
+    bind(rootElement) {
+
+        const input = rootElement.querySelector(
+            `[data-reflection="${this.component.id}"]`
+        );
+
+        if (!input) {
+            return;
+        }
+
+        input.addEventListener("input", (event) => {
+
+            this.collect(event.target.value);
+
+        });
+
+    }
+
     collect(text) {
 
         this.response = String(text).trim();

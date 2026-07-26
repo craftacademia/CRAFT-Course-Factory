@@ -19,6 +19,47 @@ export default class DragDropInteraction extends Interaction {
 
     }
 
+    bind(rootElement) {
+
+        const draggables = rootElement.querySelectorAll("[data-drag-item]");
+        const dropZones = rootElement.querySelectorAll("[data-drop-zone]");
+
+        for (const draggable of draggables) {
+
+            draggable.addEventListener("dragstart", (event) => {
+
+                event.dataTransfer.setData(
+                    "text/plain",
+                    draggable.dataset.dragItem
+                );
+
+            });
+
+        }
+
+        for (const zone of dropZones) {
+
+            zone.addEventListener("dragover", (event) => {
+
+                event.preventDefault();
+
+            });
+
+            zone.addEventListener("drop", (event) => {
+
+                event.preventDefault();
+
+                const itemId = event.dataTransfer.getData("text/plain");
+                const zoneId = zone.dataset.dropZone;
+
+                this.collect(itemId, zoneId);
+
+            });
+
+        }
+
+    }
+
     collect(itemId, zoneId) {
 
         this.placements.set(itemId, zoneId);
