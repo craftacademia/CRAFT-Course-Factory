@@ -11,23 +11,44 @@ export default class RuntimePlayer {
 
     constructor(page) {
 
+        if (!page) {
+            throw new Error("Page is required.");
+        }
+
         this.page = page;
 
         this.registry = new ComponentRegistry();
+
+        this.registerDefaultRenderers();
+
+        this.scheduler = new EventScheduler(page.timeline ?? []);
+
+        this.context = new RenderContext();
+
+        this.componentIndex = new Map();
+
+        this.buildComponentIndex();
+
+    }
+
+    registerDefaultRenderers() {
 
         this.registry.register("NARRATION", new NarrationRenderer());
         this.registry.register("DIALOGUE", new DialogueRenderer());
         this.registry.register("BACKGROUND", new BackgroundRenderer());
         this.registry.register("CHARACTER", new CharacterRenderer());
 
-        this.scheduler = new EventScheduler(page.timeline ?? []);
-        this.context = new RenderContext();
+    }
 
-        this.componentIndex = new Map();
+    buildComponentIndex() {
 
-        for (const layer of page.layers ?? []) {
+        for (const layer of (this.page.layers ?? [])) {
 
-            for (const component of layer.components ?? []) {
+            for (const component of (layer.components ?? [])) {
+
+                if (!component?.id) {
+                    continue;
+                }
 
                 this.componentIndex.set(component.id, component);
 
@@ -45,6 +66,10 @@ export default class RuntimePlayer {
 
             const event = this.scheduler.next();
 
+            if (!event?.componentId) {
+                continue;
+            }
+
             const component = this.componentIndex.get(event.componentId);
 
             if (!component) {
@@ -53,7 +78,7 @@ export default class RuntimePlayer {
 
             const renderer = this.registry.get(component.type);
 
-            if (!renderer) {
+            if (!renderer || typeof renderer.render !== "function") {
                 continue;
             }
 
@@ -62,6 +87,18 @@ export default class RuntimePlayer {
         }
 
         return this.context.flush();
+
+    }
+
+    hasComponent(id) {
+
+        return this.componentIndex.has(id);
+
+    }
+
+    getComponent(id) {
+
+        return this.componentIndex.get(id) ?? null;
 
     }
 

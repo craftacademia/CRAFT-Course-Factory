@@ -8,6 +8,18 @@ export default class AssetLoader {
 
     async load(asset) {
 
+        if (!asset) {
+            throw new Error("Asset is required.");
+        }
+
+        if (!asset.id) {
+            throw new Error("Asset id is required.");
+        }
+
+        if (!asset.src) {
+            throw new Error("Asset source is required.");
+        }
+
         if (this.cache.has(asset.id)) {
             return this.cache.get(asset.id);
         }
@@ -16,8 +28,11 @@ export default class AssetLoader {
 
         await new Promise((resolve, reject) => {
 
-            image.onload = resolve;
-            image.onerror = reject;
+            image.onload = () => resolve(image);
+
+            image.onerror = () =>
+                reject(new Error(`Failed to load asset: ${asset.src}`));
+
             image.src = asset.src;
 
         });
@@ -28,9 +43,21 @@ export default class AssetLoader {
 
     }
 
+    async preload(assets = []) {
+
+        const loaded = [];
+
+        for (const asset of assets) {
+            loaded.push(await this.load(asset));
+        }
+
+        return loaded;
+
+    }
+
     get(id) {
 
-        return this.cache.get(id);
+        return this.cache.get(id) ?? null;
 
     }
 
@@ -42,13 +69,19 @@ export default class AssetLoader {
 
     unload(id) {
 
-        this.cache.delete(id);
+        return this.cache.delete(id);
 
     }
 
     clear() {
 
         this.cache.clear();
+
+    }
+
+    size() {
+
+        return this.cache.size;
 
     }
 
