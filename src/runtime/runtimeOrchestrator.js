@@ -14,6 +14,14 @@ export default class RuntimeOrchestrator {
 
         this.course = null;
 
+        this.status = "idle";
+
+    }
+
+    async initialize(course) {
+
+        await this.load(course);
+
     }
 
     async load(course) {
@@ -27,6 +35,50 @@ export default class RuntimeOrchestrator {
         this.state.reset();
 
         await this.runtime.mount(course);
+
+        this.status = "loaded";
+
+    }
+
+    async start() {
+
+        if (!this.course) {
+            throw new Error("No course loaded.");
+        }
+
+        this.status = "running";
+
+        await this.runtime.reload();
+
+    }
+
+    async pause() {
+
+        if (this.status === "running") {
+            this.status = "paused";
+        }
+
+    }
+
+    async resume() {
+
+        if (this.status === "paused") {
+
+            this.status = "running";
+
+            await this.runtime.reload();
+
+        }
+
+    }
+
+    async stop() {
+
+        this.runtime.destroy();
+
+        this.state.reset();
+
+        this.status = "stopped";
 
     }
 
@@ -63,6 +115,14 @@ export default class RuntimeOrchestrator {
         this.state.reset();
 
         this.course = null;
+
+        this.status = "destroyed";
+
+    }
+
+    getStatus() {
+
+        return this.status;
 
     }
 
