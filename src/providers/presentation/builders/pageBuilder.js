@@ -21,20 +21,23 @@ export default class PageBuilder {
         const images =
             ccir.assets?.images ?? [];
 
+        const backgroundAudio =
+            ccir.assets?.audio?.background?.[0]?.path ?? null;
+
 
         for (const screen of ccir.screens ?? []) {
 
             const components = [];
 
 
-            const asset =
+            const image =
                 this.resolveImage(
                     screen,
                     images
                 );
 
 
-            if (asset) {
+            if (image) {
 
                 components.push(
 
@@ -45,11 +48,13 @@ export default class PageBuilder {
                             id:
                             `IMAGE_${components.length + 1}`,
 
-                            asset,
+                            asset:
+                            image,
 
                             properties:
                             {
-                                asset
+                                asset:
+                                image
                             }
 
                         }
@@ -58,6 +63,36 @@ export default class PageBuilder {
                 );
 
             }
+
+
+
+            if (backgroundAudio) {
+
+                components.push(
+
+                    this.componentBuilder.build(
+                        "AUDIO",
+                        {
+
+                            id:
+                            `AUDIO_${components.length + 1}`,
+
+                            asset:
+                            backgroundAudio,
+
+                            properties:
+                            {
+                                asset:
+                                backgroundAudio
+                            }
+
+                        }
+                    )
+
+                );
+
+            }
+
 
 
             this.addNodeComponents(
