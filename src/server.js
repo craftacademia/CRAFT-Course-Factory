@@ -61,11 +61,13 @@ app.use(
     )
 );
 
+
 app.use(
     express.json({
         limit: "50mb"
     })
 );
+
 
 app.use(
     express.urlencoded({
@@ -90,8 +92,24 @@ app.post(
             maxCount: 1
         },
         {
-            name: "assets",
+            name: "images",
             maxCount: 50
+        },
+        {
+            name: "narration",
+            maxCount: 50
+        },
+        {
+            name: "dialogueAudio",
+            maxCount: 50
+        },
+        {
+            name: "backgroundMusic",
+            maxCount: 5
+        },
+        {
+            name: "logo",
+            maxCount: 1
         }
     ]),
     async (req, res) => {
@@ -112,19 +130,116 @@ app.post(
             }
 
 
+            const buildId =
+                `build_${Date.now()}`;
+
+
             const buildDir =
                 path.join(
                     outputDir,
-                    `build_${Date.now()}`
+                    buildId
                 );
 
 
+            const assetsDir =
+                path.join(
+                    buildDir,
+                    "assets"
+                );
+
+
+            const assetFolders = [
+
+                "images",
+
+                "audio/narration",
+
+                "audio/dialogue",
+
+                "audio/background",
+
+                "branding"
+
+            ];
+
+
             fs.mkdirSync(
-                buildDir,
+                assetsDir,
                 {
-                    recursive: true
+                    recursive:true
                 }
             );
+
+
+            assetFolders.forEach(folder => {
+
+                fs.mkdirSync(
+                    path.join(
+                        assetsDir,
+                        folder
+                    ),
+                    {
+                        recursive:true
+                    }
+                );
+
+            });
+
+
+
+            const copyAssets = (
+                files,
+                destination
+            ) => {
+
+                if (!files) return;
+
+
+                files.forEach(file => {
+
+                    fs.copyFileSync(
+                        file.path,
+                        path.join(
+                            assetsDir,
+                            destination,
+                            file.originalname
+                        )
+                    );
+
+                });
+
+            };
+
+
+            copyAssets(
+                req.files?.images,
+                "images"
+            );
+
+
+            copyAssets(
+                req.files?.narration,
+                "audio/narration"
+            );
+
+
+            copyAssets(
+                req.files?.dialogueAudio,
+                "audio/dialogue"
+            );
+
+
+            copyAssets(
+                req.files?.backgroundMusic,
+                "audio/background"
+            );
+
+
+            copyAssets(
+                req.files?.logo,
+                "branding"
+            );
+
 
 
             const compiler =
@@ -145,6 +260,7 @@ app.post(
 
 
             res.set({
+
                 "Content-Type":
                     "application/zip",
 
@@ -153,10 +269,13 @@ app.post(
 
                 "Content-Length":
                     zipBuffer.length
+
             });
 
 
-            return res.send(zipBuffer);
+            return res.send(
+                zipBuffer
+            );
 
 
         } catch (err) {
@@ -168,8 +287,10 @@ app.post(
 
 
             return res.status(500).json({
+
                 error:
                     err.message
+
             });
 
         }
@@ -184,8 +305,10 @@ app.use(
     (req, res) => {
 
         res.status(404).json({
+
             error:
                 `API route ${req.originalUrl} does not exist.`
+
         });
 
     }
