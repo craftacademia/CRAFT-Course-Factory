@@ -25,6 +25,18 @@ export default class PresentationProvider {
             page.timeline =
                 this.timelineBuilder.build(page);
 
+
+            for (const layer of page.layers ?? []) {
+
+                if (!layer.template) {
+
+                    layer.template =
+                        this.resolveTemplate(layer);
+
+                }
+
+            }
+
         }
 
 
@@ -53,6 +65,38 @@ export default class PresentationProvider {
 
 
         return presentation;
+
+    }
+
+
+    resolveTemplate(layer) {
+
+        const type =
+            layer.type ?? "";
+
+
+        if (type === "DIALOGUE") {
+
+            return "dialogue";
+
+        }
+
+
+        if (type === "IMAGE") {
+
+            return "image";
+
+        }
+
+
+        if (type === "ASSESSMENT") {
+
+            return "assessment";
+
+        }
+
+
+        return "content";
 
     }
 
