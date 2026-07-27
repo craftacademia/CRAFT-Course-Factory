@@ -31,6 +31,7 @@ export default class CourseRenderer {
             pir.branding ?? assets?.branding ?? null;
 
 
+
         const renderedPages =
             pages
                 .map(page => {
@@ -41,6 +42,71 @@ export default class CourseRenderer {
 
                 })
                 .join("\n");
+
+
+
+        const logo =
+            branding?.logo?.path
+                ? branding.logo.path
+                : "";
+
+
+
+        const brandingStyle =
+            `
+<style>
+
+:root {
+
+    --craft-primary:
+        ${branding?.primaryColor ?? "#1e3a8a"};
+
+    --craft-secondary:
+        ${branding?.secondaryColor ?? "#f59e0b"};
+
+}
+
+
+.craft-brand-header {
+
+    display:flex;
+
+    align-items:center;
+
+    padding:20px;
+
+    background:
+        var(--craft-primary);
+
+}
+
+
+.craft-brand-header img {
+
+    max-height:60px;
+
+    max-width:200px;
+
+}
+
+
+</style>
+`;
+
+
+
+        const brandingHeader =
+            logo
+                ?
+`
+<div class="craft-brand-header">
+
+<img src="${logo}" />
+
+</div>
+`
+                :
+"";
 
 
 
@@ -55,18 +121,29 @@ export default class CourseRenderer {
 
 
         const assetData =
-            `
+`
 <script>
-window.CRAFT_CONFIG = ${JSON.stringify(runtimeConfig)};
-window.CRAFT_ASSETS = ${JSON.stringify(assets)};
-window.CRAFT_BRANDING = ${JSON.stringify(branding)};
+
+window.CRAFT_CONFIG =
+${JSON.stringify(runtimeConfig)};
+
+window.CRAFT_ASSETS =
+${JSON.stringify(assets)};
+
+window.CRAFT_BRANDING =
+${JSON.stringify(branding)};
+
 </script>
 `;
 
 
 
         return `
+${brandingStyle}
+
 ${assetData}
+
+${brandingHeader}
 
 ${renderedPages}
 `;
