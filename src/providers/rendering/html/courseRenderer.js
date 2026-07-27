@@ -31,6 +31,10 @@ export default class CourseRenderer {
             pir.branding ?? assets?.branding ?? null;
 
 
+        const audio =
+            pir.audio ?? assets?.audio ?? null;
+
+
 
         const renderedPages =
             pages
@@ -53,7 +57,7 @@ export default class CourseRenderer {
 
 
         const brandingStyle =
-            `
+`
 <style>
 
 :root {
@@ -89,7 +93,6 @@ export default class CourseRenderer {
 
 }
 
-
 </style>
 `;
 
@@ -114,9 +117,23 @@ export default class CourseRenderer {
 
             assets,
 
-            branding
+            branding,
+
+            audio
 
         };
+
+
+
+        const audioData =
+`
+<script>
+
+window.CRAFT_AUDIO =
+${JSON.stringify(audio)};
+
+</script>
+`;
 
 
 
@@ -142,6 +159,8 @@ ${JSON.stringify(branding)};
 ${brandingStyle}
 
 ${assetData}
+
+${audioData}
 
 ${brandingHeader}
 
