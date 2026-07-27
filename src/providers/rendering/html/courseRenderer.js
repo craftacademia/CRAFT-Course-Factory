@@ -71,6 +71,91 @@ export default class CourseRenderer {
 }
 
 
+.screen {
+
+    width:100%;
+
+    min-height:500px;
+
+    box-sizing:border-box;
+
+    padding:40px;
+
+}
+
+
+.screen-content {
+
+    background:#ffffff;
+
+}
+
+
+.screen-dialogue {
+
+    background:#f8fafc;
+
+    border-left:8px solid var(--craft-primary);
+
+}
+
+
+.screen-image {
+
+    background:#ffffff;
+
+    display:flex;
+
+    justify-content:center;
+
+}
+
+
+.screen-assessment {
+
+    background:#fff7ed;
+
+    border:2px solid var(--craft-secondary);
+
+}
+
+
+.slide-template-content {
+
+    max-width:900px;
+
+    margin:auto;
+
+}
+
+
+.slide-template-dialogue {
+
+    max-width:900px;
+
+    margin:auto;
+
+}
+
+
+.slide-template-image {
+
+    max-width:1000px;
+
+    margin:auto;
+
+}
+
+
+.slide-template-assessment {
+
+    max-width:900px;
+
+    margin:auto;
+
+}
+
+
 .craft-brand-header {
 
     display:flex;
@@ -125,20 +210,9 @@ export default class CourseRenderer {
 
 
 
-        const audioData =
-`
-<script>
+        return `
+${brandingStyle}
 
-window.CRAFT_AUDIO =
-${JSON.stringify(audio)};
-
-</script>
-`;
-
-
-
-        const assetData =
-`
 <script>
 
 window.CRAFT_CONFIG =
@@ -150,17 +224,10 @@ ${JSON.stringify(assets)};
 window.CRAFT_BRANDING =
 ${JSON.stringify(branding)};
 
+window.CRAFT_AUDIO =
+${JSON.stringify(audio)};
+
 </script>
-`;
-
-
-
-        return `
-${brandingStyle}
-
-${assetData}
-
-${audioData}
 
 ${brandingHeader}
 
