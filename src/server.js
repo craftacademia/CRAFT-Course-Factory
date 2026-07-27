@@ -41,10 +41,7 @@ const storage = multer.diskStorage({
     },
 
     filename(req, file, cb) {
-        cb(
-            null,
-            `${Date.now()}-${file.originalname}`
-        );
+        cb(null, `${Date.now()}-${file.originalname}`);
     }
 
 });
@@ -55,26 +52,16 @@ const upload = multer({
 });
 
 
-app.use(
-    express.static(
-        path.join(__dirname, "../public")
-    )
-);
+app.use(express.static(path.join(__dirname, "../public")));
 
+app.use(express.json({
+    limit:"50mb"
+}));
 
-app.use(
-    express.json({
-        limit: "50mb"
-    })
-);
-
-
-app.use(
-    express.urlencoded({
-        limit: "50mb",
-        extended: true
-    })
-);
+app.use(express.urlencoded({
+    limit:"50mb",
+    extended:true
+}));
 
 
 app.use(
@@ -88,31 +75,31 @@ app.post(
     "/api/build",
     upload.fields([
         {
-            name: "script",
-            maxCount: 1
+            name:"script",
+            maxCount:1
         },
         {
-            name: "images",
-            maxCount: 50
+            name:"images",
+            maxCount:50
         },
         {
-            name: "narration",
-            maxCount: 50
+            name:"narration",
+            maxCount:50
         },
         {
-            name: "dialogueAudio",
-            maxCount: 50
+            name:"dialogueAudio",
+            maxCount:50
         },
         {
-            name: "backgroundMusic",
-            maxCount: 5
+            name:"backgroundMusic",
+            maxCount:5
         },
         {
-            name: "logo",
-            maxCount: 1
+            name:"logo",
+            maxCount:1
         }
     ]),
-    async (req, res) => {
+    async(req,res)=>{
 
         try {
 
@@ -120,11 +107,10 @@ app.post(
                 req.files?.script?.[0];
 
 
-            if (!scriptFile) {
+            if(!scriptFile){
 
                 return res.status(400).json({
-                    error:
-                        "Missing script file (.docx)"
+                    error:"Missing script file (.docx)"
                 });
 
             }
@@ -148,30 +134,16 @@ app.post(
                 );
 
 
-            const assetFolders = [
-
+            const folders = [
                 "images",
-
                 "audio/narration",
-
                 "audio/dialogue",
-
                 "audio/background",
-
                 "branding"
-
             ];
 
 
-            fs.mkdirSync(
-                assetsDir,
-                {
-                    recursive:true
-                }
-            );
-
-
-            assetFolders.forEach(folder => {
+            folders.forEach(folder=>{
 
                 fs.mkdirSync(
                     path.join(
@@ -186,67 +158,70 @@ app.post(
             });
 
 
+
             const assetManifest = {
 
                 buildId,
 
-                images: [],
+                images:[],
 
-                audio: {
-
-                    narration: [],
-
-                    dialogue: [],
-
-                    background: []
-
+                audio:{
+                    narration:[],
+                    dialogue:[],
+                    background:[]
                 },
 
-                branding: {
+                branding:{
 
-                    logo: null
+                    logo:null,
+
+                    primaryColor:
+                        req.body.primaryColor || "#1e3a8a",
+
+                    secondaryColor:
+                        req.body.secondaryColor || "#f59e0b"
 
                 }
 
             };
 
 
-            const copyAssets = (
+
+            const copyAssets =
+            (
                 files,
-                destination,
-                manifestTarget
-            ) => {
+                folder,
+                target
+            )=>{
 
-                if (!files) return;
+                if(!files) return;
 
 
-                files.forEach(file => {
-
-                    const targetPath =
-                        path.join(
-                            assetsDir,
-                            destination,
-                            file.originalname
-                        );
-
+                files.forEach(file=>{
 
                     fs.copyFileSync(
                         file.path,
-                        targetPath
+                        path.join(
+                            assetsDir,
+                            folder,
+                            file.originalname
+                        )
                     );
 
 
-                    manifestTarget.push(
-                        {
-                            name: file.originalname,
-                            path:
-                                `assets/${destination}/${file.originalname}`
-                        }
-                    );
+                    target.push({
+
+                        name:file.originalname,
+
+                        path:
+                        `assets/${folder}/${file.originalname}`
+
+                    });
 
                 });
 
             };
+
 
 
             copyAssets(
@@ -277,7 +252,8 @@ app.post(
             );
 
 
-            if (req.files?.logo?.[0]) {
+
+            if(req.files?.logo?.[0]){
 
                 const logo =
                     req.files.logo[0];
@@ -293,14 +269,17 @@ app.post(
                 );
 
 
-                assetManifest.branding.logo =
-                {
-                    name: logo.originalname,
+                assetManifest.branding.logo = {
+
+                    name:logo.originalname,
+
                     path:
-                        `assets/branding/${logo.originalname}`
+                    `assets/branding/${logo.originalname}`
+
                 };
 
             }
+
 
 
             fs.writeFileSync(
@@ -324,8 +303,10 @@ app.post(
             const pir =
                 await compiler.compile(
                     scriptFile.path,
-                    buildDir
+                    buildDir,
+                    assetManifest
                 );
+
 
 
             const zipBuffer =
@@ -337,35 +318,30 @@ app.post(
             res.set({
 
                 "Content-Type":
-                    "application/zip",
+                "application/zip",
 
                 "Content-Disposition":
-                    'attachment; filename="SCORM_Package.zip"',
+                'attachment; filename="SCORM_Package.zip"',
 
                 "Content-Length":
-                    zipBuffer.length
+                zipBuffer.length
 
             });
 
 
-            return res.send(
-                zipBuffer
-            );
+            return res.send(zipBuffer);
 
 
-        } catch (err) {
+        } catch(error){
 
             console.error(
                 "Build Error:",
-                err
+                error
             );
 
 
             return res.status(500).json({
-
-                error:
-                    err.message
-
+                error:error.message
             });
 
         }
@@ -377,13 +353,11 @@ app.post(
 
 app.use(
     "/api/{*splat}",
-    (req, res) => {
+    (req,res)=>{
 
         res.status(404).json({
-
             error:
-                `API route ${req.originalUrl} does not exist.`
-
+            `API route ${req.originalUrl} does not exist.`
         });
 
     }
@@ -393,11 +367,9 @@ app.use(
 
 app.listen(
     PORT,
-    () => {
-
+    ()=>{
         console.log(
             `🚀 CRAFT Course Factory server active on http://localhost:${PORT}`
         );
-
     }
 );
