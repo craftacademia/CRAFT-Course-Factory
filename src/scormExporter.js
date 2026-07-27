@@ -10,6 +10,7 @@ export async function exportScormPackage(
 
     const zip = new AdmZip();
 
+
     const title =
         courseData.title ??
         courseData.course?.title ??
@@ -28,16 +29,10 @@ export async function exportScormPackage(
 
 
     const previewDirectory =
-        path.join(
-            process.cwd(),
-            "test-courses",
-            "Document & Eligibility GAMES",
-            "Output",
-            "preview"
-        );
+        findPreviewDirectory();
 
 
-    if (fs.existsSync(previewDirectory)) {
+    if (previewDirectory) {
 
         addDirectoryToZip(
             zip,
@@ -58,14 +53,138 @@ export async function exportScormPackage(
     }
 
 
+    const assetDirectory =
+        findAssetDirectory();
+
+
+    if (assetDirectory) {
+
+        addDirectoryToZip(
+            zip,
+            assetDirectory,
+            "assets"
+        );
+
+    }
+
+
     return zip.toBuffer();
 
 }
 
 
-function addDirectoryToZip(zip, directory, prefix) {
 
-    const files = fs.readdirSync(directory);
+function findPreviewDirectory() {
+
+    const outputDir =
+        path.join(
+            process.cwd(),
+            "output"
+        );
+
+
+    if (!fs.existsSync(outputDir)) {
+
+        return null;
+
+    }
+
+
+    const builds =
+        fs.readdirSync(outputDir)
+            .filter(name =>
+                name.startsWith("build_")
+            )
+            .sort()
+            .reverse();
+
+
+    for (const build of builds) {
+
+        const preview =
+            path.join(
+                outputDir,
+                build,
+                "preview"
+            );
+
+
+        if (fs.existsSync(preview)) {
+
+            return preview;
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+
+function findAssetDirectory() {
+
+    const outputDir =
+        path.join(
+            process.cwd(),
+            "output"
+        );
+
+
+    if (!fs.existsSync(outputDir)) {
+
+        return null;
+
+    }
+
+
+    const builds =
+        fs.readdirSync(outputDir)
+            .filter(name =>
+                name.startsWith("build_")
+            )
+            .sort()
+            .reverse();
+
+
+    for (const build of builds) {
+
+        const assets =
+            path.join(
+                outputDir,
+                build,
+                "assets"
+            );
+
+
+        if (fs.existsSync(assets)) {
+
+            return assets;
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+
+function addDirectoryToZip(
+    zip,
+    directory,
+    prefix
+) {
+
+    const files =
+        fs.readdirSync(
+            directory
+        );
+
 
     for (const file of files) {
 
@@ -84,14 +203,8 @@ function addDirectoryToZip(zip, directory, prefix) {
 
 
         if (
-            file === "browserRuntime.js" &&
-            prefix === ""
+            fs.statSync(fullPath).isDirectory()
         ) {
-            continue;
-        }
-
-
-        if (fs.statSync(fullPath).isDirectory()) {
 
             addDirectoryToZip(
                 zip,
@@ -111,6 +224,7 @@ function addDirectoryToZip(zip, directory, prefix) {
     }
 
 }
+
 
 
 function generateScorm2004Manifest(title) {
@@ -139,11 +253,13 @@ return `<?xml version="1.0" encoding="UTF-8"?>
 }
 
 
+
 function generateScorm12Manifest(title) {
 
-return generateScorm2004Manifest(title);
+    return generateScorm2004Manifest(title);
 
 }
+
 
 
 function generateCourseHtml(courseData) {
@@ -158,24 +274,32 @@ return `<!DOCTYPE html>
 }
 
 
+
 function escapeXml(value = "") {
 
-return String(value).replace(
-    /[<>&'"]/g,
-    char => ({
-        "<":"&lt;",
-        ">":"&gt;",
-        "&":"&amp;",
-        "'":"&apos;",
-        '"':"&quot;"
-    }[char])
-);
+    return String(value).replace(
+        /[<>&'"]/g,
+        char => ({
+            "<":"&lt;",
+            ">":"&gt;",
+            "&":"&amp;",
+            "'":"&apos;",
+            '"':"&quot;"
+        }[char])
+    );
 
 }
 
 
-export const exportScorm = exportScormPackage;
-export const generateScormPackage = exportScormPackage;
-export const buildScormPackage = exportScormPackage;
+
+export const exportScorm =
+    exportScormPackage;
+
+export const generateScormPackage =
+    exportScormPackage;
+
+export const buildScormPackage =
+    exportScormPackage;
+
 
 export default exportScormPackage;
