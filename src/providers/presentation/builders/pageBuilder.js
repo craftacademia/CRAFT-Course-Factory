@@ -4,27 +4,77 @@ import ComponentBuilder from "./componentBuilder.js";
 export default class PageBuilder {
 
     constructor() {
-        this.layerBuilder = new LayerBuilder();
-        this.componentBuilder = new ComponentBuilder();
+
+        this.layerBuilder =
+            new LayerBuilder();
+
+        this.componentBuilder =
+            new ComponentBuilder();
+
     }
+
 
     build(ccir) {
 
         const pages = [];
 
-        for (const screen of ccir.screens ?? []) {
+        const images =
+            ccir.assets?.images ?? [];
+
+
+        for (const [index, screen] of (ccir.screens ?? []).entries()) {
 
             const components = [];
 
-            this.addNodeComponents(screen, components);
+
+            const asset =
+                screen.assetRef?.src ??
+                images[index]?.path ??
+                null;
+
+
+            if (asset) {
+
+                components.push(
+
+                    this.componentBuilder.build(
+                        "IMAGE",
+                        {
+
+                            id:
+                            `IMAGE_${components.length + 1}`,
+
+                            asset,
+
+                            properties:
+                            {
+                                asset
+                            }
+
+                        }
+                    )
+
+                );
+
+            }
+
+
+            this.addNodeComponents(
+                screen,
+                components
+            );
+
 
             pages.push({
 
-                id: screen.id,
+                id:
+                screen.id,
 
-                title: screen.title ?? screen.name ?? "",
+                title:
+                screen.title ?? "",
 
-                layers: [
+                layers:
+                [
                     this.layerBuilder.build(
                         "CONTENT",
                         components
@@ -35,59 +85,57 @@ export default class PageBuilder {
 
         }
 
+
         return pages;
 
     }
 
 
-    addNodeComponents(node, components) {
+
+    addNodeComponents(
+        node,
+        components
+    ) {
 
         if (!node) {
+
             return;
+
         }
 
 
         if (node.type === "TEXT") {
 
             components.push(
+
                 this.componentBuilder.build(
                     "NARRATION",
                     {
-                        id: `NARRATION_${components.length + 1}`,
-                        properties: {
-                            text: node.value ?? ""
+
+                        id:
+                        `NARRATION_${components.length + 1}`,
+
+                        properties:
+                        {
+                            text:
+                            node.value ?? ""
                         }
+
                     }
                 )
-            );
 
-        }
-
-
-        if (node.type === "DIALOGUE") {
-
-            const text = (node.children ?? [])
-                .filter(child => child.type === "TEXT")
-                .map(child => child.value ?? "")
-                .join(" ");
-
-            components.push(
-                this.componentBuilder.build(
-                    "DIALOGUE",
-                    {
-                        id: `DIALOGUE_${components.length + 1}`,
-                        properties: {
-                            text
-                        }
-                    }
-                )
             );
 
         }
 
 
         for (const child of node.children ?? []) {
-            this.addNodeComponents(child, components);
+
+            this.addNodeComponents(
+                child,
+                components
+            );
+
         }
 
     }

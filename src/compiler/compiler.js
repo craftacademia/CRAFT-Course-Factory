@@ -13,60 +13,155 @@ import RendererProvider from "../providers/rendering/rendererProvider.js";
 
 import AttributeNormalizer from "./normalizers/attributeNormalizer.js";
 
+
 export default class Compiler {
 
-  constructor() {
-    this.reader = new WordReaderProvider();
-    this.formatter = new DocumentFormatterProvider();
-    this.lexer = new LexerProvider();
-    this.parser = new ParserProvider();
-    this.attributeNormalizer = new AttributeNormalizer();
-    this.validator = new ValidatorProvider();
-    this.semantic = new SemanticProvider();
-    this.ccirProvider = new CCIRProvider();
-    this.presentationProvider = new PresentationProvider();
-    this.renderer = new RendererProvider();
-  }
+    constructor() {
 
-  async compile(inputFile, outputDirectory = "./build") {
+        this.reader =
+            new WordReaderProvider();
 
-    const raw = await this.reader.read(inputFile);
+        this.formatter =
+            new DocumentFormatterProvider();
 
-    const formatted = await this.formatter.format(raw);
+        this.lexer =
+            new LexerProvider();
 
-    const tokens = await this.lexer.lex(formatted);
+        this.parser =
+            new ParserProvider();
 
-    const ast = await this.parser.parse(tokens);
+        this.attributeNormalizer =
+            new AttributeNormalizer();
 
-    this.attributeNormalizer.normalize(ast);
+        this.validator =
+            new ValidatorProvider();
 
-    await this.validator.validate(ast);
+        this.semantic =
+            new SemanticProvider();
 
-    await this.semantic.validate(ast);
+        this.ccirProvider =
+            new CCIRProvider();
 
-    const ccir = await this.ccirProvider.build(ast);
+        this.presentationProvider =
+            new PresentationProvider();
 
-    const pir = await this.presentationProvider.build(ccir);
+        this.renderer =
+            new RendererProvider();
 
-    await fs.mkdir(outputDirectory, { recursive: true });
+    }
 
-    await fs.writeFile(
-      path.join(outputDirectory, "ccir.json"),
-      JSON.stringify(ccir, null, 2)
-    );
 
-    await fs.writeFile(
-      path.join(outputDirectory, "pir.json"),
-      JSON.stringify(pir, null, 2)
-    );
+    async compile(
+        inputFile,
+        outputDirectory = "./build",
+        assetManifest = null
+    ) {
 
-    await this.renderer.render(
-      pir,
-      path.join(outputDirectory, "preview")
-    );
+        const raw =
+            await this.reader.read(
+                inputFile
+            );
 
-    return pir;
 
-  }
+        const formatted =
+            await this.formatter.format(
+                raw
+            );
+
+
+        const tokens =
+            await this.lexer.lex(
+                formatted
+            );
+
+
+        const ast =
+            await this.parser.parse(
+                tokens
+            );
+
+
+        this.attributeNormalizer.normalize(
+            ast
+        );
+
+
+        await this.validator.validate(
+            ast
+        );
+
+
+        await this.semantic.validate(
+            ast
+        );
+
+
+        const ccir =
+            await this.ccirProvider.build(
+                ast,
+                assetManifest
+            );
+
+
+        const pir =
+            await this.presentationProvider.build(
+                ccir
+            );
+
+
+        if (assetManifest) {
+
+            pir.assets =
+                assetManifest;
+
+        }
+
+
+        await fs.mkdir(
+            outputDirectory,
+            {
+                recursive:true
+            }
+        );
+
+
+        await fs.writeFile(
+            path.join(
+                outputDirectory,
+                "ccir.json"
+            ),
+            JSON.stringify(
+                ccir,
+                null,
+                2
+            )
+        );
+
+
+        await fs.writeFile(
+            path.join(
+                outputDirectory,
+                "pir.json"
+            ),
+            JSON.stringify(
+                pir,
+                null,
+                2
+            )
+        );
+
+
+        await this.renderer.render(
+            pir,
+            path.join(
+                outputDirectory,
+                "preview"
+            )
+        );
+
+
+        return pir;
+
+    }
 
 }
