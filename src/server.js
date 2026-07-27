@@ -186,10 +186,35 @@ app.post(
             });
 
 
+            const assetManifest = {
+
+                buildId,
+
+                images: [],
+
+                audio: {
+
+                    narration: [],
+
+                    dialogue: [],
+
+                    background: []
+
+                },
+
+                branding: {
+
+                    logo: null
+
+                }
+
+            };
+
 
             const copyAssets = (
                 files,
-                destination
+                destination,
+                manifestTarget
             ) => {
 
                 if (!files) return;
@@ -197,13 +222,26 @@ app.post(
 
                 files.forEach(file => {
 
-                    fs.copyFileSync(
-                        file.path,
+                    const targetPath =
                         path.join(
                             assetsDir,
                             destination,
                             file.originalname
-                        )
+                        );
+
+
+                    fs.copyFileSync(
+                        file.path,
+                        targetPath
+                    );
+
+
+                    manifestTarget.push(
+                        {
+                            name: file.originalname,
+                            path:
+                                `assets/${destination}/${file.originalname}`
+                        }
                     );
 
                 });
@@ -213,31 +251,68 @@ app.post(
 
             copyAssets(
                 req.files?.images,
-                "images"
+                "images",
+                assetManifest.images
             );
 
 
             copyAssets(
                 req.files?.narration,
-                "audio/narration"
+                "audio/narration",
+                assetManifest.audio.narration
             );
 
 
             copyAssets(
                 req.files?.dialogueAudio,
-                "audio/dialogue"
+                "audio/dialogue",
+                assetManifest.audio.dialogue
             );
 
 
             copyAssets(
                 req.files?.backgroundMusic,
-                "audio/background"
+                "audio/background",
+                assetManifest.audio.background
             );
 
 
-            copyAssets(
-                req.files?.logo,
-                "branding"
+            if (req.files?.logo?.[0]) {
+
+                const logo =
+                    req.files.logo[0];
+
+
+                fs.copyFileSync(
+                    logo.path,
+                    path.join(
+                        assetsDir,
+                        "branding",
+                        logo.originalname
+                    )
+                );
+
+
+                assetManifest.branding.logo =
+                {
+                    name: logo.originalname,
+                    path:
+                        `assets/branding/${logo.originalname}`
+                };
+
+            }
+
+
+            fs.writeFileSync(
+                path.join(
+                    buildDir,
+                    "asset-manifest.json"
+                ),
+                JSON.stringify(
+                    assetManifest,
+                    null,
+                    2
+                )
             );
 
 
