@@ -22,15 +22,16 @@ export default class PageBuilder {
             ccir.assets?.images ?? [];
 
 
-        for (const [index, screen] of (ccir.screens ?? []).entries()) {
+        for (const screen of ccir.screens ?? []) {
 
             const components = [];
 
 
             const asset =
-                screen.assetRef?.src ??
-                images[index]?.path ??
-                null;
+                this.resolveImage(
+                    screen,
+                    images
+                );
 
 
             if (asset) {
@@ -87,6 +88,42 @@ export default class PageBuilder {
 
 
         return pages;
+
+    }
+
+
+
+    resolveImage(
+        screen,
+        images
+    ) {
+
+        if (screen.assetRef?.src) {
+
+            return screen.assetRef.src;
+
+        }
+
+
+        const image =
+            images.find(
+                item => {
+
+                    const imageId =
+                        item.name
+                            ?.replace(
+                                /\.[^/.]+$/,
+                                ""
+                            );
+
+
+                    return imageId === screen.id;
+
+                }
+            );
+
+
+        return image?.path ?? null;
 
     }
 
