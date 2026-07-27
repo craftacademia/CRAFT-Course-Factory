@@ -2,7 +2,8 @@ export default class Runtime {
 
     constructor(config = {}) {
 
-        this.config = config;
+        this.config =
+            config;
 
         this.audio =
             config.audio ?? null;
@@ -59,6 +60,12 @@ export default class Runtime {
             "auto";
 
 
+        this.backgroundPlayer.setAttribute(
+            "data-runtime-audio",
+            "background"
+        );
+
+
         document.body.appendChild(
             this.backgroundPlayer
         );
@@ -73,9 +80,12 @@ export default class Runtime {
             this.backgroundPlayer
         ) {
 
-            this.backgroundPlayer.play();
+            return this.backgroundPlayer.play();
 
         }
+
+
+        return Promise.resolve();
 
     }
 
@@ -89,33 +99,26 @@ export default class Runtime {
 
             this.backgroundPlayer.pause();
 
+            this.backgroundPlayer.currentTime =
+                0;
+
         }
 
     }
 
 
 
-    playAudio(asset) {
+    pauseBackground() {
 
-        if (!asset) {
+        if (
+            this.backgroundPlayer
+        ) {
 
-            return;
+            this.backgroundPlayer.pause();
 
         }
 
-
-        const player =
-            document.createElement(
-                "audio"
-            );
-
-
-        player.src =
-            asset.path;
-
-
-        player.play();
-
     }
+
 
 }
