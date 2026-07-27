@@ -20,6 +20,15 @@ export default class PresentationProvider {
             await this.courseBuilder.build(ccir);
 
 
+        const theme =
+            ccir.theme ??
+            "modern";
+
+
+        presentation.theme =
+            theme;
+
+
         for (const page of presentation.pages ?? []) {
 
             page.timeline =
@@ -32,6 +41,14 @@ export default class PresentationProvider {
 
                     layer.template =
                         this.resolveTemplate(layer);
+
+                }
+
+
+                if (!layer.theme) {
+
+                    layer.theme =
+                        theme;
 
                 }
 
