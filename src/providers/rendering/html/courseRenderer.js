@@ -35,16 +35,16 @@ export default class CourseRenderer {
             pir.audio ?? assets?.audio ?? null;
 
 
+        const theme =
+            pir.theme ?? "modern";
+
+
 
         const renderedPages =
             pages
-                .map(page => {
-
-                    return this.sceneRenderer.render(
-                        page
-                    );
-
-                })
+                .map(page =>
+                    this.sceneRenderer.render(page)
+                )
                 .join("\n");
 
 
@@ -56,130 +56,8 @@ export default class CourseRenderer {
 
 
 
-        const brandingStyle =
-`
-<style>
-
-:root {
-
-    --craft-primary:
-        ${branding?.primaryColor ?? "#1e3a8a"};
-
-    --craft-secondary:
-        ${branding?.secondaryColor ?? "#f59e0b"};
-
-}
-
-
-.screen {
-
-    width:100%;
-
-    min-height:500px;
-
-    box-sizing:border-box;
-
-    padding:40px;
-
-}
-
-
-.screen-content {
-
-    background:#ffffff;
-
-}
-
-
-.screen-dialogue {
-
-    background:#f8fafc;
-
-    border-left:8px solid var(--craft-primary);
-
-}
-
-
-.screen-image {
-
-    background:#ffffff;
-
-    display:flex;
-
-    justify-content:center;
-
-}
-
-
-.screen-assessment {
-
-    background:#fff7ed;
-
-    border:2px solid var(--craft-secondary);
-
-}
-
-
-.slide-template-content {
-
-    max-width:900px;
-
-    margin:auto;
-
-}
-
-
-.slide-template-dialogue {
-
-    max-width:900px;
-
-    margin:auto;
-
-}
-
-
-.slide-template-image {
-
-    max-width:1000px;
-
-    margin:auto;
-
-}
-
-
-.slide-template-assessment {
-
-    max-width:900px;
-
-    margin:auto;
-
-}
-
-
-.craft-brand-header {
-
-    display:flex;
-
-    align-items:center;
-
-    padding:20px;
-
-    background:
-        var(--craft-primary);
-
-}
-
-
-.craft-brand-header img {
-
-    max-height:60px;
-
-    max-width:200px;
-
-}
-
-</style>
-`;
+        const themeStyle =
+            this.resolveTheme(theme);
 
 
 
@@ -204,14 +82,79 @@ export default class CourseRenderer {
 
             branding,
 
-            audio
+            audio,
+
+            theme
 
         };
 
 
 
         return `
-${brandingStyle}
+<style>
+
+${themeStyle}
+
+
+.screen {
+
+    width:100%;
+
+    min-height:500px;
+
+    box-sizing:border-box;
+
+    padding:40px;
+
+}
+
+
+.screen-content,
+.screen-dialogue,
+.screen-image,
+.screen-assessment {
+
+    border-radius:12px;
+
+}
+
+
+.slide-template-content,
+.slide-template-dialogue,
+.slide-template-image,
+.slide-template-assessment {
+
+    max-width:1000px;
+
+    margin:auto;
+
+}
+
+
+.craft-brand-header {
+
+    display:flex;
+
+    align-items:center;
+
+    padding:20px;
+
+    background:
+    var(--craft-primary);
+
+}
+
+
+.craft-brand-header img {
+
+    max-height:60px;
+
+    max-width:200px;
+
+}
+
+</style>
+
 
 <script>
 
@@ -229,10 +172,80 @@ ${JSON.stringify(audio)};
 
 </script>
 
+
 ${brandingHeader}
 
 ${renderedPages}
 `;
+
+    }
+
+
+    resolveTheme(theme) {
+
+        const themes = {
+
+
+            modern: `
+
+:root {
+
+    --craft-primary:#1e3a8a;
+
+    --craft-secondary:#f59e0b;
+
+}
+
+.screen-content {
+
+    background:#ffffff;
+
+}
+
+`,
+
+
+            corporate: `
+
+:root {
+
+    --craft-primary:#0f172a;
+
+    --craft-secondary:#2563eb;
+
+}
+
+.screen-content {
+
+    background:#f8fafc;
+
+}
+
+`,
+
+
+            storytelling: `
+
+:root {
+
+    --craft-primary:#7c2d12;
+
+    --craft-secondary:#ea580c;
+
+}
+
+.screen-content {
+
+    background:#fff7ed;
+
+}
+
+`
+
+        };
+
+
+        return themes[theme] ?? themes.modern;
 
     }
 
