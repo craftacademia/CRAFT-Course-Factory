@@ -1,605 +1,1422 @@
 .
+./patch.py
+./testTagParser.js
+./sample_course.docx
+./test-file.txt
+./test_course.json
+./test-plugin-loader.js
+./ARCHITECTURE.md
+./index.html
 ./.DS_Store
-./.env
-./.git
-./.git/COMMIT_EDITMSG
-./.git/config
-./.git/description
-./.git/FETCH_HEAD
-./.git/HEAD
-./.git/hooks
-./.git/index
-./.git/info
-./.git/logs
-./.git/objects
-./.git/refs
-./.gitignore
-./api-scorm-test.zip
-./assets
-./assets/audio
-./audio_cache
-./audio_cache/OPT_S02_B_41bd66d6.mp3
-./audio_cache/S01_01_504961b9.mp3
-./audio_cache/S01_02_ac8f8183.mp3
-./audio_cache/S02_01_34ef1ee9.mp3
-./audio_cache/slide_1.mp3
-./check-setup.js
+./patch-scorm.js
+./testValidator.js
+./test_scorm.zip
+./test-scorm-export.zip
+./testCCIR.js
+./Document & Eligibility AHFC GAME
+./Document & Eligibility AHFC GAME/Branding
+./Document & Eligibility AHFC GAME/Branding/secondary.png.jpg
+./Document & Eligibility AHFC GAME/Branding/primary.png.jpg
+./Document & Eligibility AHFC GAME/Branding/logo.png.png
+./Document & Eligibility AHFC GAME/.DS_Store
+./Document & Eligibility AHFC GAME/Images
+./Document & Eligibility AHFC GAME/Images/CHAR-01-D.png
+./Document & Eligibility AHFC GAME/Images/PROP-24.png
+./Document & Eligibility AHFC GAME/Images/SCENE-04.png
+./Document & Eligibility AHFC GAME/Images/PROP-18.png
+./Document & Eligibility AHFC GAME/Images/SCENE-10.png
+./Document & Eligibility AHFC GAME/Images/SCENE-11.png
+./Document & Eligibility AHFC GAME/Images/PROP-19.png
+./Document & Eligibility AHFC GAME/Images/SCENE-05.png
+./Document & Eligibility AHFC GAME/Images/PROP-25.png
+./Document & Eligibility AHFC GAME/Images/CHAR-01-E.png
+./Document & Eligibility AHFC GAME/Images/PROP-27.png
+./Document & Eligibility AHFC GAME/Images/SCENE-07.png
+./Document & Eligibility AHFC GAME/Images/SCENE-06.png
+./Document & Eligibility AHFC GAME/Images/PROP-26.png
+./Document & Eligibility AHFC GAME/Images/CHAR-01-F.png
+./Document & Eligibility AHFC GAME/Images/CHAR-03-D.png
+./Document & Eligibility AHFC GAME/Images/CHAR-01-B.png
+./Document & Eligibility AHFC GAME/Images/SCENE-02.png
+./Document & Eligibility AHFC GAME/Images/PROP-22.png
+./Document & Eligibility AHFC GAME/Images/PROP-23.png
+./Document & Eligibility AHFC GAME/Images/SCENE-03.png
+./Document & Eligibility AHFC GAME/Images/CHAR-01-C.png
+./Document & Eligibility AHFC GAME/Images/CHAR-03-A.jpg
+./Document & Eligibility AHFC GAME/Images/CHAR-03-C.png
+./Document & Eligibility AHFC GAME/Images/CHAR-01-A.png
+./Document & Eligibility AHFC GAME/Images/SCENE-01.png
+./Document & Eligibility AHFC GAME/Images/PROP-09.png
+./Document & Eligibility AHFC GAME/Images/PROP-21.png
+./Document & Eligibility AHFC GAME/Images/PROP-20.png
+./Document & Eligibility AHFC GAME/Images/PROP-08.png
+./Document & Eligibility AHFC GAME/Images/CHAR-03-B.png
+./Document & Eligibility AHFC GAME/Images/CHAR-04-C.png
+./Document & Eligibility AHFC GAME/Images/LOC-03.png
+./Document & Eligibility AHFC GAME/Images/CHAR-02-D.png
+./Document & Eligibility AHFC GAME/Images/LOC-02.png
+./Document & Eligibility AHFC GAME/Images/CHAR-04-B.png
+./Document & Eligibility AHFC GAME/Images/LOC-01.png
+./Document & Eligibility AHFC GAME/Images/CHAR-04-A.png
+./Document & Eligibility AHFC GAME/Images/LOC-05.png
+./Document & Eligibility AHFC GAME/Images/CHAR-02-C.png
+./Document & Eligibility AHFC GAME/Images/CHAR-02-B.png
+./Document & Eligibility AHFC GAME/Images/LOC-04.png
+./Document & Eligibility AHFC GAME/Images/CHAR-04-D.png
+./Document & Eligibility AHFC GAME/Images/LOC-06.png
+./Document & Eligibility AHFC GAME/Images/CHAR-02-A.png
+./Document & Eligibility AHFC GAME/Images/PROP-05.png
+./Document & Eligibility AHFC GAME/Images/PROP-11.png
+./Document & Eligibility AHFC GAME/Images/PROP-10.png
+./Document & Eligibility AHFC GAME/Images/PROP-04.png
+./Document & Eligibility AHFC GAME/Images/PROP-12.png
+./Document & Eligibility AHFC GAME/Images/PROP-06.png
+./Document & Eligibility AHFC GAME/Images/PROP-07.png
+./Document & Eligibility AHFC GAME/Images/PROP-13.png
+./Document & Eligibility AHFC GAME/Images/PROP-17.png
+./Document & Eligibility AHFC GAME/Images/PROP-03.png
+./Document & Eligibility AHFC GAME/Images/PROP-02.png
+./Document & Eligibility AHFC GAME/Images/PROP-16.png
+./Document & Eligibility AHFC GAME/Images/PROP-28.png
+./Document & Eligibility AHFC GAME/Images/SCENE-08.png
+./Document & Eligibility AHFC GAME/Images/PROP-14.png
+./Document & Eligibility AHFC GAME/Images/PROP-15.png
+./Document & Eligibility AHFC GAME/Images/SCENE-09.png
+./Document & Eligibility AHFC GAME/Images/PROP-01.png
+./Document & Eligibility AHFC GAME/Images/PROP-29.png
+./Document & Eligibility AHFC GAME/Output
+./Document & Eligibility AHFC GAME/Output/pir.json
+./Document & Eligibility AHFC GAME/Output/ccir.json
+./Document & Eligibility AHFC GAME/Output/preview
+./Document & Eligibility AHFC GAME/Output/preview/index.html
+./Document & Eligibility AHFC GAME/Output/preview/runtime.js
+./Document & Eligibility AHFC GAME/Output/preview/styles.css
+./Document & Eligibility AHFC GAME/Script
+./Document & Eligibility AHFC GAME/Script/.DS_Store
+./Document & Eligibility AHFC GAME/Script/Course Script.txt
+./Document & Eligibility AHFC GAME/Script/~$urse Script.docx
+./Document & Eligibility AHFC GAME/Script/Course Script.docx
+./Document & Eligibility AHFC GAME/Audio
+./Document & Eligibility AHFC GAME/Audio/VO-S04-SHA-03B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S20-NAR-07B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S05-RAV-02B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S15-NAR-05.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S24-RAV-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S04-SHA-03A.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S15-NAR-04.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S20-NAR-07A.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S10-NAR-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S17-SHA-04A.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S21-RAV-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S09-NAR-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S16-RAV-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S17-SHA-02.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S16-NAR-02B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S12-MRS-03B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S15-NAR-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S11-MRS-02.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S06-SHA-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S17-SHA-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S15-NAR-03.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S16-NAR-02A.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S12-MRS-03A.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S15-NAR-02.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S06-RAV-03A-LOW.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S11-MRS-03A.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S09-NAR-02A.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S03-NAR-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S05-SHA-01.wav
+./Document & Eligibility AHFC GAME/Audio/VO-S20-NAR-06.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S13-SUR-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S24-SUR-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S17-SHA-03A.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S02-SUR-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S20-NAR-04.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S11-MRS-03B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S09-NAR-02B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S21-RAV-03B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S20-NAR-05.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S24-SUR-02.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S10-NAR-02B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S20-NAR-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S04-SHA-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S21-RAV-02B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S04-SHA-04B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S07-SUR-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S21-SUR-02.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S10-NAR-02A.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S06-RAV-02B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S04-SHA-02.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S20-NAR-02.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S21-RAV-02A.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S21-SUR-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S06-RAV-03A-MID.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S20-NAR-03.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S15-SHA-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S16-SHA-02.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S18-SUR-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S06-RAV-01B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S17-RAV-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S08-NAR-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S04-RAV-03B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S05-SHA-02B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S14-NAR-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S16-SHA-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S06-RAV-01A.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S22-SUR-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S21-SUR-04B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S19-NAR-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S05-SHA-02A.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S04-RAV-02A.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S11-RAV-02B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S22-SUR-02A.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S12-RAV-03.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S01-SUR-02.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S05-SHA-03B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S12-RAV-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S17-SUR-01B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S04-RAV-02B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S11-RAV-02A.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S22-SUR-02B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S01-SUR-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S12-RAV-02A.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S16-NAR-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S15-NAR-06B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S17-RAV-03A.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S15-RAV-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S06-SHA-03B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S04-RAV-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S06-SHA-04A-HI.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S12-RAV-02B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S15-NAR-06A.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S17-RAV-03B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S06-SHA-04A-LOW.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S06-SHA-02A.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S17-RAV-02B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S01-RAV-01.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S06-SHA-04A-MID.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S12-MRS-04.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S22-RAV-01B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S21-SUR-03A.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S05-RAV-01A.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S06-SHA-02B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S17-RAV-02A.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S22-RAV-01A.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S21-SUR-03B.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S06-RAV-03A-HI.mp3
+./Document & Eligibility AHFC GAME/Audio/VO-S05-RAV-01B.mp3
+./testLexer.js
+./testParser.js
 ./config
-./craft-course-factory
-./craft-course-factory-2.0
-./craft-course-factory-2.0/.env
-./craft-course-factory-2.0/.gitignore
-./craft-course-factory-2.0/assets
-./craft-course-factory-2.0/audio_cache
-./craft-course-factory-2.0/check-setup.js
-./craft-course-factory-2.0/config
-./craft-course-factory-2.0/craft-course-factory
-./craft-course-factory-2.0/output
-./craft-course-factory-2.0/package-lock.json
-./craft-course-factory-2.0/package.json
-./craft-course-factory-2.0/patch-scorm.js
-./craft-course-factory-2.0/patch.py
-./craft-course-factory-2.0/public
-./craft-course-factory-2.0/sample_course.docx
-./craft-course-factory-2.0/scorm-test
-./craft-course-factory-2.0/scripts
-./craft-course-factory-2.0/server
-./craft-course-factory-2.0/server.js
-./craft-course-factory-2.0/src
-./craft-course-factory-2.0/templates
-./craft-course-factory-2.0/test_course.json
-./craft-course-factory-2.0/test-file.txt
-./craft-course-factory-2.0/test-parse.js
-./craft-course-factory-2.0/uploads
-./craft-course-factory-2.0/vite.config.js
-./craft-course-factory/.dockerignore
-./craft-course-factory/.DS_Store
-./craft-course-factory/.env
-./craft-course-factory/.gitignore
-./craft-course-factory/Dockerfile
-./craft-course-factory/index.html
-./craft-course-factory/node_modules
-./craft-course-factory/package-lock.json
-./craft-course-factory/package.json
-./craft-course-factory/server
-./craft-course-factory/server.js
-./craft-course-factory/src
-./craft-course-factory/uploads
-./craft-course-factory/vite.config.js
+./Images
+./Images/CHAR-01-D.png
+./Images/CHAR-01-E.png
+./Images/preview-build
+./Images/preview-build/index.html
+./Images/preview-build/course.json
+./Images/preview-build/data.json
+./Images/preview-build/audio
+./Images/preview-build/audio/S02_01_34ef1ee9.mp3
+./Images/preview-build/audio/OPT_S02_B_41bd66d6.mp3
+./Images/preview-build/audio/OPT_S02_A_4c28b5d6.mp3
+./Images/preview-build/audio/S01_02_ac8f8183.mp3
+./Images/preview-build/audio/S01_01_504961b9.mp3
+./Images/preview-build/imsmanifest.xml
+./Images/CHAR-01-F.png
+./Images/CHAR-01-B.png
+./Images/SCENE-02.png
+./Images/index.html
+./Images/.DS_Store
+./Images/CHAR-01-C.png
+./Images/CHAR-01-A.png
+./Images/SCENE-01.png
+./Images/CHAR-04-C.png
+./Images/LOC-03.png
+./Images/CHAR-02-D.png
+./Images/LOC-02.png
+./Images/CHAR-04-B.png
+./Images/LOC-01.png
+./Images/CHAR-04-A.png
+./Images/LOC-05.png
+./Images/CHAR-02-C.png
+./Images/CHAR-02-B.png
+./Images/LOC-04.png
+./Images/CHAR-04-D.png
+./Images/LOC-06.png
+./Images/CHAR-02-A.png
+./Images/slide_1.png
+./Images/preview
+./Images/preview/index.html
+./server.js
+./testCompiler.js
+./testSemantic.js
+./tests
+./tests/runtime
+./tests/runtime/browserRuntime.test.html
+./tests/runtime/timelineBuilder.test.js
+./tests/runtime/runtimePlayer.test.js
+./tests/runtime/eventScheduler.test.js
+./tests/runtime/componentRegistry.test.js
+./tests/runtime/narrationRenderer.test.js
+./tests/runtime/assetLoader.test.js
+./tests/output
+./tests/output/pir.json
+./tests/output/ccir.json
+./tests/output/rawText.txt
+./tests/output/preview
+./tests/output/preview/index.html
+./tests/output/preview/runtime.js
+./tests/output/preview/styles.css
+./tests/output/ast.json
+./tests/docs
+./tests/astDump.js
+./tests/compiler.test.js
+./tests/debug
+./tests/debug/dumpRawText.js
+./tests/debug/dumpTokens.js
 ./e2e_scorm_test.zip
-./node_modules
-./node_modules/.bin
-./node_modules/.DS_Store
-./node_modules/.package-lock.json
-./node_modules/.vite
-./node_modules/@oxc-project
-./node_modules/@rolldown
-./node_modules/@vitejs
-./node_modules/@xmldom
-./node_modules/abort-controller
-./node_modules/accepts
-./node_modules/adm-zip
-./node_modules/append-field
-./node_modules/archiver
-./node_modules/argparse
-./node_modules/async
-./node_modules/b4a
-./node_modules/balanced-match
-./node_modules/bare-events
-./node_modules/bare-fs
-./node_modules/bare-path
-./node_modules/bare-stream
-./node_modules/bare-url
-./node_modules/base64-js
-./node_modules/bluebird
-./node_modules/body-parser
-./node_modules/brace-expansion
-./node_modules/buffer
-./node_modules/buffer-crc32
-./node_modules/buffer-from
-./node_modules/busboy
-./node_modules/bytes
-./node_modules/call-bind-apply-helpers
-./node_modules/call-bound
-./node_modules/compress-commons
-./node_modules/concat-stream
-./node_modules/content-disposition
-./node_modules/content-type
-./node_modules/cookie
-./node_modules/cookie-signature
-./node_modules/core-util-is
-./node_modules/cors
-./node_modules/crc-32
-./node_modules/crc32-stream
-./node_modules/debug
-./node_modules/depd
-./node_modules/detect-libc
-./node_modules/dingbat-to-unicode
-./node_modules/dotenv
-./node_modules/duck
-./node_modules/dunder-proto
-./node_modules/ee-first
-./node_modules/encodeurl
-./node_modules/es-define-property
-./node_modules/es-errors
-./node_modules/es-object-atoms
-./node_modules/escape-html
-./node_modules/etag
-./node_modules/event-target-shim
-./node_modules/events
-./node_modules/events-universal
-./node_modules/express
-./node_modules/fast-fifo
-./node_modules/fdir
-./node_modules/finalhandler
-./node_modules/forwarded
-./node_modules/fresh
-./node_modules/fs-extra
-./node_modules/fsevents
-./node_modules/function-bind
-./node_modules/get-intrinsic
-./node_modules/get-proto
-./node_modules/gopd
-./node_modules/graceful-fs
-./node_modules/has-symbols
-./node_modules/hasown
-./node_modules/http-errors
-./node_modules/iconv-lite
-./node_modules/ieee754
-./node_modules/immediate
-./node_modules/inherits
-./node_modules/ipaddr.js
-./node_modules/is-promise
-./node_modules/is-stream
-./node_modules/isarray
-./node_modules/jsonfile
-./node_modules/jszip
-./node_modules/lazystream
-./node_modules/lie
-./node_modules/lightningcss
-./node_modules/lightningcss-darwin-arm64
-./node_modules/lop
-./node_modules/mammoth
-./node_modules/math-intrinsics
-./node_modules/media-typer
-./node_modules/merge-descriptors
-./node_modules/mime-db
-./node_modules/mime-types
-./node_modules/minimatch
-./node_modules/ms
-./node_modules/multer
-./node_modules/nanoid
-./node_modules/negotiator
-./node_modules/normalize-path
-./node_modules/object-assign
-./node_modules/object-inspect
-./node_modules/on-finished
-./node_modules/once
-./node_modules/option
-./node_modules/pako
-./node_modules/parseurl
-./node_modules/path-is-absolute
-./node_modules/path-to-regexp
-./node_modules/picocolors
-./node_modules/picomatch
-./node_modules/postcss
-./node_modules/process
-./node_modules/process-nextick-args
-./node_modules/proxy-addr
-./node_modules/qs
-./node_modules/range-parser
-./node_modules/raw-body
-./node_modules/react
-./node_modules/react-dom
-./node_modules/readable-stream
-./node_modules/readdir-glob
-./node_modules/rolldown
-./node_modules/router
-./node_modules/safe-buffer
-./node_modules/safer-buffer
-./node_modules/scheduler
-./node_modules/send
-./node_modules/serve-static
-./node_modules/setimmediate
-./node_modules/setprototypeof
-./node_modules/side-channel
-./node_modules/side-channel-list
-./node_modules/side-channel-map
-./node_modules/side-channel-weakmap
-./node_modules/source-map-js
-./node_modules/sprintf-js
-./node_modules/statuses
-./node_modules/streamsearch
-./node_modules/streamx
-./node_modules/string_decoder
-./node_modules/tar-stream
-./node_modules/teex
-./node_modules/text-decoder
-./node_modules/tinyglobby
-./node_modules/toidentifier
-./node_modules/type-is
-./node_modules/typedarray
-./node_modules/underscore
-./node_modules/universalify
-./node_modules/unpipe
-./node_modules/util-deprecate
-./node_modules/vary
-./node_modules/vite
-./node_modules/wrappy
-./node_modules/xmlbuilder
-./node_modules/zip-stream
 ./output
 ./output/.DS_Store
-./output/builds
 ./output/dist
-./output/jobs
-./output/manifests
-./output/SCORM_2004_job_1784739583768_hcu2k6.zip
+./output/dist/.DS_Store
+./output/dist/scorm12
+./output/dist/scorm12/index.html
+./output/dist/scorm12/audio
+./output/dist/scorm12/audio/S02_01_34ef1ee9.mp3
+./output/dist/scorm12/audio/OPT_S02_B_41bd66d6.mp3
+./output/dist/scorm12/audio/OPT_S02_A_4c28b5d6.mp3
+./output/dist/scorm12/audio/S01_02_ac8f8183.mp3
+./output/dist/scorm12/audio/S01_01_504961b9.mp3
+./output/dist/scorm12/imsmanifest.xml
+./output/dist/scorm2004
+./output/dist/scorm2004/index.html
+./output/dist/scorm2004/audio
+./output/dist/scorm2004/audio/S02_01_34ef1ee9.mp3
+./output/dist/scorm2004/audio/OPT_S02_B_41bd66d6.mp3
+./output/dist/scorm2004/audio/OPT_S02_A_4c28b5d6.mp3
+./output/dist/scorm2004/audio/S01_02_ac8f8183.mp3
+./output/dist/scorm2004/audio/S01_01_504961b9.mp3
+./output/dist/scorm2004/imsmanifest.xml
 ./output/SCORM_2004_job_1784739696109_oftghw.zip
-./output/SCORM_2004_job_1784739839414_z6z2uw.zip
-./output/scorm12
 ./output/scorm12_course.zip
-./output/scorm2004
+./output/scorm12
+./output/scorm12/scormEngine.js
+./output/builds
+./output/builds/build_1784739456719
+./output/manifests
+./output/manifests/manifest.json
+./output/SCORM_2004_job_1784739839414_z6z2uw.zip
+./output/jobs
+./output/jobs/job_1784734253399_28bul8
+./output/jobs/job_1784734253399_28bul8/vo_manifest.json
+./output/jobs/job_1784734253399_28bul8/parsed_course.json
+./output/jobs/job_1784734253399_28bul8/image_manifest.json
+./output/jobs/job_1784734253399_28bul8/assets
+./output/jobs/job_1784734253399_28bul8/assets/images
+./output/jobs/job_1784734253399_28bul8/assets/images/CHAR-01-D.png
+./output/jobs/job_1784734253399_28bul8/assets/images/CHAR-01-E.png
+./output/jobs/job_1784734253399_28bul8/assets/images/CHAR-01-F.png
+./output/jobs/job_1784734253399_28bul8/assets/images/CHAR-01-B.png
+./output/jobs/job_1784734253399_28bul8/assets/images/SCENE-02.png
+./output/jobs/job_1784734253399_28bul8/assets/images/CHAR-01-C.png
+./output/jobs/job_1784734253399_28bul8/assets/images/CHAR-01-A.png
+./output/jobs/job_1784734253399_28bul8/assets/images/SCENE-01.png
+./output/jobs/job_1784734253399_28bul8/assets/images/CHAR-04-C.png
+./output/jobs/job_1784734253399_28bul8/assets/images/LOC-03.png
+./output/jobs/job_1784734253399_28bul8/assets/images/CHAR-02-D.png
+./output/jobs/job_1784734253399_28bul8/assets/images/LOC-02.png
+./output/jobs/job_1784734253399_28bul8/assets/images/CHAR-04-B.png
+./output/jobs/job_1784734253399_28bul8/assets/images/LOC-01.png
+./output/jobs/job_1784734253399_28bul8/assets/images/CHAR-04-A.png
+./output/jobs/job_1784734253399_28bul8/assets/images/LOC-05.png
+./output/jobs/job_1784734253399_28bul8/assets/images/CHAR-02-C.png
+./output/jobs/job_1784734253399_28bul8/assets/images/CHAR-02-B.png
+./output/jobs/job_1784734253399_28bul8/assets/images/LOC-04.png
+./output/jobs/job_1784734253399_28bul8/assets/images/CHAR-04-D.png
+./output/jobs/job_1784734253399_28bul8/assets/images/LOC-06.png
+./output/jobs/job_1784734253399_28bul8/assets/images/CHAR-02-A.png
+./output/jobs/job_1784730880246_da63d121
+./output/jobs/job_1784730880246_da63d121/parsed_course.json
+./output/jobs/job_1784730880246_da63d121/scorm
+./output/jobs/job_1784730880246_da63d121/scorm/index.html
+./output/jobs/job_1784730880246_da63d121/scorm/course_data.json
+./output/jobs/job_1784730880246_da63d121/scorm/audio
+./output/jobs/job_1784730880246_da63d121/scorm/audio/audio_manifest.json
+./output/jobs/job_1784730880246_da63d121/scorm/imsmanifest.xml
+./output/jobs/job_1784730880246_da63d121/audio
+./output/jobs/job_1784730880246_da63d121/audio/audio_manifest.json
+./output/jobs/job_1784730880246_da63d121/build
+./output/jobs/.DS_Store
+./output/jobs/job_1784731197751_b010069f
+./output/jobs/job_1784731197751_b010069f/scorm
+./output/jobs/job_1784731197751_b010069f/audio
+./output/jobs/job_1784731197751_b010069f/build
+./output/jobs/job_1784730982186_1332ea6f
+./output/jobs/job_1784730982186_1332ea6f/parsed_course.json
+./output/jobs/job_1784730982186_1332ea6f/scorm
+./output/jobs/job_1784730982186_1332ea6f/scorm/index.html
+./output/jobs/job_1784730982186_1332ea6f/scorm/course_data.json
+./output/jobs/job_1784730982186_1332ea6f/scorm/audio
+./output/jobs/job_1784730982186_1332ea6f/scorm/audio/audio_manifest.json
+./output/jobs/job_1784730982186_1332ea6f/scorm/imsmanifest.xml
+./output/jobs/job_1784730982186_1332ea6f/audio
+./output/jobs/job_1784730982186_1332ea6f/audio/audio_manifest.json
+./output/jobs/job_1784730982186_1332ea6f/build
+./output/jobs/job_1784734503006_3t71oa
+./output/jobs/job_1784734503006_3t71oa/vo_manifest.json
+./output/jobs/job_1784734503006_3t71oa/parsed_course.json
+./output/jobs/job_1784734503006_3t71oa/image_manifest.json
+./output/jobs/job_1784734503006_3t71oa/assets
+./output/jobs/job_1784734503006_3t71oa/assets/images
+./output/jobs/job_1784734503006_3t71oa/assets/images/CHAR-01-D.png
+./output/jobs/job_1784734503006_3t71oa/assets/images/CHAR-01-E.png
+./output/jobs/job_1784734503006_3t71oa/assets/images/CHAR-01-F.png
+./output/jobs/job_1784734503006_3t71oa/assets/images/CHAR-01-B.png
+./output/jobs/job_1784734503006_3t71oa/assets/images/SCENE-02.png
+./output/jobs/job_1784734503006_3t71oa/assets/images/CHAR-01-C.png
+./output/jobs/job_1784734503006_3t71oa/assets/images/CHAR-01-A.png
+./output/jobs/job_1784734503006_3t71oa/assets/images/SCENE-01.png
+./output/jobs/job_1784734503006_3t71oa/assets/images/CHAR-04-C.png
+./output/jobs/job_1784734503006_3t71oa/assets/images/LOC-03.png
+./output/jobs/job_1784734503006_3t71oa/assets/images/CHAR-02-D.png
+./output/jobs/job_1784734503006_3t71oa/assets/images/LOC-02.png
+./output/jobs/job_1784734503006_3t71oa/assets/images/CHAR-04-B.png
+./output/jobs/job_1784734503006_3t71oa/assets/images/LOC-01.png
+./output/jobs/job_1784734503006_3t71oa/assets/images/CHAR-04-A.png
+./output/jobs/job_1784734503006_3t71oa/assets/images/LOC-05.png
+./output/jobs/job_1784734503006_3t71oa/assets/images/CHAR-02-C.png
+./output/jobs/job_1784734503006_3t71oa/assets/images/CHAR-02-B.png
+./output/jobs/job_1784734503006_3t71oa/assets/images/LOC-04.png
+./output/jobs/job_1784734503006_3t71oa/assets/images/CHAR-04-D.png
+./output/jobs/job_1784734503006_3t71oa/assets/images/LOC-06.png
+./output/jobs/job_1784734503006_3t71oa/assets/images/CHAR-02-A.png
+./output/jobs/job_1784738801207
+./output/jobs/job_1784738801207/uploads
+./output/jobs/job_1784738801207/uploads/Test Script.docx
+./output/jobs/job_1784730842714_fcf6bf9e
+./output/jobs/job_1784730842714_fcf6bf9e/parsed_course.json
+./output/jobs/job_1784730842714_fcf6bf9e/scorm
+./output/jobs/job_1784730842714_fcf6bf9e/audio
+./output/jobs/job_1784730842714_fcf6bf9e/audio/audio_manifest.json
+./output/jobs/job_1784730842714_fcf6bf9e/build
+./output/jobs/job_1784734253392
+./output/jobs/job_1784734253392/uploads
+./output/jobs/job_1784734253392/uploads/Test Script.docx
+./output/jobs/job_1784733364304_wsjoo321
+./output/jobs/job_1784733364304_wsjoo321/parsed_course.json
+./output/jobs/job_1784733364304_wsjoo321/audio
+./output/jobs/job_1784733364304_wsjoo321/audio/audio_manifest.json
+./output/jobs/job_1784733364304_wsjoo321/audio/slide_3.mp3
+./output/jobs/job_1784733364304_wsjoo321/audio/slide_2.mp3
+./output/jobs/job_1784733364304_wsjoo321/audio/slide_1.mp3
+./output/jobs/job_1784733364304_wsjoo321/scorm_payload
+./output/jobs/job_1784733364304_wsjoo321/scorm_payload/index.html
+./output/jobs/job_1784733364304_wsjoo321/scorm_payload/parsed_course.json
+./output/jobs/job_1784733364304_wsjoo321/scorm_payload/audio
+./output/jobs/job_1784733364304_wsjoo321/scorm_payload/audio/audio_manifest.json
+./output/jobs/job_1784733364304_wsjoo321/scorm_payload/audio/slide_3.mp3
+./output/jobs/job_1784733364304_wsjoo321/scorm_payload/audio/slide_2.mp3
+./output/jobs/job_1784733364304_wsjoo321/scorm_payload/audio/slide_1.mp3
+./output/jobs/job_1784733364304_wsjoo321/scorm_payload/imsmanifest.xml
+./output/jobs/job_1784737273596_90z6vx
+./output/jobs/job_1784737273596_90z6vx/vo_manifest.json
+./output/jobs/job_1784737273596_90z6vx/parsed_course.json
+./output/jobs/job_1784737273596_90z6vx/image_manifest.json
+./output/jobs/job_1784737273596_90z6vx/assets
+./output/jobs/job_1784737273596_90z6vx/assets/images
+./output/jobs/job_1784737273596_90z6vx/assets/images/CHAR-01-D.png
+./output/jobs/job_1784737273596_90z6vx/assets/images/CHAR-01-E.png
+./output/jobs/job_1784737273596_90z6vx/assets/images/CHAR-01-F.png
+./output/jobs/job_1784737273596_90z6vx/assets/images/CHAR-01-B.png
+./output/jobs/job_1784737273596_90z6vx/assets/images/SCENE-02.png
+./output/jobs/job_1784737273596_90z6vx/assets/images/CHAR-01-C.png
+./output/jobs/job_1784737273596_90z6vx/assets/images/CHAR-01-A.png
+./output/jobs/job_1784737273596_90z6vx/assets/images/SCENE-01.png
+./output/jobs/job_1784737273596_90z6vx/assets/images/CHAR-04-C.png
+./output/jobs/job_1784737273596_90z6vx/assets/images/LOC-03.png
+./output/jobs/job_1784737273596_90z6vx/assets/images/CHAR-02-D.png
+./output/jobs/job_1784737273596_90z6vx/assets/images/LOC-02.png
+./output/jobs/job_1784737273596_90z6vx/assets/images/CHAR-04-B.png
+./output/jobs/job_1784737273596_90z6vx/assets/images/LOC-01.png
+./output/jobs/job_1784737273596_90z6vx/assets/images/CHAR-04-A.png
+./output/jobs/job_1784737273596_90z6vx/assets/images/LOC-05.png
+./output/jobs/job_1784737273596_90z6vx/assets/images/CHAR-02-C.png
+./output/jobs/job_1784737273596_90z6vx/assets/images/CHAR-02-B.png
+./output/jobs/job_1784737273596_90z6vx/assets/images/LOC-04.png
+./output/jobs/job_1784737273596_90z6vx/assets/images/CHAR-04-D.png
+./output/jobs/job_1784737273596_90z6vx/assets/images/LOC-06.png
+./output/jobs/job_1784737273596_90z6vx/assets/images/CHAR-02-A.png
+./output/jobs/job_1784737273596_90z6vx/assets/images/slide_1.png
+./output/jobs/job_1784737273596_90z6vx/assets/audio
+./output/jobs/job_1784737273596_90z6vx/assets/audio/slide_1.mp3.mp3
+./output/jobs/job_1784737273596_90z6vx/assets/audio/S02_01_34ef1ee9.mp3
+./output/jobs/job_1784737273596_90z6vx/assets/audio/OPT_S02_B_41bd66d6.mp3
+./output/jobs/job_1784737273596_90z6vx/assets/audio/slide_1.mp3
+./output/jobs/job_1784737273596_90z6vx/assets/audio/OPT_S02_A_4c28b5d6.mp3
+./output/jobs/job_1784737273596_90z6vx/assets/audio/S01_02_ac8f8183.mp3
+./output/jobs/job_1784737273596_90z6vx/assets/audio/S01_01_504961b9.mp3
+./output/jobs/job_1784738480269_7y4nay
+./output/jobs/job_1784738480269_7y4nay/vo_manifest.json
+./output/jobs/job_1784738480269_7y4nay/parsed_course.json
+./output/jobs/job_1784738480269_7y4nay/image_manifest.json
+./output/jobs/job_1784738480269_7y4nay/assets
+./output/jobs/job_1784738480269_7y4nay/assets/images
+./output/jobs/job_1784738480269_7y4nay/assets/images/slide_1.png
+./output/jobs/job_1784738480269_7y4nay/assets/audio
+./output/jobs/job_1784738480269_7y4nay/assets/audio/slide_1.mp3
+./output/jobs/job_1784738690457
+./output/jobs/job_1784738690457/uploads
+./output/jobs/job_1784738690457/uploads/Test Script.docx
+./output/jobs/job_1784733086032_duobytvy
+./output/jobs/job_1784733086032_duobytvy/parsed_course.json
+./output/jobs/job_1784733086032_duobytvy/audio
+./output/jobs/job_1784733086032_duobytvy/audio/audio_manifest.json
+./output/jobs/job_1784733086032_duobytvy/audio/slide_3.mp3
+./output/jobs/job_1784733086032_duobytvy/audio/slide_2.mp3
+./output/jobs/job_1784733086032_duobytvy/audio/slide_1.mp3
+./output/jobs/job_1784733086032_duobytvy/scorm_payload
+./output/jobs/job_1784733086032_duobytvy/scorm_payload/parsed_course.json
+./output/jobs/job_1784733086032_duobytvy/scorm_payload/audio
+./output/jobs/job_1784733086032_duobytvy/scorm_payload/audio/audio_manifest.json
+./output/jobs/job_1784733086032_duobytvy/scorm_payload/audio/slide_3.mp3
+./output/jobs/job_1784733086032_duobytvy/scorm_payload/audio/slide_2.mp3
+./output/jobs/job_1784733086032_duobytvy/scorm_payload/audio/slide_1.mp3
+./output/jobs/job_1784733086032_duobytvy/scorm_payload/imsmanifest.xml
+./output/jobs/job_1784733086032_duobytvy/job_1784733086032_duobytvy.zip
+./output/jobs/job_1784733432627_k58s2elg
+./output/jobs/job_1784733432627_k58s2elg/parsed_course.json
+./output/jobs/job_1784733432627_k58s2elg/audio
+./output/jobs/job_1784733432627_k58s2elg/audio/audio_manifest.json
+./output/jobs/job_1784733432627_k58s2elg/audio/slide_3.mp3
+./output/jobs/job_1784733432627_k58s2elg/audio/slide_2.mp3
+./output/jobs/job_1784733432627_k58s2elg/audio/slide_1.mp3
+./output/jobs/job_1784733432627_k58s2elg/scorm_payload
+./output/jobs/job_1784733432627_k58s2elg/scorm_payload/index.html
+./output/jobs/job_1784733432627_k58s2elg/scorm_payload/parsed_course.json
+./output/jobs/job_1784733432627_k58s2elg/scorm_payload/audio
+./output/jobs/job_1784733432627_k58s2elg/scorm_payload/audio/audio_manifest.json
+./output/jobs/job_1784733432627_k58s2elg/scorm_payload/audio/slide_3.mp3
+./output/jobs/job_1784733432627_k58s2elg/scorm_payload/audio/slide_2.mp3
+./output/jobs/job_1784733432627_k58s2elg/scorm_payload/audio/slide_1.mp3
+./output/jobs/job_1784733432627_k58s2elg/scorm_payload/imsmanifest.xml
+./output/jobs/job_1784731098075_6461fbb9
+./output/jobs/job_1784731098075_6461fbb9/parsed_course.json
+./output/jobs/job_1784731098075_6461fbb9/scorm
+./output/jobs/job_1784731098075_6461fbb9/scorm/index.html
+./output/jobs/job_1784731098075_6461fbb9/scorm/course_data.json
+./output/jobs/job_1784731098075_6461fbb9/scorm/audio
+./output/jobs/job_1784731098075_6461fbb9/scorm/audio/audio_manifest.json
+./output/jobs/job_1784731098075_6461fbb9/scorm/imsmanifest.xml
+./output/jobs/job_1784731098075_6461fbb9/audio
+./output/jobs/job_1784731098075_6461fbb9/audio/audio_manifest.json
+./output/jobs/job_1784731098075_6461fbb9/build
+./output/jobs/job_1784732914477_a4466685
+./output/jobs/job_1784732914477_a4466685/parsed_course.json
+./output/jobs/job_1784732914477_a4466685/scorm
+./output/jobs/job_1784732914477_a4466685/scorm/index.html
+./output/jobs/job_1784732914477_a4466685/scorm/course_data.json
+./output/jobs/job_1784732914477_a4466685/scorm/audio
+./output/jobs/job_1784732914477_a4466685/scorm/audio/audio_manifest.json
+./output/jobs/job_1784732914477_a4466685/scorm/audio/slide_3.mp3
+./output/jobs/job_1784732914477_a4466685/scorm/audio/slide_2.mp3
+./output/jobs/job_1784732914477_a4466685/scorm/imsmanifest.xml
+./output/jobs/job_1784732914477_a4466685/audio
+./output/jobs/job_1784732914477_a4466685/audio/audio_manifest.json
+./output/jobs/job_1784732914477_a4466685/audio/slide_3.mp3
+./output/jobs/job_1784732914477_a4466685/audio/slide_2.mp3
+./output/jobs/job_1784732914477_a4466685/build
+./output/jobs/job_1784732914477_a4466685/job_1784732914477_a4466685.zip
+./output/jobs/job_1784737921366
+./output/jobs/job_1784737921366/uploads
+./output/jobs/job_1784737921366/uploads/Test Script.docx
+./output/jobs/job_1784731426699_8fc2a882
+./output/jobs/job_1784731426699_8fc2a882/parsed_course.json
+./output/jobs/job_1784731426699_8fc2a882/job_1784731426699_8fc2a882.zip
+./output/jobs/job_1784731426699_8fc2a882/scorm
+./output/jobs/job_1784731426699_8fc2a882/scorm/index.html
+./output/jobs/job_1784731426699_8fc2a882/scorm/course_data.json
+./output/jobs/job_1784731426699_8fc2a882/scorm/audio
+./output/jobs/job_1784731426699_8fc2a882/scorm/audio/audio_manifest.json
+./output/jobs/job_1784731426699_8fc2a882/scorm/imsmanifest.xml
+./output/jobs/job_1784731426699_8fc2a882/audio
+./output/jobs/job_1784731426699_8fc2a882/audio/audio_manifest.json
+./output/jobs/job_1784731426699_8fc2a882/build
+./output/jobs/job_1784731153710_b1535b0f
+./output/jobs/job_1784731153710_b1535b0f/parsed_course.json
+./output/jobs/job_1784731153710_b1535b0f/scorm
+./output/jobs/job_1784731153710_b1535b0f/scorm/index.html
+./output/jobs/job_1784731153710_b1535b0f/scorm/course_data.json
+./output/jobs/job_1784731153710_b1535b0f/scorm/audio
+./output/jobs/job_1784731153710_b1535b0f/scorm/audio/audio_manifest.json
+./output/jobs/job_1784731153710_b1535b0f/scorm/imsmanifest.xml
+./output/jobs/job_1784731153710_b1535b0f/audio
+./output/jobs/job_1784731153710_b1535b0f/audio/audio_manifest.json
+./output/jobs/job_1784731153710_b1535b0f/build
+./output/jobs/job_1784731153710_b1535b0f/job_1784731153710_b1535b0f.zip
+./output/jobs/job_1784738480254
+./output/jobs/job_1784738480254/uploads
+./output/jobs/job_1784738480254/uploads/Test Script.docx
+./output/jobs/job_1784738690464_gyhto7
+./output/jobs/job_1784738690464_gyhto7/vo_manifest.json
+./output/jobs/job_1784738690464_gyhto7/parsed_course.json
+./output/jobs/job_1784738690464_gyhto7/image_manifest.json
+./output/jobs/job_1784738690464_gyhto7/assets
+./output/jobs/job_1784738690464_gyhto7/assets/images
+./output/jobs/job_1784738690464_gyhto7/assets/images/slide_1.png
+./output/jobs/job_1784738690464_gyhto7/assets/audio
+./output/jobs/job_1784738690464_gyhto7/assets/audio/slide_1.mp3
+./output/jobs/job_1784738943141
+./output/jobs/job_1784738943141/uploads
+./output/jobs/job_1784738943141/uploads/Test Script.docx
+./output/jobs/job_1784734503000
+./output/jobs/job_1784734503000/uploads
+./output/jobs/job_1784734503000/uploads/Test Script.docx
+./output/jobs/job_1784731022444_b2177309
+./output/jobs/job_1784731022444_b2177309/parsed_course.json
+./output/jobs/job_1784731022444_b2177309/scorm
+./output/jobs/job_1784731022444_b2177309/scorm/index.html
+./output/jobs/job_1784731022444_b2177309/scorm/course_data.json
+./output/jobs/job_1784731022444_b2177309/scorm/audio
+./output/jobs/job_1784731022444_b2177309/scorm/audio/audio_manifest.json
+./output/jobs/job_1784731022444_b2177309/scorm/imsmanifest.xml
+./output/jobs/job_1784731022444_b2177309/audio
+./output/jobs/job_1784731022444_b2177309/audio/audio_manifest.json
+./output/jobs/job_1784731022444_b2177309/build
+./output/jobs/job_1784738943147_fbe336
+./output/jobs/job_1784738943147_fbe336/vo_manifest.json
+./output/jobs/job_1784738943147_fbe336/parsed_course.json
+./output/jobs/job_1784738943147_fbe336/image_manifest.json
+./output/jobs/job_1784738943147_fbe336/assets
+./output/jobs/job_1784738943147_fbe336/assets/images
+./output/jobs/job_1784738943147_fbe336/assets/images/slide_1.png
+./output/jobs/job_1784738943147_fbe336/assets/audio
+./output/jobs/job_1784738943147_fbe336/assets/audio/slide_1.mp3
+./output/jobs/job_1784731654920_d3ed10b0
+./output/jobs/job_1784731654920_d3ed10b0/parsed_course.json
+./output/jobs/job_1784731654920_d3ed10b0/scorm
+./output/jobs/job_1784731654920_d3ed10b0/scorm/index.html
+./output/jobs/job_1784731654920_d3ed10b0/scorm/course_data.json
+./output/jobs/job_1784731654920_d3ed10b0/scorm/audio
+./output/jobs/job_1784731654920_d3ed10b0/scorm/audio/audio_manifest.json
+./output/jobs/job_1784731654920_d3ed10b0/scorm/imsmanifest.xml
+./output/jobs/job_1784731654920_d3ed10b0/audio
+./output/jobs/job_1784731654920_d3ed10b0/audio/audio_manifest.json
+./output/jobs/job_1784731654920_d3ed10b0/build
+./output/jobs/job_1784731654920_d3ed10b0/job_1784731654920_d3ed10b0.zip
+./output/jobs/job_1784737921371_7q78xz
+./output/jobs/job_1784737921371_7q78xz/vo_manifest.json
+./output/jobs/job_1784737921371_7q78xz/parsed_course.json
+./output/jobs/job_1784737921371_7q78xz/image_manifest.json
+./output/jobs/job_1784737921371_7q78xz/assets
+./output/jobs/job_1784737921371_7q78xz/assets/images
+./output/jobs/job_1784737921371_7q78xz/assets/images/slide_1.png
+./output/jobs/job_1784737921371_7q78xz/assets/audio
+./output/jobs/job_1784737921371_7q78xz/assets/audio/slide_1.mp3
+./output/jobs/job_1784733493153_t1t9s10j
+./output/jobs/job_1784733493153_t1t9s10j/parsed_course.json
+./output/jobs/job_1784733493153_t1t9s10j/job_1784733493153_t1t9s10j.zip
+./output/jobs/job_1784733493153_t1t9s10j/audio
+./output/jobs/job_1784733493153_t1t9s10j/audio/audio_manifest.json
+./output/jobs/job_1784733493153_t1t9s10j/audio/slide_3.mp3
+./output/jobs/job_1784733493153_t1t9s10j/audio/slide_2.mp3
+./output/jobs/job_1784733493153_t1t9s10j/audio/slide_1.mp3
+./output/jobs/job_1784733493153_t1t9s10j/scorm_payload
+./output/jobs/job_1784733493153_t1t9s10j/scorm_payload/index.html
+./output/jobs/job_1784733493153_t1t9s10j/scorm_payload/parsed_course.json
+./output/jobs/job_1784733493153_t1t9s10j/scorm_payload/audio
+./output/jobs/job_1784733493153_t1t9s10j/scorm_payload/audio/audio_manifest.json
+./output/jobs/job_1784733493153_t1t9s10j/scorm_payload/audio/slide_3.mp3
+./output/jobs/job_1784733493153_t1t9s10j/scorm_payload/audio/slide_2.mp3
+./output/jobs/job_1784733493153_t1t9s10j/scorm_payload/audio/slide_1.mp3
+./output/jobs/job_1784733493153_t1t9s10j/scorm_payload/imsmanifest.xml
+./output/jobs/job_1784738801213_dam7rt
+./output/jobs/job_1784738801213_dam7rt/vo_manifest.json
+./output/jobs/job_1784738801213_dam7rt/parsed_course.json
+./output/jobs/job_1784738801213_dam7rt/image_manifest.json
+./output/jobs/job_1784738801213_dam7rt/assets
+./output/jobs/job_1784738801213_dam7rt/assets/images
+./output/jobs/job_1784738801213_dam7rt/assets/images/slide_1.png
+./output/jobs/job_1784738801213_dam7rt/assets/audio
+./output/jobs/job_1784738801213_dam7rt/assets/audio/slide_1.mp3
+./output/jobs/job_1784731064464_d0b4edd0
+./output/jobs/job_1784731064464_d0b4edd0/parsed_course.json
+./output/jobs/job_1784731064464_d0b4edd0/scorm
+./output/jobs/job_1784731064464_d0b4edd0/scorm/index.html
+./output/jobs/job_1784731064464_d0b4edd0/scorm/course_data.json
+./output/jobs/job_1784731064464_d0b4edd0/scorm/audio
+./output/jobs/job_1784731064464_d0b4edd0/scorm/audio/audio_manifest.json
+./output/jobs/job_1784731064464_d0b4edd0/scorm/imsmanifest.xml
+./output/jobs/job_1784731064464_d0b4edd0/audio
+./output/jobs/job_1784731064464_d0b4edd0/audio/audio_manifest.json
+./output/jobs/job_1784731064464_d0b4edd0/build
+./output/jobs/job_1784737273580
+./output/jobs/job_1784737273580/uploads
+./output/jobs/job_1784737273580/uploads/Test Script.docx
+./output/SCORM_2004_job_1784739583768_hcu2k6.zip
 ./output/scorm2004_course
+./output/scorm2004_course/index.html
+./output/scorm2004_course/audio
+./output/scorm2004_course/audio/S02_01_34ef1ee9.mp3
+./output/scorm2004_course/audio/OPT_S02_B_41bd66d6.mp3
+./output/scorm2004_course/audio/OPT_S02_A_4c28b5d6.mp3
+./output/scorm2004_course/audio/S01_02_ac8f8183.mp3
+./output/scorm2004_course/audio/S01_01_504961b9.mp3
+./output/scorm2004_course/imsmanifest.xml
 ./output/scorm2004_course.zip
+./output/scorm2004
+./output/scorm2004/scormEngine.js
+./check-setup.js
+./scorm-test
+./scorm-test/index.html
+./scorm-test/imsmanifest.xml
+./uploads
+./uploads/images-1784794901818-487950914.png
+./uploads/images-1784794901776-458641978.png
+./uploads/1784745938540-CHAR-04-A.png
+./uploads/1784746158945-LOC-05.png
+./uploads/1784747952791-CHAR-01-C.png
+./uploads/1784745938433-CHAR-01-F.png
+./uploads/633bcb74324d28d9e1dfdbc948b0c231
+./uploads/1784746358693-CHAR-04-A.png
+./uploads/1784746455877-CHAR-01-B.png
+./uploads/b4b243f138d0ead5588457418dd65f4f
+./uploads/1784745952042-OPT_S02_B_41bd66d6.mp3
+./uploads/1784747119072-CHAR-02-C.png
+./uploads/1784747333236-CHAR-01-A.png
+./uploads/audio-1784750743153-468902950.mp3
+./uploads/1784750178453-CHAR-01-A.png
+./uploads/1784747333268-CHAR-01-B.png
+./uploads/1784746456032-CHAR-02-C.png
+./uploads/1784746158910-LOC-04.png
+./uploads/1784746158655-CHAR-01-F.png
+./uploads/audio-1784750686379-126596580.mp3
+./uploads/03ff4578d00c57ed09a0ed0646e820d3
+./uploads/1784748351434-CHAR-01-C.png
+./uploads/1784748351409-CHAR-01-B.png
+./uploads/1784746172195-S02_01_34ef1ee9.mp3
+./uploads/1784746455890-CHAR-01-C.png
+./uploads/1784745938419-CHAR-01-E.png
+./uploads/1784747333315-CHAR-01-D.png
+./uploads/1784745952043-slide_1.mp3
+./uploads/a61cb9cf60183aee13a00f516cb89746
+./uploads/1784747317517-Test Script.docx
+./uploads/temp
+./uploads/job_1784739696109_oftghw
+./uploads/job_1784739696109_oftghw/build_stage
+./uploads/job_1784739696109_oftghw/build_stage/script.docx
+./uploads/job_1784739696109_oftghw/build_stage/slide_1.mp3
+./uploads/job_1784739696109_oftghw/build_stage/courseData.json
+./uploads/job_1784739696109_oftghw/build_stage/slide_1.png
+./uploads/job_1784739696109_oftghw/script.docx
+./uploads/job_1784739696109_oftghw/slide_1.mp3
+./uploads/job_1784739696109_oftghw/slide_1.png
+./uploads/1784745938606-LOC-01.png
+./uploads/audio-1784762394016-429264870.mp3
+./uploads/1784746158788-CHAR-04-A.png
+./uploads/images-1784762379755-372185071.png
+./uploads/1784746158732-CHAR-02-C.png
+./uploads/728ae853744ccf2299b93f107164fbe8
+./uploads/7d3b83201eeb4cd827b573f6cadc1fae
+./uploads/24da48c44eee1ee3be825cab4213056d
+./uploads/d5bb8b430437b34bfcbc9d848d20430c
+./uploads/images-1784750733224-225458000.png
+./uploads/1784746456127-LOC-01.png
+./uploads/1784750137559-test-file.txt
+./uploads/1784746358600-CHAR-02-A.png
+./uploads/.DS_Store
+./uploads/audio-1784762394016-537274501.mp3
+./uploads/1784746455863-CHAR-01-A.png
+./uploads/1784746455927-CHAR-01-E.png
+./uploads/b3af50ea2ea274a7b4322d285a14d895
+./uploads/1784747119141-CHAR-04-A.png
+./uploads/images-1784794901894-991132415.png
+./uploads/audio-1784762394015-775961060.mp3
+./uploads/1784747692517-CHAR-01-B.png
+./uploads/job_1784739429409_btosu6
+./uploads/job_1784739429409_btosu6/script.docx
+./uploads/job_1784739429409_btosu6/slide_1.mp3
+./uploads/job_1784739429409_btosu6/slide_1.png
+./uploads/1784745938647-LOC-03.png
+./uploads/1784746358733-CHAR-04-D.png
+./uploads/1784748361397-S01_01_504961b9.mp3
+./uploads/1784748361397-OPT_S02_B_41bd66d6.mp3
+./uploads/1784745938473-CHAR-02-B.png
+./uploads/1784746456298-slide_1.png
+./uploads/1784746871854-S02_01_34ef1ee9.mp3
+./uploads/1784746358572-CHAR-01-E.png
+./uploads/1784747007352-CHAR-01-C.png
+./uploads/1784748214693-CHAR-01-C.png
+./uploads/images-1784794901692-788161370.png
+./uploads/1784746859332-CHAR-01-A.png
+./uploads/ca9c9a45feca9583cf2135fe0df071d3
+./uploads/1784746159026-slide_1.png
+./uploads/1784746158966-LOC-06.png
+./uploads/audio-1784794919675-816977381.mp3
+./uploads/audio-1784750686378-258384256.mp3
+./uploads/2d70b5e942d76b929685fa477c4c2ae4
+./uploads/1784746455994-CHAR-02-B.png
+./uploads/images-1784794901859-383784428.png
+./uploads/images-1784794901491-998807155.png
+./uploads/1784746358879-LOC-06.png
+./uploads/1784746859418-CHAR-01-E.png
+./uploads/audio-1784794919677-99264669.mp3
+./uploads/e478aeba3842db5c889a19401b84dc4e
+./uploads/images-1784750733237-765474680.png
+./uploads/b682830e9a8f6ad4084e6687c2e971aa
+./uploads/1784747119161-CHAR-04-C.png
+./uploads/images-1784762379726-642239389.png
+./uploads/1784747007396-CHAR-01-E.png
+./uploads/1784746859366-CHAR-01-B.png
+./uploads/images-1784794901650-283464031.png
+./uploads/1784746158828-CHAR-04-D.png
+./uploads/bcf62aec97511dfacc72546839ba2506
+./uploads/images-1784794901790-878030888.png
+./uploads/1784746340547-Test Script.docx
+./uploads/images-1784750733153-921568552.png
+./uploads/1784746358791-LOC-03.png
+./uploads/1784746158861-LOC-02.png
+./uploads/1784746358899-SCENE-01.png
+./uploads/c7c978ef44ef279298dea084054193d9
+./uploads/images-1784794901578-230181367.png
+./uploads/images-1784750733212-481847651.png
+./uploads/1784747132166-S01_01_504961b9.mp3
+./uploads/1784747020334-slide_1.mp3
+./uploads/job_1784739839414_z6z2uw
+./uploads/job_1784739839414_z6z2uw/build_stage
+./uploads/job_1784739839414_z6z2uw/build_stage/script.docx
+./uploads/job_1784739839414_z6z2uw/build_stage/slide_1.mp3
+./uploads/job_1784739839414_z6z2uw/build_stage/courseData.json
+./uploads/job_1784739839414_z6z2uw/build_stage/slide_1.png
+./uploads/job_1784739839414_z6z2uw/script.docx
+./uploads/job_1784739839414_z6z2uw/slide_1.mp3
+./uploads/job_1784739839414_z6z2uw/slide_1.png
+./uploads/job_1784743620142
+./uploads/job_1784743620142/scorm_package.zip
+./uploads/job_1784743620142/scorm
+./uploads/job_1784743620142/scorm/index.html
+./uploads/job_1784743620142/scorm/imsmanifest.xml
+./uploads/job_1784743620142/Test Script.docx
+./uploads/1784746158981-SCENE-01.png
+./uploads/1784747333325-CHAR-01-E.png
+./uploads/1784746358855-LOC-05.png
+./uploads/1784746358650-CHAR-02-C.png
+./uploads/images-1784794901710-974700507.png
+./uploads/1784747333282-CHAR-01-C.png
+./uploads/1784748201453-Test Script.docx
+./uploads/1784745938377-CHAR-01-C.png
+./uploads/1784746455949-CHAR-01-F.png
+./uploads/1784747692494-CHAR-01-A.png
+./uploads/1784746158878-LOC-03.png
+./uploads/1784745938313-CHAR-01-A.png
+./uploads/1784746456196-LOC-04.png
+./uploads/job_1784739583768_hcu2k6
+./uploads/job_1784739583768_hcu2k6/build_stage
+./uploads/job_1784739583768_hcu2k6/build_stage/script.docx
+./uploads/job_1784739583768_hcu2k6/build_stage/slide_1.mp3
+./uploads/job_1784739583768_hcu2k6/build_stage/courseData.json
+./uploads/job_1784739583768_hcu2k6/build_stage/slide_1.png
+./uploads/job_1784739583768_hcu2k6/script.docx
+./uploads/job_1784739583768_hcu2k6/slide_1.mp3
+./uploads/job_1784739583768_hcu2k6/slide_1.png
+./uploads/1784746456095-CHAR-04-C.png
+./uploads/1784746358917-SCENE-02.png
+./uploads/1784748351449-CHAR-01-D.png
+./uploads/1784747020334-S02_01_34ef1ee9.mp3
+./uploads/1784746358751-LOC-01.png
+./uploads/job_1784739767351_0nnq4b
+./uploads/job_1784739767351_0nnq4b/build_stage
+./uploads/job_1784739767351_0nnq4b/build_stage/script.docx
+./uploads/job_1784739767351_0nnq4b/build_stage/slide_1.mp3
+./uploads/job_1784739767351_0nnq4b/build_stage/courseData.json
+./uploads/job_1784739767351_0nnq4b/build_stage/slide_1.png
+./uploads/job_1784739767351_0nnq4b/script.docx
+./uploads/job_1784739767351_0nnq4b/slide_1.mp3
+./uploads/job_1784739767351_0nnq4b/slide_1.png
+./uploads/1784748341487-Test Script.docx
+./uploads/1784747679900-Test Script.docx
+./uploads/1784748361398-S01_02_ac8f8183.mp3
+./uploads/1784750178543-CHAR-01-E.png
+./uploads/97d4bfdbedbf24c2619c58bc88dcc562
+./uploads/1784746158815-CHAR-04-C.png
+./uploads/1784747119176-CHAR-04-D.png
+./uploads/1784745952043-S02_01_34ef1ee9.mp3
+./uploads/1784746456161-LOC-03.png
+./uploads/images-1784794901838-996687011.png
+./uploads/file-1784750524793-348804326.html
+./uploads/1784747119148-CHAR-04-B.png
+./uploads/1784747132166-S01_02_ac8f8183.mp3
+./uploads/8a6c9345cd6f9380bf51231f4f7a1ed8
+./uploads/1784747119045-CHAR-02-B.png
+./uploads/1784748214704-CHAR-01-D.png
+./uploads/images-1784794901670-280675313.png
+./uploads/5a895bddbdc5ebb1b75ae857ffe31b98
+./uploads/1784747097165-Test Script.docx
+./uploads/c53c2798c82cc727c49e9dfe2c09cd67
+./uploads/1784748214713-CHAR-01-E.png
+./uploads/images-1784794901564-245447516.png
+./uploads/1784745938760-SCENE-02.png
+./uploads/audio-1784794919675-829568188.mp3
+./uploads/1784745938743-SCENE-01.png
+./uploads/1784746859383-CHAR-01-C.png
+./uploads/1784747132166-OPT_S02_B_41bd66d6.mp3
+./uploads/1784747952734-CHAR-01-A.png
+./uploads/file-1784750524822-738818568.html
+./uploads/1784746158764-CHAR-02-D.png
+./uploads/1784746871851-OPT_S02_B_41bd66d6.mp3
+./uploads/1784750178508-CHAR-01-C.png
+./uploads/1784746456239-LOC-06.png
+./uploads/1784747692568-CHAR-01-E.png
+./uploads/audio-1784750743154-882779331.mp3
+./uploads/1784746172195-S01_01_504961b9.mp3
+./uploads/1784746456077-CHAR-04-A.png
+./uploads/images-1784794901625-704934560.png
+./uploads/1784746158997-SCENE-02.png
+./uploads/1784745938596-CHAR-04-D.png
+./uploads/1784750178491-CHAR-01-B.png
+./uploads/1784746158555-CHAR-01-A.png
+./uploads/audio-1784794919675-869939073.mp3
+./uploads/1784746358487-CHAR-01-A.png
+./uploads/1784746871852-S01_01_504961b9.mp3
+./uploads/audio-1784750686379-187359058.mp3
+./uploads/audio-1784750743154-757003904.mp3
+./uploads/images-1784750733187-476499901.png
+./uploads/1784746358701-CHAR-04-B.png
+./uploads/1784746358554-CHAR-01-D.png
+./uploads/1784746172195-S01_02_ac8f8183.mp3
+./uploads/1784748351382-CHAR-01-A.png
+./uploads/1784746158600-CHAR-01-C.png
+./uploads/audio-1784750743154-976246839.mp3
+./uploads/43729038c74a58f7d97703f5a5a98a9f
+./uploads/ea0290658d158f81f570b4a84564abe4
+./uploads/8e0b5664b1da09382e10afc51ee19245
+./uploads/1784746859404-CHAR-01-D.png
+./uploads/5bc124f3de08b0de0c0590bfbe9cfeb1
+./uploads/1c9a9b9c243cbeb1d20fbb76b87b2a92
+./uploads/1784746358618-CHAR-02-B.png
+./uploads/1784746358537-CHAR-01-C.png
+./uploads/1784747119259-LOC-04.png
+./uploads/1784746456220-LOC-05.png
+./uploads/1784747952827-CHAR-01-E.png
+./uploads/1784745938441-CHAR-02-A.png
+./uploads/audio-1784762394016-335462204.mp3
+./uploads/file-1784750624231-160768653.mp3
+./uploads/1784745938406-CHAR-01-D.png
+./uploads/1784746158844-LOC-01.png
+./uploads/images-1784762379703-845595961.png
+./uploads/1784745938575-CHAR-04-C.png
+./uploads/95a611378d16086bda32f66aa606402f
+./uploads/1784746455902-CHAR-01-D.png
+./uploads/job_1784740274898_9yfc45
+./uploads/job_1784740274898_9yfc45/CHAR-01-D.png
+./uploads/job_1784740274898_9yfc45/CHAR-01-E.png
+./uploads/job_1784740274898_9yfc45/CHAR-01-F.png
+./uploads/job_1784740274898_9yfc45/CHAR-01-B.png
+./uploads/job_1784740274898_9yfc45/SCENE-02.png
+./uploads/job_1784740274898_9yfc45/CHAR-01-C.png
+./uploads/job_1784740274898_9yfc45/S02_01_34ef1ee9.mp3
+./uploads/job_1784740274898_9yfc45/CHAR-01-A.png
+./uploads/job_1784740274898_9yfc45/SCENE-01.png
+./uploads/job_1784740274898_9yfc45/CHAR-04-C.png
+./uploads/job_1784740274898_9yfc45/OPT_S02_B_41bd66d6.mp3
+./uploads/job_1784740274898_9yfc45/LOC-03.png
+./uploads/job_1784740274898_9yfc45/CHAR-02-D.png
+./uploads/job_1784740274898_9yfc45/LOC-02.png
+./uploads/job_1784740274898_9yfc45/CHAR-04-B.png
+./uploads/job_1784740274898_9yfc45/script.docx
+./uploads/job_1784740274898_9yfc45/LOC-01.png
+./uploads/job_1784740274898_9yfc45/slide_1.mp3
+./uploads/job_1784740274898_9yfc45/CHAR-04-A.png
+./uploads/job_1784740274898_9yfc45/LOC-05.png
+./uploads/job_1784740274898_9yfc45/CHAR-02-C.png
+./uploads/job_1784740274898_9yfc45/CHAR-02-B.png
+./uploads/job_1784740274898_9yfc45/LOC-04.png
+./uploads/job_1784740274898_9yfc45/CHAR-04-D.png
+./uploads/job_1784740274898_9yfc45/LOC-06.png
+./uploads/job_1784740274898_9yfc45/CHAR-02-A.png
+./uploads/job_1784740274898_9yfc45/slide_1.png
+./uploads/job_1784740274898_9yfc45/S01_02_ac8f8183.mp3
+./uploads/job_1784740274898_9yfc45/S01_01_504961b9.mp3
+./uploads/1784747952769-CHAR-01-B.png
+./uploads/1784746871853-S01_02_ac8f8183.mp3
+./uploads/1784746859439-CHAR-01-F.png
+./uploads/images-1784794901430-569487442.png
+./uploads/1784747007329-CHAR-01-B.png
+./uploads/1784748214625-CHAR-01-A.png
+./uploads/images-1784762379743-693297163.png
+./uploads/1784747119222-LOC-03.png
+./uploads/213acd3af12b542893cb1eeed563a839
+./uploads/99a4118d0529020d8b755d27419ce797
+./uploads/1784747936414-Test Script.docx
+./uploads/1784747692536-CHAR-01-C.png
+./uploads/1784747007363-CHAR-01-D.png
+./uploads/1784747119209-LOC-02.png
+./uploads/audio-1784750686379-996350541.mp3
+./uploads/1784748351465-CHAR-01-E.png
+./uploads/1784746158627-CHAR-01-D.png
+./uploads/1784745938352-CHAR-01-B.png
+./uploads/1784746358933-slide_1.png
+./uploads/1784746172195-OPT_S02_B_41bd66d6.mp3
+./uploads/1784746989579-Test Script.docx
+./uploads/0133d0edebd2cc3490c835b72bf8d9f6
+./uploads/1784747132166-S02_01_34ef1ee9.mp3
+./uploads/1784747119109-CHAR-02-D.png
+./uploads/1784745938551-CHAR-04-B.png
+./uploads/a0f2955486374cdd55c24b2aa37f85b4
+./uploads/449a8374b5e924ace50705311b710684
+./uploads/1784746456110-CHAR-04-D.png
+./uploads/1784745938626-LOC-02.png
+./uploads/1784745938698-LOC-05.png
+./uploads/1784747692558-CHAR-01-D.png
+./uploads/1784746586255-Test Script.docx
+./uploads/dcb89fc6f4aa573f6f7c1d4740e63bba
+./uploads/1784745938684-LOC-04.png
+./uploads/c3de22f42238417749dacc5337d6c2f5
+./uploads/images-1784794901880-820656933.png
+./uploads/1784745938778-slide_1.png
+./uploads/1784746871854-slide_1.mp3
+./uploads/1784748214662-CHAR-01-B.png
+./uploads/images-1784794901740-286520259.png
+./uploads/1784745938495-CHAR-02-C.png
+./uploads/audio-1784750686379-812737361.mp3
+./uploads/1784746844632-Test Script.docx
+./uploads/1784747952807-CHAR-01-D.png
+./uploads/1784746172196-slide_1.mp3
+./uploads/images-1784794901725-461772639.png
+./uploads/1784746158664-CHAR-02-A.png
+./uploads/1784745952043-S01_02_ac8f8183.mp3
+./uploads/1784746358672-CHAR-02-D.png
+./uploads/1784746358822-LOC-04.png
+./uploads/1784746158586-CHAR-01-B.png
+./uploads/images-1784762379678-666461232.png
+./uploads/1784748361398-S02_01_34ef1ee9.mp3
+./uploads/49f7bfa4855e8f899dd4848413350ffb
+./uploads/1784746456146-LOC-02.png
+./uploads/1784746158799-CHAR-04-B.png
+./uploads/images-1784794901756-510677062.png
+./uploads/1784747020334-S01_02_ac8f8183.mp3
+./uploads/audio-1784794919675-130293509.mp3
+./uploads/audio-1784750743154-879105259.mp3
+./uploads/1784746158640-CHAR-01-E.png
+./uploads/1784746138003-Test Script.docx
+./uploads/1784750178528-CHAR-01-D.png
+./uploads/1784746456054-CHAR-02-D.png
+./uploads/1784746358514-CHAR-01-B.png
+./uploads/Test Script.docx
+./uploads/1784745938522-CHAR-02-D.png
+./uploads/16e65a817938cc1ee004bad71b47c32c
+./uploads/1784747118990-CHAR-02-A.png
+./uploads/1784747020333-OPT_S02_B_41bd66d6.mp3
+./uploads/audio-1784762394016-96990073.mp3
+./uploads/1784746455962-CHAR-02-A.png
+./uploads/1784746358718-CHAR-04-C.png
+./uploads/7ec8e2d8a07ef6f0dc7e8fdd0d2cc6a0
+./uploads/1784746158697-CHAR-02-B.png
+./uploads/1784746358584-CHAR-01-F.png
+./uploads/6c8f7d247b8f04e3bac4002041c60914
+./uploads/images-1784794901598-368483617.png
+./uploads/images-1784794901614-761785224.png
+./uploads/9eec395d492223ca749cdebe6af30e38
+./uploads/1784745920802-Test Script.docx
+./uploads/1784746456089-CHAR-04-B.png
+./uploads/1784747119190-LOC-01.png
+./uploads/1784745938732-LOC-06.png
+./uploads/1784746358773-LOC-02.png
+./uploads/1784747020334-S01_01_504961b9.mp3
+./uploads/1784746456252-SCENE-01.png
+./uploads/1784745952042-S01_01_504961b9.mp3
+./uploads/1784746456271-SCENE-02.png
+./uploads/1784748361398-slide_1.mp3
+./uploads/1784747132166-slide_1.mp3
+./uploads/images-1784794901542-253623864.png
+./uploads/job_1784741046544
+./uploads/job_1784741046544/scorm_package.zip
+./uploads/job_1784741046544/.DS_Store
+./uploads/job_1784741046544/scorm
+./uploads/job_1784741046544/scorm/index.html
+./uploads/job_1784741046544/scorm/imsmanifest.xml
+./uploads/job_1784741046544/assets
+./uploads/job_1784741046544/assets/CHAR-01-D.png
+./uploads/job_1784741046544/assets/CHAR-01-E.png
+./uploads/job_1784741046544/assets/CHAR-01-F.png
+./uploads/job_1784741046544/assets/CHAR-01-B.png
+./uploads/job_1784741046544/assets/SCENE-02.png
+./uploads/job_1784741046544/assets/CHAR-01-C.png
+./uploads/job_1784741046544/assets/S02_01_34ef1ee9.mp3
+./uploads/job_1784741046544/assets/CHAR-01-A.png
+./uploads/job_1784741046544/assets/SCENE-01.png
+./uploads/job_1784741046544/assets/CHAR-04-C.png
+./uploads/job_1784741046544/assets/OPT_S02_B_41bd66d6.mp3
+./uploads/job_1784741046544/assets/LOC-03.png
+./uploads/job_1784741046544/assets/CHAR-02-D.png
+./uploads/job_1784741046544/assets/LOC-02.png
+./uploads/job_1784741046544/assets/CHAR-04-B.png
+./uploads/job_1784741046544/assets/LOC-01.png
+./uploads/job_1784741046544/assets/slide_1.mp3
+./uploads/job_1784741046544/assets/CHAR-04-A.png
+./uploads/job_1784741046544/assets/LOC-05.png
+./uploads/job_1784741046544/assets/CHAR-02-C.png
+./uploads/job_1784741046544/assets/CHAR-02-B.png
+./uploads/job_1784741046544/assets/LOC-04.png
+./uploads/job_1784741046544/assets/CHAR-04-D.png
+./uploads/job_1784741046544/assets/LOC-06.png
+./uploads/job_1784741046544/assets/CHAR-02-A.png
+./uploads/job_1784741046544/assets/slide_1.png
+./uploads/job_1784741046544/assets/S01_02_ac8f8183.mp3
+./uploads/job_1784741046544/assets/S01_01_504961b9.mp3
+./uploads/job_1784741046544/Test Script.docx
+./uploads/1784747007297-CHAR-01-A.png
+./server
+./server/.DS_Store
+./server/utils
+./server/utils/scriptParser.js
+./server/routes
+./server/routes/scriptRoutes.js
+./architecture-files.txt
+./vite.config.js
+./docs
+./docs/PIR_SPEC.md
+./docs/TODO.md
+./docs/SYSTEM_ARCHITECTURE.md
+./docs/CRAFT-Language-Spec-v1.md
+./testWordReader.js
+./test-parse.js
+./public
+./public/runtime
+./public/runtime/index.html
+./public/preview
+./.gitignore
 ./package-lock.json
 ./package.json
-./patch-scorm.js
-./patch.py
-./project-tree.txt
-./public
-./public/.DS_Store
-./public/CHAR-01-A.png
-./public/CHAR-01-B.png
-./public/CHAR-01-C.png
-./public/CHAR-01-D.png
-./public/CHAR-01-E.png
-./public/CHAR-01-F.png
-./public/CHAR-02-A.png
-./public/CHAR-02-B.png
-./public/CHAR-02-C.png
-./public/CHAR-02-D.png
-./public/CHAR-04-A.png
-./public/CHAR-04-B.png
-./public/CHAR-04-C.png
-./public/CHAR-04-D.png
-./public/index.html
-./public/LOC-01.png
-./public/LOC-02.png
-./public/LOC-03.png
-./public/LOC-04.png
-./public/LOC-05.png
-./public/LOC-06.png
-./public/preview
-./public/preview-build
-./public/SCENE-01.png
-./public/SCENE-02.png
-./public/slide_1.png
-./sample_course.docx
-./scorm-test
-./scorm-test/imsmanifest.xml
-./scorm-test/index.html
+./.env
 ./scripts
 ./scripts/.DS_Store
 ./scripts/sample_script.txt
+./scripts/~$st Script.docx
+./scripts/testCourseBuild.js
+./scripts/testBuild.js
 ./scripts/Test Script.docx
-./server
-./server.js
-./server/.DS_Store
-./server/routes
-./server/utils
-./src
-./src/.DS_Store
-./src/App.jsx
-./src/audioGenerator.js
-./src/buildPlayer.js
-./src/components
-./src/jobManager.js
-./src/pages
-./src/parser.js
-./src/pipeline.js
-./src/resultsTemplate.html
-./src/routes
-./src/scormEngine.js
-./src/scormExporter.js
-./src/server.js
+./project-tree.txt
 ./templates
 ./templates/player.html
-./test_course.json
-./test_scorm.zip
-./test-file.txt
-./test-parse.js
-./test-scorm-export.zip
-./uploads
-./uploads/.DS_Store
-./uploads/0133d0edebd2cc3490c835b72bf8d9f6
-./uploads/03ff4578d00c57ed09a0ed0646e820d3
-./uploads/16e65a817938cc1ee004bad71b47c32c
-./uploads/1784745920802-Test Script.docx
-./uploads/1784745938313-CHAR-01-A.png
-./uploads/1784745938352-CHAR-01-B.png
-./uploads/1784745938377-CHAR-01-C.png
-./uploads/1784745938406-CHAR-01-D.png
-./uploads/1784745938419-CHAR-01-E.png
-./uploads/1784745938433-CHAR-01-F.png
-./uploads/1784745938441-CHAR-02-A.png
-./uploads/1784745938473-CHAR-02-B.png
-./uploads/1784745938495-CHAR-02-C.png
-./uploads/1784745938522-CHAR-02-D.png
-./uploads/1784745938540-CHAR-04-A.png
-./uploads/1784745938551-CHAR-04-B.png
-./uploads/1784745938575-CHAR-04-C.png
-./uploads/1784745938596-CHAR-04-D.png
-./uploads/1784745938606-LOC-01.png
-./uploads/1784745938626-LOC-02.png
-./uploads/1784745938647-LOC-03.png
-./uploads/1784745938684-LOC-04.png
-./uploads/1784745938698-LOC-05.png
-./uploads/1784745938732-LOC-06.png
-./uploads/1784745938743-SCENE-01.png
-./uploads/1784745938760-SCENE-02.png
-./uploads/1784745938778-slide_1.png
-./uploads/1784745952042-OPT_S02_B_41bd66d6.mp3
-./uploads/1784745952042-S01_01_504961b9.mp3
-./uploads/1784745952043-S01_02_ac8f8183.mp3
-./uploads/1784745952043-S02_01_34ef1ee9.mp3
-./uploads/1784745952043-slide_1.mp3
-./uploads/1784746138003-Test Script.docx
-./uploads/1784746158555-CHAR-01-A.png
-./uploads/1784746158586-CHAR-01-B.png
-./uploads/1784746158600-CHAR-01-C.png
-./uploads/1784746158627-CHAR-01-D.png
-./uploads/1784746158640-CHAR-01-E.png
-./uploads/1784746158655-CHAR-01-F.png
-./uploads/1784746158664-CHAR-02-A.png
-./uploads/1784746158697-CHAR-02-B.png
-./uploads/1784746158732-CHAR-02-C.png
-./uploads/1784746158764-CHAR-02-D.png
-./uploads/1784746158788-CHAR-04-A.png
-./uploads/1784746158799-CHAR-04-B.png
-./uploads/1784746158815-CHAR-04-C.png
-./uploads/1784746158828-CHAR-04-D.png
-./uploads/1784746158844-LOC-01.png
-./uploads/1784746158861-LOC-02.png
-./uploads/1784746158878-LOC-03.png
-./uploads/1784746158910-LOC-04.png
-./uploads/1784746158945-LOC-05.png
-./uploads/1784746158966-LOC-06.png
-./uploads/1784746158981-SCENE-01.png
-./uploads/1784746158997-SCENE-02.png
-./uploads/1784746159026-slide_1.png
-./uploads/1784746172195-OPT_S02_B_41bd66d6.mp3
-./uploads/1784746172195-S01_01_504961b9.mp3
-./uploads/1784746172195-S01_02_ac8f8183.mp3
-./uploads/1784746172195-S02_01_34ef1ee9.mp3
-./uploads/1784746172196-slide_1.mp3
-./uploads/1784746340547-Test Script.docx
-./uploads/1784746358487-CHAR-01-A.png
-./uploads/1784746358514-CHAR-01-B.png
-./uploads/1784746358537-CHAR-01-C.png
-./uploads/1784746358554-CHAR-01-D.png
-./uploads/1784746358572-CHAR-01-E.png
-./uploads/1784746358584-CHAR-01-F.png
-./uploads/1784746358600-CHAR-02-A.png
-./uploads/1784746358618-CHAR-02-B.png
-./uploads/1784746358650-CHAR-02-C.png
-./uploads/1784746358672-CHAR-02-D.png
-./uploads/1784746358693-CHAR-04-A.png
-./uploads/1784746358701-CHAR-04-B.png
-./uploads/1784746358718-CHAR-04-C.png
-./uploads/1784746358733-CHAR-04-D.png
-./uploads/1784746358751-LOC-01.png
-./uploads/1784746358773-LOC-02.png
-./uploads/1784746358791-LOC-03.png
-./uploads/1784746358822-LOC-04.png
-./uploads/1784746358855-LOC-05.png
-./uploads/1784746358879-LOC-06.png
-./uploads/1784746358899-SCENE-01.png
-./uploads/1784746358917-SCENE-02.png
-./uploads/1784746358933-slide_1.png
-./uploads/1784746455863-CHAR-01-A.png
-./uploads/1784746455877-CHAR-01-B.png
-./uploads/1784746455890-CHAR-01-C.png
-./uploads/1784746455902-CHAR-01-D.png
-./uploads/1784746455927-CHAR-01-E.png
-./uploads/1784746455949-CHAR-01-F.png
-./uploads/1784746455962-CHAR-02-A.png
-./uploads/1784746455994-CHAR-02-B.png
-./uploads/1784746456032-CHAR-02-C.png
-./uploads/1784746456054-CHAR-02-D.png
-./uploads/1784746456077-CHAR-04-A.png
-./uploads/1784746456089-CHAR-04-B.png
-./uploads/1784746456095-CHAR-04-C.png
-./uploads/1784746456110-CHAR-04-D.png
-./uploads/1784746456127-LOC-01.png
-./uploads/1784746456146-LOC-02.png
-./uploads/1784746456161-LOC-03.png
-./uploads/1784746456196-LOC-04.png
-./uploads/1784746456220-LOC-05.png
-./uploads/1784746456239-LOC-06.png
-./uploads/1784746456252-SCENE-01.png
-./uploads/1784746456271-SCENE-02.png
-./uploads/1784746456298-slide_1.png
-./uploads/1784746586255-Test Script.docx
-./uploads/1784746844632-Test Script.docx
-./uploads/1784746859332-CHAR-01-A.png
-./uploads/1784746859366-CHAR-01-B.png
-./uploads/1784746859383-CHAR-01-C.png
-./uploads/1784746859404-CHAR-01-D.png
-./uploads/1784746859418-CHAR-01-E.png
-./uploads/1784746859439-CHAR-01-F.png
-./uploads/1784746871851-OPT_S02_B_41bd66d6.mp3
-./uploads/1784746871852-S01_01_504961b9.mp3
-./uploads/1784746871853-S01_02_ac8f8183.mp3
-./uploads/1784746871854-S02_01_34ef1ee9.mp3
-./uploads/1784746871854-slide_1.mp3
-./uploads/1784746989579-Test Script.docx
-./uploads/1784747007297-CHAR-01-A.png
-./uploads/1784747007329-CHAR-01-B.png
-./uploads/1784747007352-CHAR-01-C.png
-./uploads/1784747007363-CHAR-01-D.png
-./uploads/1784747007396-CHAR-01-E.png
-./uploads/1784747020333-OPT_S02_B_41bd66d6.mp3
-./uploads/1784747020334-S01_01_504961b9.mp3
-./uploads/1784747020334-S01_02_ac8f8183.mp3
-./uploads/1784747020334-S02_01_34ef1ee9.mp3
-./uploads/1784747020334-slide_1.mp3
-./uploads/1784747097165-Test Script.docx
-./uploads/1784747118990-CHAR-02-A.png
-./uploads/1784747119045-CHAR-02-B.png
-./uploads/1784747119072-CHAR-02-C.png
-./uploads/1784747119109-CHAR-02-D.png
-./uploads/1784747119141-CHAR-04-A.png
-./uploads/1784747119148-CHAR-04-B.png
-./uploads/1784747119161-CHAR-04-C.png
-./uploads/1784747119176-CHAR-04-D.png
-./uploads/1784747119190-LOC-01.png
-./uploads/1784747119209-LOC-02.png
-./uploads/1784747119222-LOC-03.png
-./uploads/1784747119259-LOC-04.png
-./uploads/1784747132166-OPT_S02_B_41bd66d6.mp3
-./uploads/1784747132166-S01_01_504961b9.mp3
-./uploads/1784747132166-S01_02_ac8f8183.mp3
-./uploads/1784747132166-S02_01_34ef1ee9.mp3
-./uploads/1784747132166-slide_1.mp3
-./uploads/1784747317517-Test Script.docx
-./uploads/1784747333236-CHAR-01-A.png
-./uploads/1784747333268-CHAR-01-B.png
-./uploads/1784747333282-CHAR-01-C.png
-./uploads/1784747333315-CHAR-01-D.png
-./uploads/1784747333325-CHAR-01-E.png
-./uploads/1784747679900-Test Script.docx
-./uploads/1784747692494-CHAR-01-A.png
-./uploads/1784747692517-CHAR-01-B.png
-./uploads/1784747692536-CHAR-01-C.png
-./uploads/1784747692558-CHAR-01-D.png
-./uploads/1784747692568-CHAR-01-E.png
-./uploads/1784747936414-Test Script.docx
-./uploads/1784747952734-CHAR-01-A.png
-./uploads/1784747952769-CHAR-01-B.png
-./uploads/1784747952791-CHAR-01-C.png
-./uploads/1784747952807-CHAR-01-D.png
-./uploads/1784747952827-CHAR-01-E.png
-./uploads/1784748201453-Test Script.docx
-./uploads/1784748214625-CHAR-01-A.png
-./uploads/1784748214662-CHAR-01-B.png
-./uploads/1784748214693-CHAR-01-C.png
-./uploads/1784748214704-CHAR-01-D.png
-./uploads/1784748214713-CHAR-01-E.png
-./uploads/1784748341487-Test Script.docx
-./uploads/1784748351382-CHAR-01-A.png
-./uploads/1784748351409-CHAR-01-B.png
-./uploads/1784748351434-CHAR-01-C.png
-./uploads/1784748351449-CHAR-01-D.png
-./uploads/1784748351465-CHAR-01-E.png
-./uploads/1784748361397-OPT_S02_B_41bd66d6.mp3
-./uploads/1784748361397-S01_01_504961b9.mp3
-./uploads/1784748361398-S01_02_ac8f8183.mp3
-./uploads/1784748361398-S02_01_34ef1ee9.mp3
-./uploads/1784748361398-slide_1.mp3
-./uploads/1784750137559-test-file.txt
-./uploads/1784750178453-CHAR-01-A.png
-./uploads/1784750178491-CHAR-01-B.png
-./uploads/1784750178508-CHAR-01-C.png
-./uploads/1784750178528-CHAR-01-D.png
-./uploads/1784750178543-CHAR-01-E.png
-./uploads/1c9a9b9c243cbeb1d20fbb76b87b2a92
-./uploads/213acd3af12b542893cb1eeed563a839
-./uploads/24da48c44eee1ee3be825cab4213056d
-./uploads/2d70b5e942d76b929685fa477c4c2ae4
-./uploads/43729038c74a58f7d97703f5a5a98a9f
-./uploads/449a8374b5e924ace50705311b710684
-./uploads/49f7bfa4855e8f899dd4848413350ffb
-./uploads/5a895bddbdc5ebb1b75ae857ffe31b98
-./uploads/5bc124f3de08b0de0c0590bfbe9cfeb1
-./uploads/633bcb74324d28d9e1dfdbc948b0c231
-./uploads/6c8f7d247b8f04e3bac4002041c60914
-./uploads/728ae853744ccf2299b93f107164fbe8
-./uploads/7d3b83201eeb4cd827b573f6cadc1fae
-./uploads/7ec8e2d8a07ef6f0dc7e8fdd0d2cc6a0
-./uploads/8a6c9345cd6f9380bf51231f4f7a1ed8
-./uploads/8e0b5664b1da09382e10afc51ee19245
-./uploads/95a611378d16086bda32f66aa606402f
-./uploads/97d4bfdbedbf24c2619c58bc88dcc562
-./uploads/99a4118d0529020d8b755d27419ce797
-./uploads/9eec395d492223ca749cdebe6af30e38
-./uploads/a0f2955486374cdd55c24b2aa37f85b4
-./uploads/a61cb9cf60183aee13a00f516cb89746
-./uploads/audio-1784750686378-258384256.mp3
-./uploads/audio-1784750686379-126596580.mp3
-./uploads/audio-1784750686379-187359058.mp3
-./uploads/audio-1784750686379-812737361.mp3
-./uploads/audio-1784750686379-996350541.mp3
-./uploads/audio-1784750743153-468902950.mp3
-./uploads/audio-1784750743154-757003904.mp3
-./uploads/audio-1784750743154-879105259.mp3
-./uploads/audio-1784750743154-882779331.mp3
-./uploads/audio-1784750743154-976246839.mp3
-./uploads/audio-1784762394015-775961060.mp3
-./uploads/audio-1784762394016-335462204.mp3
-./uploads/audio-1784762394016-429264870.mp3
-./uploads/audio-1784762394016-537274501.mp3
-./uploads/audio-1784762394016-96990073.mp3
-./uploads/audio-1784794919675-130293509.mp3
-./uploads/audio-1784794919675-816977381.mp3
-./uploads/audio-1784794919675-829568188.mp3
-./uploads/audio-1784794919675-869939073.mp3
-./uploads/audio-1784794919677-99264669.mp3
-./uploads/b3af50ea2ea274a7b4322d285a14d895
-./uploads/b4b243f138d0ead5588457418dd65f4f
-./uploads/b682830e9a8f6ad4084e6687c2e971aa
-./uploads/bcf62aec97511dfacc72546839ba2506
-./uploads/c3de22f42238417749dacc5337d6c2f5
-./uploads/c53c2798c82cc727c49e9dfe2c09cd67
-./uploads/c7c978ef44ef279298dea084054193d9
-./uploads/ca9c9a45feca9583cf2135fe0df071d3
-./uploads/d5bb8b430437b34bfcbc9d848d20430c
-./uploads/dcb89fc6f4aa573f6f7c1d4740e63bba
-./uploads/e478aeba3842db5c889a19401b84dc4e
-./uploads/ea0290658d158f81f570b4a84564abe4
-./uploads/file-1784750524793-348804326.html
-./uploads/file-1784750524822-738818568.html
-./uploads/file-1784750624231-160768653.mp3
-./uploads/images-1784750733153-921568552.png
-./uploads/images-1784750733187-476499901.png
-./uploads/images-1784750733212-481847651.png
-./uploads/images-1784750733224-225458000.png
-./uploads/images-1784750733237-765474680.png
-./uploads/images-1784762379678-666461232.png
-./uploads/images-1784762379703-845595961.png
-./uploads/images-1784762379726-642239389.png
-./uploads/images-1784762379743-693297163.png
-./uploads/images-1784762379755-372185071.png
-./uploads/images-1784794901430-569487442.png
-./uploads/images-1784794901491-998807155.png
-./uploads/images-1784794901542-253623864.png
-./uploads/images-1784794901564-245447516.png
-./uploads/images-1784794901578-230181367.png
-./uploads/images-1784794901598-368483617.png
-./uploads/images-1784794901614-761785224.png
-./uploads/images-1784794901625-704934560.png
-./uploads/images-1784794901650-283464031.png
-./uploads/images-1784794901670-280675313.png
-./uploads/images-1784794901692-788161370.png
-./uploads/images-1784794901710-974700507.png
-./uploads/images-1784794901725-461772639.png
-./uploads/images-1784794901740-286520259.png
-./uploads/images-1784794901756-510677062.png
-./uploads/images-1784794901776-458641978.png
-./uploads/images-1784794901790-878030888.png
-./uploads/images-1784794901818-487950914.png
-./uploads/images-1784794901838-996687011.png
-./uploads/images-1784794901859-383784428.png
-./uploads/images-1784794901880-820656933.png
-./uploads/images-1784794901894-991132415.png
-./uploads/job_1784739429409_btosu6
-./uploads/job_1784739583768_hcu2k6
-./uploads/job_1784739696109_oftghw
-./uploads/job_1784739767351_0nnq4b
-./uploads/job_1784739839414_z6z2uw
-./uploads/job_1784740274898_9yfc45
-./uploads/job_1784741046544
-./uploads/job_1784743620142
-./uploads/temp
-./uploads/Test Script.docx
-./vite.config.js
+./previewServer.js
+./architecture-audit.zip
+./assets
+./assets/audio
+./assets/audio/S01_01.mp3
+./audio_cache
+./audio_cache/VO-S04-SHA-03B.mp3
+./audio_cache/VO-S20-NAR-07B.mp3
+./audio_cache/VO-S05-RAV-02B.mp3
+./audio_cache/VO-S15-NAR-05.mp3
+./audio_cache/VO-S24-RAV-01.mp3
+./audio_cache/VO-S04-SHA-03A.mp3
+./audio_cache/VO-S15-NAR-04.mp3
+./audio_cache/VO-S20-NAR-07A.mp3
+./audio_cache/VO-S10-NAR-01.mp3
+./audio_cache/VO-S17-SHA-04A.mp3
+./audio_cache/VO-S21-RAV-01.mp3
+./audio_cache/VO-S09-NAR-01.mp3
+./audio_cache/VO-S16-RAV-01.mp3
+./audio_cache/VO-S17-SHA-02.mp3
+./audio_cache/.DS_Store
+./audio_cache/VO-S16-NAR-02B.mp3
+./audio_cache/VO-S12-MRS-03B.mp3
+./audio_cache/VO-S15-NAR-01.mp3
+./audio_cache/VO-S11-MRS-02.mp3
+./audio_cache/VO-S06-SHA-01.mp3
+./audio_cache/VO-S17-SHA-01.mp3
+./audio_cache/VO-S15-NAR-03.mp3
+./audio_cache/VO-S16-NAR-02A.mp3
+./audio_cache/VO-S12-MRS-03A.mp3
+./audio_cache/VO-S15-NAR-02.mp3
+./audio_cache/VO-S06-RAV-03A-LOW.mp3
+./audio_cache/VO-S11-MRS-03A.mp3
+./audio_cache/VO-S09-NAR-02A.mp3
+./audio_cache/VO-S03-NAR-01.mp3
+./audio_cache/VO-S05-SHA-01.wav
+./audio_cache/VO-S20-NAR-06.mp3
+./audio_cache/VO-S13-SUR-01.mp3
+./audio_cache/VO-S24-SUR-01.mp3
+./audio_cache/VO-S17-SHA-03A.mp3
+./audio_cache/VO-S02-SUR-01.mp3
+./audio_cache/VO-S20-NAR-04.mp3
+./audio_cache/VO-S11-MRS-03B.mp3
+./audio_cache/VO-S09-NAR-02B.mp3
+./audio_cache/VO-S21-RAV-03B.mp3
+./audio_cache/VO-S20-NAR-05.mp3
+./audio_cache/VO-S24-SUR-02.mp3
+./audio_cache/VO-S10-NAR-02B.mp3
+./audio_cache/VO-S20-NAR-01.mp3
+./audio_cache/VO-S04-SHA-01.mp3
+./audio_cache/VO-S21-RAV-02B.mp3
+./audio_cache/VO-S04-SHA-04B.mp3
+./audio_cache/VO-S07-SUR-01.mp3
+./audio_cache/VO-S21-SUR-02.mp3
+./audio_cache/VO-S10-NAR-02A.mp3
+./audio_cache/VO-S06-RAV-02B.mp3
+./audio_cache/VO-S04-SHA-02.mp3
+./audio_cache/VO-S20-NAR-02.mp3
+./audio_cache/VO-S21-RAV-02A.mp3
+./audio_cache/VO-S21-SUR-01.mp3
+./audio_cache/VO-S06-RAV-03A-MID.mp3
+./audio_cache/VO-S20-NAR-03.mp3
+./audio_cache/VO-S15-SHA-01.mp3
+./audio_cache/VO-S16-SHA-02.mp3
+./audio_cache/VO-S18-SUR-01.mp3
+./audio_cache/VO-S06-RAV-01B.mp3
+./audio_cache/VO-S17-RAV-01.mp3
+./audio_cache/VO-S08-NAR-01.mp3
+./audio_cache/VO-S04-RAV-03B.mp3
+./audio_cache/VO-S05-SHA-02B.mp3
+./audio_cache/VO-S14-NAR-01.mp3
+./audio_cache/VO-S16-SHA-01.mp3
+./audio_cache/VO-S06-RAV-01A.mp3
+./audio_cache/VO-S22-SUR-01.mp3
+./audio_cache/VO-S21-SUR-04B.mp3
+./audio_cache/VO-S19-NAR-01.mp3
+./audio_cache/VO-S05-SHA-02A.mp3
+./audio_cache/VO-S04-RAV-02A.mp3
+./audio_cache/VO-S11-RAV-02B.mp3
+./audio_cache/VO-S22-SUR-02A.mp3
+./audio_cache/VO-S12-RAV-03.mp3
+./audio_cache/VO-S01-SUR-02.mp3
+./audio_cache/VO-S05-SHA-03B.mp3
+./audio_cache/VO-S12-RAV-01.mp3
+./audio_cache/VO-S17-SUR-01B.mp3
+./audio_cache/VO-S04-RAV-02B.mp3
+./audio_cache/VO-S11-RAV-02A.mp3
+./audio_cache/VO-S22-SUR-02B.mp3
+./audio_cache/VO-S01-SUR-01.mp3
+./audio_cache/VO-S12-RAV-02A.mp3
+./audio_cache/VO-S16-NAR-01.mp3
+./audio_cache/VO-S15-NAR-06B.mp3
+./audio_cache/VO-S17-RAV-03A.mp3
+./audio_cache/VO-S15-RAV-01.mp3
+./audio_cache/VO-S06-SHA-03B.mp3
+./audio_cache/VO-S04-RAV-01.mp3
+./audio_cache/VO-S06-SHA-04A-HI.mp3
+./audio_cache/VO-S12-RAV-02B.mp3
+./audio_cache/VO-S15-NAR-06A.mp3
+./audio_cache/VO-S17-RAV-03B.mp3
+./audio_cache/VO-S06-SHA-04A-LOW.mp3
+./audio_cache/VO-S06-SHA-02A.mp3
+./audio_cache/VO-S17-RAV-02B.mp3
+./audio_cache/VO-S01-RAV-01.mp3
+./audio_cache/VO-S06-SHA-04A-MID.mp3
+./audio_cache/VO-S12-MRS-04.mp3
+./audio_cache/VO-S22-RAV-01B.mp3
+./audio_cache/VO-S21-SUR-03A.mp3
+./audio_cache/VO-S05-RAV-01A.mp3
+./audio_cache/VO-S06-SHA-02B.mp3
+./audio_cache/VO-S17-RAV-02A.mp3
+./audio_cache/VO-S22-RAV-01A.mp3
+./audio_cache/VO-S21-SUR-03B.mp3
+./audio_cache/VO-S06-RAV-03A-HI.mp3
+./audio_cache/VO-S05-RAV-01B.mp3
+./api-scorm-test.zip
+./src
+./src/ccir
+./src/audioGenerator.js
+./src/.DS_Store
+./src/core
+./src/core/ccir
+./src/core/provider.js
+./src/core/loader
+./src/core/loader/index.js
+./src/core/registry
+./src/core/registry/index.js
+./src/core/providerManager.js
+./src/core/compiler
+./src/config
+./src/server.js
+./src/providers
+./src/providers/ccir
+./src/providers/ccir/validator
+./src/providers/ccir/validator/integrityValidator.js
+./src/providers/ccir/builders
+./src/providers/ccir/builders/interactionBuilder.js
+./src/providers/ccir/builders/variableBuilder.js
+./src/providers/ccir/builders/screenBuilder.js
+./src/providers/ccir/builders/locationBuilder.js
+./src/providers/ccir/builders/dialogueBuilder.js
+./src/providers/ccir/builders/assessmentBuilder.js
+./src/providers/ccir/builders/courseBuilder.js
+./src/providers/ccir/builders/characterBuilder.js
+./src/providers/ccir/builders/assetBuilder.js
+./src/providers/ccir/ccirProvider.js
+./src/providers/ccir/index.js
+./src/providers/ccir/utils
+./src/providers/ccir/utils/treeWalker.js
+./src/providers/ccir/model
+./src/providers/ccir/model/ccirDocument.js
+./src/providers/ccir/resolver
+./src/providers/ccir/resolver/referenceResolver.js
+./src/providers/renderers
+./src/providers/interactions
+./src/providers/interactions/branching
+./src/providers/interactions/branching/index.js
+./src/providers/parsers
+./src/providers/parsers/parserProvider.js
+./src/providers/parsers/index.js
+./src/providers/parsers/wordParser.js
+./src/providers/parsers/word
+./src/providers/parsers/word/index.js
+./src/providers/validator
+./src/providers/validator/index.js
+./src/providers/validator/validatorProvider.js
+./src/providers/translation
+./src/providers/lexer
+./src/providers/lexer/index.js
+./src/providers/lexer/lexerProvider.js
+./src/providers/parser
+./src/providers/parser/parserProvider.js
+./src/providers/parser/parsers
+./src/providers/parser/parsers/courseParser.js
+./src/providers/parser/parsers/screenParser.js
+./src/providers/parser/parsers/locationParser.js
+./src/providers/parser/parsers/interactionParser.js
+./src/providers/parser/parsers/characterParser.js
+./src/providers/parser/parsers/baseParser.js
+./src/providers/parser/parsers/dialogueParser.js
+./src/providers/parser/parsers/assessmentParser.js
+./src/providers/parser/parsers/variableParser.js
+./src/providers/parser/parsers/assetParser.js
+./src/providers/parser/index.js
+./src/providers/documentFormatter
+./src/providers/documentFormatter/documentFormatterProvider.js
+./src/providers/voice
+./src/providers/ai
+./src/providers/semantic
+./src/providers/semantic/index.js
+./src/providers/semantic/semanticProvider.js
+./src/providers/rendering
+./src/providers/rendering/css
+./src/providers/rendering/css/cssBuilder.js
+./src/providers/rendering/css/themes
+./src/providers/rendering/runtime
+./src/providers/rendering/runtime/runtimeBuilder.js
+./src/providers/rendering/runtime/variables.js
+./src/providers/rendering/runtime/assessment.js
+./src/providers/rendering/runtime/branching.js
+./src/providers/rendering/runtime/navigation.js
+./src/providers/rendering/output
+./src/providers/rendering/output/outputWriter.js
+./src/providers/rendering/output/packageBuilder.js
+./src/providers/rendering/html
+./src/providers/rendering/html/componentRenderer.js
+./src/providers/rendering/html/pageBuilder.js
+./src/providers/rendering/html/templateLoader.js
+./src/providers/rendering/html/screenRenderer.js
+./src/providers/rendering/html/htmlBuilder.js
+./src/providers/rendering/html/componentBuilder.js
+./src/providers/rendering/html/courseRenderer.js
+./src/providers/rendering/html/sceneRenderer.js
+./src/providers/rendering/rendererProvider.js
+./src/providers/rendering/assets
+./src/providers/rendering/assets/assetBundler.js
+./src/providers/rendering/media
+./src/providers/rendering/media/assetResolver.js
+./src/providers/rendering/media/mediaResolver.js
+./src/providers/rendering/media/imageResolver.js
+./src/providers/rendering/media/audioResolver.js
+./src/providers/readers
+./src/providers/readers/word
+./src/providers/readers/word/index.js
+./src/providers/readers/word/wordReaderProvider.js
+./src/providers/tagParser
+./src/providers/tagParser/tagAttributeParser.js
+./src/providers/assets
+./src/providers/presentation
+./src/providers/presentation/builders
+./src/providers/presentation/builders/pageBuilder.js
+./src/providers/presentation/builders/courseBuilder.js
+./src/providers/presentation/builders/componentBuilder.js
+./src/providers/presentation/builders/layerBuilder.js
+./src/providers/presentation/presentationProvider.js
+./src/providers/presentation/resolvers
+./src/providers/presentation/model
+./src/providers/presentation/model/page.js
+./src/providers/presentation/model/event.js
+./src/providers/presentation/model/timeline.js
+./src/providers/presentation/model/component.js
+./src/providers/presentation/model/layer.js
+./src/providers/analytics
+./src/compilerRunner.js
+./src/runtime
+./src/runtime/interactionEngine.js
+./src/runtime/renderers
+./src/runtime/renderers/componentRenderer.js
+./src/runtime/renderers/dialogueRenderer.js
+./src/runtime/renderers/screenRenderer.js
+./src/runtime/renderers/narrationRenderer.js
+./src/runtime/renderers/characterRenderer.js
+./src/runtime/renderers/backgroundRenderer.js
+./src/runtime/interactions
+./src/runtime/interactions/caseStudyInteraction.js
+./src/runtime/interactions/mcqInteraction.js
+./src/runtime/interactions/interaction.js
+./src/runtime/interactions/hotspotInteraction.js
+./src/runtime/interactions/branchingInteraction.js
+./src/runtime/interactions/reflectionInteraction.js
+./src/runtime/interactions/interactionRegistry.js
+./src/runtime/interactions/clickToRevealInteraction.js
+./src/runtime/interactions/dragDropInteraction.js
+./src/runtime/interactions/msqInteraction.js
+./src/runtime/componentRegistry.js
+./src/runtime/renderContext.js
+./src/runtime/.DS_Store
+./src/runtime/runtimePlayer.js
+./src/runtime/builders
+./src/runtime/builders/timelineBuilder.js
+./src/runtime/variableStore.js
+./src/runtime/browser
+./src/runtime/browser/browserRuntime.js
+./src/runtime/eventBus.js
+./src/runtime/assessmentEngine.js
+./src/runtime/conditionEvaluator.js
+./src/runtime/browserRuntime.js
+./src/runtime/interactionRenderer.js
+./src/runtime/runtimeState.js
+./src/runtime/assets
+./src/runtime/assets/background.jpg
+./src/runtime/navigationEngine.js
+./src/runtime/eventScheduler.js
+./src/runtime/assetLoader.js
+./src/resultsTemplate.html
+./src/scormEngine.js
+./src/jobManager.js
+./src/testing
+./src/testing/TestCompiler.js
+./src/main.js
+./src/components
+./src/components/ScriptUploader.jsx
+./src/components/ScriptViewer.jsx
+./src/buildPlayer.js
+./src/App.jsx
+./src/parser.js
+./src/pages
+./src/pages/ScriptWorkspace.jsx
+./src/compiler
+./src/compiler/normalizers
+./src/compiler/normalizers/attributeNormalizer.js
+./src/compiler/index.js
+./src/compiler/compiler.js
+./src/compiler/stage.js
+./src/compiler/ccirStage.js
+./src/compiler/normalizeStage.js
+./src/presentation
+./src/presentation/builders
+./src/presentation/builders/pageBuilder.js
+./src/presentation/builders/componentBuilder.js
+./src/routes
+./src/routes/scorm.js
+./src/routes/preview.js
+./src/routes/upload.js
+./src/routes/upload.routes.js
+./src/routes/parse.js
+./src/routes/parse.routes.js
+./src/routes/preview.routes.js
+./src/routes/scorm.routes.js
+./src/bundler
+./src/scormExporter.js
+./src/pipeline.js

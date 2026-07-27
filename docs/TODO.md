@@ -1,6 +1,18 @@
 # CRAFT Course Factory 2.0
 
+Version: 2.0
+
+Status: Active Development
+
+---
+
 # MASTER TODO
+
+---
+
+# IN PROGRESS
+
+- None
 
 ---
 
@@ -15,20 +27,34 @@
 
 ---
 
-## 2. Course Generation
+## 2. Course Generation Pipeline
+
+### Compiler
 
 - [ ] Stable Compiler
+- [ ] Reader
+- [ ] Document Formatter
+- [ ] Lexer
+- [ ] Parser
+- [ ] Attribute Normalizer
+- [ ] Validator
+
+### Intermediate Representations
+
 - [ ] Stable CCIR
 - [ ] Stable PIR
+
+### Output Generation
+
 - [ ] HTML Generator
 - [ ] Runtime Stability
 
 ---
 
-## 3. Analytics Merge
+## 3. Analytics
 
 - [ ] Analytics Engine
-- [ ] PlayerEngine
+- [ ] Player Engine
 - [ ] Interaction Tracking
 - [ ] Completion Dashboard
 - [ ] Module Analytics
@@ -40,8 +66,8 @@
 
 ### Voice
 
-- [ ] Existing VO Support
-- [ ] Multi-language
+- [ ] Existing Voice Over Support
+- [ ] Multi-language Voice Support
 
 ### Music
 
@@ -57,17 +83,19 @@
 - [ ] Upload Voice Overs
 - [ ] Upload Client Logo
 - [ ] Upload Brand Colours
+- [ ] Course Configuration
 - [ ] Build Course
+- [ ] Preview Course
 - [ ] Download HTML
-- [ ] Preview
 
 ---
 
 ## 6. Packaging
 
-- [ ] HTML
-- [ ] SCORM
-- [ ] ZIP
+- [ ] HTML Package
+- [ ] SCORM 1.2 Package
+- [ ] SCORM 2004 Package
+- [ ] ZIP Package
 - [ ] Standalone Package
 
 ---
@@ -75,9 +103,9 @@
 ## 7. Client Preview
 
 - [ ] Preview Server
-- [ ] Share URL
-- [ ] Password
-- [ ] Expiry
+- [ ] Shareable URL
+- [ ] Password Protection
+- [ ] Link Expiry
 - [ ] Client Comments
 - [ ] Publish New Version
 
@@ -86,10 +114,10 @@
 ## 8. Runtime Providers
 
 - [ ] Runtime Manager
-- [ ] Local Provider
-- [ ] SCORM 1.2
-- [ ] SCORM 2004
-- [ ] xAPI
+- [ ] Local Runtime
+- [ ] SCORM 1.2 Provider
+- [ ] SCORM 2004 Provider
+- [ ] xAPI Provider
 
 ---
 
@@ -103,9 +131,9 @@
 
 ---
 
-## 10. Hosting (GCP)
+## 10. Platform Infrastructure
 
-- [ ] Deploy to GCP
+- [ ] Deploy to Google Cloud Platform
 - [ ] Domain Mapping
 - [ ] HTTPS
 - [ ] Login Page
@@ -114,13 +142,18 @@
 
 ---
 
-# PHASE 2
+# PHASE 2 — Advanced Platform
 
-## Themes & Branding
+## 1. Themes & Branding
+
+### Theme Engine
 
 - [ ] Theme Registry
 - [ ] Theme Loader
 - [ ] Theme Configuration
+
+### Audio Controls
+
 - [ ] Fade In
 - [ ] Fade Out
 - [ ] Ducking
@@ -129,7 +162,7 @@
 
 ---
 
-## Advanced Authoring
+## 2. Advanced Authoring
 
 - [ ] Template Upload
 - [ ] Custom Themes
@@ -140,10 +173,58 @@
 
 ---
 
-## Collaboration
+## 3. Collaboration
 
 - [ ] Multiple Authors
 - [ ] Reviewer Mode
 - [ ] Comments
 - [ ] Version History
 - [ ] Approval Workflow
+
+---
+
+# RELEASES
+
+## MVP v1.0
+
+- [ ] Production Compiler
+- [ ] Stable HTML Output
+- [ ] Analytics
+- [ ] Audio Support
+- [ ] Course Builder
+- [ ] SCORM Export
+- [ ] Preview Server
+- [ ] GCP Deployment
+- [ ] First Client Deployment
+
+---
+
+## Version 1.1
+
+- [ ] Advanced Themes
+- [ ] Branding
+- [ ] Collaboration
+- [ ] Version History
+
+---
+
+## Version 2.0
+
+- [ ] Marketplace
+- [ ] Custom Theme Ecosystem
+- [ ] Enterprise Authoring
+- [ ] Enterprise Analytics
+
+---
+
+# COMPLETED
+
+- [x] Architecture Audit
+- [x] SYSTEM_ARCHITECTURE.md
+- [x] Production Dependency Audit
+
+---
+
+# BLOCKERS
+
+- None

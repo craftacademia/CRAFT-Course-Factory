@@ -18,7 +18,12 @@ export default class ReferenceResolver {
     for (const item of ccir.characters ?? []) {
 
       if (item.id) {
-        lookup.characters.set(item.id, item);
+
+        lookup.characters.set(
+          item.id,
+          item
+        );
+
       }
 
     }
@@ -27,16 +32,34 @@ export default class ReferenceResolver {
     for (const item of ccir.locations ?? []) {
 
       if (item.id) {
-        lookup.locations.set(item.id, item);
+
+        lookup.locations.set(
+          item.id,
+          item
+        );
+
       }
 
     }
 
 
-    for (const item of ccir.assets ?? []) {
+    for (const item of ccir.assets?.images ?? []) {
 
-      if (item.id) {
-        lookup.assets.set(item.id, item);
+      const id =
+        item.id ??
+        item.name?.replace(
+          /\.[^/.]+$/,
+          ""
+        );
+
+
+      if (id) {
+
+        lookup.assets.set(
+          id,
+          item
+        );
+
       }
 
     }
@@ -45,7 +68,12 @@ export default class ReferenceResolver {
     for (const item of ccir.variables ?? []) {
 
       if (item.id) {
-        lookup.variables.set(item.id, item);
+
+        lookup.variables.set(
+          item.id,
+          item
+        );
+
       }
 
     }
@@ -54,7 +82,12 @@ export default class ReferenceResolver {
     for (const item of ccir.screens ?? []) {
 
       if (item.id) {
-        lookup.screens.set(item.id, item);
+
+        lookup.screens.set(
+          item.id,
+          item
+        );
+
       }
 
     }
@@ -63,7 +96,12 @@ export default class ReferenceResolver {
     for (const item of ccir.interactions ?? []) {
 
       if (item.id) {
-        lookup.interactions.set(item.id, item);
+
+        lookup.interactions.set(
+          item.id,
+          item
+        );
+
       }
 
     }
@@ -72,7 +110,12 @@ export default class ReferenceResolver {
     for (const item of ccir.assessments ?? []) {
 
       if (item.id) {
-        lookup.assessments.set(item.id, item);
+
+        lookup.assessments.set(
+          item.id,
+          item
+        );
+
       }
 
     }
@@ -97,7 +140,9 @@ export default class ReferenceResolver {
 
 
       screen.assetRef =
-        lookup.assets.get(screen.asset) ?? null;
+        screen.asset
+          ? lookup.assets.get(screen.asset) ?? null
+          : null;
 
 
 
@@ -105,8 +150,21 @@ export default class ReferenceResolver {
 
         const image =
           ccir.assets.images.find(
-            item =>
-              item.name.replace(/\.[^/.]+$/, "") === screen.id
+            item => {
+
+              const imageId =
+                item.name?.replace(
+                  /\.[^/.]+$/,
+                  ""
+                );
+
+
+              return (
+                imageId === screen.id ||
+                imageId === screen.attributes?.scene
+              );
+
+            }
           );
 
 
@@ -149,25 +207,39 @@ export default class ReferenceResolver {
     ccir.index = {
 
       characters:
-        Object.fromEntries(lookup.characters),
+        Object.fromEntries(
+          lookup.characters
+        ),
 
       locations:
-        Object.fromEntries(lookup.locations),
+        Object.fromEntries(
+          lookup.locations
+        ),
 
       assets:
-        Object.fromEntries(lookup.assets),
+        Object.fromEntries(
+          lookup.assets
+        ),
 
       variables:
-        Object.fromEntries(lookup.variables),
+        Object.fromEntries(
+          lookup.variables
+        ),
 
       screens:
-        Object.fromEntries(lookup.screens),
+        Object.fromEntries(
+          lookup.screens
+        ),
 
       interactions:
-        Object.fromEntries(lookup.interactions),
+        Object.fromEntries(
+          lookup.interactions
+        ),
 
       assessments:
-        Object.fromEntries(lookup.assessments)
+        Object.fromEntries(
+          lookup.assessments
+        )
 
     };
 

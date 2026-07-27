@@ -2,25 +2,26 @@ import ScreenRenderer from "./screenRenderer.js";
 
 export default class SceneRenderer {
 
-  constructor() {
-    this.screenRenderer = new ScreenRenderer();
-  }
+    constructor() {
+        this.screenRenderer = new ScreenRenderer();
+    }
 
-  render(scene) {
+    render(page) {
 
-    const screens =
-      scene.screens ??
-      scene.children ??
-      [];
+        if (!page) {
+            return "";
+        }
 
-    return `
-<section class="scene">
+        const layers = page.layers ?? [];
 
-${screens.map(screen => this.screenRenderer.render(screen)).join("\n")}
+        return `
+<section class="scene" data-page-id="${page.id ?? ""}">
+
+${layers.map(layer => this.screenRenderer.render(layer)).join("\n")}
 
 </section>
 `;
 
-  }
+    }
 
 }

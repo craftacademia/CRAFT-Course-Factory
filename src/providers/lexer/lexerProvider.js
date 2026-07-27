@@ -14,48 +14,143 @@ export default class LexerProvider extends Provider {
 
     const tagRegex = /^\[(\/?)[A-Z_][A-Z0-9_]*.*\]$/;
 
+    let courseCreated = false;
+    let screenOpen = false;
+
     for (const line of lines) {
 
       const text = line.text.trim();
 
-      if (!tagRegex.test(text)) {
+      if (!text) {
+        continue;
+      }
+
+      // Existing DSL support
+
+      if (tagRegex.test(text)) {
+
+        const closing = text.startsWith("[/");
+
+        if (closing) {
+
+          const name = text
+            .replace("[/", "")
+            .replace("]", "")
+            .trim();
+
+          tokens.push({
+            type: "CLOSE_TAG",
+            line: line.number,
+            name
+          });
+
+          continue;
+        }
+
+        const parsed = this.tagParser.parse(text);
+
+        tokens.push({
+          type: "OPEN_TAG",
+          line: line.number,
+          name: parsed.tag,
+          attributes: parsed.attributes
+        });
+
+        continue;
+      }
+
+      // Plain Word support
+
+      if (!courseCreated) {
+
+        courseCreated = true;
+
+        tokens.push({
+          type: "OPEN_TAG",
+          line: line.number,
+          name: "COURSE",
+          attributes: {
+            title: text
+          }
+        });
+
+        continue;
+      }
+
+      if (/^Module\s+\d+\s*:/i.test(text)) {
+
+        if (screenOpen) {
+
+          tokens.push({
+            type: "CLOSE_TAG",
+            line: line.number,
+            name: "SCREEN"
+          });
+
+        }
+
+        screenOpen = true;
+
+        tokens.push({
+          type: "OPEN_TAG",
+          line: line.number,
+          name: "SCREEN",
+          attributes: {
+            title: text.replace(/^Module\s+\d+\s*:/i, "").trim()
+          }
+        });
+
+        continue;
+      }
+
+      if (/^Audio\s*:/i.test(text)) {
+
+        tokens.push({
+          type: "OPEN_TAG",
+          line: line.number,
+          name: "DIALOGUE",
+          attributes: {}
+        });
 
         tokens.push({
           type: "TEXT",
           line: line.number,
-          value: line.text
+          value: text.replace(/^Audio\s*:/i, "").trim()
         });
-
-        continue;
-
-      }
-
-      const closing = text.startsWith("[/");
-
-      if (closing) {
-
-        const name = text
-          .replace("[/", "")
-          .replace("]", "")
-          .trim();
 
         tokens.push({
           type: "CLOSE_TAG",
           line: line.number,
-          name
+          name: "DIALOGUE"
         });
 
         continue;
-
       }
 
-      const parsed = this.tagParser.parse(text);
+      tokens.push({
+        type: "TEXT",
+        line: line.number,
+        value: line.text
+      });
+
+    }
+
+    if (screenOpen) {
 
       tokens.push({
-        type: "OPEN_TAG",
-        line: line.number,
-        name: parsed.tag,
-        attributes: parsed.attributes
+        type: "CLOSE_TAG",
+        line: lines.length + 1,
+        name: "SCREEN"
+      });
+
+    }
+
+    if (courseCreated) {
+
+      tokens.push({
+        type: "CLOSE_TAG",
+        line: lines.length + 2,
+        name: "COURSE"
       });
 
     }

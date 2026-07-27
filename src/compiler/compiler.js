@@ -98,23 +98,22 @@ export default class Compiler {
 
         const ccir =
             await this.ccirProvider.build(
-                ast,
-                assetManifest
+                ast
             );
+
+
+        if (assetManifest) {
+
+            ccir.assets =
+                assetManifest;
+
+        }
 
 
         const pir =
             await this.presentationProvider.build(
                 ccir
             );
-
-
-        if (assetManifest) {
-
-            pir.assets =
-                assetManifest;
-
-        }
 
 
         await fs.mkdir(

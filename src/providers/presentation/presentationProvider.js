@@ -35,6 +35,42 @@ export default class PresentationProvider {
                 this.timelineBuilder.build(page);
 
 
+            const screen =
+                ccir.screens?.find(
+                    item =>
+                    item.id === page.id
+                );
+
+
+            if (screen?.assetRef) {
+
+                for (const layer of page.layers ?? []) {
+
+                    const imageComponent =
+                        layer.components?.find(
+                            component =>
+                            component.type === "IMAGE"
+                        );
+
+
+                    if (imageComponent) {
+
+                        imageComponent.asset =
+                            screen.assetRef.src ??
+                            screen.assetRef.name ??
+                            null;
+
+
+                        imageComponent.properties.asset =
+                            imageComponent.asset;
+
+                    }
+
+                }
+
+            }
+
+
             for (const layer of page.layers ?? []) {
 
                 if (!layer.template) {

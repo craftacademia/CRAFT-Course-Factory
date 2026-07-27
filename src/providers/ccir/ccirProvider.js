@@ -58,53 +58,86 @@ export default class CCIRProvider extends Provider {
     }
 
 
-    async build(ast, assetManifest = null) {
+    async build(
+        ast,
+        assetManifest = null
+    ) {
 
         const ccir =
             new CCIRDocument();
 
 
         ccir.course =
-            this.courseBuilder.build(ast);
+            this.courseBuilder.build(
+                ast
+            );
 
 
         ccir.characters =
-            this.characterBuilder.build(ast);
+            this.characterBuilder.build(
+                ast
+            );
 
 
         ccir.locations =
-            this.locationBuilder.build(ast);
+            this.locationBuilder.build(
+                ast
+            );
 
 
         ccir.assets =
-            this.assetBuilder.build(ast);
+            this.assetBuilder.build(
+                ast
+            );
 
 
         ccir.variables =
-            this.variableBuilder.build(ast);
+            this.variableBuilder.build(
+                ast
+            );
 
 
         ccir.screens =
-            this.screenBuilder.build(ast);
+            this.screenBuilder.build(
+                ast
+            );
 
 
         ccir.metadata.dialogues =
-            this.dialogueBuilder.build(ast);
+            this.dialogueBuilder.build(
+                ast
+            );
 
 
         ccir.interactions =
-            this.interactionBuilder.build(ast);
+            this.interactionBuilder.build(
+                ast
+            );
 
 
         ccir.assessments =
-            this.assessmentBuilder.build(ast);
+            this.assessmentBuilder.build(
+                ast
+            );
 
 
 
         if (assetManifest) {
 
-            ccir.assets =
-                assetManifest;
+            ccir.assets = {
+
+                ...ccir.assets,
+
+                images:
+                    assetManifest.images ?? [],
+
+                audio:
+                    assetManifest.audio ?? {},
+
+                branding:
+                    assetManifest.branding ?? null
+
+            };
 
         }
 

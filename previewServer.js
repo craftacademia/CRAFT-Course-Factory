@@ -10,6 +10,10 @@ const app = express();
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/runtime", express.static(path.join(__dirname, "src/runtime")));
 
+app.get("/", (req, res) => {
+    res.redirect("/runtime/index.html");
+});
+
 app.listen(5173, () => {
-    console.log("Preview Server: http://localhost:5173");
+    console.log("Preview Server running at http://localhost:5173");
 });
