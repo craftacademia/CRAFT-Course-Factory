@@ -44,6 +44,14 @@ export default class PresentationProvider {
         }
 
 
+        if (ccir.assets?.audio) {
+
+            presentation.audio =
+                ccir.assets.audio;
+
+        }
+
+
         return presentation;
 
     }
