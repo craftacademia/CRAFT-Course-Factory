@@ -5,9 +5,11 @@ export default class PresentationProvider {
 
     constructor() {
 
-        this.courseBuilder = new CourseBuilder();
+        this.courseBuilder =
+            new CourseBuilder();
 
-        this.timelineBuilder = new TimelineBuilder();
+        this.timelineBuilder =
+            new TimelineBuilder();
 
     }
 
@@ -30,6 +32,14 @@ export default class PresentationProvider {
 
             presentation.assets =
                 ccir.assets;
+
+        }
+
+
+        if (ccir.assets?.branding) {
+
+            presentation.branding =
+                ccir.assets.branding;
 
         }
 
