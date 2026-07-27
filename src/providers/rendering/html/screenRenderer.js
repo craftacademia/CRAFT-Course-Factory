@@ -29,17 +29,75 @@ export default class ScreenRenderer {
             "content";
 
 
+        const content =
+            components
+                .map(component =>
+                    this.componentRenderer.render(component)
+                )
+                .join("\n");
+
+
+
+        return this.renderTemplate(
+            template,
+            layer,
+            content
+        );
+
+    }
+
+
+    renderTemplate(
+        template,
+        layer,
+        content
+    ) {
+
+        const layouts = {
+
+            content: `
+<div class="slide-template-content">
+${content}
+</div>
+`,
+
+
+            dialogue: `
+<div class="slide-template-dialogue">
+${content}
+</div>
+`,
+
+
+            image: `
+<div class="slide-template-image">
+${content}
+</div>
+`,
+
+
+            assessment: `
+<div class="slide-template-assessment">
+${content}
+</div>
+`
+
+        };
+
+
+        const body =
+            layouts[template] ??
+            layouts.content;
+
+
+
         return `
 <section
 class="screen screen-${template}"
 data-layer="${layer.type ?? ""}"
 data-template="${template}">
 
-${components
-    .map(component =>
-        this.componentRenderer.render(component)
-    )
-    .join("\n")}
+${body}
 
 </section>
 `;
