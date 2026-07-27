@@ -27,6 +27,10 @@ export default class CourseRenderer {
             pir.assets ?? null;
 
 
+        const branding =
+            pir.branding ?? assets?.branding ?? null;
+
+
         const renderedPages =
             pages
                 .map(page => {
@@ -40,14 +44,24 @@ export default class CourseRenderer {
 
 
 
+        const runtimeConfig = {
+
+            assets,
+
+            branding
+
+        };
+
+
+
         const assetData =
-            assets
-                ? `
+            `
 <script>
+window.CRAFT_CONFIG = ${JSON.stringify(runtimeConfig)};
 window.CRAFT_ASSETS = ${JSON.stringify(assets)};
+window.CRAFT_BRANDING = ${JSON.stringify(branding)};
 </script>
-`
-                : "";
+`;
 
 
 
