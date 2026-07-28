@@ -5,17 +5,76 @@ import CharacterRenderer from "./renderers/characterRenderer.js";
 import LocationRenderer from "./renderers/locationRenderer.js";
 import PropRenderer from "./renderers/propRenderer.js";
 
+import TextRenderer from "./renderers/textRenderer.js";
+import ImageRenderer from "./renderers/imageRenderer.js";
+import AudioRenderer from "./renderers/audioRenderer.js";
+import BranchingRenderer from "./renderers/branchingRenderer.js";
+
+
 export default function registerDefaultRenderers(registry) {
 
     if (!registry) {
         throw new Error("ComponentRegistry is required.");
     }
 
-    registry.register("NARRATION", new NarrationRenderer());
-    registry.register("DIALOGUE", new DialogueRenderer());
-    registry.register("BACKGROUND", new BackgroundRenderer());
-    registry.register("CHARACTER", new CharacterRenderer());
-    registry.register("LOCATION", new LocationRenderer());
-    registry.register("PROP", new PropRenderer());
+
+    registry.register(
+        "NARRATION",
+        new NarrationRenderer()
+    );
+
+
+    registry.register(
+        "DIALOGUE",
+        new DialogueRenderer()
+    );
+
+
+    registry.register(
+        "BACKGROUND",
+        new BackgroundRenderer()
+    );
+
+
+    registry.register(
+        "CHARACTER",
+        new CharacterRenderer()
+    );
+
+
+    registry.register(
+        "LOCATION",
+        new LocationRenderer()
+    );
+
+
+    registry.register(
+        "PROP",
+        new PropRenderer()
+    );
+
+
+    registry.register(
+        "TEXT",
+        new TextRenderer()
+    );
+
+
+    registry.register(
+        "IMAGE",
+        new ImageRenderer()
+    );
+
+
+    registry.register(
+        "AUDIO",
+        new AudioRenderer()
+    );
+
+
+    registry.register(
+        "BRANCHING",
+        new BranchingRenderer()
+    );
 
 }
