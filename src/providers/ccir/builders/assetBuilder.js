@@ -2,29 +2,87 @@ import { walk } from "../utils/treeWalker.js";
 
 export default class AssetBuilder {
 
-  build(ast) {
+    build(ast) {
 
-    const assets = [];
+        const assets = {
 
-    walk(ast, node => {
+            images: [],
 
-      if (node.type !== "ASSET") {
-        return;
-      }
+            audio: {},
 
-      assets.push({
-        id: node.attributes?.id ?? null,
-        name: node.attributes?.name ?? null,
-        type: node.attributes?.type ?? null,
-        src: node.attributes?.src ?? null,
-        alt: node.attributes?.alt ?? null,
-        attributes: node.attributes ?? {}
-      });
+            branding: null
 
-    });
+        };
 
-    return assets;
 
-  }
+        walk(ast, node => {
+
+            if (node.type !== "ASSET") {
+                return;
+            }
+
+
+            const asset = {
+
+                id:
+                    node.attributes?.id ?? null,
+
+                name:
+                    node.attributes?.name ?? null,
+
+                type:
+                    node.attributes?.type ?? null,
+
+                src:
+                    node.attributes?.src ?? null,
+
+                alt:
+                    node.attributes?.alt ?? null,
+
+                attributes:
+                    node.attributes ?? {}
+
+            };
+
+
+            switch (asset.type) {
+
+                case "IMAGE":
+
+                    assets.images.push(asset);
+
+                    break;
+
+
+                case "AUDIO":
+
+                    if (!assets.audio.background) {
+                        assets.audio.background = [];
+                    }
+
+                    assets.audio.background.push(asset);
+
+                    break;
+
+
+                case "BRANDING":
+
+                    assets.branding = asset;
+
+                    break;
+
+
+                default:
+
+                    break;
+
+            }
+
+        });
+
+
+        return assets;
+
+    }
 
 }

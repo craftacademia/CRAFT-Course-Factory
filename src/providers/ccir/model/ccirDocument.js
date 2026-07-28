@@ -1,29 +1,41 @@
 export default class CCIRDocument {
 
-  constructor() {
+    constructor() {
 
-    this.version = "1.0";
+        this.version = "1.0";
 
-    this.generatedAt = new Date().toISOString();
+        this.generatedAt =
+            new Date().toISOString();
 
-    this.course = null;
 
-    this.characters = [];
+        this.course = null;
 
-    this.locations = [];
+        this.characters = [];
 
-    this.assets = [];
+        this.locations = [];
 
-    this.variables = [];
 
-    this.screens = [];
+        this.assets = {
 
-    this.interactions = [];
+            images: [],
 
-    this.assessments = [];
+            audio: {},
 
-    this.metadata = {};
+            branding: null
 
-  }
+        };
+
+
+        this.variables = [];
+
+        this.screens = [];
+
+        this.interactions = [];
+
+        this.assessments = [];
+
+        this.metadata = {};
+
+    }
 
 }
