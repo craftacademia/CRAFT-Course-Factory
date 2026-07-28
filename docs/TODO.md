@@ -1,230 +1,244 @@
 # CRAFT Course Factory 2.0
 
-Version: 2.0
-
-Status: Active Development
-
----
-
 # MASTER TODO
 
----
-
-# IN PROGRESS
-
-- None
+Status: Sprint 1 — In Progress
 
 ---
 
-# PHASE 1 (P0) — MVP Production Platform
+# CURRENT IMPLEMENTATION STATE
+
+Completed:
+
+- Compiler foundation
+- DOCX ingestion
+- Lexer pipeline
+- AST generation
+- CCIR generation
+- CCIR builders foundation
+- Reference resolver foundation
+- Integrity validator foundation
+- Asset pipeline foundation
+- Image asset handling
+- Audio asset handling
+- PIR generation
+- Presentation generation foundation
+- HTML rendering foundation
+- Preview server
+- Runtime audio asset serving
+- Image asset rendering validation
+- Audio asset rendering validation
+- Preview asset MIME validation
+
+Current active phase:
+
+- Runtime completion
+
+---
+
+# PHASE 1 — MVP PRODUCTION PLATFORM
 
 ## 1. Architecture & Foundation
 
-- [x] Architecture Audit
+Completed:
+
+- [x] Architecture audit
 - [x] SYSTEM_ARCHITECTURE.md
-- [ ] PIR_SPEC.md
-- [x] Production Dependency Audit
+- [x] Provider architecture
+- [x] Dependency audit
+
+Remaining:
+
+- [ ] Final production architecture validation
 
 ---
 
-## 2. Course Generation Pipeline
+# 2. Script Processing Pipeline
 
-### Compiler
+Completed:
 
-- [ ] Stable Compiler
-- [ ] Reader
-- [ ] Document Formatter
-- [ ] Lexer
-- [ ] Parser
-- [ ] Attribute Normalizer
-- [ ] Validator
+- [x] DOCX ingestion
+- [x] Lexer provider
+- [x] AST generation
+- [x] Compiler orchestration
 
-### Intermediate Representations
+Remaining:
 
-- [ ] Stable CCIR
-- [ ] Stable PIR
-
-### Output Generation
-
-- [ ] HTML Generator
-- [ ] Runtime Stability
+- [ ] Parser stabilization
+- [ ] Error reporting
+- [ ] Production input validation
 
 ---
 
-## 3. Analytics
+# 3. CCIR Pipeline
 
-- [ ] Analytics Engine
-- [ ] Player Engine
-- [ ] Interaction Tracking
-- [ ] Completion Dashboard
-- [ ] Module Analytics
-- [ ] Score Object
+Completed:
 
----
+- [x] CCIR document model
+- [x] Course builder
+- [x] Character builder
+- [x] Location builder
+- [x] Asset builder
+- [x] Variable builder
+- [x] Screen builder
+- [x] Dialogue builder
+- [x] Interaction builder
+- [x] Assessment builder
+- [x] Reference resolver foundation
+- [x] Integrity validator foundation
 
-## 4. Audio
+Remaining:
 
-### Voice
-
-- [ ] Existing Voice Over Support
-- [ ] Multi-language Voice Support
-
-### Music
-
-- [ ] Course Music
-- [ ] Scene Music
-
----
-
-## 5. Course Builder
-
-- [ ] Upload Script
-- [ ] Upload Images
-- [ ] Upload Voice Overs
-- [ ] Upload Client Logo
-- [ ] Upload Brand Colours
-- [ ] Course Configuration
-- [ ] Build Course
-- [ ] Preview Course
-- [ ] Download HTML
+- [ ] Production validation rules
+- [ ] Complete reference validation
+- [ ] CCIR regression tests
 
 ---
 
-## 6. Packaging
+# 4. Asset Pipeline
 
-- [ ] HTML Package
-- [ ] SCORM 1.2 Package
-- [ ] SCORM 2004 Package
-- [ ] ZIP Package
-- [ ] Standalone Package
+Completed:
 
----
+- [x] Asset manifest
+- [x] Image ingestion
+- [x] Audio ingestion
+- [x] Image PIR mapping
+- [x] Audio PIR mapping
+- [x] Image rendering
+- [x] Audio rendering
+- [x] Preview asset serving
+- [x] Audio MIME validation
 
-## 7. Client Preview
+Remaining:
 
-- [ ] Preview Server
-- [ ] Shareable URL
-- [ ] Password Protection
-- [ ] Link Expiry
-- [ ] Client Comments
-- [ ] Publish New Version
-
----
-
-## 8. Runtime Providers
-
-- [ ] Runtime Manager
-- [ ] Local Runtime
-- [ ] SCORM 1.2 Provider
-- [ ] SCORM 2004 Provider
-- [ ] xAPI Provider
+- [ ] Character asset placement
+- [ ] Location asset placement
+- [ ] Multi-asset validation
 
 ---
 
-## 9. Built-in Themes
+# 5. Presentation Engine
 
-- [ ] Corporate Blue
-- [ ] Corporate Dark
-- [ ] Modern Glass
-- [ ] Minimal White
-- [ ] Banking
+Completed:
 
----
+- [x] Presentation provider
+- [x] Course builder
+- [x] Page builder
+- [x] Component generation
+- [x] HTML renderer foundation
 
-## 10. Platform Infrastructure
+Remaining:
 
-- [ ] Deploy to Google Cloud Platform
-- [ ] Domain Mapping
-- [ ] HTTPS
-- [ ] Login Page
-- [ ] User Authentication
-- [ ] User Workspace
+- [ ] Dialogue rendering
+- [ ] Assessment rendering
+- [ ] Interaction rendering
+- [ ] Template validation
 
 ---
 
-# PHASE 2 — Advanced Platform
+# 6. Runtime Engine
 
-## 1. Themes & Branding
+Completed:
 
-### Theme Engine
+- [x] Runtime foundation
+- [x] Runtime configuration
+- [x] Audio runtime foundation
 
-- [ ] Theme Registry
-- [ ] Theme Loader
-- [ ] Theme Configuration
+Remaining:
 
-### Audio Controls
-
-- [ ] Fade In
-- [ ] Fade Out
-- [ ] Ducking
-- [ ] Loop
-- [ ] Volume
+- [ ] Browser runtime validation
+- [ ] Navigation engine
+- [ ] Timeline execution
+- [ ] Runtime state management
 
 ---
 
-## 2. Advanced Authoring
+# 7. Interaction Engine
 
-- [ ] Template Upload
-- [ ] Custom Themes
-- [ ] Theme Marketplace
-- [ ] Brand Kits
-- [ ] Animation Packs
-- [ ] Client Theme Upload
+Required Sprint 1 scope:
 
----
+- [ ] Click interaction
+- [ ] MCQ / Choice interaction
+- [ ] Dialogue choice
+- [ ] Reflection
+- [ ] Hotspot
+- [ ] Drag and Drop
+- [ ] Sorting / Ordering
+- [ ] Scenario branching
 
-## 3. Collaboration
+Supporting:
 
-- [ ] Multiple Authors
-- [ ] Reviewer Mode
-- [ ] Comments
-- [ ] Version History
-- [ ] Approval Workflow
-
----
-
-# RELEASES
-
-## MVP v1.0
-
-- [ ] Production Compiler
-- [ ] Stable HTML Output
-- [ ] Analytics
-- [ ] Audio Support
-- [ ] Course Builder
-- [ ] SCORM Export
-- [ ] Preview Server
-- [ ] GCP Deployment
-- [ ] First Client Deployment
+- [ ] Interaction event dispatcher
+- [ ] Interaction state handling
+- [ ] Feedback system
 
 ---
 
-## Version 1.1
+# 8. Assessment Runtime
 
-- [ ] Advanced Themes
-- [ ] Branding
-- [ ] Collaboration
-- [ ] Version History
+Remaining:
 
----
-
-## Version 2.0
-
-- [ ] Marketplace
-- [ ] Custom Theme Ecosystem
-- [ ] Enterprise Authoring
-- [ ] Enterprise Analytics
+- [ ] Assessment rendering
+- [ ] Score calculation
+- [ ] Pass/fail handling
+- [ ] Completion state
 
 ---
 
-# COMPLETED
+# 9. Final Analytics Slide
 
-- [x] Architecture Audit
-- [x] SYSTEM_ARCHITECTURE.md
-- [x] Production Dependency Audit
+Scope:
+
+Only end-of-course generated summary slide.
+
+Required:
+
+- [ ] Completion summary
+- [ ] Score summary
+- [ ] Interaction performance
+- [ ] Time spent
+- [ ] Completion status
+- [ ] Certificate/completion trigger hook
 
 ---
 
-# BLOCKERS
+# 10. SCORM Delivery
 
-- None
+Remaining:
+
+- [ ] SCORM manifest
+- [ ] SCORM packaging
+- [ ] Runtime communication
+- [ ] Completion reporting
+
+---
+
+# 11. GCP Production Hosting
+
+Remaining:
+
+- [ ] Docker production image
+- [ ] Cloud Run deployment
+- [ ] Cloud Storage integration
+- [ ] Production environment
+- [ ] Team access workflow
+
+---
+
+# 12. Client Project Workflow
+
+Remaining:
+
+- [ ] Upload client script
+- [ ] Upload assets
+- [ ] Generate course
+- [ ] Preview
+- [ ] Export HTML5
+- [ ] Export SCORM
+- [ ] Client delivery workflow
+
+---
+
+# Sprint 1 Completion Criteria
+
+Sprint 1 completes when:

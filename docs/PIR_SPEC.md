@@ -1,50 +1,260 @@
-## Runtime Presentation Components
+# CRAFT Course Factory 2.0
 
-The current Presentation Builder generates the following domain-specific components from CCIR:
+# PIR SPECIFICATION
 
-- BACKGROUND
-- CHARACTER
-- LOCATION
-- PROP
-- NARRATION
-- DIALOGUE
+Version: 1.0
 
-These components form the runtime presentation layer and are consumed directly by the registered runtime renderers.
+Status: Active Development
 
-### Component Properties
+---
 
-#### BACKGROUND
+# Purpose
 
-Properties:
+PIR (Presentation Intermediate Representation) is the presentation-ready representation generated from CCIR.
 
-- asset
+PIR defines how course content should be rendered and executed by the presentation and runtime layers.
 
-#### CHARACTER
+Pipeline:
 
-Properties:
+CCIR
+↓
+Presentation Provider
+↓
+PIR
+↓
+Renderer
+↓
+HTML5 Runtime
 
-- name
 
-#### LOCATION
+---
 
-Properties:
+# PIR Objectives
 
-- name
+PIR must:
 
-#### PROP
+- Separate content structure from rendering implementation
+- Define learner-facing presentation
+- Maintain asset references
+- Support runtime execution
+- Support multiple renderers
 
-Properties:
+---
 
-- name
+# Root PIR Structure
 
-#### NARRATION
+```json
+{
+  "version": "",
+  "generatedAt": "",
+  "course": {},
+  "pages": [],
+  "assets": {},
+  "branding": {},
+  "audio": {}
+}
 
-Properties:
+Course Object
+Stores course metadata.
+Structure:
+{
+  "id": "",
+  "title": "",
+  "version": ""
+}
 
-- text
+Page Object
+A page represents one learner-facing screen.
+Structure:
+{
+  "id": "",
+  "title": "",
+  "layers": []
+}
 
-#### DIALOGUE
+Layer Object
+Layers organize visual and interactive components.
+Structure:
+{
+  "type": "",
+  "components": [],
+  "template": "",
+  "theme": ""
+}
 
-Properties:
+Component Object
+Components are the smallest renderable units.
+Supported foundation:
+TEXT
+IMAGE
+AUDIO
+Future:
+INTERACTION
+ASSESSMENT
+VIDEO
+ANIMATION
+Structure:
+{
+  "id": "",
+  "type": "",
+  "asset": null,
+  "properties": {},
+  "events": []
+}
 
-- text
+Text Component
+Purpose:
+Render text content.
+Example:
+{
+  "type": "TEXT",
+  "properties": {
+    "text": ""
+  }
+}
+
+Image Component
+Purpose:
+Render visual assets.
+Example:
+{
+  "type": "IMAGE",
+  "asset": "assets/images/example.png",
+  "properties": {
+    "asset": "assets/images/example.png"
+  }
+}
+
+Audio Component
+Purpose:
+Render audio assets.
+Example:
+{
+  "type": "AUDIO",
+  "asset": "assets/audio/example.mp3",
+  "properties": {
+    "asset": "assets/audio/example.mp3"
+  }
+}
+
+Asset Handling
+PIR maintains references to generated assets.
+Asset flow:
+Asset Manifest
+        ↓
+CCIR
+        ↓
+PIR
+        ↓
+Renderer
+        ↓
+Runtime
+
+Supported:
+Images
+Audio
+
+Runtime Properties
+Components may contain:
+Visibility
+Timing
+Events
+Animations
+Runtime attributes
+Example:
+{
+  "start": 0,
+  "duration": 0,
+  "visible": true
+}
+
+Audio Runtime Structure
+PIR supports:
+{
+  "audio": {
+    "narration": [],
+    "dialogue": [],
+    "background": []
+  }
+}
+
+Branding Structure
+PIR supports:
+{
+  "branding": {
+    "logo": null,
+    "primaryColor": "",
+    "secondaryColor": ""
+  }
+}
+
+Interaction Components
+Planned Sprint-1 support:
+CLICK
+
+MCQ
+
+DIALOGUE_CHOICE
+
+REFLECTION
+
+HOTSPOT
+
+DRAG_DROP
+
+SORTING
+
+BRANCHING
+
+Structure:
+{
+  "type": "INTERACTION",
+  "interactionType": "",
+  "properties": {},
+  "events": []
+}
+
+Assessment Components
+Planned:
+{
+  "type": "ASSESSMENT",
+  "properties": {}
+}
+
+PIR Generation Flow
+CCIR
+  ↓
+Course Builder
+  ↓
+Page Builder
+  ↓
+Component Generation
+  ↓
+PIR
+
+Validation Rules
+PIR validation checks:
+Structure
+Pages exist
+Components have valid types
+Required properties exist
+Assets
+Asset references resolve
+Paths exist
+Runtime
+Events are valid
+Components are executable
+Current Implementation Status
+Completed:
+PIR generation foundation
+Page generation
+Layer generation
+Component generation foundation
+Image component support
+Audio component support
+Asset propagation
+Remaining:
+Interaction components
+Assessment components
+Runtime event handling
+Timeline execution
