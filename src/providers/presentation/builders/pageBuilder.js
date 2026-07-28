@@ -50,12 +50,10 @@ export default class PageBuilder {
                             id:
                             `IMAGE_${components.length + 1}`,
 
-                            asset:
-                            image,
+                            asset:image,
 
-                            properties:
-                            {
-                                asset: image
+                            properties:{
+                                asset:image
                             }
                         }
                     )
@@ -73,12 +71,10 @@ export default class PageBuilder {
                             id:
                             `AUDIO_${components.length + 1}`,
 
-                            asset:
-                            backgroundAudio,
+                            asset:backgroundAudio,
 
-                            properties:
-                            {
-                                asset: backgroundAudio
+                            properties:{
+                                asset:backgroundAudio
                             }
                         }
                     )
@@ -101,16 +97,21 @@ export default class PageBuilder {
             );
 
 
+            this.addInteractions(
+                screen,
+                components,
+                ccir.interactions ?? []
+            );
+
+
             pages.push({
 
-                id:
-                screen.id,
+                id:screen.id,
 
                 title:
                 screen.title ?? "",
 
-                layers:
-                [
+                layers:[
                     this.layerBuilder.build(
                         "CONTENT",
                         components
@@ -127,49 +128,60 @@ export default class PageBuilder {
     }
 
 
-    getScreenDialogues(
+    addInteractions(
         screen,
-        dialogues
+        components,
+        interactions
     ) {
 
-        const screenIndex =
-            Number(
-                String(screen.id)
-                    .replace(/\D/g, "")
+        for (const interaction of interactions) {
+
+            const exists =
+                screen.children?.some(
+                    child =>
+                    child.type === "BRANCH_POINT" &&
+                    child.attributes?.id === interaction.id
+                );
+
+
+            if (!exists) {
+                continue;
+            }
+
+
+            components.push(
+
+                this.componentBuilder.build(
+                    "BRANCHING",
+                    {
+                        id:
+                        interaction.id,
+
+                        properties:{
+                            options:
+                            interaction.options ?? []
+                        }
+                    }
+                )
+
             );
 
-
-        if (!screenIndex) {
-            return dialogues;
         }
-
-
-        const perScreenCount =
-            Math.ceil(
-                dialogues.length /
-                (screenIndex)
-            );
-
-
-        return dialogues.slice(
-            screenIndex === 1
-                ? 0
-                : perScreenCount * (screenIndex - 1),
-            perScreenCount * screenIndex
-        );
 
     }
 
 
-    resolveImage(
-        screen,
-        images
-    ) {
+    getScreenDialogues(screen, dialogues) {
+
+        return dialogues;
+
+    }
+
+
+    resolveImage(screen, images) {
 
         if (screen.assetRef?.src) {
-
             return screen.assetRef.src;
-
         }
 
 
@@ -207,19 +219,13 @@ export default class PageBuilder {
 
 
             components.push(
-
                 this.componentBuilder.build(
                     "DIALOGUE",
                     {
-
                         id:
                         `DIALOGUE_${components.length + 1}`,
 
-                        voice:
-                        dialogue?.voice ?? null,
-
-                        properties:
-                        {
+                        properties:{
                             text:
                             node.value ?? "",
 
@@ -234,10 +240,8 @@ export default class PageBuilder {
                             expression:
                             dialogue?.expression ?? null
                         }
-
                     }
                 )
-
             );
 
             return;
