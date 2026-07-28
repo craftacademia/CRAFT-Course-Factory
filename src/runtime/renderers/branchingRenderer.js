@@ -10,10 +10,10 @@ export default class BranchingRenderer {
             .map((option, index) => `
 
 <button
-    class="branch-option"
-    data-branching-id="${component.id}"
-    data-option-index="${index}">
-    ${option.text ?? ""}
+class="branch-option"
+data-branching-id="${component.id}"
+data-option-index="${index}">
+${option.text ?? ""}
 </button>
 
 `)
@@ -22,7 +22,11 @@ export default class BranchingRenderer {
     }
 
 
-    bind(rootElement, component, runtime) {
+    bind(
+        rootElement,
+        component,
+        runtime
+    ) {
 
         const buttons =
             rootElement.querySelectorAll(
@@ -34,7 +38,7 @@ export default class BranchingRenderer {
 
             button.addEventListener(
                 "click",
-                () => {
+                async () => {
 
                     const index =
                         Number(
@@ -46,10 +50,26 @@ export default class BranchingRenderer {
                         component.properties.options[index];
 
 
-                    if (runtime?.navigate &&
-                        option?.next) {
+                    if (!option) {
+                        return;
+                    }
 
-                        runtime.navigate(
+
+                    runtime.state.variables.set(
+                        `branching.${component.id}`,
+                        {
+                            selected:index,
+                            option
+                        }
+                    );
+
+
+                    if (
+                        option.next &&
+                        runtime.navigate
+                    ) {
+
+                        await runtime.navigate(
                             option.next
                         );
 
