@@ -2,54 +2,94 @@ import { walk } from "../utils/treeWalker.js";
 
 export default class DialogueBuilder {
 
-  build(ast) {
+    build(ast) {
 
-    const dialogues = [];
-    let dialogueNumber = 1;
+        const dialogues = [];
 
-    walk(ast, node => {
+        let dialogueNumber = 1;
 
-      if (node.type !== "DIALOGUE") {
-        return;
-      }
 
-      const id =
-        node.attributes?.id ??
-        `DIALOGUE_${String(dialogueNumber).padStart(3, "0")}`;
+        const extractText = (node) => {
 
-      const text =
-        node.attributes?.text ??
-        (node.children ?? [])
-          .filter(child => child.type === "TEXT")
-          .map(child => child.value)
-          .join(" ")
-          .trim();
+            if (!node) {
+                return "";
+            }
 
-      dialogues.push({
 
-        id,
+            if (node.type === "TEXT") {
+                return node.value ?? "";
+            }
 
-        character: node.attributes?.character ?? null,
 
-        text,
+            return (node.children ?? [])
+                .map(child => extractText(child))
+                .join(" ")
+                .trim();
 
-        voice: node.attributes?.voice ?? null,
+        };
 
-        attributes: {
-          ...(node.attributes ?? {}),
-          id
-        },
 
-        children: node.children ?? []
+        walk(ast, node => {
 
-      });
+            if (node.type !== "LINE") {
+                return;
+            }
 
-      dialogueNumber++;
 
-    });
+            const id =
+                node.attributes?.id ??
+                node.attributes?.vo_id ??
+                `DIALOGUE_${String(dialogueNumber).padStart(3, "0")}`;
 
-    return dialogues;
 
-  }
+            const text =
+                extractText(node);
+
+
+            dialogues.push({
+
+                id,
+
+                speaker:
+                    node.attributes?.speaker ?? null,
+
+                character:
+                    node.attributes?.character ??
+                    node.attributes?.speaker ??
+                    null,
+
+                text,
+
+                voice:
+                    node.attributes?.voice ?? null,
+
+                voiceId:
+                    node.attributes?.vo_id ??
+                    node.attributes?.voiceId ??
+                    null,
+
+                expression:
+                    node.attributes?.expression ??
+                    null,
+
+                attributes: {
+                    ...(node.attributes ?? {}),
+                    id
+                },
+
+                children:
+                    node.children ?? []
+
+            });
+
+
+            dialogueNumber++;
+
+        });
+
+
+        return dialogues;
+
+    }
 
 }

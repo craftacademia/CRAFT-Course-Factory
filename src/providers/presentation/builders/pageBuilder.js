@@ -25,6 +25,10 @@ export default class PageBuilder {
             ccir.assets?.audio?.background?.[0]?.path ?? null;
 
 
+        const dialogues =
+            ccir.metadata?.dialogues ?? [];
+
+
         for (const screen of ccir.screens ?? []) {
 
             const components = [];
@@ -40,11 +44,9 @@ export default class PageBuilder {
             if (image) {
 
                 components.push(
-
                     this.componentBuilder.build(
                         "IMAGE",
                         {
-
                             id:
                             `IMAGE_${components.length + 1}`,
 
@@ -53,27 +55,21 @@ export default class PageBuilder {
 
                             properties:
                             {
-                                asset:
-                                image
+                                asset: image
                             }
-
                         }
                     )
-
                 );
 
             }
 
 
-
             if (backgroundAudio) {
 
                 components.push(
-
                     this.componentBuilder.build(
                         "AUDIO",
                         {
-
                             id:
                             `AUDIO_${components.length + 1}`,
 
@@ -82,22 +78,26 @@ export default class PageBuilder {
 
                             properties:
                             {
-                                asset:
-                                backgroundAudio
+                                asset: backgroundAudio
                             }
-
                         }
                     )
-
                 );
 
             }
 
 
+            const screenDialogues =
+                this.getScreenDialogues(
+                    screen,
+                    dialogues
+                );
+
 
             this.addNodeComponents(
                 screen,
-                components
+                components,
+                screenDialogues
             );
 
 
@@ -127,6 +127,39 @@ export default class PageBuilder {
     }
 
 
+    getScreenDialogues(
+        screen,
+        dialogues
+    ) {
+
+        const screenIndex =
+            Number(
+                String(screen.id)
+                    .replace(/\D/g, "")
+            );
+
+
+        if (!screenIndex) {
+            return dialogues;
+        }
+
+
+        const perScreenCount =
+            Math.ceil(
+                dialogues.length /
+                (screenIndex)
+            );
+
+
+        return dialogues.slice(
+            screenIndex === 1
+                ? 0
+                : perScreenCount * (screenIndex - 1),
+            perScreenCount * screenIndex
+        );
+
+    }
+
 
     resolveImage(
         screen,
@@ -142,19 +175,12 @@ export default class PageBuilder {
 
         const image =
             images.find(
-                item => {
-
-                    const imageId =
-                        item.name
-                            ?.replace(
-                                /\.[^/.]+$/,
-                                ""
-                            );
-
-
-                    return imageId === screen.id;
-
-                }
+                item =>
+                item.name
+                    ?.replace(
+                        /\.[^/.]+$/,
+                        ""
+                    ) === screen.id
             );
 
 
@@ -163,40 +189,58 @@ export default class PageBuilder {
     }
 
 
-
     addNodeComponents(
         node,
-        components
+        components,
+        dialogues
     ) {
 
         if (!node) {
-
             return;
-
         }
 
 
         if (node.type === "TEXT") {
 
+            const dialogue =
+                dialogues.shift();
+
+
             components.push(
 
                 this.componentBuilder.build(
-                    "NARRATION",
+                    "DIALOGUE",
                     {
 
                         id:
-                        `NARRATION_${components.length + 1}`,
+                        `DIALOGUE_${components.length + 1}`,
+
+                        voice:
+                        dialogue?.voice ?? null,
 
                         properties:
                         {
                             text:
-                            node.value ?? ""
+                            node.value ?? "",
+
+                            speaker:
+                            dialogue?.speaker ?? null,
+
+                            voiceId:
+                            dialogue?.voiceId ??
+                            dialogue?.attributes?.voId ??
+                            null,
+
+                            expression:
+                            dialogue?.expression ?? null
                         }
 
                     }
                 )
 
             );
+
+            return;
 
         }
 
@@ -205,7 +249,8 @@ export default class PageBuilder {
 
             this.addNodeComponents(
                 child,
-                components
+                components,
+                dialogues
             );
 
         }
