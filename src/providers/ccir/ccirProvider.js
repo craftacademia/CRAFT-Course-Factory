@@ -1,157 +1,199 @@
-import Provider from "../../core/provider.js";
-
-import CCIRDocument from "./model/ccirDocument.js";
-
-import CourseBuilder from "./builders/courseBuilder.js";
-import CharacterBuilder from "./builders/characterBuilder.js";
-import LocationBuilder from "./builders/locationBuilder.js";
-import AssetBuilder from "./builders/assetBuilder.js";
-import VariableBuilder from "./builders/variableBuilder.js";
-import ScreenBuilder from "./builders/screenBuilder.js";
 import DialogueBuilder from "./builders/dialogueBuilder.js";
-import InteractionBuilder from "./builders/interactionBuilder.js";
-import AssessmentBuilder from "./builders/assessmentBuilder.js";
-
-import ReferenceResolver from "./resolver/referenceResolver.js";
-import IntegrityValidator from "./validator/integrityValidator.js";
 
 
-export default class CCIRProvider extends Provider {
+export default class CCIRProvider {
+
 
     constructor() {
-
-        super("ccir");
-
-        this.courseBuilder =
-            new CourseBuilder();
-
-        this.characterBuilder =
-            new CharacterBuilder();
-
-        this.locationBuilder =
-            new LocationBuilder();
-
-        this.assetBuilder =
-            new AssetBuilder();
-
-        this.variableBuilder =
-            new VariableBuilder();
-
-        this.screenBuilder =
-            new ScreenBuilder();
 
         this.dialogueBuilder =
             new DialogueBuilder();
 
-        this.interactionBuilder =
-            new InteractionBuilder();
-
-        this.assessmentBuilder =
-            new AssessmentBuilder();
-
-        this.referenceResolver =
-            new ReferenceResolver();
-
-        this.integrityValidator =
-            new IntegrityValidator();
-
     }
 
 
-    async build(
-        ast,
-        assetManifest = null
-    ) {
 
-        const ccir =
-            new CCIRDocument();
+    async build(ast) {
 
 
-        ccir.course =
-            this.courseBuilder.build(
-                ast
-            );
-
-
-        ccir.characters =
-            this.characterBuilder.build(
-                ast
-            );
-
-
-        ccir.locations =
-            this.locationBuilder.build(
-                ast
-            );
-
-
-        ccir.assets =
-            this.assetBuilder.build(
-                ast
-            );
-
-
-        ccir.variables =
-            this.variableBuilder.build(
-                ast
-            );
-
-
-        ccir.screens =
-            this.screenBuilder.build(
-                ast
-            );
-
-
-        ccir.metadata.dialogues =
+        const dialogues =
             this.dialogueBuilder.build(
                 ast
             );
 
 
-        ccir.interactions =
-            this.interactionBuilder.build(
-                ast
-            );
+        const ccir = {
+
+            version:"1.0",
+
+            generatedAt:
+            new Date().toISOString(),
 
 
-        ccir.assessments =
-            this.assessmentBuilder.build(
-                ast
-            );
+            course:{
+
+                id:null,
+
+                title:
+                this.findTitle(ast),
+
+                version:null
+
+            },
+
+
+            screens:
+            this.buildScreens(ast),
+
+
+            metadata:{
+
+                dialogues
+
+            },
+
+
+            assets:{
+
+                images:[],
+
+                audio:{},
+
+                branding:null
+
+            },
+
+
+            interactions:
+            [],
+
+
+            lookup:{
+
+                characters:{},
+
+                locations:{},
+
+                assets:{},
+
+                variables:{},
+
+                screens:{},
+
+                interactions:{},
+
+                assessments:{}
+
+            }
+
+        };
+
+
+        return ccir;
+
+    }
 
 
 
-        if (assetManifest) {
+    findTitle(ast) {
 
-            ccir.assets = {
-
-                ...ccir.assets,
-
-                images:
-                    assetManifest.images ?? [],
-
-                audio:
-                    assetManifest.audio ?? {},
-
-                branding:
-                    assetManifest.branding ?? null
-
-            };
-
-        }
+        let title = null;
 
 
+        const walk =
+        (node)=>{
 
-        const resolved =
-            this.referenceResolver.resolve(
-                ccir
-            );
+            if (!node) {
+                return;
+            }
 
 
-        return this.integrityValidator.validate(
-            resolved
-        );
+            if (
+                node.type === "COURSE" &&
+                node.attributes?.TITLE
+            ) {
+
+                title =
+                node.attributes.TITLE;
+
+            }
+
+
+            for (
+                const child of node.children ?? []
+            ) {
+
+                walk(child);
+
+            }
+
+        };
+
+
+        walk(ast);
+
+
+        return title;
+
+    }
+
+
+
+    buildScreens(ast) {
+
+        const screens = [];
+
+
+        const walk =
+        (node)=>{
+
+            if (!node) {
+                return;
+            }
+
+
+            if (
+                node.type === "SCENE" ||
+                node.type === "SCREEN"
+            ) {
+
+                screens.push({
+
+                    id:
+                    node.attributes?.id ??
+                    node.attributes?.ID ??
+                    null,
+
+
+                    title:
+                    node.attributes?.title ??
+                    node.attributes?.TITLE ??
+                    "",
+
+
+                    children:
+                    node.children ?? []
+
+                });
+
+            }
+
+
+            for (
+                const child of node.children ?? []
+            ) {
+
+                walk(child);
+
+            }
+
+        };
+
+
+        walk(ast);
+
+
+        return screens;
 
     }
 

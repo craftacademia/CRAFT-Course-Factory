@@ -1,12 +1,15 @@
 import LayerBuilder from "./layerBuilder.js";
 import ComponentBuilder from "./componentBuilder.js";
 
+
 export default class PageBuilder {
+
 
     constructor() {
 
         this.layerBuilder =
             new LayerBuilder();
+
 
         this.componentBuilder =
             new ComponentBuilder();
@@ -14,80 +17,39 @@ export default class PageBuilder {
     }
 
 
+
     build(ccir) {
 
         const pages = [];
 
+
         const images =
             ccir.assets?.images ?? [];
+
 
         const backgroundAudio =
             ccir.assets?.audio?.background?.[0]?.path ?? null;
 
 
-        const dialogues =
-            ccir.metadata?.dialogues ?? [];
-
 
         for (const screen of ccir.screens ?? []) {
+
 
             const components = [];
 
 
-            const image =
-                this.resolveImage(
-                    screen,
-                    images
-                );
-
-
-            if (image) {
-
-                components.push(
-                    this.componentBuilder.build(
-                        "IMAGE",
-                        {
-                            id:
-                            `IMAGE_${components.length + 1}`,
-
-                            asset:image,
-
-                            properties:{
-                                asset:image
-                            }
-                        }
-                    )
-                );
-
-            }
-
-
-            if (backgroundAudio) {
-
-                components.push(
-                    this.componentBuilder.build(
-                        "AUDIO",
-                        {
-                            id:
-                            `AUDIO_${components.length + 1}`,
-
-                            asset:backgroundAudio,
-
-                            properties:{
-                                asset:backgroundAudio
-                            }
-                        }
-                    )
-                );
-
-            }
-
-
             const screenDialogues =
-                this.getScreenDialogues(
-                    screen,
-                    dialogues
+                (ccir.metadata?.dialogues ?? [])
+                .filter(
+                    item =>
+                    item.screenId === screen.id
+                )
+                .map(
+                    item => ({
+                        ...item
+                    })
                 );
+
 
 
             this.addNodeComponents(
@@ -97,11 +59,13 @@ export default class PageBuilder {
             );
 
 
+
             this.addInteractions(
                 screen,
                 components,
                 ccir.interactions ?? []
             );
+
 
 
             pages.push({
@@ -110,6 +74,7 @@ export default class PageBuilder {
 
                 title:
                 screen.title ?? "",
+
 
                 layers:[
                     this.layerBuilder.build(
@@ -128,13 +93,17 @@ export default class PageBuilder {
     }
 
 
+
+
     addInteractions(
         screen,
         components,
         interactions
     ) {
 
+
         for (const interaction of interactions) {
+
 
             const exists =
                 screen.children?.some(
@@ -150,7 +119,6 @@ export default class PageBuilder {
 
 
             components.push(
-
                 this.componentBuilder.build(
                     "BRANCHING",
                     {
@@ -163,7 +131,6 @@ export default class PageBuilder {
                         }
                     }
                 )
-
             );
 
         }
@@ -171,34 +138,7 @@ export default class PageBuilder {
     }
 
 
-    getScreenDialogues(screen, dialogues) {
 
-        return dialogues;
-
-    }
-
-
-    resolveImage(screen, images) {
-
-        if (screen.assetRef?.src) {
-            return screen.assetRef.src;
-        }
-
-
-        const image =
-            images.find(
-                item =>
-                item.name
-                    ?.replace(
-                        /\.[^/.]+$/,
-                        ""
-                    ) === screen.id
-            );
-
-
-        return image?.path ?? null;
-
-    }
 
 
     addNodeComponents(
@@ -207,46 +147,67 @@ export default class PageBuilder {
         dialogues
     ) {
 
+
         if (!node) {
             return;
         }
 
 
+
+        if (
+            node.type === "BRANCH_POINT" ||
+            node.type === "OPTION"
+        ) {
+            return;
+        }
+
+
+
         if (node.type === "TEXT") {
+
 
             const dialogue =
                 dialogues.shift();
+
 
 
             components.push(
                 this.componentBuilder.build(
                     "DIALOGUE",
                     {
+
                         id:
                         `DIALOGUE_${components.length + 1}`,
 
+
                         properties:{
+
                             text:
                             node.value ?? "",
+
 
                             speaker:
                             dialogue?.speaker ?? null,
 
+
                             voiceId:
-                            dialogue?.voiceId ??
-                            dialogue?.attributes?.voId ??
-                            null,
+                            dialogue?.voiceId ?? null,
+
 
                             expression:
                             dialogue?.expression ?? null
+
                         }
+
                     }
                 )
             );
 
+
             return;
 
         }
+
 
 
         for (const child of node.children ?? []) {
