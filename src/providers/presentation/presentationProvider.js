@@ -1,12 +1,15 @@
 import CourseBuilder from "./builders/courseBuilder.js";
 import TimelineBuilder from "../../runtime/builders/timelineBuilder.js";
 
+
 export default class PresentationProvider {
+
 
     constructor() {
 
         this.courseBuilder =
             new CourseBuilder();
+
 
         this.timelineBuilder =
             new TimelineBuilder();
@@ -14,10 +17,13 @@ export default class PresentationProvider {
     }
 
 
+
     async build(ccir) {
+
 
         const presentation =
             await this.courseBuilder.build(ccir);
+
 
 
         const theme =
@@ -29,10 +35,13 @@ export default class PresentationProvider {
             theme;
 
 
+
         for (const page of presentation.pages ?? []) {
+
 
             page.timeline =
                 this.timelineBuilder.build(page);
+
 
 
             const screen =
@@ -40,6 +49,7 @@ export default class PresentationProvider {
                     item =>
                     item.id === page.id
                 );
+
 
 
             if (screen?.assetRef) {
@@ -71,7 +81,16 @@ export default class PresentationProvider {
             }
 
 
+
+            this.attachVoiceAssets(
+                page,
+                ccir
+            );
+
+
+
             for (const layer of page.layers ?? []) {
+
 
                 if (!layer.template) {
 
@@ -91,6 +110,7 @@ export default class PresentationProvider {
             }
 
         }
+
 
 
         if (ccir.assets) {
@@ -117,12 +137,120 @@ export default class PresentationProvider {
         }
 
 
+
         return presentation;
 
     }
 
 
+
+    attachVoiceAssets(
+        page,
+        ccir
+    ) {
+
+
+        const audioAssets = [
+
+            ...(ccir.assets?.audio?.dialogue ?? []),
+
+            ...(ccir.assets?.audio?.narration ?? []),
+
+            ...(ccir.assets?.audio?.background ?? [])
+
+        ];
+
+
+
+        for (const layer of page.layers ?? []) {
+
+
+            for (const component of layer.components ?? []) {
+
+
+                if (
+                    component.type !== "DIALOGUE"
+                ) {
+
+                    continue;
+
+                }
+
+
+
+                const voiceId =
+                    component.properties?.voiceId;
+
+
+
+                if (!voiceId) {
+
+                    continue;
+
+                }
+
+
+
+                const screenId =
+                    page.id
+                    ?.toLowerCase()
+                    ?? "";
+
+
+
+                const audio =
+                    audioAssets.find(
+                        item => {
+
+                            const filename =
+                                item.name
+                                ?.toLowerCase()
+                                ?? "";
+
+
+                            return (
+                                filename.includes(
+                                    voiceId
+                                    .toLowerCase()
+                                    .replace("_","-")
+                                )
+                                ||
+                                filename.startsWith(
+                                    "vo-" +
+                                    screenId
+                                )
+                            );
+
+                        }
+                    );
+
+
+
+                if (!audio) {
+
+                    continue;
+
+                }
+
+
+
+                component.voice =
+                    audio;
+
+
+                component.asset =
+                    audio;
+
+            }
+
+        }
+
+    }
+
+
+
     resolveTemplate(layer) {
+
 
         const type =
             layer.type ?? "";
