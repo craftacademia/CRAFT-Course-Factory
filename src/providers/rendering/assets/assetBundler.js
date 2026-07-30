@@ -3,46 +3,75 @@ import path from "path";
 
 export default class AssetBundler {
 
-    async build(assets = [], outputDirectory) {
+    async build(
+        assets = [],
+        outputDirectory
+    ) {
 
-        const outputAssetsDirectory = path.join(
-            outputDirectory,
-            "assets"
-        );
+        const outputAssetsDirectory =
+            path.join(
+                outputDirectory,
+                "assets"
+            );
+
 
         await fs.mkdir(
             outputAssetsDirectory,
             {
-                recursive: true
+                recursive:true
             }
         );
 
+
         const bundledAssets = [];
+
 
         for (const asset of assets) {
 
+
             if (!asset?.src) {
+
                 continue;
+
             }
 
-            const fileName = path.basename(asset.src);
 
-            const destination = path.join(
-                outputAssetsDirectory,
-                fileName
-            );
+
+            const fileName =
+                asset.name ??
+                path.basename(
+                    asset.src
+                );
+
+
+
+            const destination =
+                path.join(
+                    outputAssetsDirectory,
+                    fileName
+                );
+
+
 
             await fs.copyFile(
                 asset.src,
                 destination
             );
 
+
+
             bundledAssets.push({
+
                 ...asset,
-                bundledPath: `assets/${fileName}`
+
+                bundledPath:
+                    `assets/${fileName}`
+
             });
 
+
         }
+
 
         return bundledAssets;
 

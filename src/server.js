@@ -9,59 +9,125 @@ import { generateScormPackage } from "./scormExporter.js";
 import scormRouter from "./routes/scorm.js";
 
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename =
+    fileURLToPath(import.meta.url);
+
+const __dirname =
+    path.dirname(__filename);
 
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+
+const app =
+    express();
 
 
-const uploadDir = path.join(__dirname, "../uploads");
-const outputDir = path.join(__dirname, "../output");
+const PORT =
+    process.env.PORT || 3000;
 
 
-[uploadDir, outputDir].forEach(dir => {
 
-    if (!fs.existsSync(dir)) {
+const uploadDir =
+    path.join(
+        __dirname,
+        "../uploads"
+    );
 
-        fs.mkdirSync(dir, {
-            recursive: true
-        });
+
+const outputDir =
+    path.join(
+        __dirname,
+        "../output"
+    );
+
+
+
+[
+    uploadDir,
+    outputDir
+].forEach(
+    dir => {
+
+        if (!fs.existsSync(dir)) {
+
+            fs.mkdirSync(
+                dir,
+                {
+                    recursive:true
+                }
+            );
+
+        }
 
     }
-
-});
-
-
-const storage = multer.diskStorage({
-
-    destination(req, file, cb) {
-        cb(null, uploadDir);
-    },
-
-    filename(req, file, cb) {
-        cb(null, `${Date.now()}-${file.originalname}`);
-    }
-
-});
+);
 
 
-const upload = multer({
-    storage
-});
+
+const storage =
+    multer.diskStorage({
+
+        destination(
+            req,
+            file,
+            cb
+        ){
+
+            cb(
+                null,
+                uploadDir
+            );
+
+        },
 
 
-app.use(express.static(path.join(__dirname, "../public")));
+        filename(
+            req,
+            file,
+            cb
+        ){
 
-app.use(express.json({
-    limit:"50mb"
-}));
+            cb(
+                null,
+                `${Date.now()}-${file.originalname}`
+            );
 
-app.use(express.urlencoded({
-    limit:"50mb",
-    extended:true
-}));
+        }
+
+    });
+
+
+
+const upload =
+    multer({
+        storage
+    });
+
+
+
+app.use(
+    express.static(
+        path.join(
+            __dirname,
+            "../public"
+        )
+    )
+);
+
+
+app.use(
+    express.json({
+        limit:"50mb"
+    })
+);
+
+
+app.use(
+    express.urlencoded({
+        limit:"50mb",
+        extended:true
+    })
+);
+
 
 
 app.use(
@@ -73,51 +139,59 @@ app.use(
 
 app.post(
     "/api/build",
-    upload.fields([
-        {
-            name:"script",
-            maxCount:1
-        },
-        {
-            name:"images",
-            maxCount:50
-        },
-        {
-            name:"narration",
-            maxCount:50
-        },
-        {
-            name:"dialogueAudio",
-            maxCount:50
-        },
-        {
-            name:"backgroundMusic",
-            maxCount:5
-        },
-        {
-            name:"logo",
-            maxCount:1
-        }
-    ]),
-    async(req,res)=>{
+    upload.fields(
+        [
+            {
+                name:"script",
+                maxCount:1
+            },
+            {
+                name:"images",
+                maxCount:100
+            },
+            {
+                name:"narration",
+                maxCount:100
+            },
+            {
+                name:"dialogueAudio",
+                maxCount:200
+            },
+            {
+                name:"backgroundMusic",
+                maxCount:10
+            },
+            {
+                name:"logo",
+                maxCount:1
+            }
+        ]
+    ),
+    async(
+        req,
+        res
+    )=>{
 
         try {
+
 
             const scriptFile =
                 req.files?.script?.[0];
 
 
-            if(!scriptFile){
+            if (!scriptFile) {
 
-                return res.status(400).json({
-                    error:"Missing script file (.docx)"
-                });
+                throw new Error(
+                    "Script file required"
+                );
 
             }
 
 
+
             const buildId =
                 `build_${Date.now()}`;
+
 
 
             const buildDir =
@@ -127,6 +201,7 @@ app.post(
                 );
 
 
+
             const assetsDir =
                 path.join(
                     buildDir,
@@ -134,28 +209,38 @@ app.post(
                 );
 
 
+
             const folders = [
+
                 "images",
+
                 "audio/narration",
+
                 "audio/dialogue",
+
                 "audio/background",
+
                 "branding"
+
             ];
 
 
-            folders.forEach(folder=>{
 
-                fs.mkdirSync(
-                    path.join(
-                        assetsDir,
-                        folder
-                    ),
-                    {
-                        recursive:true
-                    }
-                );
+            folders.forEach(
+                folder=>{
 
-            });
+                    fs.mkdirSync(
+                        path.join(
+                            assetsDir,
+                            folder
+                        ),
+                        {
+                            recursive:true
+                        }
+                    );
+
+                }
+            );
 
 
 
@@ -166,20 +251,28 @@ app.post(
                 images:[],
 
                 audio:{
+
                     narration:[],
+
                     dialogue:[],
+
                     background:[]
+
                 },
+
 
                 branding:{
 
                     logo:null,
 
                     primaryColor:
-                        req.body.primaryColor || "#1e3a8a",
+                        req.body.primaryColor ||
+                        "#1e3a8a",
+
 
                     secondaryColor:
-                        req.body.secondaryColor || "#f59e0b"
+                        req.body.secondaryColor ||
+                        "#f59e0b"
 
                 }
 
@@ -194,31 +287,49 @@ app.post(
                 target
             )=>{
 
-                if(!files) return;
+
+                if (!files) {
+
+                    return;
+
+                }
 
 
-                files.forEach(file=>{
 
-                    fs.copyFileSync(
-                        file.path,
-                        path.join(
-                            assetsDir,
-                            folder,
-                            file.originalname
-                        )
-                    );
+                files.forEach(
+                    file=>{
 
 
-                    target.push({
+                        fs.copyFileSync(
+                            file.path,
+                            path.join(
+                                assetsDir,
+                                folder,
+                                file.originalname
+                            )
+                        );
 
-                        name:file.originalname,
 
-                        path:
-                        `assets/${folder}/${file.originalname}`
 
-                    });
+                        target.push({
 
-                });
+                            name:
+                                file.originalname,
+
+
+                            path:
+                                `assets/${folder}/${file.originalname}`,
+
+
+                            src:
+                                file.path
+
+                        });
+
+
+                    }
+                );
+
 
             };
 
@@ -253,10 +364,14 @@ app.post(
 
 
 
-            if(req.files?.logo?.[0]){
+            if (
+                req.files?.logo?.[0]
+            ) {
+
 
                 const logo =
                     req.files.logo[0];
+
 
 
                 fs.copyFileSync(
@@ -269,14 +384,22 @@ app.post(
                 );
 
 
+
                 assetManifest.branding.logo = {
 
-                    name:logo.originalname,
+                    name:
+                        logo.originalname,
+
 
                     path:
-                    `assets/branding/${logo.originalname}`
+                        `assets/branding/${logo.originalname}`,
+
+
+                    src:
+                        logo.path
 
                 };
+
 
             }
 
@@ -300,6 +423,7 @@ app.post(
                 new Compiler();
 
 
+
             const pir =
                 await compiler.compile(
                     scriptFile.path,
@@ -315,50 +439,38 @@ app.post(
                 );
 
 
-            res.set({
 
-                "Content-Type":
-                "application/zip",
+            res.json({
 
-                "Content-Disposition":
-                'attachment; filename="SCORM_Package.zip"',
+                buildId,
 
-                "Content-Length":
-                zipBuffer.length
+                output:
+                    buildDir,
+
+                success:true
 
             });
 
 
-            return res.send(zipBuffer);
+        }
+        catch(error) {
 
-
-        } catch(error){
 
             console.error(
-                "Build Error:",
                 error
             );
 
 
-            return res.status(500).json({
-                error:error.message
+            res.status(500)
+            .json({
+
+                error:
+                    error.message
+
             });
 
+
         }
-
-    }
-);
-
-
-
-app.use(
-    "/api/{*splat}",
-    (req,res)=>{
-
-        res.status(404).json({
-            error:
-            `API route ${req.originalUrl} does not exist.`
-        });
 
     }
 );
@@ -369,7 +481,7 @@ app.listen(
     PORT,
     ()=>{
         console.log(
-            `🚀 CRAFT Course Factory server active on http://localhost:${PORT}`
+            `CRAFT Course Factory running on ${PORT}`
         );
     }
 );
