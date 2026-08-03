@@ -172,7 +172,7 @@ body {
 
 
 
-.slide-template-image {
+.image-component {
 
     position:absolute;
 
@@ -182,27 +182,11 @@ body {
 
     height:100%;
 
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    z-index:1;
-
-}
-
-
-
-.slide-template-image img {
-
-    width:100%;
-
-    height:100%;
-
     object-fit:contain;
 
     display:block;
+
+    z-index:1;
 
 }
 
@@ -270,6 +254,89 @@ body {
     display:flex;
 
     flex-direction:column;
+
+}
+
+
+
+.speaker-badge {
+
+    position:absolute;
+
+    top:5%;
+
+    left:5%;
+
+    z-index:15;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    background:#ffffff;
+
+    border:2px solid #d71920;
+
+    border-radius:999px;
+
+    padding:6px 16px 6px 6px;
+
+    box-shadow:
+    0 4px 12px rgba(0,0,0,0.3);
+
+}
+
+
+
+.speaker-avatar {
+
+    width:44px;
+
+    height:44px;
+
+    flex-shrink:0;
+
+    border-radius:50%;
+
+    overflow:hidden;
+
+    border:2px solid #d71920;
+
+    background:#f5f5f5;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+
+
+.speaker-avatar img {
+
+    width:44px;
+
+    height:44px;
+
+    object-fit:cover;
+
+    display:block;
+
+}
+
+
+
+.speaker-name {
+
+    font-size:16px;
+
+    font-weight:700;
+
+    color:#d71920;
 
 }
 

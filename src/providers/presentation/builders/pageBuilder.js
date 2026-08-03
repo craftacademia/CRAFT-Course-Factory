@@ -18,6 +18,43 @@ export default class PageBuilder {
 
 
 
+    findImageByRef(images, ref) {
+
+        if (!ref) {
+            return null;
+        }
+
+        const normalizedRef =
+            String(ref)
+                .replaceAll("_", "-")
+                .toUpperCase();
+
+        return images.find(
+            image => {
+
+                const name =
+                    (image.name ?? "")
+                        .toUpperCase();
+
+                const nameWithoutExtension =
+                    name.replace(
+                        /\.[A-Z0-9]+$/,
+                        ""
+                    );
+
+                return (
+                    nameWithoutExtension === normalizedRef
+                    ||
+                    name.includes(normalizedRef)
+                );
+
+            }
+        ) ?? null;
+
+    }
+
+
+
     build(ccir) {
 
         const pages = [];
@@ -36,10 +73,19 @@ export default class PageBuilder {
 
 
             const screenImage =
-                screen.assetRef ??
-                images.find(
-                    image =>
-                    image.name === screen.assetRef?.name
+                this.findImageByRef(
+                    images,
+                    screen.location
+                )
+                ??
+                this.findImageByRef(
+                    images,
+                    screen.character
+                )
+                ??
+                this.findImageByRef(
+                    images,
+                    screen.asset
                 )
                 ??
                 images[0]

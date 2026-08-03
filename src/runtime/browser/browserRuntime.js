@@ -234,6 +234,120 @@ export default class BrowserRuntime {
 
 
 
+    findSpeakerAvatar(expression) {
+
+        if (!expression || expression === "NONE") {
+            return null;
+        }
+
+
+        const images =
+            this.course?.assets?.images ??
+            this.course?.images ??
+            [];
+
+
+        const normalizedExpression =
+            expression
+                .replaceAll("_", "-")
+                .toUpperCase();
+
+
+
+        return images.find(
+            item => {
+
+                const name =
+                    (item.name ?? "").toUpperCase();
+
+
+                const nameWithoutExtension =
+                    name.replace(
+                        /\.[A-Z0-9]+$/,
+                        ""
+                    );
+
+
+                return (
+                    nameWithoutExtension === normalizedExpression
+                    ||
+                    name.includes(normalizedExpression)
+                );
+
+            }
+        ) ?? null;
+
+    }
+
+
+
+    renderSpeakerBadge(component) {
+
+        const badgeSlot =
+            this.rootElement.querySelector(
+                "#speaker-badge-slot"
+            );
+
+
+        if (!badgeSlot) {
+            return;
+        }
+
+
+        const speaker =
+            component.properties?.speaker ?? "";
+
+
+        if (speaker.toUpperCase() === "NAR") {
+
+            badgeSlot.innerHTML = `
+<div class="speaker-badge">
+    <div class="speaker-avatar">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d71920" stroke-width="2">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="23"/>
+            <line x1="8" y1="23" x2="16" y2="23"/>
+        </svg>
+    </div>
+    <span class="speaker-name">Narrator</span>
+</div>
+`;
+
+            return;
+
+        }
+
+
+        const expression =
+            component.properties?.expression;
+
+
+        const avatar =
+            this.findSpeakerAvatar(expression);
+
+
+        if (avatar) {
+
+            badgeSlot.innerHTML = `
+<div class="speaker-badge">
+    <div class="speaker-avatar">
+        <img src="./${avatar.src}" alt="">
+    </div>
+    <span class="speaker-name">${speaker}</span>
+</div>
+`;
+
+        } else {
+
+            badgeSlot.innerHTML = "";
+
+        }
+
+    }
+
+
+
     async playDialogueSequence(page) {
 
 
@@ -284,6 +398,11 @@ export default class BrowserRuntime {
 
             slot.innerHTML =
                 lineContext.flush();
+
+
+            this.renderSpeakerBadge(
+                component
+            );
 
 
             const voiceId =
@@ -363,6 +482,18 @@ export default class BrowserRuntime {
 
 
         slot.innerHTML = "";
+
+
+        const badgeSlot =
+            this.rootElement.querySelector(
+                "#speaker-badge-slot"
+            );
+
+        if (badgeSlot) {
+
+            badgeSlot.innerHTML = "";
+
+        }
 
     }
 

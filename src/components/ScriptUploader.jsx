@@ -3,6 +3,11 @@ import axios from 'axios';
 
 export default function ScriptUploader({ onScriptParsed }) {
   const [file, setFile] = useState(null);
+  const [images, setImages] = useState([]);
+  const [narration, setNarration] = useState([]);
+  const [dialogueAudio, setDialogueAudio] = useState([]);
+  const [backgroundMusic, setBackgroundMusic] = useState([]);
+  const [logo, setLogo] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -27,6 +32,14 @@ export default function ScriptUploader({ onScriptParsed }) {
       const formData = new FormData();
       formData.append('script', file);
 
+      images.forEach((img) => formData.append('images', img));
+      narration.forEach((a) => formData.append('narration', a));
+      dialogueAudio.forEach((a) => formData.append('dialogueAudio', a));
+      backgroundMusic.forEach((a) => formData.append('backgroundMusic', a));
+      if (logo) {
+        formData.append('logo', logo);
+      }
+
       const response = await axios.post('/api/build', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -49,12 +62,70 @@ export default function ScriptUploader({ onScriptParsed }) {
     <div className="upload-card">
       <h3>Upload Course Script</h3>
       <form onSubmit={handleUpload}>
-        <input 
-          type="file" 
-          accept=".docx" 
-          onChange={handleFileChange} 
-          disabled={loading}
-        />
+        <label>
+          Script (.docx) — required
+          <input
+            type="file"
+            accept=".docx"
+            onChange={handleFileChange}
+            disabled={loading}
+          />
+        </label>
+
+        <label>
+          Images (characters, locations, props, scenes)
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={(e) => setImages(Array.from(e.target.files || []))}
+            disabled={loading}
+          />
+        </label>
+
+        <label>
+          Narration Audio
+          <input
+            type="file"
+            accept="audio/*"
+            multiple
+            onChange={(e) => setNarration(Array.from(e.target.files || []))}
+            disabled={loading}
+          />
+        </label>
+
+        <label>
+          Dialogue Voice-Over Audio
+          <input
+            type="file"
+            accept="audio/*"
+            multiple
+            onChange={(e) => setDialogueAudio(Array.from(e.target.files || []))}
+            disabled={loading}
+          />
+        </label>
+
+        <label>
+          Background Music
+          <input
+            type="file"
+            accept="audio/*"
+            multiple
+            onChange={(e) => setBackgroundMusic(Array.from(e.target.files || []))}
+            disabled={loading}
+          />
+        </label>
+
+        <label>
+          Logo (optional)
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setLogo(e.target.files?.[0] || null)}
+            disabled={loading}
+          />
+        </label>
+
         <button type="submit" disabled={!file || loading}>
           {loading ? 'Uploading & Building...' : 'Build Course'}
         </button>

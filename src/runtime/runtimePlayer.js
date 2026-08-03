@@ -99,6 +99,12 @@ export default class RuntimePlayer {
             `<div id="dialogue-slot"></div>`
         );
 
+        // Reserve a stable slot for the current speaker's avatar badge,
+        // updated alongside each dialogue line by BrowserRuntime.
+        this.context.append(
+            `<div id="speaker-badge-slot"></div>`
+        );
+
         return this.context.flush();
 
     }
