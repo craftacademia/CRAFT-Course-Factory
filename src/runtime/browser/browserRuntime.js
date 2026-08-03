@@ -3,6 +3,7 @@ import AssetLoader from "../assetLoader.js";
 import NavigationEngine from "../navigationEngine.js";
 import InteractionRenderer from "../interactionRenderer.js";
 import RuntimeState from "../runtimeState.js";
+import RenderContext from "../renderContext.js";
 
 import MCQInteraction from "../interactions/mcqInteraction.js";
 import MSQInteraction from "../interactions/msqInteraction.js";
@@ -126,7 +127,7 @@ export default class BrowserRuntime {
 
         this.mountBranching(page);
 
-        await this.playDialogueAudio(page);
+        await this.playDialogueSequence(page);
 
     }
 
@@ -174,7 +175,7 @@ export default class BrowserRuntime {
 
 
 
-    async playDialogueAudio(page) {
+    async playDialogueSequence(page) {
 
 
         if (this.currentAudio) {
@@ -186,79 +187,123 @@ export default class BrowserRuntime {
         }
 
 
-        const dialogues = [];
+        const dialogueQueue =
+            this.currentPlayer?.dialogueQueue ?? [];
 
 
-        for (const layer of page.layers ?? []) {
+        const slot =
+            this.rootElement.querySelector(
+                "#dialogue-slot"
+            );
 
 
-            for (const component of layer.components ?? []) {
+        if (!slot || dialogueQueue.length === 0) {
+
+            return;
+
+        }
 
 
-                if (
-                    component.type !== "DIALOGUE"
-                ) {
-                    continue;
-                }
+        for (const component of dialogueQueue) {
 
 
-                const voiceId =
-                    component.properties?.voiceId;
+            const dialogueRenderer =
+                this.currentPlayer.registry.get(
+                    "DIALOGUE"
+                );
 
 
-                const audio =
-                    this.findDialogueAudio(
-                        voiceId
-                    );
+            const lineContext =
+                new RenderContext();
 
 
-                if (audio) {
+            dialogueRenderer.render(
+                component,
+                lineContext
+            );
 
-                    dialogues.push(audio);
 
-                }
+            slot.innerHTML =
+                lineContext.flush();
+
+
+            const voiceId =
+                component.properties?.voiceId;
+
+
+            const audioAsset =
+                this.findDialogueAudio(
+                    voiceId
+                );
+
+
+            if (audioAsset) {
+
+                await new Promise(
+                    resolve => {
+
+
+                        const audio =
+                            new Audio(
+                                `./${audioAsset.src}`
+                            );
+
+
+                        this.currentAudio =
+                            audio;
+
+
+                        audio.onended =
+                            resolve;
+
+
+                        audio.onerror =
+                            resolve;
+
+
+                        audio.play()
+                        .catch(
+                            resolve
+                        );
+
+
+                    }
+                );
+
+            } else {
+
+                // No voice-over for this line — wait for the learner
+                // to click it before advancing to the next line.
+                await new Promise(
+                    resolve => {
+
+                        const handler =
+                            () => {
+
+                                slot.removeEventListener(
+                                    "click",
+                                    handler
+                                );
+
+                                resolve();
+
+                            };
+
+
+                        slot.addEventListener(
+                            "click",
+                            handler
+                        );
+
+                    }
+                );
 
             }
 
         }
 
 
-
-        for (const audioAsset of dialogues) {
-
-
-            await new Promise(
-                resolve => {
-
-
-                    const audio =
-                        new Audio(
-                            `./${audioAsset.src}`
-                        );
-
-
-                    this.currentAudio =
-                        audio;
-
-
-                    audio.onended =
-                        resolve;
-
-
-                    audio.onerror =
-                        resolve;
-
-
-                    audio.play()
-                    .catch(
-                        resolve
-                    );
-
-
-                }
-            );
-
-        }
+        slot.innerHTML = "";
 
     }
 

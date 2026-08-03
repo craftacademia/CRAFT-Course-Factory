@@ -23,6 +23,8 @@ export default class RuntimePlayer {
 
         this.componentIndex = new Map();
 
+        this.dialogueQueue = [];
+
         this.buildComponentIndex();
 
     }
@@ -55,6 +57,8 @@ export default class RuntimePlayer {
 
         this.scheduler.reset();
 
+        this.dialogueQueue = [];
+
         while (this.scheduler.hasNext()) {
 
             const event = this.scheduler.next();
@@ -69,6 +73,16 @@ export default class RuntimePlayer {
                 continue;
             }
 
+            // DIALOGUE lines are revealed one at a time by BrowserRuntime,
+            // not rendered all at once here — collect them in order instead.
+            if (component.type === "DIALOGUE") {
+
+                this.dialogueQueue.push(component);
+
+                continue;
+
+            }
+
             const renderer = this.registry.get(component.type);
 
             if (!renderer || typeof renderer.render !== "function") {
@@ -78,6 +92,12 @@ export default class RuntimePlayer {
             renderer.render(component, this.context);
 
         }
+
+        // Reserve a single, stable slot for dialogue lines to be revealed into,
+        // one at a time, by BrowserRuntime after this static scene is mounted.
+        this.context.append(
+            `<div id="dialogue-slot"></div>`
+        );
 
         return this.context.flush();
 
