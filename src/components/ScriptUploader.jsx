@@ -1,9 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { AuthContext } from '../context/AuthContext';
 
 export default function ScriptUploader({ onScriptParsed }) {
-  const { token } = useContext(AuthContext);
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -27,19 +25,18 @@ export default function ScriptUploader({ onScriptParsed }) {
 
     try {
       const formData = new FormData();
-      formData.append('scriptFile', file);
+      formData.append('script', file);
 
-const response = await axios.post('/api/courses/upload', formData, {      const response = await axios.post('/api/scripts/upload', formData, {
+      const response = await axios.post('/api/build', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${token}`
+          'Content-Type': 'multipart/form-data'
         }
       });
 
       if (response.data.success) {
-        onScriptParsed(response.data.data, response.data.filename);
+        onScriptParsed(response.data, file.name);
       } else {
-        setError(response.data.error || 'Failed to parse script.');
+        setError(response.data.error || 'Failed to build course.');
       }
     } catch (err) {
       setError(err.response?.data?.error || 'Server error uploading file.');
@@ -59,7 +56,7 @@ const response = await axios.post('/api/courses/upload', formData, {      const 
           disabled={loading}
         />
         <button type="submit" disabled={!file || loading}>
-          {loading ? 'Uploading & Parsing...' : 'Parse Script'}
+          {loading ? 'Uploading & Building...' : 'Build Course'}
         </button>
       </form>
 
