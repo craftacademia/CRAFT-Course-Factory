@@ -126,6 +126,14 @@ app.use(
 
 
 app.use(
+    "/output",
+    express.static(
+        outputDir
+    )
+);
+
+
+app.use(
     express.json({
         limit:"50mb"
     })
@@ -464,6 +472,9 @@ console.log(
 
                 output:
                     buildDir,
+
+                previewUrl:
+                    `/output/${buildId}/html5/index.html`,
 
                 success:true
 

@@ -29,11 +29,13 @@ export default function ScriptWorkspace() {
             <div><strong>Status:</strong> {buildResult.success ? 'Success' : 'Failed'}</div>
           </div>
 
-          <p className="build-note">
-            Course compiled successfully. A browser-viewable preview link is not yet wired up
-            on the server (this is a known, separate gap) — for now the build artifacts are
-            saved to the path above on the server's disk.
-          </p>
+          {buildResult.previewUrl && (
+            <p className="preview-link">
+              <a href={buildResult.previewUrl} target="_blank" rel="noopener noreferrer">
+                Open Course Preview
+              </a>
+            </p>
+          )}
         </div>
       )}
     </div>
