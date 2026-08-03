@@ -273,15 +273,15 @@ body {
 
     align-items:center;
 
-    gap:10px;
+    gap:14px;
 
     background:#ffffff;
 
-    border:2px solid #d71920;
+    border:3px solid #d71920;
 
     border-radius:999px;
 
-    padding:6px 16px 6px 6px;
+    padding:10px 24px 10px 10px;
 
     box-shadow:
     0 4px 12px rgba(0,0,0,0.3);
@@ -292,9 +292,9 @@ body {
 
 .speaker-avatar {
 
-    width:44px;
+    width:88px;
 
-    height:44px;
+    height:88px;
 
     flex-shrink:0;
 
@@ -302,7 +302,7 @@ body {
 
     overflow:hidden;
 
-    border:2px solid #d71920;
+    border:3px solid #d71920;
 
     background:#f5f5f5;
 
@@ -318,9 +318,9 @@ body {
 
 .speaker-avatar img {
 
-    width:44px;
+    width:88px;
 
-    height:44px;
+    height:88px;
 
     object-fit:cover;
 
@@ -330,9 +330,19 @@ body {
 
 
 
+.speaker-avatar svg {
+
+    width:36px;
+
+    height:36px;
+
+}
+
+
+
 .speaker-name {
 
-    font-size:16px;
+    font-size:24px;
 
     font-weight:700;
 

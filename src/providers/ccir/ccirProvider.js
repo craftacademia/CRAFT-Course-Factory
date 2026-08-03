@@ -194,8 +194,22 @@ export default class CCIRProvider {
                     "",
 
 
-                    assetRef:
-                    imageAsset,
+                    scene:
+                    node.attributes?.scene ??
+                    node.attributes?.SCENE ??
+                    null,
+
+
+                    location:
+                    node.attributes?.location ??
+                    node.attributes?.LOCATION ??
+                    null,
+
+
+                    character:
+                    node.attributes?.character ??
+                    node.attributes?.CHARACTER ??
+                    null,
 
 
                     children:

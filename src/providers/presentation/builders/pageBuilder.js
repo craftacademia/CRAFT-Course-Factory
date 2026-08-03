@@ -75,17 +75,17 @@ export default class PageBuilder {
             const screenImage =
                 this.findImageByRef(
                     images,
+                    screen.scene
+                )
+                ??
+                this.findImageByRef(
+                    images,
                     screen.location
                 )
                 ??
                 this.findImageByRef(
                     images,
                     screen.character
-                )
-                ??
-                this.findImageByRef(
-                    images,
-                    screen.asset
                 )
                 ??
                 images[0]
