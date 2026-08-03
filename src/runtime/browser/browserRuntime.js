@@ -91,7 +91,66 @@ export default class BrowserRuntime {
         this.isMounted = true;
 
 
+        await this.showStartGate();
+
         await this.renderCurrentPage();
+
+    }
+
+
+
+    async showStartGate() {
+
+        // Browsers block audio autoplay until the learner has interacted
+        // with the page at least once. This single click satisfies that
+        // requirement for the entire course session — every page after
+        // this one will auto-play its voice-over with no further clicks.
+        await new Promise(
+            resolve => {
+
+                this.rootElement.innerHTML = `
+<div
+    id="start-gate"
+    style="
+        width:100%;
+        height:100%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        background:#111;
+    "
+>
+    <button
+        id="start-course-btn"
+        style="
+            font-size:28px;
+            font-weight:700;
+            padding:20px 50px;
+            border-radius:16px;
+            border:3px solid #d71920;
+            background:#ffffff;
+            color:#d71920;
+            cursor:pointer;
+        "
+    >
+        Click to Begin Course
+    </button>
+</div>
+`;
+
+                const button =
+                    this.rootElement.querySelector(
+                        "#start-course-btn"
+                    );
+
+                button.addEventListener(
+                    "click",
+                    () => resolve(),
+                    { once: true }
+                );
+
+            }
+        );
 
     }
 
