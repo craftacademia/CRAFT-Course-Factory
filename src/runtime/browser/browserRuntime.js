@@ -5,7 +5,7 @@ import InteractionRenderer from "../interactionRenderer.js";
 import RuntimeState from "../runtimeState.js";
 
 import MCQInteraction from "../interactions/mcqInteraction.js";
-import MSQInteraction from "../interactions/mcqInteraction.js";
+import MSQInteraction from "../interactions/msqInteraction.js";
 import HotspotInteraction from "../interactions/hotspotInteraction.js";
 import ClickToRevealInteraction from "../interactions/clickToRevealInteraction.js";
 import DragDropInteraction from "../interactions/dragDropInteraction.js";
