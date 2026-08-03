@@ -2,11 +2,11 @@
   "name": "craft-course-factory-2.0",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js",
+    "start": "node src/server.js",
+    "dev": "node src/server.js",
     "build": "node src/compilerRunner.js",
     "test": "node src/compilerRunner.js",
     "test:compiler": "node tests/compiler.test.js"
