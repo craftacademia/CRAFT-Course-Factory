@@ -115,6 +115,17 @@ app.use(
 
 
 app.use(
+    "/build",
+    express.static(
+        path.join(
+            __dirname,
+            "../build"
+        )
+    )
+);
+
+
+app.use(
     express.json({
         limit:"50mb"
     })
@@ -176,8 +187,15 @@ app.post(
 
 
             const scriptFile =
-                req.files?.script?.[0];
+    req.files?.script?.[0];
 
+
+console.log(
+    "UPLOADED IMAGES:",
+    req.files?.images?.map(
+        file => file.originalname
+    )
+);
 
             if (!scriptFile) {
 
@@ -475,7 +493,36 @@ app.post(
     }
 );
 
+console.log(
+    "BUILD PATH:",
+    path.join(__dirname,"../build")
+);
 
+console.log(
+    "BUILD EXISTS:",
+    fs.existsSync(
+        path.join(
+            __dirname,
+            "../build/document-eligibility-games/html5/index.html"
+        )
+    )
+);
+app.get(
+    "/build/:course/html5/index.html",
+    (req,res)=>{
+
+        res.sendFile(
+            path.join(
+                __dirname,
+                "../build",
+                req.params.course,
+                "html5",
+                "index.html"
+            )
+        );
+
+    }
+);
 
 app.listen(
     PORT,

@@ -1,99 +1,75 @@
-import SceneRenderer from "./sceneRenderer.js";
+import ThemeProvider from "./themeProvider.js";
+
 
 export default class CourseRenderer {
 
+
     constructor() {
 
-        this.sceneRenderer =
-            new SceneRenderer();
+        this.themeProvider =
+            new ThemeProvider();
 
     }
 
 
-    render(pir) {
 
-        if (!pir) {
-
-            return "";
-
-        }
-
-
-        const pages =
-            pir.pages ?? [];
-
-
-        const assets =
-            pir.assets ?? null;
-
-
-        const branding =
-            pir.branding ?? assets?.branding ?? null;
-
-
-        const audio =
-            pir.audio ?? assets?.audio ?? null;
+    render(course) {
 
 
         const theme =
-            pir.theme ?? "modern";
+            this.themeProvider.get(
+                course.theme ?? "modern"
+            );
 
 
 
-        const renderedPages =
-            pages
-                .map(page =>
-                    this.sceneRenderer.render(page)
+        const pages =
+            (course.pages ?? [])
+            .map(
+                page =>
+                this.renderPage(
+                    page
                 )
-                .join("\n");
-
-
-
-        const logo =
-            branding?.logo?.path
-                ? branding.logo.path
-                : "";
-
-
-
-        const themeStyle =
-            this.resolveTheme(theme);
-
-
-
-        const brandingHeader =
-            logo
-                ?
-`
-<div class="craft-brand-header">
-
-<img src="${logo}" />
-
-</div>
-`
-                :
-"";
-
-
-
-        const runtimeConfig = {
-
-            assets,
-
-            branding,
-
-            audio,
-
-            theme
-
-        };
+            )
+            .join("");
 
 
 
         return `
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>
+${course.course?.title ?? "Course"}
+</title>
+
+
 <style>
 
-${themeStyle}
+
+${theme}
+
+
+
+body {
+
+    margin:0;
+
+    font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+    background:#f5f5f5;
+
+}
+
 
 
 .screen {
@@ -109,6 +85,7 @@ ${themeStyle}
 }
 
 
+
 .screen-content,
 .screen-dialogue,
 .screen-image,
@@ -119,133 +96,184 @@ ${themeStyle}
 }
 
 
+
+.screen-dialogue {
+
+    position:relative;
+
+}
+
+
+
 .slide-template-content,
 .slide-template-dialogue,
 .slide-template-image,
 .slide-template-assessment {
 
-    max-width:1000px;
+    max-width:1100px;
 
     margin:auto;
 
 }
 
 
-.craft-brand-header {
+
+.slide-template-dialogue {
+
+    background:#ffffff;
+
+    border:4px solid var(--craft-primary);
+
+    border-radius:20px;
+
+    padding:35px;
+
+    box-shadow:
+    0 8px 25px rgba(0,0,0,0.25);
+
+}
+
+
+
+.dialogue-box {
+
+    width:100%;
+
+}
+
+
+
+.dialogue-line {
 
     display:flex;
 
-    align-items:center;
+    flex-direction:column;
 
-    padding:20px;
-
-    background:
-    var(--craft-primary);
+    gap:14px;
 
 }
 
 
-.craft-brand-header img {
 
-    max-height:60px;
+.dialogue-speaker {
 
-    max-width:200px;
+    font-size:32px;
+
+    font-weight:700;
+
+    color:var(--craft-primary);
 
 }
+
+
+
+.dialogue-text {
+
+    font-size:30px;
+
+    font-weight:500;
+
+    line-height:1.5;
+
+    color:#222;
+
+}
+
+
+
+.dialogue {
+
+    font-size:30px;
+
+}
+
+
+
+.slide-template-image img {
+
+    width:100%;
+
+    border-radius:12px;
+
+}
+
+
 
 </style>
 
 
-<script>
-
-window.CRAFT_CONFIG =
-${JSON.stringify(runtimeConfig)};
-
-window.CRAFT_ASSETS =
-${JSON.stringify(assets)};
-
-window.CRAFT_BRANDING =
-${JSON.stringify(branding)};
-
-window.CRAFT_AUDIO =
-${JSON.stringify(audio)};
-
-</script>
+</head>
 
 
-${brandingHeader}
+<body>
 
-${renderedPages}
+
+${pages}
+
+
+</body>
+
+
+</html>
+
 `;
 
     }
 
 
-    resolveTheme(theme) {
 
-        const themes = {
-
-
-            modern: `
-
-:root {
-
-    --craft-primary:#1e3a8a;
-
-    --craft-secondary:#f59e0b;
-
-}
-
-.screen-content {
-
-    background:#ffffff;
-
-}
-
-`,
+    renderPage(page) {
 
 
-            corporate: `
-
-:root {
-
-    --craft-primary:#0f172a;
-
-    --craft-secondary:#2563eb;
-
-}
-
-.screen-content {
-
-    background:#f8fafc;
-
-}
-
-`,
+        const layers =
+            (page.layers ?? [])
+            .map(
+                layer =>
+                this.renderLayer(
+                    layer
+                )
+            )
+            .join("");
 
 
-            storytelling: `
 
-:root {
+        return `
 
-    --craft-primary:#7c2d12;
+<section
+class="screen screen-${page.id}">
 
-    --craft-secondary:#ea580c;
+${layers}
 
-}
+</section>
 
-.screen-content {
+`;
 
-    background:#fff7ed;
-
-}
-
-`
-
-        };
+    }
 
 
-        return themes[theme] ?? themes.modern;
+
+    renderLayer(layer) {
+
+
+        const components =
+            (layer.components ?? [])
+            .map(
+                component =>
+                component.html ?? ""
+            )
+            .join("");
+
+
+
+        return `
+
+<div class="slide-template-${layer.type?.toLowerCase() ?? "content"}">
+
+${components}
+
+</div>
+
+`;
 
     }
 

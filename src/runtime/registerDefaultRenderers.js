@@ -14,7 +14,9 @@ import BranchingRenderer from "./renderers/branchingRenderer.js";
 export default function registerDefaultRenderers(registry) {
 
     if (!registry) {
-        throw new Error("ComponentRegistry is required.");
+        throw new Error(
+            "ComponentRegistry is required."
+        );
     }
 
 

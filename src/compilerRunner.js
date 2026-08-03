@@ -1,55 +1,79 @@
+import fs from "fs/promises";
+
 import Compiler from "./compiler/compiler.js";
+
 
 async function main() {
 
-    const inputFile = process.argv[2];
+    const inputFile =
+        process.argv[2];
+
 
     const outputDirectory =
-        process.argv[3] ?? "./build";
+        process.argv[3] ??
+        "./build";
+
+
+    const assetManifestFile =
+        process.argv[4] ?? null;
+
 
 
     if (!inputFile) {
 
-        console.error(
-            "Usage: node src/compilerRunner.js <course.docx> [output-folder]"
+        throw new Error(
+            "Input script file required."
         );
-
-        process.exit(1);
 
     }
 
 
-    try {
 
-        const compiler =
-            new Compiler();
+    let assetManifest =
+        null;
 
 
-        const result =
-            await compiler.compile(
-                inputFile,
-                outputDirectory
+
+    if (assetManifestFile) {
+
+        assetManifest =
+            JSON.parse(
+                await fs.readFile(
+                    assetManifestFile,
+                    "utf8"
+                )
             );
 
-
-        console.log(
-            JSON.stringify(
-                result,
-                null,
-                2
-            )
-        );
-
-
-    } catch (err) {
-
-        console.error(err);
-
-        process.exit(1);
-
     }
+
+
+
+    const compiler =
+        new Compiler();
+
+
+
+    await compiler.compile(
+        inputFile,
+        outputDirectory,
+        assetManifest
+    );
 
 }
 
 
-main();
+
+main()
+.catch(
+    error => {
+
+        console.error(
+            error
+        );
+
+        process.exit(
+            1
+        );
+
+    }
+);

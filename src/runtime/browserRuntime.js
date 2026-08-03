@@ -9,6 +9,9 @@ import DragDropInteraction from "./interactions/dragDropInteraction.js";
 import ReflectionInteraction from "./interactions/reflectionInteraction.js";
 import BranchingInteraction from "./interactions/branchingInteraction.js";
 import CaseStudyInteraction from "./interactions/caseStudyInteraction.js";
+import DialogueChoiceInteraction from "./interactions/dialogueChoiceInteraction.js";
+import SortingInteraction from "./interactions/sortingInteraction.js";
+
 
 export default class BrowserRuntime {
 
@@ -18,100 +21,195 @@ export default class BrowserRuntime {
 
         this.player = new RuntimePlayer(page);
 
-        this.interactionRenderer = new InteractionRenderer(this);
+        this.interactionRenderer =
+            new InteractionRenderer(this);
+
 
         this.state = {
+
             variables: {},
+
             interactions: {},
+
             score: 0,
+
             completed: false,
+
             currentPage: 0
+
         };
 
+
         this.analytics = [];
+
 
         this.registerInteractions();
 
     }
 
+
     registerInteractions() {
 
-        this.interactionRenderer.register("MCQ", MCQInteraction);
-        this.interactionRenderer.register("MSQ", MSQInteraction);
-        this.interactionRenderer.register("HOTSPOT", HotspotInteraction);
-        this.interactionRenderer.register("CLICK_TO_REVEAL", ClickToRevealInteraction);
-        this.interactionRenderer.register("DRAG_DROP", DragDropInteraction);
-        this.interactionRenderer.register("REFLECTION", ReflectionInteraction);
-        this.interactionRenderer.register("BRANCHING", BranchingInteraction);
-        this.interactionRenderer.register("CASE_STUDY", CaseStudyInteraction);
+        this.interactionRenderer.register(
+            "MCQ",
+            MCQInteraction
+        );
+
+
+        this.interactionRenderer.register(
+            "MSQ",
+            MSQInteraction
+        );
+
+
+        this.interactionRenderer.register(
+            "HOTSPOT",
+            HotspotInteraction
+        );
+
+
+        this.interactionRenderer.register(
+            "CLICK_TO_REVEAL",
+            ClickToRevealInteraction
+        );
+
+
+        this.interactionRenderer.register(
+            "DRAG_DROP",
+            DragDropInteraction
+        );
+
+
+        this.interactionRenderer.register(
+            "REFLECTION",
+            ReflectionInteraction
+        );
+
+
+        this.interactionRenderer.register(
+            "BRANCHING",
+            BranchingInteraction
+        );
+
+
+        this.interactionRenderer.register(
+            "CASE_STUDY",
+            CaseStudyInteraction
+        );
+
+
+        this.interactionRenderer.register(
+            "DIALOGUE_CHOICE",
+            DialogueChoiceInteraction
+        );
+
+
+        this.interactionRenderer.register(
+            "SORTING",
+            SortingInteraction
+        );
 
     }
 
+
     play() {
 
-        this.track("course_started");
+        this.track(
+            "course_started"
+        );
 
         return this.player.play();
 
     }
 
+
     renderInteraction(component) {
 
-        return this.interactionRenderer.render(component);
+        return this.interactionRenderer.render(
+            component
+        );
 
     }
 
+
     mountInteraction(component, rootElement) {
 
-        const interaction = this.interactionRenderer.registry.create(
-            component.type,
-            component,
-            this
+        const interaction =
+            this.interactionRenderer.registry.create(
+                component.type,
+                component,
+                this
+            );
+
+
+        interaction.bind(
+            rootElement
         );
 
-        interaction.bind(rootElement);
 
         return interaction;
 
     }
 
+
     nextPage() {
 
         this.state.currentPage++;
 
-        this.track("page_next", {
-            page: this.state.currentPage
-        });
+
+        this.track(
+            "page_next",
+            {
+                page: this.state.currentPage
+            }
+        );
+
 
         return this.state.currentPage;
 
     }
+
 
     previousPage() {
 
         if (this.state.currentPage > 0) {
+
             this.state.currentPage--;
+
         }
 
-        this.track("page_previous", {
-            page: this.state.currentPage
-        });
+
+        this.track(
+            "page_previous",
+            {
+                page: this.state.currentPage
+            }
+        );
+
 
         return this.state.currentPage;
 
     }
+
 
     goToPage(pageIndex) {
 
-        this.state.currentPage = pageIndex;
+        this.state.currentPage =
+            pageIndex;
 
-        this.track("page_goto", {
-            page: pageIndex
-        });
+
+        this.track(
+            "page_goto",
+            {
+                page: pageIndex
+            }
+        );
+
 
         return this.state.currentPage;
 
     }
+
 
     getCurrentPage() {
 
@@ -119,16 +217,23 @@ export default class BrowserRuntime {
 
     }
 
+
     setVariable(name, value) {
 
-        this.state.variables[name] = value;
+        this.state.variables[name] =
+            value;
 
-        this.track("variable_set", {
-            name,
-            value
-        });
+
+        this.track(
+            "variable_set",
+            {
+                name,
+                value
+            }
+        );
 
     }
+
 
     getVariable(name) {
 
@@ -136,16 +241,23 @@ export default class BrowserRuntime {
 
     }
 
+
     saveInteraction(id, data) {
 
-        this.state.interactions[id] = data;
+        this.state.interactions[id] =
+            data;
 
-        this.track("interaction_saved", {
-            id,
-            data
-        });
+
+        this.track(
+            "interaction_saved",
+            {
+                id,
+                data
+            }
+        );
 
     }
+
 
     getInteraction(id) {
 
@@ -153,15 +265,22 @@ export default class BrowserRuntime {
 
     }
 
+
     setScore(score) {
 
-        this.state.score = score;
+        this.state.score =
+            score;
 
-        this.track("score_updated", {
-            score
-        });
+
+        this.track(
+            "score_updated",
+            {
+                score
+            }
+        );
 
     }
+
 
     getScore() {
 
@@ -169,23 +288,34 @@ export default class BrowserRuntime {
 
     }
 
+
     completeCourse() {
 
-        this.state.completed = true;
+        this.state.completed =
+            true;
 
-        this.track("course_completed");
+
+        this.track(
+            "course_completed"
+        );
 
     }
+
 
     track(event, data = {}) {
 
         this.analytics.push({
+
             event,
+
             data,
+
             timestamp: Date.now()
+
         });
 
     }
+
 
     getAnalytics() {
 
@@ -193,21 +323,30 @@ export default class BrowserRuntime {
 
     }
 
+
     getState() {
 
         return this.state;
 
     }
 
+
     resetState() {
 
         this.state = {
+
             variables: {},
+
             interactions: {},
+
             score: 0,
+
             completed: false,
+
             currentPage: 0
+
         };
+
 
         this.analytics = [];
 

@@ -7,6 +7,7 @@ import AssetBundler from "../assets/assetBundler.js";
 
 export default class Html5Builder {
 
+
     constructor() {
 
         this.htmlBuilder =
@@ -39,19 +40,107 @@ export default class Html5Builder {
         );
 
 
-        const assets =
-            this.collectAssets(
-                pir
-            );
-
-
         await this.assetBundler.build(
-            assets,
+            this.collectAssets(pir),
+            outputDirectory
+        );
+
+
+        await this.copyRuntimeTree(
             outputDirectory
         );
 
 
         return outputDirectory;
+
+    }
+
+
+
+    async copyRuntimeTree(
+        outputDirectory
+    ) {
+
+        const source =
+            path.resolve(
+                "src/runtime"
+            );
+
+
+        const destination =
+            outputDirectory;
+
+
+
+        await this.copyDirectory(
+            source,
+            destination
+        );
+
+    }
+
+
+
+    async copyDirectory(
+        source,
+        destination
+    ) {
+
+        await fs.mkdir(
+            destination,
+            {
+                recursive:true
+            }
+        );
+
+
+        const entries =
+            await fs.readdir(
+                source,
+                {
+                    withFileTypes:true
+                }
+            );
+
+
+        for (const entry of entries) {
+
+
+            const sourcePath =
+                path.join(
+                    source,
+                    entry.name
+                );
+
+
+            const destinationPath =
+                path.join(
+                    destination,
+                    entry.name
+                );
+
+
+
+            if (entry.isDirectory()) {
+
+
+                await this.copyDirectory(
+                    sourcePath,
+                    destinationPath
+                );
+
+
+            } else {
+
+
+                await fs.copyFile(
+                    sourcePath,
+                    destinationPath
+                );
+
+            }
+
+        }
 
     }
 
@@ -102,27 +191,6 @@ export default class Html5Builder {
                 name:group.name,
 
                 type:"audio"
-
-            });
-
-        }
-
-
-
-        if (source.branding?.logo) {
-
-            assets.push({
-
-                src:
-                    source.branding.logo.src,
-
-                path:
-                    source.branding.logo.path,
-
-                name:
-                    source.branding.logo.name,
-
-                type:"image"
 
             });
 

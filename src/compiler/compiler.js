@@ -65,8 +65,7 @@ function cloneForSerialization(object) {
             (key, value) => {
 
                 if (
-                    key === "voice" ||
-                    key === "asset"
+                    key === "voice"
                 ) {
 
                     return undefined;
@@ -128,6 +127,7 @@ export default class Compiler {
         assetManifest = null
     ) {
 
+
         const raw =
             await this.reader.read(
                 inputFile
@@ -175,16 +175,9 @@ export default class Compiler {
 
         const ccir =
             await this.ccirProvider.build(
-                ast
+                ast,
+                assetManifest
             );
-
-
-        if (assetManifest) {
-
-            ccir.assets =
-                assetManifest;
-
-        }
 
 
         const pir =

@@ -2,6 +2,55 @@ import fs from "fs/promises";
 import path from "path";
 
 
+function normalizeAssets(value) {
+
+    if (!value) {
+        return value;
+    }
+
+
+    if (Array.isArray(value)) {
+
+        return value.map(
+            item =>
+            normalizeAssets(item)
+        );
+
+    }
+
+
+    if (typeof value === "object") {
+
+        const output = {};
+
+        for (const [key, item] of Object.entries(value)) {
+
+            output[key] =
+                normalizeAssets(item);
+
+        }
+
+        return output;
+
+    }
+
+
+    if (
+        typeof value === "string" &&
+        value.includes("/uploads/")
+    ) {
+
+        return `assets/${path.basename(value)}`;
+
+    }
+
+
+    return value;
+
+}
+
+
+
 export default class HtmlBuilder {
 
 
@@ -14,9 +63,15 @@ export default class HtmlBuilder {
         await fs.mkdir(
             outputDirectory,
             {
-                recursive: true
+                recursive:true
             }
         );
+
+
+        const finalPir =
+            normalizeAssets(
+                pir
+            );
 
 
         const dataDirectory =
@@ -29,12 +84,14 @@ export default class HtmlBuilder {
         await fs.mkdir(
             dataDirectory,
             {
-                recursive: true
+                recursive:true
             }
         );
 
 
+
         const html = `<!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -43,43 +100,183 @@ export default class HtmlBuilder {
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
+<link rel="icon" href="data:,">
+
+
 <title>
-${pir?.course?.title ?? "C.R.A.F.T Course"}
+${finalPir?.course?.title ?? "C.R.A.F.T Course"}
 </title>
 
 
 <style>
 
+
+html,
 body {
 
+    width:100%;
+
+    height:100%;
+
     margin:0;
-    font-family:Arial, sans-serif;
-    background:#f5f5f5;
+
+    overflow:hidden;
+
+    font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+    background:#111;
 
 }
+
 
 
 #app {
 
-    min-height:100vh;
-    padding:40px;
+    width:100vw;
+
+    height:100vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    overflow:hidden;
 
 }
 
 
-.dialogue {
 
-    background:white;
-    padding:20px;
-    margin:20px auto;
-    max-width:800px;
-    border-radius:12px;
-    box-shadow:0 4px 12px rgba(0,0,0,0.15);
-    font-size:22px;
+.screen {
+
+    position:relative;
+
+    width:100%;
+
+    height:100%;
+
+    max-width:1280px;
+
+    max-height:720px;
+
+    box-sizing:border-box;
+
+    overflow:hidden;
 
 }
+
+
+
+.slide-template-image {
+
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+
+    height:100%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    z-index:1;
+
+}
+
+
+
+.slide-template-image img {
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:contain;
+
+    display:block;
+
+}
+
+
+
+.dialogue-box {
+
+    position:absolute;
+
+    left:10%;
+
+    right:10%;
+
+    bottom:8%;
+
+    width:auto;
+
+    margin:0;
+
+    background:#ffffff;
+
+    border:3px solid #d71920;
+
+    border-radius:20px;
+
+    padding:25px;
+
+    z-index:10;
+
+    box-shadow:
+    0 8px 25px rgba(0,0,0,0.35);
+
+}
+
+
+
+.dialogue-speaker {
+
+    font-size:28px;
+
+    font-weight:700;
+
+    color:#d71920;
+
+    margin-bottom:12px;
+
+}
+
+
+
+.dialogue-text {
+
+    font-size:28px;
+
+    line-height:1.5;
+
+    color:#222;
+
+}
+
+
+
+.dialogue-line {
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+
 
 </style>
+
 
 </head>
 
@@ -93,32 +290,7 @@ body {
 <script>
 
 window.PIR =
-${JSON.stringify(pir, null, 2)};
-
-
-window.CRAFT_AUDIO =
-${JSON.stringify(
-    pir?.audio ??
-    pir?.assets?.audio ??
-    {},
-    null,
-    2
-)};
-
-
-window.CRAFT_CONFIG =
-${JSON.stringify(
-    {
-        audio:
-            pir?.audio ??
-            pir?.assets?.audio ??
-            {},
-        assets:
-            pir?.assets ?? {}
-    },
-    null,
-    2
-)};
+${JSON.stringify(finalPir, null, 2)};
 
 </script>
 
@@ -128,7 +300,10 @@ ${JSON.stringify(
 
 </body>
 
-</html>`;
+
+</html>
+`;
+
 
 
         await fs.writeFile(
@@ -148,7 +323,7 @@ ${JSON.stringify(
                 "course.json"
             ),
             JSON.stringify(
-                pir,
+                finalPir,
                 null,
                 2
             ),
@@ -159,6 +334,5 @@ ${JSON.stringify(
         return outputDirectory;
 
     }
-
 
 }

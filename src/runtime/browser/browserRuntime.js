@@ -1,14 +1,30 @@
 import RuntimePlayer from "../runtimePlayer.js";
 import AssetLoader from "../assetLoader.js";
 import NavigationEngine from "../navigationEngine.js";
+import InteractionRenderer from "../interactionRenderer.js";
+import RuntimeState from "../runtimeState.js";
+
+import MCQInteraction from "../interactions/mcqInteraction.js";
+import MSQInteraction from "../interactions/mcqInteraction.js";
+import HotspotInteraction from "../interactions/hotspotInteraction.js";
+import ClickToRevealInteraction from "../interactions/clickToRevealInteraction.js";
+import DragDropInteraction from "../interactions/dragDropInteraction.js";
+import ReflectionInteraction from "../interactions/reflectionInteraction.js";
+import BranchingInteraction from "../interactions/branchingInteraction.js";
+import CaseStudyInteraction from "../interactions/caseStudyInteraction.js";
+import DialogueChoiceInteraction from "../interactions/dialogueChoiceInteraction.js";
+import SortingInteraction from "../interactions/sortingInteraction.js";
+
 
 export default class BrowserRuntime {
+
 
     constructor(rootElement) {
 
         if (!rootElement) {
             throw new Error("Root element is required.");
         }
+
 
         this.rootElement = rootElement;
 
@@ -20,9 +36,39 @@ export default class BrowserRuntime {
 
         this.currentPlayer = null;
 
+        this.currentAudio = null;
+
         this.isMounted = false;
 
+        this.state = new RuntimeState();
+
+        this.interactionRenderer =
+            new InteractionRenderer(this);
+
+        this.analytics = [];
+
+        this.registerInteractions();
+
     }
+
+
+
+    registerInteractions() {
+
+        this.interactionRenderer.register("MCQ", MCQInteraction);
+        this.interactionRenderer.register("MSQ", MSQInteraction);
+        this.interactionRenderer.register("HOTSPOT", HotspotInteraction);
+        this.interactionRenderer.register("CLICK_TO_REVEAL", ClickToRevealInteraction);
+        this.interactionRenderer.register("DRAG_DROP", DragDropInteraction);
+        this.interactionRenderer.register("REFLECTION", ReflectionInteraction);
+        this.interactionRenderer.register("BRANCHING", BranchingInteraction);
+        this.interactionRenderer.register("CASE_STUDY", CaseStudyInteraction);
+        this.interactionRenderer.register("DIALOGUE_CHOICE", DialogueChoiceInteraction);
+        this.interactionRenderer.register("SORTING", SortingInteraction);
+
+    }
+
+
 
     async mount(course) {
 
@@ -30,96 +76,346 @@ export default class BrowserRuntime {
             throw new Error("Course is required.");
         }
 
-        if (!Array.isArray(course.layers) && !Array.isArray(course.pages)) {
-            throw new Error("Invalid course.");
-        }
 
         this.clear();
 
         this.course = course;
 
-        this.navigation = new NavigationEngine(course);
+        this.state.reset();
+
+        this.navigation =
+            new NavigationEngine(course);
+
 
         this.isMounted = true;
+
 
         await this.renderCurrentPage();
 
     }
 
+
+
     async renderCurrentPage() {
 
-        if (!this.navigation) {
-            throw new Error("Runtime has not been mounted.");
-        }
+        const page =
+            this.navigation.current();
 
-        const page = this.navigation.current();
 
         if (!page) {
+
             this.rootElement.innerHTML = "";
+
             return;
+
         }
+
 
         await this.loadAssets(page);
 
-        this.currentPlayer = new RuntimePlayer(page);
+
+        this.currentPlayer =
+            new RuntimePlayer(page);
+
 
         this.rootElement.innerHTML =
             this.currentPlayer.play();
 
+
+        this.mountInteractions(page);
+
+        this.mountBranching(page);
+
+        await this.playDialogueAudio(page);
+
     }
 
-    async next() {
 
-        if (!this.navigation) {
-            return;
+
+    findDialogueAudio(voiceId) {
+
+        if (!voiceId) {
+            return null;
         }
 
-        this.navigation.next();
 
-        await this.renderCurrentPage();
+        const audio =
+            this.course?.audio?.dialogue ??
+            this.course?.assets?.audio?.dialogue ??
+            [];
+
+
+        const normalizedVoice =
+            voiceId
+                .replaceAll("_", "-")
+                .toUpperCase();
+
+
+
+        return audio.find(
+            item => {
+
+                const name =
+                    item.name?.toUpperCase() ?? "";
+
+
+                return (
+                    name.includes(normalizedVoice)
+                    ||
+                    name.includes(
+                        normalizedVoice.replaceAll("-", "")
+                    )
+                );
+
+            }
+        ) ?? null;
 
     }
 
-    async previous() {
 
-        if (!this.navigation) {
-            return;
+
+    async playDialogueAudio(page) {
+
+
+        if (this.currentAudio) {
+
+            this.currentAudio.pause();
+
+            this.currentAudio = null;
+
         }
 
-        this.navigation.previous();
 
-        await this.renderCurrentPage();
+        const dialogues = [];
 
-    }
 
-    async reload() {
+        for (const layer of page.layers ?? []) {
 
-        if (!this.isMounted) {
-            return;
-        }
 
-        await this.renderCurrentPage();
+            for (const component of layer.components ?? []) {
 
-    }
 
-    async loadAssets(page) {
-
-        for (const layer of (page.layers ?? [])) {
-
-            for (const component of (layer.components ?? [])) {
-
-                if (!component.asset) {
+                if (
+                    component.type !== "DIALOGUE"
+                ) {
                     continue;
                 }
 
-                component.asset.object =
-                    await this.loader.load(component.asset);
+
+                const voiceId =
+                    component.properties?.voiceId;
+
+
+                const audio =
+                    this.findDialogueAudio(
+                        voiceId
+                    );
+
+
+                if (audio) {
+
+                    dialogues.push(audio);
+
+                }
+
+            }
+
+        }
+
+
+
+        for (const audioAsset of dialogues) {
+
+
+            await new Promise(
+                resolve => {
+
+
+                    const audio =
+                        new Audio(
+                            `./${audioAsset.src}`
+                        );
+
+
+                    this.currentAudio =
+                        audio;
+
+
+                    audio.onended =
+                        resolve;
+
+
+                    audio.onerror =
+                        resolve;
+
+
+                    audio.play()
+                    .catch(
+                        resolve
+                    );
+
+
+                }
+            );
+
+        }
+
+    }
+
+
+
+    mountInteractions(page) {
+
+        for (const interaction of page.interactions ?? []) {
+
+
+            const element =
+                this.rootElement.querySelector(
+                    `[data-component-id="${interaction.id}"]`
+                );
+
+
+            if (!element) {
+                continue;
+            }
+
+
+            const instance =
+                this.interactionRenderer.registry.create(
+                    interaction.type,
+                    interaction,
+                    this
+                );
+
+
+            instance.bind(element);
+
+        }
+
+    }
+
+
+
+    mountBranching(page) {
+
+        for (const layer of page.layers ?? []) {
+
+            for (const component of layer.components ?? []) {
+
+
+                if (component.type !== "BRANCHING") {
+                    continue;
+                }
+
+
+                const element =
+                    this.rootElement.querySelector(
+                        `[data-component-id="${component.id}"]`
+                    );
+
+
+                if (!element) {
+                    continue;
+                }
+
+
+                const renderer =
+                    this.currentPlayer.registry.get(
+                        "BRANCHING"
+                    );
+
+
+                if (
+                    renderer &&
+                    typeof renderer.bind === "function"
+                ) {
+
+                    renderer.bind(
+                        element,
+                        component,
+                        this
+                    );
+
+                }
 
             }
 
         }
 
     }
+
+
+
+    async next() {
+
+        this.navigation.next();
+
+        this.state.nextPage();
+
+        await this.renderCurrentPage();
+
+    }
+
+
+
+    async previous() {
+
+        this.navigation.previous();
+
+        this.state.previousPage();
+
+        await this.renderCurrentPage();
+
+    }
+
+
+
+    async reload() {
+
+        await this.renderCurrentPage();
+
+    }
+
+
+
+    async loadAssets(page) {
+
+        for (const layer of page.layers ?? []) {
+
+
+            for (const component of layer.components ?? []) {
+
+
+                if (!component.asset) {
+                    continue;
+                }
+
+
+                if (typeof component.asset === "string") {
+
+                    component.asset = {
+
+                        id: component.id,
+
+                        src: component.asset
+
+                    };
+
+                }
+
+
+                component.asset.object =
+                    await this.loader.load(
+                        component.asset
+                    );
+
+            }
+
+        }
+
+    }
+
+
 
     clear() {
 
@@ -131,7 +427,16 @@ export default class BrowserRuntime {
 
     }
 
+
+
     destroy() {
+
+        if (this.currentAudio) {
+
+            this.currentAudio.pause();
+
+        }
+
 
         this.clear();
 
@@ -140,6 +445,30 @@ export default class BrowserRuntime {
         this.course = null;
 
         this.isMounted = false;
+
+    }
+
+
+
+    track(event, data = {}) {
+
+        this.analytics.push({
+
+            event,
+
+            data,
+
+            timestamp: Date.now()
+
+        });
+
+    }
+
+
+
+    getAnalytics() {
+
+        return this.analytics;
 
     }
 

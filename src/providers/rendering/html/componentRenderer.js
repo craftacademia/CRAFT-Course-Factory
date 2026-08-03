@@ -11,7 +11,8 @@ export default class ComponentRenderer {
 
 
         const type =
-            (component.type ?? "unknown").toLowerCase();
+            (component.type ?? "unknown")
+            .toUpperCase();
 
 
         const asset =
@@ -20,16 +21,50 @@ export default class ComponentRenderer {
             null;
 
 
-        const content =
-            this.renderContent(
-                component,
-                asset
-            );
+        let content = "";
+
+
+        switch (type) {
+
+            case "IMAGE":
+
+                content =
+                    this.renderImage(asset);
+
+                break;
+
+
+            case "AUDIO":
+
+                content =
+                    this.renderAudio(asset);
+
+                break;
+
+
+            case "BRANCHING":
+
+                content =
+                    this.renderBranching(
+                        component
+                    );
+
+                break;
+
+
+            default:
+
+                content =
+                    this.renderText(
+                        component
+                    );
+
+        }
 
 
         return `
 <div
-class="component component-${type}"
+class="component component-${type.toLowerCase()}"
 data-component-id="${component.id ?? ""}"
 data-component-type="${component.type ?? ""}"
 >
@@ -42,36 +77,37 @@ ${content}
     }
 
 
-    renderContent(component, asset) {
 
-        const type =
-            (component.type ?? "")
-            .toUpperCase();
+    renderImage(asset) {
+
+        if (!asset) {
+
+            return "";
+
+        }
 
 
-
-        if (
-            type === "IMAGE" &&
-            asset
-        ) {
-
-            return `
+        return `
 <img
 class="component-image"
 src="${asset}"
 />
 `;
 
+    }
+
+
+
+    renderAudio(asset) {
+
+        if (!asset) {
+
+            return "";
+
         }
 
 
-
-        if (
-            type === "AUDIO" &&
-            asset
-        ) {
-
-            return `
+        return `
 <audio
 class="component-audio"
 controls
@@ -79,9 +115,36 @@ src="${asset}">
 </audio>
 `;
 
-        }
+    }
 
 
+
+    renderBranching(component) {
+
+        const options =
+            component.properties?.options ?? [];
+
+
+        return options
+            .map(
+                (option, index) => `
+
+<button
+class="branch-option"
+data-branching-id="${component.id}"
+data-option-index="${index}">
+${option.text ?? ""}
+</button>
+
+`
+            )
+            .join("");
+
+    }
+
+
+
+    renderText(component) {
 
         return (
             component.properties?.text ??

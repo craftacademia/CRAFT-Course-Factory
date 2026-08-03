@@ -5,11 +5,13 @@ export default class DialogueBuilder {
 
         const dialogues = [];
 
+
         this.walk(
             ast,
             dialogues,
             []
         );
+
 
         return dialogues;
 
@@ -22,6 +24,7 @@ export default class DialogueBuilder {
         dialogues,
         ancestors
     ) {
+
 
         if (!node) {
             return;
@@ -41,6 +44,7 @@ export default class DialogueBuilder {
                 );
 
 
+
             const screenNode =
                 [...ancestors]
                 .reverse()
@@ -50,8 +54,16 @@ export default class DialogueBuilder {
                 );
 
 
+
             const attributes =
                 lineNode?.attributes ?? {};
+
+
+
+            const characterId =
+                attributes.expression ??
+                attributes.EXPRESSION ??
+                null;
 
 
 
@@ -59,6 +71,7 @@ export default class DialogueBuilder {
 
                 screenId:
                 screenNode?.attributes?.id ??
+                screenNode?.attributes?.ID ??
                 null,
 
 
@@ -72,6 +85,9 @@ export default class DialogueBuilder {
                 null,
 
 
+                characterId,
+
+
                 voiceId:
                 attributes.vo_id ??
                 attributes.voiceId ??
@@ -80,9 +96,7 @@ export default class DialogueBuilder {
 
 
                 expression:
-                attributes.expression ??
-                attributes.EXPRESSION ??
-                null
+                characterId
 
             });
 

@@ -1,0 +1,119 @@
+{
+  "type": "COURSE",
+  "children": [
+    {
+      "type": "SCREEN",
+      "line": 1,
+      "attributes": {
+        "ID": "S01",
+        "TYPE": "STATIC",
+        "SCENE": "SCENE-01",
+        "LOCATION": "XYZ HFC Branch"
+      },
+      "children": [
+        {
+          "type": "LINE",
+          "line": 2,
+          "attributes": {
+            "SPEAKER": "SUR",
+            "VO_ID": "S01_01",
+            "EXPRESSION": "NEUTRAL"
+          },
+          "children": [
+            {
+              "type": "TEXT",
+              "line": 3,
+              "value": "Close 3 files this week — you earn your first performance bonus. ₹8,000."
+            }
+          ]
+        },
+        {
+          "type": "LINE",
+          "line": 5,
+          "attributes": {
+            "SPEAKER": "RAV",
+            "VO_ID": "S01_02",
+            "EXPRESSION": "CONFIDENT"
+          },
+          "children": [
+            {
+              "type": "TEXT",
+              "line": 6,
+              "value": "Sir, I have one strong lead. Mr. Sharma — grocery shop owner near the station."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "SCREEN",
+      "line": 9,
+      "attributes": {
+        "ID": "S02",
+        "TYPE": "BRANCHING",
+        "SCENE": "SCENE-02",
+        "LOCATION": "Sharma Kirana Store"
+      },
+      "children": [
+        {
+          "type": "LINE",
+          "line": 10,
+          "attributes": {
+            "SPEAKER": "SHA",
+            "VO_ID": "S02_01"
+          },
+          "children": [
+            {
+              "type": "TEXT",
+              "line": 11,
+              "value": "Beta, you called about a home loan? Come, sit down. Have some chai."
+            }
+          ]
+        },
+        {
+          "type": "BRANCH_POINT",
+          "line": 13,
+          "attributes": {
+            "ID": "BP_01"
+          },
+          "children": [
+            {
+              "type": "OPTION",
+              "line": 14,
+              "attributes": {
+                "LETTER": "A",
+                "SCORE": "10",
+                "NEXT": "S03",
+                "VO_ID": "OPT_S02_A"
+              },
+              "children": [
+                {
+                  "type": "TEXT",
+                  "line": 15,
+                  "value": "What is the total cost as per the builder agreement Sharma ji?"
+                }
+              ]
+            },
+            {
+              "type": "OPTION",
+              "line": 17,
+              "attributes": {
+                "LETTER": "B",
+                "SCORE": "5",
+                "NEXT": "S03",
+                "VO_ID": "OPT_S02_B"
+              },
+              "children": [
+                {
+                  "type": "TEXT",
+                  "line": 18,
+                  "value": "How much home loan are you looking for, Sharma ji?"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,124 +1,35 @@
-export default class Runtime {
-
-    constructor(config = {}) {
-
-        this.config =
-            config;
-
-        this.audio =
-            config.audio ?? null;
-
-        this.backgroundPlayer =
-            null;
-
-    }
+import BrowserRuntime from "./browser/browserRuntime.js";
 
 
-    init() {
-
-        if (!this.audio) {
-
-            return;
-
-        }
+console.log(
+    "CRAFT Runtime Loaded"
+);
 
 
-        this.loadBackgroundMusic();
-
-    }
-
-
-
-    loadBackgroundMusic() {
-
-        const background =
-            this.audio.background?.[0];
+const app =
+    document.getElementById(
+        "app"
+    );
 
 
-        if (!background) {
-
-            return;
-
-        }
-
-
-        this.backgroundPlayer =
-            document.createElement(
-                "audio"
-            );
+const runtime =
+    new BrowserRuntime(
+        app
+    );
 
 
-        this.backgroundPlayer.src =
-            background.path;
-
-
-        this.backgroundPlayer.loop =
-            true;
-
-
-        this.backgroundPlayer.preload =
-            "auto";
-
-
-        this.backgroundPlayer.setAttribute(
-            "data-runtime-audio",
-            "background"
-        );
-
-
-        document.body.appendChild(
-            this.backgroundPlayer
-        );
-
-    }
-
-
-
-    playBackground() {
-
-        if (
-            this.backgroundPlayer
-        ) {
-
-            return this.backgroundPlayer.play();
-
-        }
-
-
-        return Promise.resolve();
-
-    }
-
-
-
-    stopBackground() {
-
-        if (
-            this.backgroundPlayer
-        ) {
-
-            this.backgroundPlayer.pause();
-
-            this.backgroundPlayer.currentTime =
-                0;
-
-        }
-
-    }
-
-
-
-    pauseBackground() {
-
-        if (
-            this.backgroundPlayer
-        ) {
-
-            this.backgroundPlayer.pause();
-
-        }
-
-    }
-
-
-}
+fetch(
+    "./data/course.json"
+)
+.then(
+    response =>
+    response.json()
+)
+.then(
+    course =>
+    runtime.mount(course)
+)
+.catch(
+    error =>
+    console.error(error)
+);

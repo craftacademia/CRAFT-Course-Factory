@@ -1,87 +1,184 @@
 export default class AssetLoader {
 
+
     constructor() {
 
         this.cache = new Map();
 
     }
 
+
+
     async load(asset) {
 
+
         if (!asset) {
-            throw new Error("Asset is required.");
+
+            throw new Error(
+                "Asset is required."
+            );
+
         }
 
-        if (!asset.id) {
-            throw new Error("Asset id is required.");
+
+        const id =
+            asset.id ??
+            asset.name ??
+            asset.path ??
+            asset.src;
+
+
+
+        if (!id) {
+
+            throw new Error(
+                "Asset id is required."
+            );
+
         }
 
-        if (!asset.src) {
-            throw new Error("Asset source is required.");
+
+
+        let src =
+            asset.src ??
+            asset.path ??
+            null;
+
+
+
+        if (!src) {
+
+            throw new Error(
+                "Asset source is required."
+            );
+
         }
 
-        if (this.cache.has(asset.id)) {
-            return this.cache.get(asset.id);
+
+
+        if (
+            src.startsWith("assets/")
+        ) {
+
+            src =
+                `./${src}`;
+
         }
 
-        const image = new Image();
 
-        await new Promise((resolve, reject) => {
 
-            image.onload = () => resolve(image);
+        if (this.cache.has(id)) {
 
-            image.onerror = () =>
-                reject(new Error(`Failed to load asset: ${asset.src}`));
+            return this.cache.get(id);
 
-            image.src = asset.src;
+        }
 
-        });
 
-        this.cache.set(asset.id, image);
+
+        const extension =
+            src.split("?")[0]
+            .split(".")
+            .pop()
+            .toLowerCase();
+
+
+
+        if (
+            [
+                "mp3",
+                "wav",
+                "ogg"
+            ].includes(extension)
+        ) {
+
+
+            const audio =
+                new Audio();
+
+
+            await new Promise(
+                (resolve,reject)=>{
+
+
+                    audio.oncanplaythrough =
+                        resolve;
+
+
+                    audio.onerror =
+                        () =>
+                        reject(
+                            new Error(
+                                `Failed to load asset: ${src}`
+                            )
+                        );
+
+
+                    audio.src =
+                        src;
+
+
+                }
+            );
+
+
+            this.cache.set(
+                id,
+                audio
+            );
+
+
+            return audio;
+
+        }
+
+
+
+        const image =
+            new Image();
+
+
+
+        await new Promise(
+            (resolve,reject)=>{
+
+
+                image.onload =
+                    resolve;
+
+
+                image.onerror =
+                    () =>
+                    reject(
+                        new Error(
+                            `Failed to load asset: ${src}`
+                        )
+                    );
+
+
+                image.src =
+                    src;
+
+
+            }
+        );
+
+
+
+        this.cache.set(
+            id,
+            image
+        );
+
 
         return image;
 
     }
 
-    async preload(assets = []) {
 
-        const loaded = [];
-
-        for (const asset of assets) {
-            loaded.push(await this.load(asset));
-        }
-
-        return loaded;
-
-    }
-
-    get(id) {
-
-        return this.cache.get(id) ?? null;
-
-    }
-
-    has(id) {
-
-        return this.cache.has(id);
-
-    }
-
-    unload(id) {
-
-        return this.cache.delete(id);
-
-    }
 
     clear() {
 
         this.cache.clear();
-
-    }
-
-    size() {
-
-        return this.cache.size;
 
     }
 

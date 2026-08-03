@@ -1,12 +1,15 @@
 import fs from "fs/promises";
 import path from "path";
 
+
 export default class AssetBundler {
+
 
     async build(
         assets = [],
         outputDirectory
     ) {
+
 
         const outputAssetsDirectory =
             path.join(
@@ -26,6 +29,7 @@ export default class AssetBundler {
         const bundledAssets = [];
 
 
+
         for (const asset of assets) {
 
 
@@ -38,11 +42,9 @@ export default class AssetBundler {
 
 
             const fileName =
-                asset.name ??
                 path.basename(
                     asset.src
                 );
-
 
 
             const destination =
@@ -62,15 +64,30 @@ export default class AssetBundler {
 
             bundledAssets.push({
 
-                ...asset,
+                id:
+                asset.id ??
+                fileName,
+
+                name:
+                asset.name ??
+                fileName,
+
+                type:
+                asset.type,
+
+                path:
+                `assets/${fileName}`,
+
+                src:
+                `assets/${fileName}`,
 
                 bundledPath:
-                    `assets/${fileName}`
+                `assets/${fileName}`
 
             });
 
-
         }
+
 
 
         return bundledAssets;

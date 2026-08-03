@@ -13,7 +13,10 @@ export default class CCIRProvider {
 
 
 
-    async build(ast) {
+    async build(
+        ast,
+        assetManifest = null
+    ) {
 
 
         const dialogues =
@@ -43,7 +46,10 @@ export default class CCIRProvider {
 
 
             screens:
-            this.buildScreens(ast),
+            this.buildScreens(
+                ast,
+                assetManifest
+            ),
 
 
             metadata:{
@@ -53,7 +59,9 @@ export default class CCIRProvider {
             },
 
 
-            assets:{
+            assets:
+            assetManifest ??
+            {
 
                 images:[],
 
@@ -104,7 +112,9 @@ export default class CCIRProvider {
         (node)=>{
 
             if (!node) {
+
                 return;
+
             }
 
 
@@ -139,23 +149,36 @@ export default class CCIRProvider {
 
 
 
-    buildScreens(ast) {
+    buildScreens(
+        ast,
+        assetManifest
+    ) {
+
 
         const screens = [];
+
+
+        const imageAsset =
+            assetManifest?.images?.[0] ?? null;
+
 
 
         const walk =
         (node)=>{
 
             if (!node) {
+
                 return;
+
             }
+
 
 
             if (
                 node.type === "SCENE" ||
                 node.type === "SCREEN"
             ) {
+
 
                 screens.push({
 
@@ -169,6 +192,10 @@ export default class CCIRProvider {
                     node.attributes?.title ??
                     node.attributes?.TITLE ??
                     "",
+
+
+                    assetRef:
+                    imageAsset,
 
 
                     children:

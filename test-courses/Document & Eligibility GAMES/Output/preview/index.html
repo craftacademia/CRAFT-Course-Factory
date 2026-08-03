@@ -1,0 +1,4440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>================================================================================</title>
+
+<link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+
+<div id="app">
+
+
+<style>
+
+
+
+:root {
+
+    --craft-primary:#1e3a8a;
+
+    --craft-secondary:#f59e0b;
+
+}
+
+.screen-content {
+
+    background:#ffffff;
+
+}
+
+
+
+
+.screen {
+
+    width:100%;
+
+    min-height:500px;
+
+    box-sizing:border-box;
+
+    padding:40px;
+
+}
+
+
+.screen-content,
+.screen-dialogue,
+.screen-image,
+.screen-assessment {
+
+    border-radius:12px;
+
+}
+
+
+.slide-template-content,
+.slide-template-dialogue,
+.slide-template-image,
+.slide-template-assessment {
+
+    max-width:1000px;
+
+    margin:auto;
+
+}
+
+
+.craft-brand-header {
+
+    display:flex;
+
+    align-items:center;
+
+    padding:20px;
+
+    background:
+    var(--craft-primary);
+
+}
+
+
+.craft-brand-header img {
+
+    max-height:60px;
+
+    max-width:200px;
+
+}
+
+</style>
+
+
+<script>
+
+window.CRAFT_CONFIG =
+{"assets":[{"id":"SCENE-01","name":"Ravi arrives at XYZ HFC branch — Monday morning","type":"SCENE","src":null,"alt":null,"attributes":{"id":"SCENE-01","type":"SCENE","name":"Ravi arrives at XYZ HFC branch — Monday morning"}},{"id":"SCENE-02","name":"Ravi and Mr. Sharma — First meeting at kirana store","type":"SCENE","src":null,"alt":null,"attributes":{"id":"SCENE-02","type":"SCENE","name":"Ravi and Mr. Sharma — First meeting at kirana store"}},{"id":"SCENE-03","name":"Ravi at kirana store — Property question conversation","type":"SCENE","src":null,"alt":null,"attributes":{"id":"SCENE-03","type":"SCENE","name":"Ravi at kirana store — Property question conversation"}},{"id":"SCENE-04","name":"Ravi and Mr. Sharma — Income conversation at counter","type":"SCENE","src":null,"alt":null,"attributes":{"id":"SCENE-04","type":"SCENE","name":"Ravi and Mr. Sharma — Income conversation at counter"}},{"id":"SCENE-05","name":"Ravi, Mr. Sharma and Mrs. Sharma — Informal income conversation","type":"SCENE","src":null,"alt":null,"attributes":{"id":"SCENE-05","type":"SCENE","name":"Ravi, Mr. Sharma and Mrs. Sharma — Informal income conversation"}},{"id":"SCENE-06","name":"Mrs. Sharma — Relieved after being reassured","type":"SCENE","src":null,"alt":null,"attributes":{"id":"SCENE-06","type":"SCENE","name":"Mrs. Sharma — Relieved after being reassured"}},{"id":"SCENE-07","name":"Ravi at branch desk — document review, Friday morning","type":"SCENE","src":null,"alt":null,"attributes":{"id":"SCENE-07","type":"SCENE","name":"Ravi at branch desk — document review, Friday morning"}},{"id":"SCENE-08","name":"Ravi placing file on Suresh Nair's desk — Friday afternoon","type":"SCENE","src":null,"alt":null,"attributes":{"id":"SCENE-08","type":"SCENE","name":"Ravi placing file on Suresh Nair's desk — Friday afternoon"}},{"id":"SCENE-09","name":"Suresh Nair approving the file — Friday afternoon","type":"SCENE","src":null,"alt":null,"attributes":{"id":"SCENE-09","type":"SCENE","name":"Suresh Nair approving the file — Friday afternoon"}},{"id":"SCENE-10","name":"Suresh Nair correcting Ravi — Path B consequence","type":"SCENE","src":null,"alt":null,"attributes":{"id":"SCENE-10","type":"SCENE","name":"Suresh Nair correcting Ravi — Path B consequence"}},{"id":"SCENE-11","name":"Ravi — Relieved and satisfied, end of week","type":"SCENE","src":null,"alt":null,"attributes":{"id":"SCENE-11","type":"SCENE","name":"Ravi — Relieved and satisfied, end of week"}},{"id":"PROP-01","name":"Policy Card — AHFC Eligibility Rules","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-01","type":"PROP","name":"Policy Card — AHFC Eligibility Rules"}},{"id":"PROP-02","name":"Six Manila Folders — Branch desk overview","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-02","type":"PROP","name":"Six Manila Folders — Branch desk overview"}},{"id":"PROP-03","name":"PAN Card — R.K. Sharma","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-03","type":"PROP","name":"PAN Card — R.K. Sharma"}},{"id":"PROP-04","name":"Aadhaar Card — Ramesh Kumar Sharma","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-04","type":"PROP","name":"Aadhaar Card — Ramesh Kumar Sharma"}},{"id":"PROP-05","name":"Passport Size Photograph","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-05","type":"PROP","name":"Passport Size Photograph"}},{"id":"PROP-06","name":"Electricity Bill — Ramesh Kumar Sharma","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-06","type":"PROP","name":"Electricity Bill — Ramesh Kumar Sharma"}},{"id":"PROP-07","name":"Booking Receipt — Property Booking","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-07","type":"PROP","name":"Booking Receipt — Property Booking"}},{"id":"PROP-08","name":"Allotment Letter — Unsigned, Plain Paper","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-08","type":"PROP","name":"Allotment Letter — Unsigned, Plain Paper"}},{"id":"PROP-09","name":"Builder NOC — Addressed to Whom It May Concern","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-09","type":"PROP","name":"Builder NOC — Addressed to Whom It May Concern"}},{"id":"PROP-10","name":"Policy Card — Income and FOIR","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-10","type":"PROP","name":"Policy Card — Income and FOIR"}},{"id":"PROP-11","name":"Income Classification Cards — Drag & Drop","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-11","type":"PROP","name":"Income Classification Cards — Drag & Drop"}},{"id":"PROP-12","name":"FOIR Infographic","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-12","type":"PROP","name":"FOIR Infographic"}},{"id":"PROP-13","name":"Policy Card — Document Requirements","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-13","type":"PROP","name":"Policy Card — Document Requirements"}},{"id":"PROP-14","name":"KYC Documents Spread — Hotspot Overlay","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-14","type":"PROP","name":"KYC Documents Spread — Hotspot Overlay"}},{"id":"PROP-15","name":"Property Documents — Three Cards for Drag & Drop","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-15","type":"PROP","name":"Property Documents — Three Cards for Drag & Drop"}},{"id":"PROP-16","name":"Policy Card — Pre-Submission Final Check","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-16","type":"PROP","name":"Policy Card — Pre-Submission Final Check"}},{"id":"PROP-17","name":"Full File Documents Spread — Name Consistency Hotspot","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-17","type":"PROP","name":"Full File Documents Spread — Name Consistency Hotspot"}},{"id":"PROP-18","name":"Scorecard — Final Score Display","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-18","type":"PROP","name":"Scorecard — Final Score Display"}}],"branding":null,"audio":null,"theme":"modern"};
+
+window.CRAFT_ASSETS =
+[{"id":"SCENE-01","name":"Ravi arrives at XYZ HFC branch — Monday morning","type":"SCENE","src":null,"alt":null,"attributes":{"id":"SCENE-01","type":"SCENE","name":"Ravi arrives at XYZ HFC branch — Monday morning"}},{"id":"SCENE-02","name":"Ravi and Mr. Sharma — First meeting at kirana store","type":"SCENE","src":null,"alt":null,"attributes":{"id":"SCENE-02","type":"SCENE","name":"Ravi and Mr. Sharma — First meeting at kirana store"}},{"id":"SCENE-03","name":"Ravi at kirana store — Property question conversation","type":"SCENE","src":null,"alt":null,"attributes":{"id":"SCENE-03","type":"SCENE","name":"Ravi at kirana store — Property question conversation"}},{"id":"SCENE-04","name":"Ravi and Mr. Sharma — Income conversation at counter","type":"SCENE","src":null,"alt":null,"attributes":{"id":"SCENE-04","type":"SCENE","name":"Ravi and Mr. Sharma — Income conversation at counter"}},{"id":"SCENE-05","name":"Ravi, Mr. Sharma and Mrs. Sharma — Informal income conversation","type":"SCENE","src":null,"alt":null,"attributes":{"id":"SCENE-05","type":"SCENE","name":"Ravi, Mr. Sharma and Mrs. Sharma — Informal income conversation"}},{"id":"SCENE-06","name":"Mrs. Sharma — Relieved after being reassured","type":"SCENE","src":null,"alt":null,"attributes":{"id":"SCENE-06","type":"SCENE","name":"Mrs. Sharma — Relieved after being reassured"}},{"id":"SCENE-07","name":"Ravi at branch desk — document review, Friday morning","type":"SCENE","src":null,"alt":null,"attributes":{"id":"SCENE-07","type":"SCENE","name":"Ravi at branch desk — document review, Friday morning"}},{"id":"SCENE-08","name":"Ravi placing file on Suresh Nair's desk — Friday afternoon","type":"SCENE","src":null,"alt":null,"attributes":{"id":"SCENE-08","type":"SCENE","name":"Ravi placing file on Suresh Nair's desk — Friday afternoon"}},{"id":"SCENE-09","name":"Suresh Nair approving the file — Friday afternoon","type":"SCENE","src":null,"alt":null,"attributes":{"id":"SCENE-09","type":"SCENE","name":"Suresh Nair approving the file — Friday afternoon"}},{"id":"SCENE-10","name":"Suresh Nair correcting Ravi — Path B consequence","type":"SCENE","src":null,"alt":null,"attributes":{"id":"SCENE-10","type":"SCENE","name":"Suresh Nair correcting Ravi — Path B consequence"}},{"id":"SCENE-11","name":"Ravi — Relieved and satisfied, end of week","type":"SCENE","src":null,"alt":null,"attributes":{"id":"SCENE-11","type":"SCENE","name":"Ravi — Relieved and satisfied, end of week"}},{"id":"PROP-01","name":"Policy Card — AHFC Eligibility Rules","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-01","type":"PROP","name":"Policy Card — AHFC Eligibility Rules"}},{"id":"PROP-02","name":"Six Manila Folders — Branch desk overview","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-02","type":"PROP","name":"Six Manila Folders — Branch desk overview"}},{"id":"PROP-03","name":"PAN Card — R.K. Sharma","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-03","type":"PROP","name":"PAN Card — R.K. Sharma"}},{"id":"PROP-04","name":"Aadhaar Card — Ramesh Kumar Sharma","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-04","type":"PROP","name":"Aadhaar Card — Ramesh Kumar Sharma"}},{"id":"PROP-05","name":"Passport Size Photograph","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-05","type":"PROP","name":"Passport Size Photograph"}},{"id":"PROP-06","name":"Electricity Bill — Ramesh Kumar Sharma","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-06","type":"PROP","name":"Electricity Bill — Ramesh Kumar Sharma"}},{"id":"PROP-07","name":"Booking Receipt — Property Booking","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-07","type":"PROP","name":"Booking Receipt — Property Booking"}},{"id":"PROP-08","name":"Allotment Letter — Unsigned, Plain Paper","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-08","type":"PROP","name":"Allotment Letter — Unsigned, Plain Paper"}},{"id":"PROP-09","name":"Builder NOC — Addressed to Whom It May Concern","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-09","type":"PROP","name":"Builder NOC — Addressed to Whom It May Concern"}},{"id":"PROP-10","name":"Policy Card — Income and FOIR","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-10","type":"PROP","name":"Policy Card — Income and FOIR"}},{"id":"PROP-11","name":"Income Classification Cards — Drag & Drop","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-11","type":"PROP","name":"Income Classification Cards — Drag & Drop"}},{"id":"PROP-12","name":"FOIR Infographic","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-12","type":"PROP","name":"FOIR Infographic"}},{"id":"PROP-13","name":"Policy Card — Document Requirements","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-13","type":"PROP","name":"Policy Card — Document Requirements"}},{"id":"PROP-14","name":"KYC Documents Spread — Hotspot Overlay","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-14","type":"PROP","name":"KYC Documents Spread — Hotspot Overlay"}},{"id":"PROP-15","name":"Property Documents — Three Cards for Drag & Drop","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-15","type":"PROP","name":"Property Documents — Three Cards for Drag & Drop"}},{"id":"PROP-16","name":"Policy Card — Pre-Submission Final Check","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-16","type":"PROP","name":"Policy Card — Pre-Submission Final Check"}},{"id":"PROP-17","name":"Full File Documents Spread — Name Consistency Hotspot","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-17","type":"PROP","name":"Full File Documents Spread — Name Consistency Hotspot"}},{"id":"PROP-18","name":"Scorecard — Final Score Display","type":"PROP","src":null,"alt":null,"attributes":{"id":"PROP-18","type":"PROP","name":"Scorecard — Final Score Display"}}];
+
+window.CRAFT_BRANDING =
+null;
+
+window.CRAFT_AUDIO =
+null;
+
+</script>
+
+
+
+
+
+<section class="scene" data-page-id="S01">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_1"
+data-component-type="NARRATION"
+>
+
+ Close 3 files this week — you earn your first performance bonus. ₹8,000. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_2"
+data-component-type="NARRATION"
+>
+
+ Sir, I have one strong lead. Mr. Sharma — grocery shop owner near the railway station. He called last week about a home loan. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_3"
+data-component-type="NARRATION"
+>
+
+ Good. But before you go — learn what to check. Six things. Miss one and the file comes back. 
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+<section class="scene" data-page-id="S02">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_1"
+data-component-type="NARRATION"
+>
+
+ Six checkpoints. Learn all six before you walk into that shop. 
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+<section class="scene" data-page-id="S03">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_1"
+data-component-type="NARRATION"
+>
+
+ Read this before meeting Mr. Sharma. Three rules. Property, income, and ownership. All three must pass. 
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+<section class="scene" data-page-id="S04">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_1"
+data-component-type="NARRATION"
+>
+
+ Beta, you called about a home loan? Come, sit down. Have some chai. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_2"
+data-component-type="NARRATION"
+>
+
+ Thank you Sharma ji. Three quick questions before we discuss anything else. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_3"
+data-component-type="NARRATION"
+>
+
+ I have already booked a 1BHK flat on the outskirts of town. Still under construction. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_4"
+data-component-type="NARRATION"
+>
+
+ What is the total cost as per the builder agreement Sharma ji — including all charges like parking and registration? 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_5"
+data-component-type="NARRATION"
+>
+
+ How much home loan are you looking for, Sharma ji? 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_6"
+data-component-type="NARRATION"
+>
+
+ Total cost is ₹16 lakhs as per the agreement. That includes parking and registration charges. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_7"
+data-component-type="NARRATION"
+>
+
+ I was thinking around ₹12 to 13 lakhs loan. The flat costs ₹16 lakhs total. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_8"
+data-component-type="NARRATION"
+>
+
+ Understood Sharma ji. And the total cost of the flat as per the builder agreement — what is that figure including all charges? 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_9"
+data-component-type="NARRATION"
+>
+
+ Oh, the total cost — that is ₹16 lakhs. Includes parking and registration as per the builder's agreement. 
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+<section class="scene" data-page-id="S05">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_1"
+data-component-type="NARRATION"
+>
+
+ So what else do you need to know beta? 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_2"
+data-component-type="NARRATION"
+>
+
+ What comes into the household every month from all sources — your shop, your wife, anything else that is regular? 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_3"
+data-component-type="NARRATION"
+>
+
+ What is your monthly income from the shop, Sharma ji? 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_4"
+data-component-type="NARRATION"
+>
+
+ From the shop around ₹25,000 per month. My wife also does tailoring from home — maybe ₹8,000 to ₹10,000. So together ₹33,000 to ₹35,000. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_5"
+data-component-type="NARRATION"
+>
+
+ Around ₹25,000 from the shop beta. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_6"
+data-component-type="NARRATION"
+>
+
+ And is there any other income in the household Sharma ji — your wife, any rent, anything else that comes in regularly? 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_7"
+data-component-type="NARRATION"
+>
+
+ Yes, my wife does tailoring from home. Maybe ₹8,000 to ₹10,000 per month. I should have mentioned that. 
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+<section class="scene" data-page-id="S06">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_1"
+data-component-type="NARRATION"
+>
+
+ Is there anything else you need to know beta? 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_2"
+data-component-type="NARRATION"
+>
+
+ Just one more thing Sharma ji — have you or your family ever owned a home before, or will this be your first? 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_3"
+data-component-type="NARRATION"
+>
+
+ Sharma ji, you do not own any property currently — right? 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_4"
+data-component-type="NARRATION"
+>
+
+ First time beta. My father rented, I have rented all my life. This will be the first home our family has ever owned. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_5"
+data-component-type="NARRATION"
+>
+
+ No no beta, nothing like that. Why — is that a problem? 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_6"
+data-component-type="NARRATION"
+>
+
+ Not at all Sharma ji — just a standard check I ask everyone. Is this going to be your first home? 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_7"
+data-component-type="NARRATION"
+>
+
+ Yes beta, first time. My father rented, I have rented all my life. This will be our first home. I got a little worried when you asked like that. 
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+<section class="scene" data-page-id="S07">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_1"
+data-component-type="NARRATION"
+>
+
+ Eligibility confirmed. Now — is the property actually right for our product? 
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+<section class="scene" data-page-id="S08">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_1"
+data-component-type="NARRATION"
+>
+
+ Read this before the income conversation. Three rules — household income, FOIR, and informal income. All three matter. 
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+<section class="scene" data-page-id="S09">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_1"
+data-component-type="NARRATION"
+>
+
+ Mr. Sharma mentioned four income figures. Not all of them count for the FOIR calculation. Drag each one to the right zone. 
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+<section class="scene" data-page-id="S10">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_1"
+data-component-type="NARRATION"
+>
+
+ Mr. Sharma's household income is ₹33,000. Proposed home loan EMI is ₹11,500. No existing EMIs. FOIR equals 35%. What does this mean for the file? 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_2"
+data-component-type="NARRATION"
+>
+
+ 35% is within the 50% limit. File can proceed. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_3"
+data-component-type="NARRATION"
+>
+
+ 35% is borderline. Ravi should reduce the loan amount to be safe. 
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+<section class="scene" data-page-id="S11">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_1"
+data-component-type="NARRATION"
+>
+
+ My husband said you need to ask me about my income beta. I don't have any paperwork — ITR or anything like that. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_2"
+data-component-type="NARRATION"
+>
+
+ No problem Mrs. Sharma. Let me ask you a couple of things. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_3"
+data-component-type="NARRATION"
+>
+
+ I do tailoring from home. I have been doing it for 12 years. But everything is cash — no records as such. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_4"
+data-component-type="NARRATION"
+>
+
+ That is completely fine Mrs. Sharma. Our product is designed for customers like you. I just need to understand what documents you do have — even if they are not formal tax returns. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_5"
+data-component-type="NARRATION"
+>
+
+ Mrs. Sharma, can you get an ITR filed before we proceed? It would help the file significantly. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_6"
+data-component-type="NARRATION"
+>
+
+ Oh good beta. I was worried. I do have an order book where I write every customer's work. And I have a bank account — though mostly I withdraw cash. And a post office RD I have been paying for 4 years. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_7"
+data-component-type="NARRATION"
+>
+
+ Filing ITR will take so much time beta. But I do have an order book, a bank account, and a post office RD I have been paying for 4 years. Is that helpful? 
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+<section class="scene" data-page-id="S12">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_1"
+data-component-type="NARRATION"
+>
+
+ That is very helpful Mrs. Sharma. Let me confirm what I need to collect from you. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_2"
+data-component-type="NARRATION"
+>
+
+ The order book, bank statement, and RD passbook together are exactly what we need. Can I also get the electricity bill for this address in your name? 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_3"
+data-component-type="NARRATION"
+>
+
+ Please give me the order book and bank statement. That should be enough. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_4"
+data-component-type="NARRATION"
+>
+
+ Yes beta, I can get all of that ready. Give me one day. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_5"
+data-component-type="NARRATION"
+>
+
+ Yes beta, I can give you those. Should I also get the electricity bill and my RD passbook? 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_6"
+data-component-type="NARRATION"
+>
+
+ Perfect. Your income is just as important as Sharma ji's for this file, Mrs. Sharma. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_7"
+data-component-type="NARRATION"
+>
+
+ Thank you beta. Nobody told us that before. 
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+<section class="scene" data-page-id="S13">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_1"
+data-component-type="NARRATION"
+>
+
+ Income picture sorted. Now collect the documents — and check every single paper before you leave that shop. 
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+<section class="scene" data-page-id="S14">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_1"
+data-component-type="NARRATION"
+>
+
+ Read this before document collection. Three rules — KYC name match, property documents, and co-applicant eligibility. 
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+<section class="scene" data-page-id="S15">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_1"
+data-component-type="NARRATION"
+>
+
+ Ravi goes through each document carefully. Click all four to examine them — then answer. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_2"
+data-component-type="NARRATION"
+>
+
+ The name on PAN (R.K. Sharma) and Aadhaar (Ramesh Kumar Sharma) do not match. This must be corrected before submission. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_3"
+data-component-type="NARRATION"
+>
+
+ The electricity bill is not required since Aadhaar address matches. It should be removed from the file. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_4"
+data-component-type="NARRATION"
+>
+
+ Sharma ji, PAN shows R.K. Sharma but Aadhaar shows your full name. Please update PAN through your CA — about 7 to 10 days. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_5"
+data-component-type="NARRATION"
+>
+
+ I will go today itself beta. 
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+<section class="scene" data-page-id="S16">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_1"
+data-component-type="NARRATION"
+>
+
+ Here are the property papers beta — booking receipt, allotment letter, and the NOC the builder gave me last week. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_2"
+data-component-type="NARRATION"
+>
+
+ Ravi examines each document. Sort them into the correct zone. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_3"
+data-component-type="NARRATION"
+>
+
+ Sharma ji — please collect a signed stamped allotment letter from the builder's office. And ask them to reissue the NOC addressed to XYZ HFC. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_4"
+data-component-type="NARRATION"
+>
+
+ I will go to the builder's office tomorrow morning. 
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+<section class="scene" data-page-id="S17">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_1"
+data-component-type="NARRATION"
+>
+
+ Beta, my younger brother Vikram wants to join as co-applicant. He earns ₹20,000 from his job — it will only strengthen the file, right? 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_2"
+data-component-type="NARRATION"
+>
+
+ Sharma ji, does Vikram ji currently own any residential property? 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_3"
+data-component-type="NARRATION"
+>
+
+ Yes — he bought a small flat in Pune 2 years ago. He lives there. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_4"
+data-component-type="NARRATION"
+>
+
+ Sharma ji, Vikram ji owns a flat in Pune — under our AHFC product, co-applicants must also be first-time buyers. He cannot be included. But do not worry — I have already checked the FOIR on your and Mrs. Sharma's income alone and the file is perfectly strong. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_5"
+data-component-type="NARRATION"
+>
+
+ Sharma ji, let me check with my manager and come back to you on whether Vikram ji can join. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_6"
+data-component-type="NARRATION"
+>
+
+ Oh. But the file is still okay without him beta? 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_7"
+data-component-type="NARRATION"
+>
+
+ Absolutely Sharma ji. FOIR is 35% on your and Mrs. Sharma's income. The file is strong — Vikram ji's income was a bonus but you do not need it. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_8"
+data-component-type="NARRATION"
+>
+
+ Thank you for explaining beta. You handled that well. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_9"
+data-component-type="NARRATION"
+>
+
+ Ravi, you did not need to escalate this. The policy is clear — co-applicant owns property, they cannot join an AHFC file. Call Sharma ji back and tell him. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_10"
+data-component-type="NARRATION"
+>
+
+ Understood sir. I will call him now. 
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+<section class="scene" data-page-id="S18">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_1"
+data-component-type="NARRATION"
+>
+
+ Documents almost ready. One final check before this file lands on my desk. 
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+<section class="scene" data-page-id="S19">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_1"
+data-component-type="NARRATION"
+>
+
+ Friday. One final check before the file moves. Name consistency, final FOIR, and file summary. All three. 
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+<section class="scene" data-page-id="S20">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_1"
+data-component-type="NARRATION"
+>
+
+ The full file is in front of Ravi. Click each document to check for name consistency — then answer. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_2"
+data-component-type="NARRATION"
+>
+
+ The bank statement shows R.K. Sharma — the account name has not been updated. Ravi must get a fresh statement showing the full name or a bank-certified name correction letter. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_3"
+data-component-type="NARRATION"
+>
+
+ The NOC must be re-dated to today's date before submission. 
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+<section class="scene" data-page-id="S21">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_1"
+data-component-type="NARRATION"
+>
+
+ Sir, Sharma ji's file. Complete. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_2"
+data-component-type="NARRATION"
+>
+
+ Two questions before I open it. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_3"
+data-component-type="NARRATION"
+>
+
+ Loan amount? 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_4"
+data-component-type="NARRATION"
+>
+
+ ₹13 lakhs sir. Property is ₹16 lakhs — Mr. Sharma is contributing ₹3 lakhs as down payment from his own funds. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_5"
+data-component-type="NARRATION"
+>
+
+ Around ₹13 to 14 lakhs sir. Somewhere in that range. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_6"
+data-component-type="NARRATION"
+>
+
+ Good. FOIR? 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_7"
+data-component-type="NARRATION"
+>
+
+ Around is not a number Ravi. ₹13 lakhs or ₹14 lakhs — which is it? 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_8"
+data-component-type="NARRATION"
+>
+
+ ₹13 lakhs sir. ₹16 lakh property, ₹3 lakh down payment from Mr. Sharma's own funds. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_9"
+data-component-type="NARRATION"
+>
+
+ FOIR? 
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+<section class="scene" data-page-id="S22">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_1"
+data-component-type="NARRATION"
+>
+
+ FOIR? 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_2"
+data-component-type="NARRATION"
+>
+
+ 35% sir. Household income ₹33,000, proposed EMI ₹11,500, no existing EMIs. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_3"
+data-component-type="NARRATION"
+>
+
+ It should be fine sir. Their income is good and there are no existing loans. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_4"
+data-component-type="NARRATION"
+>
+
+ First clean file you have brought me without me asking twice. Credit reviews this weekend. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_5"
+data-component-type="NARRATION"
+>
+
+ Should be fine is not a FOIR, Ravi. The number is 35%. Remember that for next time. 
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+<section class="scene" data-page-id="S23">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+<section class="scene" data-page-id="S24">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_1"
+data-component-type="NARRATION"
+>
+
+ File is with credit. If everything is in order — we hear back Monday. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_2"
+data-component-type="NARRATION"
+>
+
+ Two more leads to close before then, sir. 
+
+</div>
+
+
+<div
+class="component component-narration"
+data-component-id="NARRATION_3"
+data-component-type="NARRATION"
+>
+
+ Then stop talking and get moving. 
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+<section class="scene" data-page-id="S25">
+
+
+<section
+class="screen screen-content"
+data-layer="CONTENT"
+data-template="content">
+
+
+<div class="slide-template-content">
+
+</div>
+
+
+</section>
+
+
+</section>
+
+
+
+</div>
+
+<script>
+
+window.PIR = {
+  "version": "1.0",
+  "generatedAt": "2026-07-28T11:21:04.705Z",
+  "course": {
+    "id": null,
+    "title": "================================================================================",
+    "version": null
+  },
+  "pages": [
+    {
+      "id": "S01",
+      "title": "Screen 1",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "NARRATION_1",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Close 3 files this week — you earn your first performance bonus. ₹8,000. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_2",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Sir, I have one strong lead. Mr. Sharma — grocery shop owner near the railway station. He called last week about a home loan. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_3",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Good. But before you go — learn what to check. Six things. Miss one and the file comes back. "
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "NARRATION_1",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_002",
+          "componentId": "NARRATION_2",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_003",
+          "componentId": "NARRATION_3",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    },
+    {
+      "id": "S02",
+      "title": "Screen 2",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "NARRATION_1",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Six checkpoints. Learn all six before you walk into that shop. "
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "NARRATION_1",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    },
+    {
+      "id": "S03",
+      "title": "Screen 3",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "NARRATION_1",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Read this before meeting Mr. Sharma. Three rules. Property, income, and ownership. All three must pass. "
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "NARRATION_1",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    },
+    {
+      "id": "S04",
+      "title": "Screen 4",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "NARRATION_1",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Beta, you called about a home loan? Come, sit down. Have some chai. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_2",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Thank you Sharma ji. Three quick questions before we discuss anything else. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_3",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " I have already booked a 1BHK flat on the outskirts of town. Still under construction. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_4",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " What is the total cost as per the builder agreement Sharma ji — including all charges like parking and registration? "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_5",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " How much home loan are you looking for, Sharma ji? "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_6",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Total cost is ₹16 lakhs as per the agreement. That includes parking and registration charges. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_7",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " I was thinking around ₹12 to 13 lakhs loan. The flat costs ₹16 lakhs total. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_8",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Understood Sharma ji. And the total cost of the flat as per the builder agreement — what is that figure including all charges? "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_9",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Oh, the total cost — that is ₹16 lakhs. Includes parking and registration as per the builder's agreement. "
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "NARRATION_1",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_002",
+          "componentId": "NARRATION_2",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_003",
+          "componentId": "NARRATION_3",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_004",
+          "componentId": "NARRATION_4",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_005",
+          "componentId": "NARRATION_5",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_006",
+          "componentId": "NARRATION_6",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_007",
+          "componentId": "NARRATION_7",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_008",
+          "componentId": "NARRATION_8",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_009",
+          "componentId": "NARRATION_9",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    },
+    {
+      "id": "S05",
+      "title": "Screen 5",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "NARRATION_1",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " So what else do you need to know beta? "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_2",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " What comes into the household every month from all sources — your shop, your wife, anything else that is regular? "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_3",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " What is your monthly income from the shop, Sharma ji? "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_4",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " From the shop around ₹25,000 per month. My wife also does tailoring from home — maybe ₹8,000 to ₹10,000. So together ₹33,000 to ₹35,000. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_5",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Around ₹25,000 from the shop beta. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_6",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " And is there any other income in the household Sharma ji — your wife, any rent, anything else that comes in regularly? "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_7",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Yes, my wife does tailoring from home. Maybe ₹8,000 to ₹10,000 per month. I should have mentioned that. "
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "NARRATION_1",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_002",
+          "componentId": "NARRATION_2",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_003",
+          "componentId": "NARRATION_3",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_004",
+          "componentId": "NARRATION_4",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_005",
+          "componentId": "NARRATION_5",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_006",
+          "componentId": "NARRATION_6",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_007",
+          "componentId": "NARRATION_7",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    },
+    {
+      "id": "S06",
+      "title": "Screen 6",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "NARRATION_1",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Is there anything else you need to know beta? "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_2",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Just one more thing Sharma ji — have you or your family ever owned a home before, or will this be your first? "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_3",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Sharma ji, you do not own any property currently — right? "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_4",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " First time beta. My father rented, I have rented all my life. This will be the first home our family has ever owned. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_5",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " No no beta, nothing like that. Why — is that a problem? "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_6",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Not at all Sharma ji — just a standard check I ask everyone. Is this going to be your first home? "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_7",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Yes beta, first time. My father rented, I have rented all my life. This will be our first home. I got a little worried when you asked like that. "
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "NARRATION_1",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_002",
+          "componentId": "NARRATION_2",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_003",
+          "componentId": "NARRATION_3",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_004",
+          "componentId": "NARRATION_4",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_005",
+          "componentId": "NARRATION_5",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_006",
+          "componentId": "NARRATION_6",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_007",
+          "componentId": "NARRATION_7",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    },
+    {
+      "id": "S07",
+      "title": "Screen 7",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "NARRATION_1",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Eligibility confirmed. Now — is the property actually right for our product? "
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "NARRATION_1",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    },
+    {
+      "id": "S08",
+      "title": "Screen 8",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "NARRATION_1",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Read this before the income conversation. Three rules — household income, FOIR, and informal income. All three matter. "
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "NARRATION_1",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    },
+    {
+      "id": "S09",
+      "title": "Screen 9",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "NARRATION_1",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Mr. Sharma mentioned four income figures. Not all of them count for the FOIR calculation. Drag each one to the right zone. "
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "NARRATION_1",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    },
+    {
+      "id": "S10",
+      "title": "Screen 10",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "NARRATION_1",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Mr. Sharma's household income is ₹33,000. Proposed home loan EMI is ₹11,500. No existing EMIs. FOIR equals 35%. What does this mean for the file? "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_2",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " 35% is within the 50% limit. File can proceed. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_3",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " 35% is borderline. Ravi should reduce the loan amount to be safe. "
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "NARRATION_1",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_002",
+          "componentId": "NARRATION_2",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_003",
+          "componentId": "NARRATION_3",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    },
+    {
+      "id": "S11",
+      "title": "Screen 11",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "NARRATION_1",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " My husband said you need to ask me about my income beta. I don't have any paperwork — ITR or anything like that. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_2",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " No problem Mrs. Sharma. Let me ask you a couple of things. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_3",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " I do tailoring from home. I have been doing it for 12 years. But everything is cash — no records as such. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_4",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " That is completely fine Mrs. Sharma. Our product is designed for customers like you. I just need to understand what documents you do have — even if they are not formal tax returns. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_5",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Mrs. Sharma, can you get an ITR filed before we proceed? It would help the file significantly. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_6",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Oh good beta. I was worried. I do have an order book where I write every customer's work. And I have a bank account — though mostly I withdraw cash. And a post office RD I have been paying for 4 years. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_7",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Filing ITR will take so much time beta. But I do have an order book, a bank account, and a post office RD I have been paying for 4 years. Is that helpful? "
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "NARRATION_1",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_002",
+          "componentId": "NARRATION_2",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_003",
+          "componentId": "NARRATION_3",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_004",
+          "componentId": "NARRATION_4",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_005",
+          "componentId": "NARRATION_5",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_006",
+          "componentId": "NARRATION_6",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_007",
+          "componentId": "NARRATION_7",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    },
+    {
+      "id": "S12",
+      "title": "Screen 12",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "NARRATION_1",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " That is very helpful Mrs. Sharma. Let me confirm what I need to collect from you. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_2",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " The order book, bank statement, and RD passbook together are exactly what we need. Can I also get the electricity bill for this address in your name? "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_3",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Please give me the order book and bank statement. That should be enough. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_4",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Yes beta, I can get all of that ready. Give me one day. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_5",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Yes beta, I can give you those. Should I also get the electricity bill and my RD passbook? "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_6",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Perfect. Your income is just as important as Sharma ji's for this file, Mrs. Sharma. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_7",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Thank you beta. Nobody told us that before. "
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "NARRATION_1",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_002",
+          "componentId": "NARRATION_2",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_003",
+          "componentId": "NARRATION_3",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_004",
+          "componentId": "NARRATION_4",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_005",
+          "componentId": "NARRATION_5",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_006",
+          "componentId": "NARRATION_6",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_007",
+          "componentId": "NARRATION_7",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    },
+    {
+      "id": "S13",
+      "title": "Screen 13",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "NARRATION_1",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Income picture sorted. Now collect the documents — and check every single paper before you leave that shop. "
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "NARRATION_1",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    },
+    {
+      "id": "S14",
+      "title": "Screen 14",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "NARRATION_1",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Read this before document collection. Three rules — KYC name match, property documents, and co-applicant eligibility. "
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "NARRATION_1",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    },
+    {
+      "id": "S15",
+      "title": "Screen 15",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "NARRATION_1",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Ravi goes through each document carefully. Click all four to examine them — then answer. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_2",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " The name on PAN (R.K. Sharma) and Aadhaar (Ramesh Kumar Sharma) do not match. This must be corrected before submission. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_3",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " The electricity bill is not required since Aadhaar address matches. It should be removed from the file. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_4",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Sharma ji, PAN shows R.K. Sharma but Aadhaar shows your full name. Please update PAN through your CA — about 7 to 10 days. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_5",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " I will go today itself beta. "
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "NARRATION_1",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_002",
+          "componentId": "NARRATION_2",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_003",
+          "componentId": "NARRATION_3",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_004",
+          "componentId": "NARRATION_4",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_005",
+          "componentId": "NARRATION_5",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    },
+    {
+      "id": "S16",
+      "title": "Screen 16",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "NARRATION_1",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Here are the property papers beta — booking receipt, allotment letter, and the NOC the builder gave me last week. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_2",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Ravi examines each document. Sort them into the correct zone. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_3",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Sharma ji — please collect a signed stamped allotment letter from the builder's office. And ask them to reissue the NOC addressed to XYZ HFC. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_4",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " I will go to the builder's office tomorrow morning. "
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "NARRATION_1",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_002",
+          "componentId": "NARRATION_2",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_003",
+          "componentId": "NARRATION_3",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_004",
+          "componentId": "NARRATION_4",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    },
+    {
+      "id": "S17",
+      "title": "Screen 17",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "NARRATION_1",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Beta, my younger brother Vikram wants to join as co-applicant. He earns ₹20,000 from his job — it will only strengthen the file, right? "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_2",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Sharma ji, does Vikram ji currently own any residential property? "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_3",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Yes — he bought a small flat in Pune 2 years ago. He lives there. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_4",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Sharma ji, Vikram ji owns a flat in Pune — under our AHFC product, co-applicants must also be first-time buyers. He cannot be included. But do not worry — I have already checked the FOIR on your and Mrs. Sharma's income alone and the file is perfectly strong. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_5",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Sharma ji, let me check with my manager and come back to you on whether Vikram ji can join. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_6",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Oh. But the file is still okay without him beta? "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_7",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Absolutely Sharma ji. FOIR is 35% on your and Mrs. Sharma's income. The file is strong — Vikram ji's income was a bonus but you do not need it. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_8",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Thank you for explaining beta. You handled that well. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_9",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Ravi, you did not need to escalate this. The policy is clear — co-applicant owns property, they cannot join an AHFC file. Call Sharma ji back and tell him. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_10",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Understood sir. I will call him now. "
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "NARRATION_1",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_002",
+          "componentId": "NARRATION_2",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_003",
+          "componentId": "NARRATION_3",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_004",
+          "componentId": "NARRATION_4",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_005",
+          "componentId": "NARRATION_5",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_006",
+          "componentId": "NARRATION_6",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_007",
+          "componentId": "NARRATION_7",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_008",
+          "componentId": "NARRATION_8",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_009",
+          "componentId": "NARRATION_9",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_010",
+          "componentId": "NARRATION_10",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    },
+    {
+      "id": "S18",
+      "title": "Screen 18",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "NARRATION_1",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Documents almost ready. One final check before this file lands on my desk. "
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "NARRATION_1",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    },
+    {
+      "id": "S19",
+      "title": "Screen 19",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "NARRATION_1",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Friday. One final check before the file moves. Name consistency, final FOIR, and file summary. All three. "
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "NARRATION_1",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    },
+    {
+      "id": "S20",
+      "title": "Screen 20",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "NARRATION_1",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " The full file is in front of Ravi. Click each document to check for name consistency — then answer. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_2",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " The bank statement shows R.K. Sharma — the account name has not been updated. Ravi must get a fresh statement showing the full name or a bank-certified name correction letter. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_3",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " The NOC must be re-dated to today's date before submission. "
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "NARRATION_1",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_002",
+          "componentId": "NARRATION_2",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_003",
+          "componentId": "NARRATION_3",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    },
+    {
+      "id": "S21",
+      "title": "Screen 21",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "NARRATION_1",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Sir, Sharma ji's file. Complete. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_2",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Two questions before I open it. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_3",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Loan amount? "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_4",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " ₹13 lakhs sir. Property is ₹16 lakhs — Mr. Sharma is contributing ₹3 lakhs as down payment from his own funds. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_5",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Around ₹13 to 14 lakhs sir. Somewhere in that range. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_6",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Good. FOIR? "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_7",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Around is not a number Ravi. ₹13 lakhs or ₹14 lakhs — which is it? "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_8",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " ₹13 lakhs sir. ₹16 lakh property, ₹3 lakh down payment from Mr. Sharma's own funds. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_9",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " FOIR? "
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "NARRATION_1",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_002",
+          "componentId": "NARRATION_2",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_003",
+          "componentId": "NARRATION_3",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_004",
+          "componentId": "NARRATION_4",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_005",
+          "componentId": "NARRATION_5",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_006",
+          "componentId": "NARRATION_6",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_007",
+          "componentId": "NARRATION_7",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_008",
+          "componentId": "NARRATION_8",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_009",
+          "componentId": "NARRATION_9",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    },
+    {
+      "id": "S22",
+      "title": "Screen 22",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "NARRATION_1",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " FOIR? "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_2",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " 35% sir. Household income ₹33,000, proposed EMI ₹11,500, no existing EMIs. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_3",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " It should be fine sir. Their income is good and there are no existing loans. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_4",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " First clean file you have brought me without me asking twice. Credit reviews this weekend. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_5",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Should be fine is not a FOIR, Ravi. The number is 35%. Remember that for next time. "
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "NARRATION_1",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_002",
+          "componentId": "NARRATION_2",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_003",
+          "componentId": "NARRATION_3",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_004",
+          "componentId": "NARRATION_4",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_005",
+          "componentId": "NARRATION_5",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    },
+    {
+      "id": "S23",
+      "title": "Screen 23",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": []
+    },
+    {
+      "id": "S24",
+      "title": "Screen 24",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "NARRATION_1",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " File is with credit. If everything is in order — we hear back Monday. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_2",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Two more leads to close before then, sir. "
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "NARRATION_3",
+              "type": "NARRATION",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": " Then stop talking and get moving. "
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "NARRATION_1",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_002",
+          "componentId": "NARRATION_2",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_003",
+          "componentId": "NARRATION_3",
+          "componentType": "NARRATION",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    },
+    {
+      "id": "S25",
+      "title": "Screen 25",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": []
+    }
+  ],
+  "theme": "modern",
+  "assets": [
+    {
+      "id": "SCENE-01",
+      "name": "Ravi arrives at XYZ HFC branch — Monday morning",
+      "type": "SCENE",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "SCENE-01",
+        "type": "SCENE",
+        "name": "Ravi arrives at XYZ HFC branch — Monday morning"
+      }
+    },
+    {
+      "id": "SCENE-02",
+      "name": "Ravi and Mr. Sharma — First meeting at kirana store",
+      "type": "SCENE",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "SCENE-02",
+        "type": "SCENE",
+        "name": "Ravi and Mr. Sharma — First meeting at kirana store"
+      }
+    },
+    {
+      "id": "SCENE-03",
+      "name": "Ravi at kirana store — Property question conversation",
+      "type": "SCENE",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "SCENE-03",
+        "type": "SCENE",
+        "name": "Ravi at kirana store — Property question conversation"
+      }
+    },
+    {
+      "id": "SCENE-04",
+      "name": "Ravi and Mr. Sharma — Income conversation at counter",
+      "type": "SCENE",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "SCENE-04",
+        "type": "SCENE",
+        "name": "Ravi and Mr. Sharma — Income conversation at counter"
+      }
+    },
+    {
+      "id": "SCENE-05",
+      "name": "Ravi, Mr. Sharma and Mrs. Sharma — Informal income conversation",
+      "type": "SCENE",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "SCENE-05",
+        "type": "SCENE",
+        "name": "Ravi, Mr. Sharma and Mrs. Sharma — Informal income conversation"
+      }
+    },
+    {
+      "id": "SCENE-06",
+      "name": "Mrs. Sharma — Relieved after being reassured",
+      "type": "SCENE",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "SCENE-06",
+        "type": "SCENE",
+        "name": "Mrs. Sharma — Relieved after being reassured"
+      }
+    },
+    {
+      "id": "SCENE-07",
+      "name": "Ravi at branch desk — document review, Friday morning",
+      "type": "SCENE",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "SCENE-07",
+        "type": "SCENE",
+        "name": "Ravi at branch desk — document review, Friday morning"
+      }
+    },
+    {
+      "id": "SCENE-08",
+      "name": "Ravi placing file on Suresh Nair's desk — Friday afternoon",
+      "type": "SCENE",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "SCENE-08",
+        "type": "SCENE",
+        "name": "Ravi placing file on Suresh Nair's desk — Friday afternoon"
+      }
+    },
+    {
+      "id": "SCENE-09",
+      "name": "Suresh Nair approving the file — Friday afternoon",
+      "type": "SCENE",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "SCENE-09",
+        "type": "SCENE",
+        "name": "Suresh Nair approving the file — Friday afternoon"
+      }
+    },
+    {
+      "id": "SCENE-10",
+      "name": "Suresh Nair correcting Ravi — Path B consequence",
+      "type": "SCENE",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "SCENE-10",
+        "type": "SCENE",
+        "name": "Suresh Nair correcting Ravi — Path B consequence"
+      }
+    },
+    {
+      "id": "SCENE-11",
+      "name": "Ravi — Relieved and satisfied, end of week",
+      "type": "SCENE",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "SCENE-11",
+        "type": "SCENE",
+        "name": "Ravi — Relieved and satisfied, end of week"
+      }
+    },
+    {
+      "id": "PROP-01",
+      "name": "Policy Card — AHFC Eligibility Rules",
+      "type": "PROP",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "PROP-01",
+        "type": "PROP",
+        "name": "Policy Card — AHFC Eligibility Rules"
+      }
+    },
+    {
+      "id": "PROP-02",
+      "name": "Six Manila Folders — Branch desk overview",
+      "type": "PROP",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "PROP-02",
+        "type": "PROP",
+        "name": "Six Manila Folders — Branch desk overview"
+      }
+    },
+    {
+      "id": "PROP-03",
+      "name": "PAN Card — R.K. Sharma",
+      "type": "PROP",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "PROP-03",
+        "type": "PROP",
+        "name": "PAN Card — R.K. Sharma"
+      }
+    },
+    {
+      "id": "PROP-04",
+      "name": "Aadhaar Card — Ramesh Kumar Sharma",
+      "type": "PROP",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "PROP-04",
+        "type": "PROP",
+        "name": "Aadhaar Card — Ramesh Kumar Sharma"
+      }
+    },
+    {
+      "id": "PROP-05",
+      "name": "Passport Size Photograph",
+      "type": "PROP",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "PROP-05",
+        "type": "PROP",
+        "name": "Passport Size Photograph"
+      }
+    },
+    {
+      "id": "PROP-06",
+      "name": "Electricity Bill — Ramesh Kumar Sharma",
+      "type": "PROP",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "PROP-06",
+        "type": "PROP",
+        "name": "Electricity Bill — Ramesh Kumar Sharma"
+      }
+    },
+    {
+      "id": "PROP-07",
+      "name": "Booking Receipt — Property Booking",
+      "type": "PROP",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "PROP-07",
+        "type": "PROP",
+        "name": "Booking Receipt — Property Booking"
+      }
+    },
+    {
+      "id": "PROP-08",
+      "name": "Allotment Letter — Unsigned, Plain Paper",
+      "type": "PROP",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "PROP-08",
+        "type": "PROP",
+        "name": "Allotment Letter — Unsigned, Plain Paper"
+      }
+    },
+    {
+      "id": "PROP-09",
+      "name": "Builder NOC — Addressed to Whom It May Concern",
+      "type": "PROP",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "PROP-09",
+        "type": "PROP",
+        "name": "Builder NOC — Addressed to Whom It May Concern"
+      }
+    },
+    {
+      "id": "PROP-10",
+      "name": "Policy Card — Income and FOIR",
+      "type": "PROP",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "PROP-10",
+        "type": "PROP",
+        "name": "Policy Card — Income and FOIR"
+      }
+    },
+    {
+      "id": "PROP-11",
+      "name": "Income Classification Cards — Drag & Drop",
+      "type": "PROP",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "PROP-11",
+        "type": "PROP",
+        "name": "Income Classification Cards — Drag & Drop"
+      }
+    },
+    {
+      "id": "PROP-12",
+      "name": "FOIR Infographic",
+      "type": "PROP",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "PROP-12",
+        "type": "PROP",
+        "name": "FOIR Infographic"
+      }
+    },
+    {
+      "id": "PROP-13",
+      "name": "Policy Card — Document Requirements",
+      "type": "PROP",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "PROP-13",
+        "type": "PROP",
+        "name": "Policy Card — Document Requirements"
+      }
+    },
+    {
+      "id": "PROP-14",
+      "name": "KYC Documents Spread — Hotspot Overlay",
+      "type": "PROP",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "PROP-14",
+        "type": "PROP",
+        "name": "KYC Documents Spread — Hotspot Overlay"
+      }
+    },
+    {
+      "id": "PROP-15",
+      "name": "Property Documents — Three Cards for Drag & Drop",
+      "type": "PROP",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "PROP-15",
+        "type": "PROP",
+        "name": "Property Documents — Three Cards for Drag & Drop"
+      }
+    },
+    {
+      "id": "PROP-16",
+      "name": "Policy Card — Pre-Submission Final Check",
+      "type": "PROP",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "PROP-16",
+        "type": "PROP",
+        "name": "Policy Card — Pre-Submission Final Check"
+      }
+    },
+    {
+      "id": "PROP-17",
+      "name": "Full File Documents Spread — Name Consistency Hotspot",
+      "type": "PROP",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "PROP-17",
+        "type": "PROP",
+        "name": "Full File Documents Spread — Name Consistency Hotspot"
+      }
+    },
+    {
+      "id": "PROP-18",
+      "name": "Scorecard — Final Score Display",
+      "type": "PROP",
+      "src": null,
+      "alt": null,
+      "attributes": {
+        "id": "PROP-18",
+        "type": "PROP",
+        "name": "Scorecard — Final Score Display"
+      }
+    }
+  ]
+};
+
+</script>
+
+<script type="module" src="runtime.js"></script>
+
+</body>
+
+</html>

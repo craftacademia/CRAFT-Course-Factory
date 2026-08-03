@@ -1,0 +1,709 @@
+{
+  "type": "COURSE",
+  "children": [
+    {
+      "type": "TEXT",
+      "line": 1,
+      "value": "================================================================================"
+    },
+    {
+      "type": "TEXT",
+      "line": 2,
+      "value": ""
+    },
+    {
+      "type": "TEXT",
+      "line": 3,
+      "value": "SCRIPT COMPILER PROCESSING..."
+    },
+    {
+      "type": "TEXT",
+      "line": 4,
+      "value": ""
+    },
+    {
+      "type": "TEXT",
+      "line": 5,
+      "value": "Source Document: C.R.A.F.T Academia — Ravi's Biggest Week"
+    },
+    {
+      "type": "TEXT",
+      "line": 6,
+      "value": ""
+    },
+    {
+      "type": "TEXT",
+      "line": 7,
+      "value": "Target Engine: Automated eLearning Build Engine (2026 Spec)"
+    },
+    {
+      "type": "TEXT",
+      "line": 8,
+      "value": ""
+    },
+    {
+      "type": "TEXT",
+      "line": 9,
+      "value": "Rule Enforcement: Strict Mode (No emojis, no loose pipes/lines, clean XML-style tagging)"
+    },
+    {
+      "type": "TEXT",
+      "line": 10,
+      "value": ""
+    },
+    {
+      "type": "TEXT",
+      "line": 11,
+      "value": ""
+    },
+    {
+      "type": "TEXT",
+      "line": 12,
+      "value": ""
+    },
+    {
+      "type": "CHARACTERS",
+      "line": 13,
+      "attributes": {
+        "ID": "CHAR-01-F",
+        "NAME": "Apologetic",
+        "TITLE": "Branch Sales Executive, XYZ HFC"
+      },
+      "children": [
+        {
+          "type": "TEXT",
+          "line": 14,
+          "value": ""
+        },
+        {
+          "type": "CHARACTER",
+          "line": 15,
+          "attributes": {
+            "ID": "CHAR-02-F",
+            "NAME": "Agreeable",
+            "TITLE": "Grocery Shop Owner, Anand Gujarat"
+          },
+          "children": [
+            {
+              "type": "TEXT",
+              "line": 16,
+              "value": ""
+            },
+            {
+              "type": "CHARACTER",
+              "line": 17,
+              "attributes": {
+                "ID": "CHAR-03-D",
+                "NAME": "Grateful",
+                "TITLE": "Home-Based Tailor, Anand Gujarat"
+              },
+              "children": [
+                {
+                  "type": "TEXT",
+                  "line": 18,
+                  "value": ""
+                },
+                {
+                  "type": "CHARACTER",
+                  "line": 19,
+                  "attributes": {
+                    "ID": "CHAR-04-D",
+                    "NAME": "Coaching/Patient",
+                    "TITLE": "Branch Manager, XYZ HFC"
+                  },
+                  "children": [
+                    {
+                      "type": "TEXT",
+                      "line": 20,
+                      "value": ""
+                    },
+                    {
+                      "type": "CHARACTER",
+                      "line": 21,
+                      "attributes": {
+                        "ID": "CHAR-05-B",
+                        "NAME": "Disappointed/Accepting",
+                        "TITLE": "Mr. Sharma's Brother"
+                      },
+                      "children": [
+                        {
+                          "type": "TEXT",
+                          "line": 22,
+                          "value": ""
+                        },
+                        {
+                          "type": "LOCATIONS",
+                          "line": 23,
+                          "attributes": {
+                            "ID": "LOC-06",
+                            "NAME": "XYZ HFC Branch Office — Document Review Desk"
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "line": 24,
+                              "value": ""
+                            },
+                            {
+                              "type": "ASSETS",
+                              "line": 25,
+                              "attributes": {
+                                "ID": "PROP-18",
+                                "TYPE": "PROP",
+                                "NAME": "Scorecard — Final Score Display"
+                              },
+                              "children": [
+                                {
+                                  "type": "TEXT",
+                                  "line": 26,
+                                  "value": ""
+                                },
+                                {
+                                  "type": "SCREENS",
+                                  "line": 27,
+                                  "attributes": {
+                                    "ID": "S01",
+                                    "TYPE": "STATIC",
+                                    "SCENE": "SCENE-01",
+                                    "LOCATION": "LOC-01",
+                                    "SPEAKER": "SUR",
+                                    "EXPRESSION": "CHAR-04-A",
+                                    "VO_ID": "VO-S01-SUR-02"
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "TEXT",
+                                      "line": 28,
+                                      "value": ""
+                                    },
+                                    {
+                                      "type": "SCREEN",
+                                      "line": 29,
+                                      "attributes": {
+                                        "ID": "S02",
+                                        "TYPE": "TAB",
+                                        "SCENE": "SCENE-01",
+                                        "LOCATION": "LOC-01",
+                                        "ASSET_REF": "PROP-02",
+                                        "SPEAKER": "SUR",
+                                        "EXPRESSION": "CHAR-04-A",
+                                        "VO_ID": "VO-S02-SUR-01"
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "TEXT",
+                                          "line": 30,
+                                          "value": ""
+                                        },
+                                        {
+                                          "type": "SCREEN",
+                                          "line": 31,
+                                          "attributes": {
+                                            "ID": "S03",
+                                            "TYPE": "TAB",
+                                            "LOCATION": "LOC-01",
+                                            "ASSET_REF": "PROP-01",
+                                            "SPEAKER": "NAR",
+                                            "EXPRESSION": "NONE",
+                                            "VO_ID": "VO-S03-NAR-01"
+                                          },
+                                          "children": [
+                                            {
+                                              "type": "TEXT",
+                                              "line": 32,
+                                              "value": ""
+                                            },
+                                            {
+                                              "type": "SCREEN",
+                                              "line": 33,
+                                              "attributes": {
+                                                "ID": "PATH_S04_B",
+                                                "TYPE": "BRANCHING",
+                                                "SCENE": "SCENE-02",
+                                                "LOCATION": "LOC-03",
+                                                "SPEAKER": "SHA",
+                                                "EXPRESSION": "CHAR-02-F",
+                                                "VO_ID": "VO-S04-SHA-04B",
+                                                "LETTER": "B",
+                                                "SCORE": "5",
+                                                "NEXT": "PATH_S04_B"
+                                              },
+                                              "children": [
+                                                {
+                                                  "type": "TEXT",
+                                                  "line": 34,
+                                                  "value": ""
+                                                },
+                                                {
+                                                  "type": "SCREEN",
+                                                  "line": 35,
+                                                  "attributes": {
+                                                    "ID": "PATH_S05_B",
+                                                    "TYPE": "BRANCHING",
+                                                    "SCENE": "SCENE-04",
+                                                    "LOCATION": "LOC-04",
+                                                    "SPEAKER": "SHA",
+                                                    "EXPRESSION": "CHAR-02-B",
+                                                    "VO_ID": "VO-S05-SHA-03B",
+                                                    "LETTER": "B",
+                                                    "SCORE": "5",
+                                                    "NEXT": "PATH_S05_B"
+                                                  },
+                                                  "children": [
+                                                    {
+                                                      "type": "TEXT",
+                                                      "line": 36,
+                                                      "value": ""
+                                                    },
+                                                    {
+                                                      "type": "SCREEN",
+                                                      "line": 37,
+                                                      "attributes": {
+                                                        "ID": "PATH_S06_B",
+                                                        "TYPE": "BRANCHING",
+                                                        "SCENE": "SCENE-04",
+                                                        "LOCATION": "LOC-04",
+                                                        "SPEAKER": "SHA",
+                                                        "EXPRESSION": "CHAR-02-D",
+                                                        "VO_ID": "VO-S06-SHA-03B",
+                                                        "LETTER": "B",
+                                                        "SCORE": "5",
+                                                        "NEXT": "PATH_S06_B"
+                                                      },
+                                                      "children": [
+                                                        {
+                                                          "type": "TEXT",
+                                                          "line": 38,
+                                                          "value": ""
+                                                        },
+                                                        {
+                                                          "type": "SCREEN",
+                                                          "line": 39,
+                                                          "attributes": {
+                                                            "ID": "S07",
+                                                            "TYPE": "STATIC",
+                                                            "ASSET_REF": "PROP-18",
+                                                            "SPEAKER": "SUR",
+                                                            "EXPRESSION": "CHAR-04-D",
+                                                            "VO_ID": "VO-S07-SUR-01"
+                                                          },
+                                                          "children": [
+                                                            {
+                                                              "type": "TEXT",
+                                                              "line": 40,
+                                                              "value": ""
+                                                            },
+                                                            {
+                                                              "type": "SCREEN",
+                                                              "line": 41,
+                                                              "attributes": {
+                                                                "ID": "S08",
+                                                                "TYPE": "TAB",
+                                                                "ASSET_REF": "PROP-10",
+                                                                "SPEAKER": "NAR",
+                                                                "EXPRESSION": "NONE",
+                                                                "VO_ID": "VO-S08-NAR-01"
+                                                              },
+                                                              "children": [
+                                                                {
+                                                                  "type": "TEXT",
+                                                                  "line": 42,
+                                                                  "value": ""
+                                                                },
+                                                                {
+                                                                  "type": "SCREEN",
+                                                                  "line": 43,
+                                                                  "attributes": {
+                                                                    "ID": "S09",
+                                                                    "TYPE": "DRAG_DROP",
+                                                                    "LOCATION": "LOC-04",
+                                                                    "ASSET_REF": "PROP-11",
+                                                                    "SPEAKER": "NAR",
+                                                                    "EXPRESSION": "NONE",
+                                                                    "VO_ID": "VO-S09-NAR-01"
+                                                                  },
+                                                                  "children": [
+                                                                    {
+                                                                      "type": "TEXT",
+                                                                      "line": 44,
+                                                                      "value": ""
+                                                                    },
+                                                                    {
+                                                                      "type": "SCREEN",
+                                                                      "line": 45,
+                                                                      "attributes": {
+                                                                        "ID": "BP10_1",
+                                                                        "TYPE": "MCQ",
+                                                                        "ASSET_REF": "PROP-12",
+                                                                        "SPEAKER": "NAR",
+                                                                        "EXPRESSION": "NONE",
+                                                                        "VO_ID": "VO-S10-NAR-02B",
+                                                                        "LETTER": "B",
+                                                                        "SCORE": "5",
+                                                                        "NEXT": "NEXT_SCREEN"
+                                                                      },
+                                                                      "children": [
+                                                                        {
+                                                                          "type": "TEXT",
+                                                                          "line": 46,
+                                                                          "value": ""
+                                                                        },
+                                                                        {
+                                                                          "type": "SCREEN",
+                                                                          "line": 47,
+                                                                          "attributes": {
+                                                                            "ID": "PATH_S11_B",
+                                                                            "TYPE": "BRANCHING",
+                                                                            "SCENE": "SCENE-05",
+                                                                            "LOCATION": "LOC-05",
+                                                                            "SPEAKER": "MRS",
+                                                                            "EXPRESSION": "CHAR-03-A",
+                                                                            "VO_ID": "VO-S11-MRS-03B",
+                                                                            "LETTER": "B",
+                                                                            "SCORE": "5",
+                                                                            "NEXT": "PATH_S11_B"
+                                                                          },
+                                                                          "children": [
+                                                                            {
+                                                                              "type": "TEXT",
+                                                                              "line": 48,
+                                                                              "value": ""
+                                                                            },
+                                                                            {
+                                                                              "type": "SCREEN",
+                                                                              "line": 49,
+                                                                              "attributes": {
+                                                                                "ID": "PATH_S12_B",
+                                                                                "TYPE": "BRANCHING",
+                                                                                "SCENE": "SCENE-05",
+                                                                                "LOCATION": "LOC-05",
+                                                                                "SPEAKER": "MRS",
+                                                                                "EXPRESSION": "CHAR-03-D",
+                                                                                "VO_ID": "VO-S12-MRS-04",
+                                                                                "LETTER": "B",
+                                                                                "SCORE": "5",
+                                                                                "NEXT": "PATH_S12_B"
+                                                                              },
+                                                                              "children": [
+                                                                                {
+                                                                                  "type": "TEXT",
+                                                                                  "line": 50,
+                                                                                  "value": ""
+                                                                                },
+                                                                                {
+                                                                                  "type": "SCREEN",
+                                                                                  "line": 51,
+                                                                                  "attributes": {
+                                                                                    "ID": "S13",
+                                                                                    "TYPE": "STATIC",
+                                                                                    "ASSET_REF": "PROP-18",
+                                                                                    "SPEAKER": "SUR",
+                                                                                    "EXPRESSION": "CHAR-04-D",
+                                                                                    "VO_ID": "VO-S13-SUR-01"
+                                                                                  },
+                                                                                  "children": [
+                                                                                    {
+                                                                                      "type": "TEXT",
+                                                                                      "line": 52,
+                                                                                      "value": ""
+                                                                                    },
+                                                                                    {
+                                                                                      "type": "SCREEN",
+                                                                                      "line": 53,
+                                                                                      "attributes": {
+                                                                                        "ID": "S14",
+                                                                                        "TYPE": "TAB",
+                                                                                        "ASSET_REF": "PROP-13",
+                                                                                        "SPEAKER": "NAR",
+                                                                                        "EXPRESSION": "NONE",
+                                                                                        "VO_ID": "VO-S14-NAR-01"
+                                                                                      },
+                                                                                      "children": [
+                                                                                        {
+                                                                                          "type": "TEXT",
+                                                                                          "line": 54,
+                                                                                          "value": ""
+                                                                                        },
+                                                                                        {
+                                                                                          "type": "SCREEN",
+                                                                                          "line": 55,
+                                                                                          "attributes": {
+                                                                                            "ID": "BP15_1",
+                                                                                            "TYPE": "HOTSPOT",
+                                                                                            "LOCATION": "LOC-04",
+                                                                                            "ASSET_REF": "PROP-14",
+                                                                                            "SPEAKER": "SHA",
+                                                                                            "EXPRESSION": "CHAR-02-F",
+                                                                                            "VO_ID": "VO-S15-SHA-01",
+                                                                                            "LETTER": "B",
+                                                                                            "SCORE": "5",
+                                                                                            "NEXT": "NEXT_SCREEN"
+                                                                                          },
+                                                                                          "children": [
+                                                                                            {
+                                                                                              "type": "TEXT",
+                                                                                              "line": 56,
+                                                                                              "value": ""
+                                                                                            },
+                                                                                            {
+                                                                                              "type": "SCREEN",
+                                                                                              "line": 57,
+                                                                                              "attributes": {
+                                                                                                "ID": "S16",
+                                                                                                "TYPE": "DRAG_DROP",
+                                                                                                "LOCATION": "LOC-04",
+                                                                                                "ASSET_REF": "PROP-15",
+                                                                                                "SPEAKER": "SHA",
+                                                                                                "EXPRESSION": "CHAR-02-F",
+                                                                                                "VO_ID": "VO-S16-SHA-02"
+                                                                                              },
+                                                                                              "children": [
+                                                                                                {
+                                                                                                  "type": "TEXT",
+                                                                                                  "line": 58,
+                                                                                                  "value": ""
+                                                                                                },
+                                                                                                {
+                                                                                                  "type": "SCREEN",
+                                                                                                  "line": 59,
+                                                                                                  "attributes": {
+                                                                                                    "ID": "PATH_S17_B",
+                                                                                                    "TYPE": "BRANCHING",
+                                                                                                    "LOCATION": "LOC-02",
+                                                                                                    "SPEAKER": "RAV",
+                                                                                                    "EXPRESSION": "CHAR-01-F",
+                                                                                                    "VO_ID": "VO-S17-RAV-03B",
+                                                                                                    "LETTER": "B",
+                                                                                                    "SCORE": "5",
+                                                                                                    "NEXT": "PATH_S17_B"
+                                                                                                  },
+                                                                                                  "children": [
+                                                                                                    {
+                                                                                                      "type": "TEXT",
+                                                                                                      "line": 60,
+                                                                                                      "value": ""
+                                                                                                    },
+                                                                                                    {
+                                                                                                      "type": "SCREEN",
+                                                                                                      "line": 61,
+                                                                                                      "attributes": {
+                                                                                                        "ID": "S18",
+                                                                                                        "TYPE": "STATIC",
+                                                                                                        "ASSET_REF": "PROP-18",
+                                                                                                        "SPEAKER": "SUR",
+                                                                                                        "EXPRESSION": "CHAR-04-D",
+                                                                                                        "VO_ID": "VO-S18-SUR-01"
+                                                                                                      },
+                                                                                                      "children": [
+                                                                                                        {
+                                                                                                          "type": "TEXT",
+                                                                                                          "line": 62,
+                                                                                                          "value": ""
+                                                                                                        },
+                                                                                                        {
+                                                                                                          "type": "SCREEN",
+                                                                                                          "line": 63,
+                                                                                                          "attributes": {
+                                                                                                            "ID": "S19",
+                                                                                                            "TYPE": "TAB",
+                                                                                                            "ASSET_REF": "PROP-16",
+                                                                                                            "SPEAKER": "NAR",
+                                                                                                            "EXPRESSION": "NONE",
+                                                                                                            "VO_ID": "VO-S19-NAR-01"
+                                                                                                          },
+                                                                                                          "children": [
+                                                                                                            {
+                                                                                                              "type": "TEXT",
+                                                                                                              "line": 64,
+                                                                                                              "value": ""
+                                                                                                            },
+                                                                                                            {
+                                                                                                              "type": "SCREEN",
+                                                                                                              "line": 65,
+                                                                                                              "attributes": {
+                                                                                                                "ID": "BP20_1",
+                                                                                                                "TYPE": "HOTSPOT",
+                                                                                                                "SCENE": "SCENE-07",
+                                                                                                                "LOCATION": "LOC-06",
+                                                                                                                "ASSET_REF": "PROP-17",
+                                                                                                                "SPEAKER": "NAR",
+                                                                                                                "EXPRESSION": "NONE",
+                                                                                                                "VO_ID": "VO-S20-NAR-07B",
+                                                                                                                "LETTER": "B",
+                                                                                                                "SCORE": "5",
+                                                                                                                "NEXT": "NEXT_SCREEN"
+                                                                                                              },
+                                                                                                              "children": [
+                                                                                                                {
+                                                                                                                  "type": "TEXT",
+                                                                                                                  "line": 66,
+                                                                                                                  "value": ""
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "type": "SCREEN",
+                                                                                                                  "line": 67,
+                                                                                                                  "attributes": {
+                                                                                                                    "ID": "PATH_S21_B",
+                                                                                                                    "TYPE": "BRANCHING",
+                                                                                                                    "SCENE": "SCENE-08",
+                                                                                                                    "LOCATION": "LOC-02",
+                                                                                                                    "SPEAKER": "SUR",
+                                                                                                                    "EXPRESSION": "CHAR-04-D",
+                                                                                                                    "VO_ID": "VO-S21-SUR-04B",
+                                                                                                                    "LETTER": "B",
+                                                                                                                    "SCORE": "5",
+                                                                                                                    "NEXT": "PATH_S21_B"
+                                                                                                                  },
+                                                                                                                  "children": [
+                                                                                                                    {
+                                                                                                                      "type": "TEXT",
+                                                                                                                      "line": 68,
+                                                                                                                      "value": ""
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                      "type": "SCREEN",
+                                                                                                                      "line": 69,
+                                                                                                                      "attributes": {
+                                                                                                                        "ID": "PATH_S22_B",
+                                                                                                                        "TYPE": "BRANCHING",
+                                                                                                                        "LOCATION": "LOC-02",
+                                                                                                                        "SPEAKER": "SUR",
+                                                                                                                        "EXPRESSION": "CHAR-04-C",
+                                                                                                                        "VO_ID": "VO-S22-SUR-02B",
+                                                                                                                        "LETTER": "B",
+                                                                                                                        "SCORE": "5",
+                                                                                                                        "NEXT": "PATH_S22_B"
+                                                                                                                      },
+                                                                                                                      "children": [
+                                                                                                                        {
+                                                                                                                          "type": "TEXT",
+                                                                                                                          "line": 70,
+                                                                                                                          "value": ""
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                          "type": "SCREEN",
+                                                                                                                          "line": 71,
+                                                                                                                          "attributes": {
+                                                                                                                            "ID": "S23",
+                                                                                                                            "TYPE": "STATIC",
+                                                                                                                            "ASSET_REF": "PROP-18"
+                                                                                                                          },
+                                                                                                                          "children": [
+                                                                                                                            {
+                                                                                                                              "type": "TEXT",
+                                                                                                                              "line": 72,
+                                                                                                                              "value": ""
+                                                                                                                            },
+                                                                                                                            {
+                                                                                                                              "type": "SCREEN",
+                                                                                                                              "line": 73,
+                                                                                                                              "attributes": {
+                                                                                                                                "ID": "S24",
+                                                                                                                                "TYPE": "STATIC",
+                                                                                                                                "SCENE": "SCENE-11",
+                                                                                                                                "LOCATION": "LOC-01",
+                                                                                                                                "SPEAKER": "SUR",
+                                                                                                                                "EXPRESSION": "CHAR-04-B",
+                                                                                                                                "VO_ID": "VO-S24-SUR-02"
+                                                                                                                              },
+                                                                                                                              "children": [
+                                                                                                                                {
+                                                                                                                                  "type": "TEXT",
+                                                                                                                                  "line": 74,
+                                                                                                                                  "value": ""
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                  "type": "SCREEN",
+                                                                                                                                  "line": 75,
+                                                                                                                                  "attributes": {
+                                                                                                                                    "ID": "S25",
+                                                                                                                                    "TYPE": "TAB",
+                                                                                                                                    "ASSET_REF": "PROP-18"
+                                                                                                                                  },
+                                                                                                                                  "children": [
+                                                                                                                                    {
+                                                                                                                                      "type": "TEXT",
+                                                                                                                                      "line": 76,
+                                                                                                                                      "value": ""
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                      "type": "TEXT",
+                                                                                                                                      "line": 77,
+                                                                                                                                      "value": ""
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                      "type": "TEXT",
+                                                                                                                                      "line": 78,
+                                                                                                                                      "value": ""
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                      "type": "TEXT",
+                                                                                                                                      "line": 79,
+                                                                                                                                      "value": ""
+                                                                                                                                    }
+                                                                                                                                  ]
+                                                                                                                                }
+                                                                                                                              ]
+                                                                                                                            }
+                                                                                                                          ]
+                                                                                                                        }
+                                                                                                                      ]
+                                                                                                                    }
+                                                                                                                  ]
+                                                                                                                }
+                                                                                                              ]
+                                                                                                            }
+                                                                                                          ]
+                                                                                                        }
+                                                                                                      ]
+                                                                                                    }
+                                                                                                  ]
+                                                                                                }
+                                                                                              ]
+                                                                                            }
+                                                                                          ]
+                                                                                        }
+                                                                                      ]
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              ]
+                                                                            }
+                                                                          ]
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  ]
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

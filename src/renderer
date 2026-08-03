@@ -1,0 +1,41 @@
+export default class Renderer {
+
+    constructor(componentRegistry) {
+
+        if (!componentRegistry) {
+            throw new Error("ComponentRegistry is required.");
+        }
+
+        this.registry = componentRegistry;
+
+    }
+
+    render(component) {
+
+        if (!component) {
+            throw new Error("Component is required.");
+        }
+
+        const type = component.type;
+
+        if (!type) {
+            throw new Error("Component type is required.");
+        }
+
+        const renderer = this.registry.get(type);
+
+        return renderer.render(component);
+
+    }
+
+    renderAll(components = []) {
+
+        if (!Array.isArray(components)) {
+            throw new Error("Components must be an array.");
+        }
+
+        return components.map(component => this.render(component));
+
+    }
+
+}

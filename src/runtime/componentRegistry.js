@@ -2,25 +2,72 @@ export default class ComponentRegistry {
 
     constructor() {
 
-        this.registry = new Map();
+        this.renderers = {};
 
     }
 
-    register(type, handler) {
 
-        this.registry.set(type, handler);
+    register(
+        type,
+        renderer
+    ) {
+
+        this.renderers[type] = renderer;
 
     }
+
 
     get(type) {
 
-        return this.registry.get(type);
+        return this.renderers[type] ?? null;
 
     }
 
-    has(type) {
 
-        return this.registry.has(type);
+    render(
+        component
+    ) {
+
+        const renderer =
+            this.get(component.type);
+
+
+        if (!renderer) {
+
+            return "";
+
+        }
+
+
+        return renderer.render(
+            component
+        );
+
+    }
+
+
+    mount(
+        element,
+        component,
+        runtime
+    ) {
+
+        const renderer =
+            this.get(component.type);
+
+
+        if (
+            renderer &&
+            typeof renderer.mount === "function"
+        ) {
+
+            renderer.mount(
+                element,
+                component,
+                runtime
+            );
+
+        }
 
     }
 

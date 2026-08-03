@@ -26,11 +26,43 @@ export default class NavigationEngine {
 
     }
 
+
     current() {
 
         return this.course.pages[this.currentPage] ?? null;
 
     }
+
+
+    findPageIndex(pageId) {
+
+        return this.course.pages.findIndex(
+            page =>
+                page.id === pageId
+        );
+
+    }
+
+
+    goToPage(pageId) {
+
+        const index =
+            this.findPageIndex(pageId);
+
+
+        if (index === -1) {
+
+            throw new Error(
+                `Page not found: ${pageId}`
+            );
+
+        }
+
+
+        return this.navigate(index);
+
+    }
+
 
     currentIndex() {
 
@@ -38,11 +70,13 @@ export default class NavigationEngine {
 
     }
 
+
     totalPages() {
 
         return this.course.pages.length;
 
     }
+
 
     progress() {
 
@@ -50,11 +84,13 @@ export default class NavigationEngine {
 
     }
 
+
     hasNext() {
 
         return this.currentPage < this.totalPages() - 1;
 
     }
+
 
     hasPrevious() {
 
@@ -62,122 +98,146 @@ export default class NavigationEngine {
 
     }
 
+
     on(event, handler) {
 
         if (!this.listeners.has(event)) {
-            this.listeners.set(event, new Set());
+
+            this.listeners.set(
+                event,
+                new Set()
+            );
+
         }
 
-        this.listeners.get(event).add(handler);
-
-        return () => this.off(event, handler);
+        this.listeners
+            .get(event)
+            .add(handler);
 
     }
 
-    off(event, handler) {
-
-        const handlers = this.listeners.get(event);
-
-        if (!handlers) {
-            return;
-        }
-
-        handlers.delete(handler);
-
-    }
 
     emit(event, payload) {
 
-        const handlers = this.listeners.get(event);
+        const handlers =
+            this.listeners.get(event);
+
 
         if (!handlers) {
             return;
         }
 
+
         for (const handler of handlers) {
+
             handler(payload);
+
         }
 
     }
 
+
     navigate(index) {
 
-        const previousPage = this.currentPage;
+        const previousPage =
+            this.currentPage;
 
-        this.emit("beforeNavigate", {
-            from: previousPage,
-            to: index
-        });
+
+        this.emit(
+            "beforeNavigate",
+            {
+                from: previousPage,
+                to: index
+            }
+        );
+
 
         this.currentPage = index;
 
         this.history.push(index);
 
-        this.emit("afterNavigate", {
-            from: previousPage,
-            to: index,
-            page: this.current()
-        });
+
+        this.emit(
+            "afterNavigate",
+            {
+                from: previousPage,
+                to: index,
+                page: this.current()
+            }
+        );
+
 
         return this.current();
 
     }
+
 
     next() {
 
         if (this.hasNext()) {
-            return this.navigate(this.currentPage + 1);
+
+            return this.navigate(
+                this.currentPage + 1
+            );
+
         }
+
 
         return this.current();
 
     }
+
 
     previous() {
 
         if (this.hasPrevious()) {
-            return this.navigate(this.currentPage - 1);
+
+            return this.navigate(
+                this.currentPage - 1
+            );
+
         }
+
 
         return this.current();
 
     }
 
-    first() {
-
-        return this.navigate(0);
-
-    }
-
-    last() {
-
-        return this.navigate(this.totalPages() - 1);
-
-    }
 
     goTo(index) {
 
         if (!Number.isInteger(index)) {
-            throw new Error("Page index must be an integer.");
+
+            throw new Error(
+                "Page index must be an integer."
+            );
+
         }
 
-        if (index < 0 || index >= this.totalPages()) {
-            throw new Error("Page index out of range.");
+
+        if (
+            index < 0 ||
+            index >= this.totalPages()
+        ) {
+
+            throw new Error(
+                "Page index out of range."
+            );
+
         }
+
 
         return this.navigate(index);
 
     }
 
-    bookmark(index = this.currentPage) {
 
-        if (index < 0 || index >= this.totalPages()) {
-            throw new Error("Page index out of range.");
-        }
+    bookmark(index = this.currentPage) {
 
         this.bookmarks.add(index);
 
     }
+
 
     removeBookmark(index) {
 
@@ -185,17 +245,20 @@ export default class NavigationEngine {
 
     }
 
+
     isBookmarked(index = this.currentPage) {
 
         return this.bookmarks.has(index);
 
     }
 
+
     getBookmarks() {
 
-        return [...this.bookmarks].sort((a, b) => a - b);
+        return [...this.bookmarks];
 
     }
+
 
     getHistory() {
 
@@ -203,15 +266,21 @@ export default class NavigationEngine {
 
     }
 
+
     serialize() {
 
         return {
+
             currentPage: this.currentPage,
-            history: [...this.history],
+
+            history: this.history,
+
             bookmarks: [...this.bookmarks]
+
         };
 
     }
+
 
     restore(state) {
 
@@ -219,22 +288,16 @@ export default class NavigationEngine {
             return;
         }
 
+
         if (Number.isInteger(state.currentPage)) {
-            this.currentPage = Math.min(
-                Math.max(state.currentPage, 0),
-                this.totalPages() - 1
-            );
-        }
 
-        if (Array.isArray(state.history)) {
-            this.history = [...state.history];
-        }
+            this.currentPage =
+                state.currentPage;
 
-        if (Array.isArray(state.bookmarks)) {
-            this.bookmarks = new Set(state.bookmarks);
         }
 
     }
+
 
     reset() {
 

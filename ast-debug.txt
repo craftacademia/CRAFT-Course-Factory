@@ -1,0 +1,176 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-07-30T08:05:52.512Z",
+  "course": {
+    "id": null,
+    "title": "Close 3 files this week — you earn your first performance bonus. ₹8,000.",
+    "version": null
+  },
+  "pages": [
+    {
+      "id": "S01",
+      "title": "Screen 1",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "DIALOGUE_1",
+              "type": "DIALOGUE",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": "Sir, I have one strong lead. Mr. Sharma — grocery shop owner near the station.",
+                "speaker": "RAV",
+                "voiceId": "S01_02",
+                "expression": "CONFIDENT"
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "DIALOGUE_2",
+              "type": "DIALOGUE",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": "Beta, you called about a home loan? Come, sit down. Have some chai.",
+                "speaker": null,
+                "voiceId": null,
+                "expression": null
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "DIALOGUE_1",
+          "componentType": "DIALOGUE",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_002",
+          "componentId": "DIALOGUE_2",
+          "componentType": "DIALOGUE",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    },
+    {
+      "id": "S02",
+      "title": "Screen 2",
+      "layers": [
+        {
+          "type": "CONTENT",
+          "components": [
+            {
+              "id": "DIALOGUE_1",
+              "type": "DIALOGUE",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "text": "Beta, you called about a home loan? Come, sit down. Have some chai.",
+                "speaker": "SHA",
+                "voiceId": "S02_01",
+                "expression": null
+              },
+              "events": [],
+              "layer": null
+            },
+            {
+              "id": "BP_01",
+              "type": "BRANCHING",
+              "start": 0,
+              "duration": 0,
+              "visible": true,
+              "asset": null,
+              "voice": null,
+              "animation": null,
+              "properties": {
+                "options": [
+                  {
+                    "letter": "A",
+                    "score": 10,
+                    "next": "S03",
+                    "voiceId": "OPT_S02_A",
+                    "text": "What is the total cost as per the builder agreement Sharma ji?",
+                    "attributes": {
+                      "letter": "A",
+                      "score": "10",
+                      "next": "S03",
+                      "voId": "OPT_S02_A"
+                    }
+                  },
+                  {
+                    "letter": "B",
+                    "score": 5,
+                    "next": "S03",
+                    "voiceId": "OPT_S02_B",
+                    "text": "How much home loan are you looking for, Sharma ji?",
+                    "attributes": {
+                      "letter": "B",
+                      "score": "5",
+                      "next": "S03",
+                      "voId": "OPT_S02_B"
+                    }
+                  }
+                ]
+              },
+              "events": [],
+              "layer": null
+            }
+          ],
+          "template": "content",
+          "theme": "modern"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "EVENT_001",
+          "componentId": "DIALOGUE_1",
+          "componentType": "DIALOGUE",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        },
+        {
+          "id": "EVENT_002",
+          "componentId": "BP_01",
+          "componentType": "BRANCHING",
+          "start": 0,
+          "duration": 0,
+          "end": 0
+        }
+      ]
+    }
+  ],
+  "theme": "modern",
+  "assets": {
+    "images": [],
+    "audio": {},
+    "branding": null
+  },
+  "audio": {}
+}
