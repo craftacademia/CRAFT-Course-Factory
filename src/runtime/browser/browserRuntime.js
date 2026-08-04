@@ -186,9 +186,9 @@ export default class BrowserRuntime {
 
         this.mountInteractions(page);
 
-        this.mountBranching(page);
-
         await this.playDialogueSequence(page);
+
+        await this.renderBranchingOptions(page);
 
     }
 
@@ -533,47 +533,69 @@ export default class BrowserRuntime {
 
 
 
-    mountBranching(page) {
+    async renderBranchingOptions(page) {
 
-        for (const layer of page.layers ?? []) {
-
-            for (const component of layer.components ?? []) {
-
-
-                if (component.type !== "BRANCHING") {
-                    continue;
-                }
+        const branchingQueue =
+            this.currentPlayer?.branchingQueue ?? [];
 
 
-                const element =
-                    this.rootElement.querySelector(
-                        `[data-component-id="${component.id}"]`
-                    );
+        if (branchingQueue.length === 0) {
+
+            return;
+
+        }
 
 
-                if (!element) {
-                    continue;
-                }
+        const slot =
+            this.rootElement.querySelector(
+                "#branching-slot"
+            );
 
 
-                const renderer =
-                    this.currentPlayer.registry.get(
-                        "BRANCHING"
-                    );
+        if (!slot) {
+
+            return;
+
+        }
 
 
-                if (
-                    renderer &&
-                    typeof renderer.bind === "function"
-                ) {
+        const branchingRenderer =
+            this.currentPlayer.registry.get(
+                "BRANCHING"
+            );
 
-                    renderer.bind(
-                        element,
-                        component,
-                        this
-                    );
 
-                }
+        if (!branchingRenderer) {
+
+            return;
+
+        }
+
+
+        for (const component of branchingQueue) {
+
+
+            const lineContext =
+                new RenderContext();
+
+
+            branchingRenderer.render(
+                component,
+                lineContext
+            );
+
+
+            slot.innerHTML =
+                lineContext.flush();
+
+
+            if (typeof branchingRenderer.bind === "function") {
+
+                branchingRenderer.bind(
+                    slot,
+                    component,
+                    this
+                );
 
             }
 
@@ -595,9 +617,56 @@ export default class BrowserRuntime {
 
         try {
 
-            this.navigation.next();
+            // A page reached via a branching PATH carries a nextOverride —
+            // the screen that should follow it, so all paths correctly
+            // rejoin the main course sequence regardless of where they
+            // sit in the underlying page array.
+            const currentPage =
+                this.navigation.current();
+
+
+            if (currentPage?.nextOverride) {
+
+                this.navigation.goToPage(
+                    currentPage.nextOverride
+                );
+
+            } else {
+
+                this.navigation.next();
+
+            }
+
 
             this.state.nextPage();
+
+            await this.renderCurrentPage();
+
+        } finally {
+
+            this.isTransitioning = false;
+
+        }
+
+    }
+
+
+
+    async navigate(pageId) {
+
+        if (this.isTransitioning) {
+            return;
+        }
+
+
+        this.isTransitioning = true;
+
+
+        try {
+
+            this.navigation.goToPage(
+                pageId
+            );
 
             await this.renderCurrentPage();
 

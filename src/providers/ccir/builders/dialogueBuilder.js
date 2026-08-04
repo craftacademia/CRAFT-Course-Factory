@@ -35,22 +35,44 @@ export default class DialogueBuilder {
         if (node.type === "TEXT") {
 
 
-            const lineNode =
+            // Text can belong to a LINE (spoken dialogue) or an OPTION
+            // (a branching choice's button label) — only LINE text counts
+            // as dialogue. OPTION text is collected separately by
+            // CCIRProvider when it builds branching data.
+            const nearestContainer =
                 [...ancestors]
                 .reverse()
                 .find(
                     item =>
-                    item.type === "LINE"
+                    item.type === "LINE" ||
+                    item.type === "OPTION"
                 );
 
 
+            if (
+                !nearestContainer ||
+                nearestContainer.type !== "LINE"
+            ) {
 
-            const screenNode =
+                return;
+
+            }
+
+
+            const lineNode =
+                nearestContainer;
+
+
+
+            // A LINE inside a PATH belongs to that PATH (which becomes
+            // its own page), not to the SCREEN the PATH is nested in.
+            const screenOrPathNode =
                 [...ancestors]
                 .reverse()
                 .find(
                     item =>
-                    item.type === "SCREEN"
+                    item.type === "SCREEN" ||
+                    item.type === "PATH"
                 );
 
 
@@ -70,8 +92,8 @@ export default class DialogueBuilder {
             dialogues.push({
 
                 screenId:
-                screenNode?.attributes?.id ??
-                screenNode?.attributes?.ID ??
+                screenOrPathNode?.attributes?.id ??
+                screenOrPathNode?.attributes?.ID ??
                 null,
 
 

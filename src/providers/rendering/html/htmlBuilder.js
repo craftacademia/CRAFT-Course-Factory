@@ -566,6 +566,60 @@ body {
 
 
 
+.branch-options {
+
+    position:absolute;
+
+    left:10%;
+
+    right:10%;
+
+    bottom:32%;
+
+    z-index:12;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+}
+
+
+
+.branch-option {
+
+    font-size:24px;
+
+    font-weight:600;
+
+    text-align:left;
+
+    padding:20px 25px;
+
+    border-radius:16px;
+
+    border:3px solid #d71920;
+
+    background:#ffffff;
+
+    color:#222;
+
+    cursor:pointer;
+
+}
+
+
+
+.branch-option:hover {
+
+    background:#fdeceb;
+
+}
+
+
+
 </style>
 
 

@@ -25,6 +25,8 @@ export default class RuntimePlayer {
 
         this.dialogueQueue = [];
 
+        this.branchingQueue = [];
+
         this.buildComponentIndex();
 
     }
@@ -59,6 +61,8 @@ export default class RuntimePlayer {
 
         this.dialogueQueue = [];
 
+        this.branchingQueue = [];
+
         while (this.scheduler.hasNext()) {
 
             const event = this.scheduler.next();
@@ -78,6 +82,17 @@ export default class RuntimePlayer {
             if (component.type === "DIALOGUE") {
 
                 this.dialogueQueue.push(component);
+
+                continue;
+
+            }
+
+            // BRANCHING options should only appear once the setup dialogue
+            // has finished playing, not from the moment the page loads —
+            // collect them here and reveal them later, same as dialogue.
+            if (component.type === "BRANCHING") {
+
+                this.branchingQueue.push(component);
 
                 continue;
 
@@ -103,6 +118,12 @@ export default class RuntimePlayer {
         // updated alongside each dialogue line by BrowserRuntime.
         this.context.append(
             `<div id="speaker-badge-slot"></div>`
+        );
+
+        // Reserve a stable slot for branching options, revealed only after
+        // the dialogue sequence above finishes.
+        this.context.append(
+            `<div id="branching-slot"></div>`
         );
 
         return this.context.flush();

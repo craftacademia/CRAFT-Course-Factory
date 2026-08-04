@@ -149,89 +149,282 @@ export default class CCIRProvider {
 
 
 
+    attr(
+        node,
+        lowerKey,
+        upperKey
+    ) {
+
+        return (
+            node.attributes?.[lowerKey] ??
+            node.attributes?.[upperKey] ??
+            null
+        );
+
+    }
+
+
+
+    buildOptionsFromBranchPoint(
+        branchPointNode
+    ) {
+
+        return (branchPointNode.children ?? [])
+            .filter(
+                child =>
+                child.type === "OPTION"
+            )
+            .map(
+                optionNode => {
+
+                    const textNode =
+                        (optionNode.children ?? [])
+                        .find(
+                            child =>
+                            child.type === "TEXT"
+                        );
+
+
+                    return {
+
+                        text:
+                        (textNode?.value ?? "").trim(),
+
+
+                        letter:
+                        this.attr(optionNode, "letter", "LETTER"),
+
+
+                        score:
+                        this.attr(optionNode, "score", "SCORE"),
+
+
+                        voiceId:
+                        this.attr(optionNode, "vo_id", "VO_ID"),
+
+
+                        next:
+                        this.attr(optionNode, "next", "NEXT")
+
+                    };
+
+                }
+            );
+
+    }
+
+
+
+    collectScreenNodes(
+        node,
+        results
+    ) {
+
+        if (!node) {
+            return;
+        }
+
+
+        if (
+            node.type === "SCENE" ||
+            node.type === "SCREEN"
+        ) {
+
+            results.push(node);
+
+            // SCREEN/SCENE nodes don't nest inside one another, so no
+            // need to look further down this branch.
+            return;
+
+        }
+
+
+        for (const child of node.children ?? []) {
+
+            this.collectScreenNodes(
+                child,
+                results
+            );
+
+        }
+
+    }
+
+
+
     buildScreens(
         ast,
         assetManifest
     ) {
 
 
+        // Search at any depth, not just direct children of the root —
+        // scripts may wrap all [SCREEN] tags in a [SCREENS] container,
+        // and this must work whether that wrapper is present or not.
+        const topLevelNodes = [];
+
+        this.collectScreenNodes(
+            ast,
+            topLevelNodes
+        );
+
+
         const screens = [];
 
 
-        const imageAsset =
-            assetManifest?.images?.[0] ?? null;
+        for (let index = 0; index < topLevelNodes.length; index++) {
+
+
+            const node =
+                topLevelNodes[index];
+
+
+            const nextNode =
+                topLevelNodes[index + 1] ?? null;
+
+
+            const screenId =
+                this.attr(node, "id", "ID");
+
+
+            const nextScreenId =
+                nextNode
+                ? this.attr(nextNode, "id", "ID")
+                : null;
+
+
+            const scene =
+                this.attr(node, "scene", "SCENE");
+
+
+            const location =
+                this.attr(node, "location", "LOCATION");
+
+
+            const character =
+                this.attr(node, "character", "CHARACTER");
+
+
+            const branchPointNode =
+                (node.children ?? [])
+                .find(
+                    child =>
+                    child.type === "BRANCH_POINT"
+                );
+
+
+            const branching =
+                branchPointNode
+                ? {
+
+                    id:
+                    this.attr(branchPointNode, "id", "ID") ??
+                    `BP_${screenId}`,
+
+
+                    options:
+                    this.buildOptionsFromBranchPoint(
+                        branchPointNode
+                    )
+
+                }
+                : null;
+
+
+            screens.push({
+
+                id:
+                screenId,
+
+
+                title:
+                this.attr(node, "title", "TITLE") ?? "",
+
+
+                type:
+                this.attr(node, "type", "TYPE"),
+
+
+                // Named propRef, not assetRef, to avoid colliding with
+                // presentationProvider.js's pre-existing assetRef handling,
+                // which expects a resolved image object, not a raw string.
+                propRef:
+                this.attr(node, "asset_ref", "ASSET_REF"),
+
+
+                scene,
+
+                location,
+
+                character,
+
+
+                branching,
+
+
+                nextOverride:
+                null,
+
+
+                children:
+                node.children ?? []
+
+            });
 
 
 
-        const walk =
-        (node)=>{
-
-            if (!node) {
-
-                return;
-
-            }
+            const pathNodes =
+                (node.children ?? [])
+                .filter(
+                    child =>
+                    child.type === "PATH"
+                );
 
 
-
-            if (
-                node.type === "SCENE" ||
-                node.type === "SCREEN"
-            ) {
+            for (const pathNode of pathNodes) {
 
 
                 screens.push({
 
                     id:
-                    node.attributes?.id ??
-                    node.attributes?.ID ??
-                    null,
+                    this.attr(pathNode, "id", "ID"),
 
 
                     title:
-                    node.attributes?.title ??
-                    node.attributes?.TITLE ??
                     "",
 
 
-                    scene:
-                    node.attributes?.scene ??
-                    node.attributes?.SCENE ??
+                    type:
+                    "PATH",
+
+
+                    propRef:
                     null,
 
 
-                    location:
-                    node.attributes?.location ??
-                    node.attributes?.LOCATION ??
+                    scene,
+
+                    location,
+
+                    character,
+
+
+                    branching:
                     null,
 
 
-                    character:
-                    node.attributes?.character ??
-                    node.attributes?.CHARACTER ??
-                    null,
+                    nextOverride:
+                    nextScreenId,
 
 
                     children:
-                    node.children ?? []
+                    pathNode.children ?? []
 
                 });
 
             }
 
-
-            for (
-                const child of node.children ?? []
-            ) {
-
-                walk(child);
-
-            }
-
-        };
-
-
-        walk(ast);
+        }
 
 
         return screens;

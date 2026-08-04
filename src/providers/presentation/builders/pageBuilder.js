@@ -178,6 +178,56 @@ export default class PageBuilder {
 
 
 
+            if (
+                screen.branching &&
+                screen.branching.options?.length > 0
+            ) {
+
+
+                components.push(
+                    this.componentBuilder.build(
+                        "BRANCHING",
+                        {
+
+                            id:
+                            screen.branching.id ??
+                            `BRANCHING_${screen.id}`,
+
+
+                            properties:{
+
+                                options:
+                                screen.branching.options.map(
+                                    option => ({
+
+                                        text:
+                                        option.text,
+
+                                        next:
+                                        option.next,
+
+                                        letter:
+                                        option.letter,
+
+                                        score:
+                                        option.score,
+
+                                        voiceId:
+                                        option.voiceId
+
+                                    })
+                                )
+
+                            }
+
+                        }
+                    )
+                );
+
+            }
+
+
+
             pages.push({
 
                 id:
@@ -186,6 +236,10 @@ export default class PageBuilder {
 
                 title:
                 screen.title ?? "",
+
+
+                nextOverride:
+                screen.nextOverride ?? null,
 
 
                 layers:[

@@ -1,12 +1,13 @@
 export default class BranchingRenderer {
 
-    render(component) {
+    render(component, context) {
 
         const options =
             component.properties?.options ?? [];
 
 
-        return options
+        const html =
+            options
             .map((option, index) => `
 
 <button
@@ -18,6 +19,18 @@ ${option.text ?? ""}
 
 `)
             .join("");
+
+
+        if (context && typeof context.append === "function") {
+
+            context.append(
+                `<div class="branch-options" data-component-id="${component.id}">${html}</div>`
+            );
+
+        }
+
+
+        return html;
 
     }
 
