@@ -88,6 +88,11 @@ export default class PageBuilder {
                     screen.character
                 )
                 ??
+                this.findImageByRef(
+                    images,
+                    screen.propRef
+                )
+                ??
                 images[0]
                 ??
                 null;

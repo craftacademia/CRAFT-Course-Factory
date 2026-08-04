@@ -68,6 +68,20 @@ ${option.text ?? ""}
                     }
 
 
+                    // Stop any option voice-over still playing, and tell
+                    // the playback loop in browserRuntime.js to stop
+                    // moving to further options.
+                    runtime.branchingChoicePending = false;
+
+                    if (runtime.currentAudio) {
+
+                        runtime.currentAudio.pause();
+
+                        runtime.currentAudio = null;
+
+                    }
+
+
                     runtime.state.variables.set(
                         `branching.${component.id}`,
                         {

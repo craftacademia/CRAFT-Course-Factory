@@ -54,6 +54,33 @@ const runtime =
     );
 
 
+function currentPageHasUnresolvedBranching() {
+
+    const currentPage =
+        runtime.navigation.current();
+
+
+    for (const layer of currentPage?.layers ?? []) {
+
+        for (const component of layer.components ?? []) {
+
+            if (component.type === "BRANCHING") {
+
+                return true;
+
+            }
+
+        }
+
+    }
+
+
+    return false;
+
+}
+
+
+
 function updateChrome() {
 
     const total =
@@ -112,7 +139,11 @@ function updateChrome() {
 
     if (nextBtn) {
 
+        // A page with branching options is navigated only by choosing
+        // an option — the Next button must not offer a way to skip
+        // past the choice.
         nextBtn.disabled =
+            currentPageHasUnresolvedBranching() ||
             !runtime.navigation.hasNext();
 
     }

@@ -201,10 +201,27 @@ export default class BrowserRuntime {
         }
 
 
-        const audio =
+        // A voice line can come from either upload bucket — dialogue
+        // (character lines) or narration (NAR-speaker lines) — depending
+        // on which field it was uploaded under. Search both, since the
+        // script itself doesn't distinguish which bucket a VO_ID lives in.
+        const dialogueAudio =
             this.course?.audio?.dialogue ??
             this.course?.assets?.audio?.dialogue ??
             [];
+
+
+        const narrationAudio =
+            this.course?.audio?.narration ??
+            this.course?.assets?.audio?.narration ??
+            [];
+
+
+        const audio =
+            [
+                ...dialogueAudio,
+                ...narrationAudio
+            ];
 
 
         const normalizedVoice =
@@ -572,6 +589,13 @@ export default class BrowserRuntime {
         }
 
 
+        // Cleared by the click handler in branchingRenderer.js the
+        // moment the learner picks an option, so option voice-over
+        // playback stops immediately instead of continuing underneath
+        // the next page.
+        this.branchingChoicePending = true;
+
+
         for (const component of branchingQueue) {
 
 
@@ -595,6 +619,63 @@ export default class BrowserRuntime {
                     slot,
                     component,
                     this
+                );
+
+            }
+
+
+            for (const option of component.properties?.options ?? []) {
+
+
+                if (!this.branchingChoicePending) {
+
+                    break;
+
+                }
+
+
+                const audioAsset =
+                    this.findDialogueAudio(
+                        option.voiceId
+                    );
+
+
+                if (!audioAsset) {
+
+                    continue;
+
+                }
+
+
+                await new Promise(
+                    resolve => {
+
+
+                        const audio =
+                            new Audio(
+                                `./${audioAsset.src}`
+                            );
+
+
+                        this.currentAudio =
+                            audio;
+
+
+                        audio.onended =
+                            resolve;
+
+
+                        audio.onerror =
+                            resolve;
+
+
+                        audio.play()
+                        .catch(
+                            resolve
+                        );
+
+
+                    }
                 );
 
             }
