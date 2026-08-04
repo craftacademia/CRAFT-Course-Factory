@@ -184,12 +184,13 @@ fetch(
         }
 
 
-        return runtime.mount(course);
+        // Start mounting, but don't wait for the full first-scene
+        // playback to finish before wiring up the header. `navigation`
+        // is created synchronously inside mount() before its first
+        // await, so it already exists at this point.
+        const mountPromise =
+            runtime.mount(course);
 
-    }
-)
-.then(
-    () => {
 
         runtime.navigation.on(
             "afterNavigate",
@@ -197,6 +198,9 @@ fetch(
         );
 
         updateChrome();
+
+
+        return mountPromise;
 
     }
 )
