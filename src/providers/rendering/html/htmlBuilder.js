@@ -142,9 +142,7 @@ body {
 
     display:flex;
 
-    align-items:center;
-
-    justify-content:center;
+    flex-direction:column;
 
     overflow:hidden;
 
@@ -167,6 +165,222 @@ body {
     box-sizing:border-box;
 
     overflow:hidden;
+
+}
+
+
+
+.craft-player-header {
+
+    height:64px;
+
+    flex-shrink:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 20px;
+
+    background:#ffffff;
+
+    border-bottom:1px solid #e0e0e0;
+
+}
+
+
+
+.craft-header-left {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+
+
+.craft-logo {
+
+    width:40px;
+
+    height:40px;
+
+    border-radius:6px;
+
+    background:#d71920;
+
+    color:#ffffff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    overflow:hidden;
+
+}
+
+
+
+.craft-logo img {
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:contain;
+
+}
+
+
+
+.craft-course-title {
+
+    font-size:16px;
+
+    font-weight:700;
+
+    color:#222;
+
+}
+
+
+
+.craft-scene-counter {
+
+    font-size:12px;
+
+    color:#777;
+
+}
+
+
+
+.craft-actions {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+}
+
+
+
+.craft-icon-btn {
+
+    font-size:18px;
+
+    color:#777;
+
+    cursor:pointer;
+
+    user-select:none;
+
+}
+
+
+
+.craft-progress-track {
+
+    height:4px;
+
+    flex-shrink:0;
+
+    background:#eee;
+
+}
+
+
+
+.craft-progress-fill {
+
+    height:100%;
+
+    width:0%;
+
+    background:#d71920;
+
+    transition:width 0.3s ease;
+
+}
+
+
+
+.craft-player-stage {
+
+    position:relative;
+
+    flex:1;
+
+    overflow:hidden;
+
+    background:#111;
+
+}
+
+
+
+.craft-player-footer {
+
+    height:64px;
+
+    flex-shrink:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 20px;
+
+    background:#ffffff;
+
+    border-top:1px solid #e0e0e0;
+
+}
+
+
+
+.craft-nav-btn {
+
+    font-size:14px;
+
+    font-weight:600;
+
+    padding:10px 20px;
+
+    border-radius:8px;
+
+    border:1px solid #ccc;
+
+    background:#ffffff;
+
+    color:#333;
+
+    cursor:pointer;
+
+}
+
+
+
+.craft-nav-btn:disabled {
+
+    opacity:0.35;
+
+    cursor:default;
 
 }
 

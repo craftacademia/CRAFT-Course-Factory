@@ -48,6 +48,8 @@ export default class BrowserRuntime {
 
         this.analytics = [];
 
+        this.isTransitioning = false;
+
         this.registerInteractions();
 
     }
@@ -583,11 +585,27 @@ export default class BrowserRuntime {
 
     async next() {
 
-        this.navigation.next();
+        if (this.isTransitioning) {
+            return;
+        }
 
-        this.state.nextPage();
 
-        await this.renderCurrentPage();
+        this.isTransitioning = true;
+
+
+        try {
+
+            this.navigation.next();
+
+            this.state.nextPage();
+
+            await this.renderCurrentPage();
+
+        } finally {
+
+            this.isTransitioning = false;
+
+        }
 
     }
 
@@ -595,11 +613,27 @@ export default class BrowserRuntime {
 
     async previous() {
 
-        this.navigation.previous();
+        if (this.isTransitioning) {
+            return;
+        }
 
-        this.state.previousPage();
 
-        await this.renderCurrentPage();
+        this.isTransitioning = true;
+
+
+        try {
+
+            this.navigation.previous();
+
+            this.state.previousPage();
+
+            await this.renderCurrentPage();
+
+        } finally {
+
+            this.isTransitioning = false;
+
+        }
 
     }
 
