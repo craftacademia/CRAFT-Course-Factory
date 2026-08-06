@@ -265,6 +265,7 @@ function updateChrome() {
     if (backBtn) {
 
         backBtn.disabled =
+            !runtime.dialogueComplete ||
             !runtime.navigation.hasPrevious();
 
     }
@@ -281,6 +282,7 @@ function updateChrome() {
         // an option — the Next button must not offer a way to skip
         // past the choice.
         nextBtn.disabled =
+            !runtime.dialogueComplete ||
             currentPageHasUnresolvedBranching() ||
             currentPageHasUnreadTabPanel() ||
             currentPageHasUnreadRevealPanel() ||

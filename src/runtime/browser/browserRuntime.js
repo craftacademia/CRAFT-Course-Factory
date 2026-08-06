@@ -50,6 +50,12 @@ export default class BrowserRuntime {
 
         this.isTransitioning = false;
 
+        // Tracks whether the CURRENT page's dialogue has finished playing.
+        // Back/Next stay disabled until this becomes true, in addition to
+        // any interaction-specific gating (branching choice, tab read,
+        // etc.) that already applies on top of it.
+        this.dialogueComplete = false;
+
         this.registerInteractions();
 
     }
@@ -186,7 +192,18 @@ export default class BrowserRuntime {
 
         this.mountInteractions(page);
 
+        this.dialogueComplete = false;
+
         await this.playDialogueSequence(page);
+
+        this.dialogueComplete = true;
+
+        if (typeof this.onStateChange === "function") {
+
+            this.onStateChange();
+
+        }
+
 
         await this.renderBranchingOptions(page);
 
