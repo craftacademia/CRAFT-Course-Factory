@@ -1,6 +1,16 @@
 import Provider from "../../core/provider.js";
 
 
+// These tags carry all their data in attributes and never have a
+// matching closing tag — [CARD ID=... ZONE=A], not [CARD]...[/CARD].
+// Without this list, the parser would keep them open on the stack
+// forever, silently nesting every tag that follows inside them.
+const SELF_CLOSING_TAGS = new Set([
+    "CARD",
+    "ZONE"
+]);
+
+
 export default class ParserProvider extends Provider {
 
     constructor() {
@@ -55,9 +65,13 @@ export default class ParserProvider extends Provider {
                     );
 
 
-                    stack.push(
-                        node
-                    );
+                    if (!SELF_CLOSING_TAGS.has(token.name)) {
+
+                        stack.push(
+                            node
+                        );
+
+                    }
 
 
                     break;

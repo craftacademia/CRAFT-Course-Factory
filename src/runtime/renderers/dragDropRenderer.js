@@ -309,7 +309,7 @@ data-correct-zone="${card.correctZone ?? ""}">
 
             submitButton.addEventListener(
                 "click",
-                () => {
+                async () => {
 
                     let allCorrect = true;
 
@@ -358,6 +358,68 @@ data-correct-zone="${card.correctZone ?? ""}">
                         allCorrect ? 10 : 5;
 
 
+                    submitButton.disabled = true;
+
+
+                    // Both feedback lines always play, regardless of the
+                    // result — they're two parts of one explanation, not
+                    // a correct/incorrect branch.
+                    const feedbackLines =
+                        component.properties?.feedbackLines ?? [];
+
+
+                    for (const line of feedbackLines) {
+
+
+                        const audioAsset =
+                            typeof runtime.findDialogueAudio === "function"
+                            ? runtime.findDialogueAudio(line.voiceId)
+                            : null;
+
+
+                        if (!audioAsset) {
+
+                            continue;
+
+                        }
+
+
+                        await new Promise(
+                            resolve => {
+
+
+                                const audio =
+                                    new Audio(
+                                        `./${audioAsset.src}`
+                                    );
+
+
+                                runtime.currentAudio =
+                                    audio;
+
+
+                                audio.onended =
+                                    resolve;
+
+                                audio.onerror =
+                                    resolve;
+
+                                audio.onpause =
+                                    resolve;
+
+
+                                audio.play()
+                                .catch(
+                                    resolve
+                                );
+
+
+                            }
+                        );
+
+                    }
+
+
                     runtime.state.variables.set(
                         `dragDrop.${component.id}`,
                         {
@@ -370,9 +432,6 @@ data-correct-zone="${card.correctZone ?? ""}">
 
                         }
                     );
-
-
-                    submitButton.disabled = true;
 
 
                     if (typeof runtime.onStateChange === "function") {

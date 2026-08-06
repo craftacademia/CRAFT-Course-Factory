@@ -1064,6 +1064,12 @@ body {
 
     gap:16px;
 
+    background:#ffffff;
+
+    border-radius:20px;
+
+    padding:20px;
+
 }
 
 

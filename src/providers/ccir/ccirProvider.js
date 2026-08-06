@@ -165,6 +165,93 @@ export default class CCIRProvider {
 
 
 
+    collectLinesAfterDragDrop(
+        screenNode
+    ) {
+
+        const children =
+            screenNode.children ?? [];
+
+
+        let lastCardOrZoneIndex = -1;
+
+
+        for (let i = 0; i < children.length; i++) {
+
+            if (
+                children[i].type === "CARD" ||
+                children[i].type === "ZONE"
+            ) {
+
+                lastCardOrZoneIndex = i;
+
+            }
+
+        }
+
+
+        if (lastCardOrZoneIndex === -1) {
+
+            return [];
+
+        }
+
+
+        const feedbackLines = [];
+
+
+        for (
+            let i = lastCardOrZoneIndex + 1;
+            i < children.length;
+            i++
+        ) {
+
+            const child = children[i];
+
+
+            if (child.type !== "LINE") {
+
+                continue;
+
+            }
+
+
+            const textNode =
+                (child.children ?? [])
+                .find(
+                    grandchild =>
+                    grandchild.type === "TEXT"
+                );
+
+
+            feedbackLines.push({
+
+                text:
+                (textNode?.value ?? "").trim(),
+
+
+                speaker:
+                this.attr(child, "speaker", "SPEAKER"),
+
+
+                voiceId:
+                this.attr(child, "vo_id", "VO_ID"),
+
+
+                expression:
+                this.attr(child, "expression", "EXPRESSION")
+
+            });
+
+        }
+
+
+        return feedbackLines;
+
+    }
+
+
+
     buildOptionsFromBranchPoint(
         branchPointNode
     ) {
@@ -489,6 +576,16 @@ export default class CCIRProvider {
                             this.attr(zoneNode, "color", "COLOR") ?? "green"
 
                         })
+                    ),
+
+
+                    // Lines that appear AFTER the last CARD/ZONE tag are
+                    // post-submission feedback, not intro narration — they
+                    // must not play before the interaction like regular
+                    // dialogue does.
+                    feedbackLines:
+                    this.collectLinesAfterDragDrop(
+                        node
                     )
 
                 }

@@ -128,11 +128,23 @@ export default class PageBuilder {
 
 
 
+            const dragDropFeedbackVoiceIds =
+                new Set(
+                    (screen.dragDrop?.feedbackLines ?? [])
+                    .map(
+                        line =>
+                        line.voiceId
+                    )
+                    .filter(Boolean)
+                );
+
+
             const screenDialogues =
                 (ccir.metadata?.dialogues ?? [])
                 .filter(
                     item =>
-                    item.screenId === screen.id
+                    item.screenId === screen.id &&
+                    !dragDropFeedbackVoiceIds.has(item.voiceId)
                 );
 
 
@@ -376,7 +388,11 @@ export default class PageBuilder {
 
 
                                 zones:
-                                screen.dragDrop.zones
+                                screen.dragDrop.zones,
+
+
+                                feedbackLines:
+                                screen.dragDrop.feedbackLines ?? []
 
                             }
 
