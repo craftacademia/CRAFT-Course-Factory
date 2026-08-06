@@ -1309,6 +1309,59 @@ body {
 }
 
 
+
+
+.score-checkpoint-panel {
+
+    position:absolute;
+
+    left:15%;
+
+    right:15%;
+
+    bottom:30%;
+
+    z-index:12;
+
+    background:#ffffff;
+
+    border:3px solid #d71920;
+
+    border-radius:16px;
+
+    padding:20px 30px;
+
+    text-align:center;
+
+}
+
+
+
+.score-checkpoint-module-name {
+
+    font-size:20px;
+
+    font-weight:700;
+
+    color:#222;
+
+    margin-bottom:8px;
+
+}
+
+
+
+.score-checkpoint-module-score {
+
+    font-size:24px;
+
+    font-weight:700;
+
+    color:#d71920;
+
+}
+
+
 </style>
 
 

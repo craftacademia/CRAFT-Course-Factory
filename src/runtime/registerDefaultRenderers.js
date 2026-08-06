@@ -12,6 +12,7 @@ import BranchingRenderer from "./renderers/branchingRenderer.js";
 import TabPanelRenderer from "./renderers/tabPanelRenderer.js";
 import RevealPanelRenderer from "./renderers/revealPanelRenderer.js";
 import DragDropRenderer from "./renderers/dragDropRenderer.js";
+import ScoreCheckpointRenderer from "./renderers/scoreCheckpointRenderer.js";
 
 
 export default function registerDefaultRenderers(registry) {
@@ -98,6 +99,12 @@ export default function registerDefaultRenderers(registry) {
     registry.register(
         "DRAG_DROP",
         new DragDropRenderer()
+    );
+
+
+    registry.register(
+        "SCORE_CHECKPOINT",
+        new ScoreCheckpointRenderer()
     );
 
 }

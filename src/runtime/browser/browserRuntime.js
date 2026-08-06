@@ -213,6 +213,8 @@ export default class BrowserRuntime {
 
         this.renderDragDrop(page);
 
+        this.renderScoreCheckpoint(page);
+
     }
 
 
@@ -927,6 +929,78 @@ export default class BrowserRuntime {
             if (typeof dragDropRenderer.bind === "function") {
 
                 dragDropRenderer.bind(
+                    slot,
+                    component,
+                    this
+                );
+
+            }
+
+        }
+
+    }
+
+
+
+    renderScoreCheckpoint(page) {
+
+        const scoreCheckpointQueue =
+            this.currentPlayer?.scoreCheckpointQueue ?? [];
+
+
+        if (scoreCheckpointQueue.length === 0) {
+
+            return;
+
+        }
+
+
+        const slot =
+            this.rootElement.querySelector(
+                "#score-checkpoint-slot"
+            );
+
+
+        if (!slot) {
+
+            return;
+
+        }
+
+
+        const scoreCheckpointRenderer =
+            this.currentPlayer.registry.get(
+                "SCORE_CHECKPOINT"
+            );
+
+
+        if (!scoreCheckpointRenderer) {
+
+            return;
+
+        }
+
+
+        for (const component of scoreCheckpointQueue) {
+
+
+            const lineContext =
+                new RenderContext();
+
+
+            scoreCheckpointRenderer.render(
+                component,
+                lineContext
+            );
+
+
+            slot.innerHTML +=
+                lineContext.flush();
+
+
+            if (typeof scoreCheckpointRenderer.bind === "function") {
+
+                scoreCheckpointRenderer.bind(
                     slot,
                     component,
                     this

@@ -33,6 +33,8 @@ export default class RuntimePlayer {
 
         this.dragDropQueue = [];
 
+        this.scoreCheckpointQueue = [];
+
         this.buildComponentIndex();
 
     }
@@ -74,6 +76,8 @@ export default class RuntimePlayer {
         this.revealPanelQueue = [];
 
         this.dragDropQueue = [];
+
+        this.scoreCheckpointQueue = [];
 
         while (this.scheduler.hasNext()) {
 
@@ -136,6 +140,14 @@ export default class RuntimePlayer {
 
             }
 
+            if (component.type === "SCORE_CHECKPOINT") {
+
+                this.scoreCheckpointQueue.push(component);
+
+                continue;
+
+            }
+
             const renderer = this.registry.get(component.type);
 
             if (!renderer || typeof renderer.render !== "function") {
@@ -180,6 +192,12 @@ export default class RuntimePlayer {
         // only after the dialogue sequence above finishes.
         this.context.append(
             `<div id="dragdrop-slot"></div>`
+        );
+
+        // Reserve a stable slot for the score checkpoint display,
+        // revealed only after the dialogue sequence above finishes.
+        this.context.append(
+            `<div id="score-checkpoint-slot"></div>`
         );
 
         return this.context.flush();

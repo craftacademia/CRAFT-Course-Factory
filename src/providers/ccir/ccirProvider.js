@@ -605,6 +605,27 @@ export default class CCIRProvider {
                 this.attr(node, "type", "TYPE");
 
 
+            const scoreCheckpoint =
+                (screenType ?? "").toUpperCase() === "SCORE_CHECKPOINT"
+                ? {
+
+                    checkpointId:
+                    this.attr(node, "checkpoint_id", "CHECKPOINT_ID"),
+
+
+                    moduleName:
+                    this.attr(node, "module_name", "MODULE_NAME") ?? "",
+
+
+                    max:
+                    Number(
+                        this.attr(node, "max", "MAX")
+                    ) || 0
+
+                }
+                : null;
+
+
             const branching =
                 branchPointNode
                 ? {
@@ -650,6 +671,9 @@ export default class CCIRProvider {
 
 
                 dragDrop,
+
+
+                scoreCheckpoint,
 
 
                 // Named propRef, not assetRef, to avoid colliding with

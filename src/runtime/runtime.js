@@ -209,6 +209,37 @@ function computeTotalScore() {
 
 
 
+function computeOverallMaxScore() {
+
+    let total = 0;
+
+
+    for (const page of runtime.course?.pages ?? []) {
+
+        for (const layer of page.layers ?? []) {
+
+            for (const component of layer.components ?? []) {
+
+                if (component.type === "SCORE_CHECKPOINT") {
+
+                    total +=
+                        Number(component.properties?.max) || 0;
+
+                }
+
+            }
+
+        }
+
+    }
+
+
+    return total;
+
+}
+
+
+
 function currentPageHasUnresolvedBranching() {
 
     const currentPage =
@@ -300,7 +331,7 @@ function updateChrome() {
     if (scoreEl) {
 
         scoreEl.textContent =
-            `Score: ${computeTotalScore()}`;
+            `Score: ${computeTotalScore()}/${computeOverallMaxScore()}`;
 
     }
 
@@ -346,6 +377,11 @@ function updateChrome() {
 // to re-check its state after something changes that doesn't itself
 // trigger navigation, like checking a "I have read this" checkbox.
 runtime.onStateChange = updateChrome;
+
+
+// Lets renderers (e.g. scoreCheckpointRenderer.js) compute the running
+// total using the exact same logic the header uses, so both always agree.
+runtime.computeTotalScore = computeTotalScore;
 
 
 document.getElementById(

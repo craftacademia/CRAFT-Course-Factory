@@ -404,6 +404,39 @@ export default class PageBuilder {
 
 
 
+            if (screen.scoreCheckpoint) {
+
+
+                components.push(
+                    this.componentBuilder.build(
+                        "SCORE_CHECKPOINT",
+                        {
+
+                            id:
+                            `SCORE_CHECKPOINT_${screen.id}`,
+
+
+                            properties:{
+
+                                checkpointId:
+                                screen.scoreCheckpoint.checkpointId,
+
+                                moduleName:
+                                screen.scoreCheckpoint.moduleName,
+
+                                max:
+                                screen.scoreCheckpoint.max
+
+                            }
+
+                        }
+                    )
+                );
+
+            }
+
+
+
             pages.push({
 
                 id:
