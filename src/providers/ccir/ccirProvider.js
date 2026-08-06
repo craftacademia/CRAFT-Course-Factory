@@ -165,6 +165,113 @@ export default class CCIRProvider {
 
 
 
+    collectScoreBranch(
+        screenNode
+    ) {
+
+        const scoreBranchNode =
+            (screenNode.children ?? [])
+            .find(
+                child =>
+                child.type === "SCORE_BRANCH"
+            );
+
+
+        if (!scoreBranchNode) {
+
+            return null;
+
+        }
+
+
+        const caseNodes =
+            (scoreBranchNode.children ?? [])
+            .filter(
+                child =>
+                child.type === "SCORE_CASE"
+            );
+
+
+        const cases =
+            caseNodes.map(
+                caseNode => {
+
+                    const lineNodes =
+                        (caseNode.children ?? [])
+                        .filter(
+                            child =>
+                            child.type === "LINE"
+                        );
+
+
+                    const lines =
+                        lineNodes.map(
+                            lineNode => {
+
+                                const textNode =
+                                    (lineNode.children ?? [])
+                                    .find(
+                                        child =>
+                                        child.type === "TEXT"
+                                    );
+
+
+                                return {
+
+                                    text:
+                                    (textNode?.value ?? "").trim(),
+
+                                    speaker:
+                                    this.attr(lineNode, "speaker", "SPEAKER"),
+
+                                    voiceId:
+                                    this.attr(lineNode, "vo_id", "VO_ID"),
+
+                                    expression:
+                                    this.attr(lineNode, "expression", "EXPRESSION")
+
+                                };
+
+                            }
+                        );
+
+
+                    return {
+
+                        min:
+                        Number(
+                            this.attr(caseNode, "min", "MIN")
+                        ) || 0,
+
+
+                        max:
+                        Number(
+                            this.attr(caseNode, "max", "MAX")
+                        ) || 0,
+
+
+                        lines
+
+                    };
+
+                }
+            );
+
+
+        return {
+
+            moduleRef:
+            this.attr(scoreBranchNode, "module_ref", "MODULE_REF"),
+
+
+            cases
+
+        };
+
+    }
+
+
+
     collectLinesAfterDragDrop(
         screenNode
     ) {
@@ -676,6 +783,10 @@ export default class CCIRProvider {
                 scoreCheckpoint,
 
 
+                scoreBranch:
+                this.collectScoreBranch(node),
+
+
                 // Named propRef, not assetRef, to avoid colliding with
                 // presentationProvider.js's pre-existing assetRef handling,
                 // which expects a resolved image object, not a raw string.
@@ -746,6 +857,14 @@ export default class CCIRProvider {
 
                     nextOverride:
                     nextScreenId,
+
+
+                    // Both paths converge to the SAME score-branch
+                    // closing dialogue, evaluated once the path itself
+                    // finishes — carry it forward to whichever path the
+                    // learner actually takes.
+                    scoreBranch:
+                    this.collectScoreBranch(node),
 
 
                     children:

@@ -139,12 +139,28 @@ export default class PageBuilder {
                 );
 
 
+            const scoreBranchVoiceIds =
+                new Set(
+                    (screen.scoreBranch?.cases ?? [])
+                    .flatMap(
+                        scoreCase =>
+                        scoreCase.lines ?? []
+                    )
+                    .map(
+                        line =>
+                        line.voiceId
+                    )
+                    .filter(Boolean)
+                );
+
+
             const screenDialogues =
                 (ccir.metadata?.dialogues ?? [])
                 .filter(
                     item =>
                     item.screenId === screen.id &&
-                    !dragDropFeedbackVoiceIds.has(item.voiceId)
+                    !dragDropFeedbackVoiceIds.has(item.voiceId) &&
+                    !scoreBranchVoiceIds.has(item.voiceId)
                 );
 
 
@@ -449,6 +465,10 @@ export default class PageBuilder {
 
                 nextOverride:
                 screen.nextOverride ?? null,
+
+
+                scoreBranch:
+                screen.scoreBranch ?? null,
 
 
                 layers:[

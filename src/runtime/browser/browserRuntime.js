@@ -196,6 +196,8 @@ export default class BrowserRuntime {
 
         await this.playDialogueSequence(page);
 
+        await this.playScoreBranchDialogue(page);
+
         this.dialogueComplete = true;
 
         if (typeof this.onStateChange === "function") {
@@ -1007,6 +1009,212 @@ export default class BrowserRuntime {
                 );
 
             }
+
+        }
+
+    }
+
+
+
+    async playScoreBranchDialogue(page) {
+
+        const scoreBranch =
+            page.scoreBranch;
+
+
+        if (!scoreBranch || !scoreBranch.cases?.length) {
+
+            return;
+
+        }
+
+
+        const currentTotal =
+            typeof this.computeTotalScore === "function"
+            ? this.computeTotalScore()
+            : 0;
+
+
+        // Same rolling baseline used for SCORE_CHECKPOINT — this
+        // module's score-so-far is however much the total has grown
+        // since the last checkpoint (0 if none has happened yet).
+        const baseline =
+            this.state.variables.get(
+                "scoreCheckpointBaseline"
+            ) ?? 0;
+
+
+        const moduleScoreSoFar =
+            currentTotal - baseline;
+
+
+        const matchingCase =
+            scoreBranch.cases.find(
+                scoreCase =>
+                moduleScoreSoFar >= scoreCase.min &&
+                moduleScoreSoFar <= scoreCase.max
+            );
+
+
+        if (!matchingCase) {
+
+            return;
+
+        }
+
+
+        const slot =
+            this.rootElement.querySelector(
+                "#dialogue-slot"
+            );
+
+
+        if (!slot) {
+
+            return;
+
+        }
+
+
+        const dialogueRenderer =
+            this.currentPlayer?.registry.get(
+                "DIALOGUE"
+            );
+
+
+        if (!dialogueRenderer) {
+
+            return;
+
+        }
+
+
+        for (const line of matchingCase.lines) {
+
+
+            const lineComponent = {
+
+                properties:{
+
+                    text:
+                    line.text,
+
+                    speaker:
+                    line.speaker,
+
+                    voiceId:
+                    line.voiceId,
+
+                    expression:
+                    line.expression
+
+                }
+
+            };
+
+
+            const lineContext =
+                new RenderContext();
+
+
+            dialogueRenderer.render(
+                lineComponent,
+                lineContext
+            );
+
+
+            slot.innerHTML =
+                lineContext.flush();
+
+
+            this.renderSpeakerBadge(
+                lineComponent
+            );
+
+
+            const audioAsset =
+                this.findDialogueAudio(
+                    line.voiceId
+                );
+
+
+            if (audioAsset) {
+
+                await new Promise(
+                    resolve => {
+
+
+                        const audio =
+                            new Audio(
+                                `./${audioAsset.src}`
+                            );
+
+
+                        this.currentAudio =
+                            audio;
+
+
+                        audio.onended =
+                            resolve;
+
+                        audio.onerror =
+                            resolve;
+
+                        audio.onpause =
+                            resolve;
+
+
+                        audio.play()
+                        .catch(
+                            resolve
+                        );
+
+
+                    }
+                );
+
+            } else {
+
+                await new Promise(
+                    resolve => {
+
+                        const handler =
+                            () => {
+
+                                slot.removeEventListener(
+                                    "click",
+                                    handler
+                                );
+
+                                resolve();
+
+                            };
+
+
+                        slot.addEventListener(
+                            "click",
+                            handler
+                        );
+
+                    }
+                );
+
+            }
+
+        }
+
+
+        slot.innerHTML = "";
+
+
+        const badgeSlot =
+            this.rootElement.querySelector(
+                "#speaker-badge-slot"
+            );
+
+        if (badgeSlot) {
+
+            badgeSlot.innerHTML = "";
 
         }
 
