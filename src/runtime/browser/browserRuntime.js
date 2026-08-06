@@ -477,6 +477,16 @@ export default class BrowserRuntime {
                             audio;
 
 
+                        // Lets an interrupting click (see
+                        // branchingRenderer.js selectOption) directly
+                        // and synchronously unblock this wait, instead
+                        // of relying on the async 'pause' event, whose
+                        // timing isn't guaranteed relative to whatever
+                        // the click handler does next.
+                        this.currentAudioResolve =
+                            resolve;
+
+
                         audio.onended =
                             resolve;
 
@@ -694,6 +704,16 @@ export default class BrowserRuntime {
 
                         this.currentAudio =
                             audio;
+
+
+                        // Lets an interrupting click (see
+                        // branchingRenderer.js selectOption) directly
+                        // and synchronously unblock this wait, instead
+                        // of relying on the async 'pause' event, whose
+                        // timing isn't guaranteed relative to whatever
+                        // the click handler does next.
+                        this.currentAudioResolve =
+                            resolve;
 
 
                         audio.onended =
@@ -1152,6 +1172,16 @@ export default class BrowserRuntime {
 
                         this.currentAudio =
                             audio;
+
+
+                        // Lets an interrupting click (see
+                        // branchingRenderer.js selectOption) directly
+                        // and synchronously unblock this wait, instead
+                        // of relying on the async 'pause' event, whose
+                        // timing isn't guaranteed relative to whatever
+                        // the click handler does next.
+                        this.currentAudioResolve =
+                            resolve;
 
 
                         audio.onended =

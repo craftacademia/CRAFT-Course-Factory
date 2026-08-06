@@ -154,6 +154,27 @@ data-option-index="${index}">
         }
 
 
+        // Directly, synchronously unblock the old audio-wait loop
+        // (rather than relying on the async 'pause' event) so its
+        // branchingChoicePending check runs and it exits cleanly
+        // BEFORE the new page below starts playing its own audio —
+        // otherwise the two can overlap.
+        if (typeof runtime.currentAudioResolve === "function") {
+
+            runtime.currentAudioResolve();
+
+            runtime.currentAudioResolve = null;
+
+        }
+
+
+        // isTransitioning is also cleared directly here, for the same
+        // reason — the flag's normal clearing (in a finally block, once
+        // the old render chain actually finishes) isn't guaranteed to
+        // happen before this click's own navigate() call checks it.
+        runtime.isTransitioning = false;
+
+
         runtime.state.variables.set(
             `branching.${component.id}`,
             {
