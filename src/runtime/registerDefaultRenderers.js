@@ -9,6 +9,7 @@ import TextRenderer from "./renderers/textRenderer.js";
 import ImageRenderer from "./renderers/imageRenderer.js";
 import AudioRenderer from "./renderers/audioRenderer.js";
 import BranchingRenderer from "./renderers/branchingRenderer.js";
+import TabPanelRenderer from "./renderers/tabPanelRenderer.js";
 
 
 export default function registerDefaultRenderers(registry) {
@@ -77,6 +78,12 @@ export default function registerDefaultRenderers(registry) {
     registry.register(
         "BRANCHING",
         new BranchingRenderer()
+    );
+
+
+    registry.register(
+        "TAB_PANEL",
+        new TabPanelRenderer()
     );
 
 }

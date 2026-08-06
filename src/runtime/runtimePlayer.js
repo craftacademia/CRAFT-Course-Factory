@@ -27,6 +27,8 @@ export default class RuntimePlayer {
 
         this.branchingQueue = [];
 
+        this.tabPanelQueue = [];
+
         this.buildComponentIndex();
 
     }
@@ -63,6 +65,8 @@ export default class RuntimePlayer {
 
         this.branchingQueue = [];
 
+        this.tabPanelQueue = [];
+
         while (this.scheduler.hasNext()) {
 
             const event = this.scheduler.next();
@@ -98,6 +102,16 @@ export default class RuntimePlayer {
 
             }
 
+            // TAB_PANEL should only appear once the intro dialogue has
+            // finished playing, same reasoning as BRANCHING above.
+            if (component.type === "TAB_PANEL") {
+
+                this.tabPanelQueue.push(component);
+
+                continue;
+
+            }
+
             const renderer = this.registry.get(component.type);
 
             if (!renderer || typeof renderer.render !== "function") {
@@ -124,6 +138,12 @@ export default class RuntimePlayer {
         // the dialogue sequence above finishes.
         this.context.append(
             `<div id="branching-slot"></div>`
+        );
+
+        // Reserve a stable slot for the TAB/REVEAL panel, revealed only
+        // after the dialogue sequence above finishes.
+        this.context.append(
+            `<div id="tab-panel-slot"></div>`
         );
 
         return this.context.flush();

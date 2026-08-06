@@ -54,6 +54,46 @@ const runtime =
     );
 
 
+function currentPageHasUnreadTabPanel() {
+
+    const currentPage =
+        runtime.navigation.current();
+
+
+    for (const layer of currentPage?.layers ?? []) {
+
+        for (const component of layer.components ?? []) {
+
+            if (component.type !== "TAB_PANEL") {
+
+                continue;
+
+            }
+
+
+            const isRead =
+                runtime.state.variables.get(
+                    `tabPanel.${component.id}`
+                ) === true;
+
+
+            if (!isRead) {
+
+                return true;
+
+            }
+
+        }
+
+    }
+
+
+    return false;
+
+}
+
+
+
 function currentPageHasUnresolvedBranching() {
 
     const currentPage =
@@ -64,7 +104,25 @@ function currentPageHasUnresolvedBranching() {
 
         for (const component of layer.components ?? []) {
 
-            if (component.type === "BRANCHING") {
+            if (component.type !== "BRANCHING") {
+
+                continue;
+
+            }
+
+
+            // A choice recorded against this component's id means the
+            // learner already picked an option — including a NEXT_SCREEN
+            // option, which deliberately stays on this page rather than
+            // navigating away. Only still-unanswered branching should
+            // block Next.
+            const alreadyChosen =
+                runtime.state.variables.has(
+                    `branching.${component.id}`
+                );
+
+
+            if (!alreadyChosen) {
 
                 return true;
 
@@ -144,11 +202,18 @@ function updateChrome() {
         // past the choice.
         nextBtn.disabled =
             currentPageHasUnresolvedBranching() ||
+            currentPageHasUnreadTabPanel() ||
             !runtime.navigation.hasNext();
 
     }
 
 }
+
+
+// Lets renderers (e.g. tabPanelRenderer.js) ask the header/footer chrome
+// to re-check its state after something changes that doesn't itself
+// trigger navigation, like checking a "I have read this" checkbox.
+runtime.onStateChange = updateChrome;
 
 
 document.getElementById(

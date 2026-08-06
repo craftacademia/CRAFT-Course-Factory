@@ -620,6 +620,257 @@ body {
 
 
 
+.mcq-option {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    font-size:24px;
+
+    font-weight:600;
+
+    background:#ffffff;
+
+    border:3px solid #d71920;
+
+    border-radius:16px;
+
+    padding:18px 25px;
+
+    margin-bottom:14px;
+
+    cursor:pointer;
+
+}
+
+
+
+.mcq-option input {
+
+    width:24px;
+
+    height:24px;
+
+    accent-color:#d71920;
+
+}
+
+
+
+.mcq-submit-btn {
+
+    font-size:22px;
+
+    font-weight:700;
+
+    padding:16px 40px;
+
+    border-radius:16px;
+
+    border:3px solid #d71920;
+
+    background:#d71920;
+
+    color:#ffffff;
+
+    cursor:pointer;
+
+}
+
+
+
+.mcq-submit-btn:disabled {
+
+    opacity:0.4;
+
+    cursor:default;
+
+}
+
+
+
+.branch-options--hotspot {
+
+    flex-direction:row;
+
+    flex-wrap:wrap;
+
+}
+
+
+
+.hotspot-option {
+
+    display:inline-flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:10px;
+
+    width:180px;
+
+    cursor:pointer;
+
+    border:3px solid #d71920;
+
+    border-radius:16px;
+
+    background:#ffffff;
+
+    padding:10px;
+
+    margin-right:16px;
+
+}
+
+
+
+.hotspot-option img {
+
+    width:100%;
+
+    height:140px;
+
+    object-fit:cover;
+
+    border-radius:10px;
+
+}
+
+
+
+.hotspot-caption {
+
+    font-size:16px;
+
+    font-weight:600;
+
+    color:#222;
+
+    text-align:center;
+
+}
+
+
+
+
+
+.tab-panel {
+
+    position:absolute;
+
+    left:10%;
+
+    right:10%;
+
+    bottom:10%;
+
+    z-index:12;
+
+}
+
+
+
+.tab-open-btn {
+
+    font-size:24px;
+
+    font-weight:700;
+
+    padding:20px 40px;
+
+    border-radius:16px;
+
+    border:3px solid #d71920;
+
+    background:#ffffff;
+
+    color:#d71920;
+
+    cursor:pointer;
+
+}
+
+
+
+.tab-panel-content {
+
+    background:#ffffff;
+
+    border:3px solid #d71920;
+
+    border-radius:16px;
+
+    padding:25px 30px;
+
+    max-height:60vh;
+
+    overflow-y:auto;
+
+}
+
+
+
+.tab-bullet-list {
+
+    margin:0 0 18px 0;
+
+    padding-left:22px;
+
+}
+
+
+
+.tab-bullet-list li {
+
+    font-size:20px;
+
+    line-height:1.5;
+
+    color:#222;
+
+    margin-bottom:10px;
+
+}
+
+
+
+.tab-checkbox-label {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    color:#222;
+
+    cursor:pointer;
+
+}
+
+
+
+.tab-checkbox-label input {
+
+    width:22px;
+
+    height:22px;
+
+    accent-color:#d71920;
+
+}
+
+
 </style>
 
 

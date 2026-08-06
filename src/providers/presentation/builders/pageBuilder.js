@@ -201,6 +201,10 @@ export default class PageBuilder {
 
                             properties:{
 
+                                style:
+                                screen.branching.style ?? "instant",
+
+
                                 options:
                                 screen.branching.options.map(
                                     option => ({
@@ -218,10 +222,54 @@ export default class PageBuilder {
                                         option.score,
 
                                         voiceId:
-                                        option.voiceId
+                                        option.voiceId,
+
+
+                                        // Only used when style is "hotspot" —
+                                        // each option is a document image
+                                        // rather than a text button.
+                                        image:
+                                        screen.branching.style === "hotspot"
+                                        ?
+                                        this.findImageByRef(
+                                            images,
+                                            option.assetRef
+                                        )
+                                        :
+                                        null
 
                                     })
                                 )
+
+                            }
+
+                        }
+                    )
+                );
+
+            }
+
+
+
+            if (
+                screen.tabContent &&
+                screen.tabContent.bullets?.length > 0
+            ) {
+
+
+                components.push(
+                    this.componentBuilder.build(
+                        "TAB_PANEL",
+                        {
+
+                            id:
+                            `TAB_PANEL_${screen.id}`,
+
+
+                            properties:{
+
+                                bullets:
+                                screen.tabContent.bullets
 
                             }
 

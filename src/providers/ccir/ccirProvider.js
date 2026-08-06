@@ -204,12 +204,48 @@ export default class CCIRProvider {
 
 
                         next:
-                        this.attr(optionNode, "next", "NEXT")
+                        this.attr(optionNode, "next", "NEXT"),
+
+
+                        // Only meaningful for HOTSPOT-style screens, where
+                        // each option is a document image to click, not a
+                        // text button.
+                        assetRef:
+                        this.attr(optionNode, "asset_ref", "ASSET_REF")
 
                     };
 
                 }
             );
+
+    }
+
+
+
+    branchingStyleForScreenType(
+        screenType
+    ) {
+
+        const normalized =
+            (screenType ?? "")
+                .toUpperCase();
+
+
+        if (normalized === "MCQ") {
+
+            return "mcq";
+
+        }
+
+
+        if (normalized === "HOTSPOT") {
+
+            return "hotspot";
+
+        }
+
+
+        return "instant";
 
     }
 
@@ -305,12 +341,61 @@ export default class CCIRProvider {
                 this.attr(node, "character", "CHARACTER");
 
 
+            const tabContentNode =
+                (node.children ?? [])
+                .find(
+                    child =>
+                    child.type === "TAB_CONTENT"
+                );
+
+
+            const tabContent =
+                tabContentNode
+                ? {
+
+                    bullets:
+                    (tabContentNode.children ?? [])
+                    .filter(
+                        child =>
+                        child.type === "BULLET"
+                    )
+                    .map(
+                        bulletNode => {
+
+                            const textNode =
+                                (bulletNode.children ?? [])
+                                .find(
+                                    child =>
+                                    child.type === "TEXT"
+                                );
+
+
+                            return (
+                                textNode?.value ?? ""
+                            ).trim();
+
+                        }
+                    )
+                    .filter(
+                        text =>
+                        text.length > 0
+                    )
+
+                }
+                : null;
+
+
+
             const branchPointNode =
                 (node.children ?? [])
                 .find(
                     child =>
                     child.type === "BRANCH_POINT"
                 );
+
+
+            const screenType =
+                this.attr(node, "type", "TYPE");
 
 
             const branching =
@@ -320,6 +405,12 @@ export default class CCIRProvider {
                     id:
                     this.attr(branchPointNode, "id", "ID") ??
                     `BP_${screenId}`,
+
+
+                    style:
+                    this.branchingStyleForScreenType(
+                        screenType
+                    ),
 
 
                     options:
@@ -343,6 +434,9 @@ export default class CCIRProvider {
 
                 type:
                 this.attr(node, "type", "TYPE"),
+
+
+                tabContent,
 
 
                 // Named propRef, not assetRef, to avoid colliding with

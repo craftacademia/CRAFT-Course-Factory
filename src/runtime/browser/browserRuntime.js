@@ -190,6 +190,8 @@ export default class BrowserRuntime {
 
         await this.renderBranchingOptions(page);
 
+        this.renderTabPanel(page);
+
     }
 
 
@@ -458,6 +460,14 @@ export default class BrowserRuntime {
                             resolve;
 
 
+                        // .pause() does NOT fire 'ended' — without this,
+                        // interrupting audio (e.g. by clicking a branching
+                        // option mid-playback) leaves this promise pending
+                        // forever, permanently freezing navigation.
+                        audio.onpause =
+                            resolve;
+
+
                         audio.play()
                         .catch(
                             resolve
@@ -669,6 +679,13 @@ export default class BrowserRuntime {
                             resolve;
 
 
+                        // Same reasoning as playDialogueSequence above —
+                        // .pause() must also resolve this promise, or
+                        // clicking an option mid-VO freezes navigation.
+                        audio.onpause =
+                            resolve;
+
+
                         audio.play()
                         .catch(
                             resolve
@@ -676,6 +693,78 @@ export default class BrowserRuntime {
 
 
                     }
+                );
+
+            }
+
+        }
+
+    }
+
+
+
+    renderTabPanel(page) {
+
+        const tabPanelQueue =
+            this.currentPlayer?.tabPanelQueue ?? [];
+
+
+        if (tabPanelQueue.length === 0) {
+
+            return;
+
+        }
+
+
+        const slot =
+            this.rootElement.querySelector(
+                "#tab-panel-slot"
+            );
+
+
+        if (!slot) {
+
+            return;
+
+        }
+
+
+        const tabPanelRenderer =
+            this.currentPlayer.registry.get(
+                "TAB_PANEL"
+            );
+
+
+        if (!tabPanelRenderer) {
+
+            return;
+
+        }
+
+
+        for (const component of tabPanelQueue) {
+
+
+            const lineContext =
+                new RenderContext();
+
+
+            tabPanelRenderer.render(
+                component,
+                lineContext
+            );
+
+
+            slot.innerHTML +=
+                lineContext.flush();
+
+
+            if (typeof tabPanelRenderer.bind === "function") {
+
+                tabPanelRenderer.bind(
+                    slot,
+                    component,
+                    this
                 );
 
             }
