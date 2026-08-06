@@ -21,6 +21,8 @@ app.innerHTML = `
             <div class="craft-scene-counter" id="craft-scene-counter">Scene 1 of 1</div>
         </div>
     </div>
+    <div class="craft-score-display" id="craft-score-display">Score: 0</div>
+
     <div class="craft-actions">
         <span class="craft-icon-btn" title="Menu">&#9776;</span>
         <span class="craft-icon-btn" title="Help">?</span>
@@ -174,6 +176,39 @@ function currentPageHasUnresolvedDragDrop() {
 
 
 
+function computeTotalScore() {
+
+    const allVars =
+        runtime.state.variables.all();
+
+
+    let total = 0;
+
+
+    for (const [key, value] of Object.entries(allVars)) {
+
+
+        if (key.startsWith("branching.")) {
+
+            total +=
+                Number(value?.option?.score) || 0;
+
+        } else if (key.startsWith("dragDrop.")) {
+
+            total +=
+                Number(value?.score) || 0;
+
+        }
+
+    }
+
+
+    return total;
+
+}
+
+
+
 function currentPageHasUnresolvedBranching() {
 
     const currentPage =
@@ -253,6 +288,19 @@ function updateChrome() {
 
         fillEl.style.width =
             `${progress}%`;
+
+    }
+
+
+    const scoreEl =
+        document.getElementById(
+            "craft-score-display"
+        );
+
+    if (scoreEl) {
+
+        scoreEl.textContent =
+            `Score: ${computeTotalScore()}`;
 
     }
 

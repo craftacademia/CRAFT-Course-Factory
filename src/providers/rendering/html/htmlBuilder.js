@@ -1289,6 +1289,26 @@ body {
 }
 
 
+
+
+.craft-score-display {
+
+    font-size:14px;
+
+    font-weight:700;
+
+    color:#d71920;
+
+    background:#fdeceb;
+
+    padding:6px 16px;
+
+    border-radius:999px;
+
+    border:1px solid #d71920;
+}
+
+
 </style>
 
 
