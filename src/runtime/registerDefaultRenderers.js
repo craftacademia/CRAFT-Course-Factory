@@ -10,6 +10,7 @@ import ImageRenderer from "./renderers/imageRenderer.js";
 import AudioRenderer from "./renderers/audioRenderer.js";
 import BranchingRenderer from "./renderers/branchingRenderer.js";
 import TabPanelRenderer from "./renderers/tabPanelRenderer.js";
+import RevealPanelRenderer from "./renderers/revealPanelRenderer.js";
 
 
 export default function registerDefaultRenderers(registry) {
@@ -84,6 +85,12 @@ export default function registerDefaultRenderers(registry) {
     registry.register(
         "TAB_PANEL",
         new TabPanelRenderer()
+    );
+
+
+    registry.register(
+        "REVEAL_PANEL",
+        new RevealPanelRenderer()
     );
 
 }

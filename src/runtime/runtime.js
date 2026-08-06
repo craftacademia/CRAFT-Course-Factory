@@ -94,6 +94,46 @@ function currentPageHasUnreadTabPanel() {
 
 
 
+function currentPageHasUnreadRevealPanel() {
+
+    const currentPage =
+        runtime.navigation.current();
+
+
+    for (const layer of currentPage?.layers ?? []) {
+
+        for (const component of layer.components ?? []) {
+
+            if (component.type !== "REVEAL_PANEL") {
+
+                continue;
+
+            }
+
+
+            const isRead =
+                runtime.state.variables.get(
+                    `revealPanel.${component.id}`
+                ) === true;
+
+
+            if (!isRead) {
+
+                return true;
+
+            }
+
+        }
+
+    }
+
+
+    return false;
+
+}
+
+
+
 function currentPageHasUnresolvedBranching() {
 
     const currentPage =
@@ -203,6 +243,7 @@ function updateChrome() {
         nextBtn.disabled =
             currentPageHasUnresolvedBranching() ||
             currentPageHasUnreadTabPanel() ||
+            currentPageHasUnreadRevealPanel() ||
             !runtime.navigation.hasNext();
 
     }

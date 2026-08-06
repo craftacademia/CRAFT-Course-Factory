@@ -29,6 +29,8 @@ export default class RuntimePlayer {
 
         this.tabPanelQueue = [];
 
+        this.revealPanelQueue = [];
+
         this.buildComponentIndex();
 
     }
@@ -66,6 +68,8 @@ export default class RuntimePlayer {
         this.branchingQueue = [];
 
         this.tabPanelQueue = [];
+
+        this.revealPanelQueue = [];
 
         while (this.scheduler.hasNext()) {
 
@@ -112,6 +116,14 @@ export default class RuntimePlayer {
 
             }
 
+            if (component.type === "REVEAL_PANEL") {
+
+                this.revealPanelQueue.push(component);
+
+                continue;
+
+            }
+
             const renderer = this.registry.get(component.type);
 
             if (!renderer || typeof renderer.render !== "function") {
@@ -144,6 +156,12 @@ export default class RuntimePlayer {
         // after the dialogue sequence above finishes.
         this.context.append(
             `<div id="tab-panel-slot"></div>`
+        );
+
+        // Reserve a stable slot for the REVEAL panel, revealed only
+        // after the dialogue sequence above finishes.
+        this.context.append(
+            `<div id="reveal-panel-slot"></div>`
         );
 
         return this.context.flush();

@@ -386,6 +386,52 @@ export default class CCIRProvider {
 
 
 
+            const revealTabNodes =
+                (node.children ?? [])
+                .filter(
+                    child =>
+                    child.type === "TAB_ITEM"
+                );
+
+
+            const revealTabs =
+                revealTabNodes.length > 0
+                ? revealTabNodes.map(
+                    tabNode => {
+
+                        const textNode =
+                            (tabNode.children ?? [])
+                            .find(
+                                child =>
+                                child.type === "TEXT"
+                            );
+
+
+                        return {
+
+                            id:
+                            this.attr(tabNode, "id", "ID"),
+
+
+                            title:
+                            this.attr(tabNode, "title", "TITLE") ?? "",
+
+
+                            assetRef:
+                            this.attr(tabNode, "asset_ref", "ASSET_REF"),
+
+
+                            text:
+                            (textNode?.value ?? "").trim()
+
+                        };
+
+                    }
+                )
+                : null;
+
+
+
             const branchPointNode =
                 (node.children ?? [])
                 .find(
@@ -437,6 +483,9 @@ export default class CCIRProvider {
 
 
                 tabContent,
+
+
+                revealTabs,
 
 
                 // Named propRef, not assetRef, to avoid colliding with

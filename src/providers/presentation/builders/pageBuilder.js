@@ -281,6 +281,56 @@ export default class PageBuilder {
 
 
 
+            if (
+                screen.revealTabs &&
+                screen.revealTabs.length > 0
+            ) {
+
+
+                components.push(
+                    this.componentBuilder.build(
+                        "REVEAL_PANEL",
+                        {
+
+                            id:
+                            `REVEAL_PANEL_${screen.id}`,
+
+
+                            properties:{
+
+                                tabs:
+                                screen.revealTabs.map(
+                                    tab => ({
+
+                                        id:
+                                        tab.id,
+
+                                        title:
+                                        tab.title,
+
+                                        text:
+                                        tab.text,
+
+
+                                        image:
+                                        this.findImageByRef(
+                                            images,
+                                            tab.assetRef
+                                        )
+
+                                    })
+                                )
+
+                            }
+
+                        }
+                    )
+                );
+
+            }
+
+
+
             pages.push({
 
                 id:

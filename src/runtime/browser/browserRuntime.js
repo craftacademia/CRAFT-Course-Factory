@@ -192,6 +192,8 @@ export default class BrowserRuntime {
 
         this.renderTabPanel(page);
 
+        this.renderRevealPanel(page);
+
     }
 
 
@@ -762,6 +764,78 @@ export default class BrowserRuntime {
             if (typeof tabPanelRenderer.bind === "function") {
 
                 tabPanelRenderer.bind(
+                    slot,
+                    component,
+                    this
+                );
+
+            }
+
+        }
+
+    }
+
+
+
+    renderRevealPanel(page) {
+
+        const revealPanelQueue =
+            this.currentPlayer?.revealPanelQueue ?? [];
+
+
+        if (revealPanelQueue.length === 0) {
+
+            return;
+
+        }
+
+
+        const slot =
+            this.rootElement.querySelector(
+                "#reveal-panel-slot"
+            );
+
+
+        if (!slot) {
+
+            return;
+
+        }
+
+
+        const revealPanelRenderer =
+            this.currentPlayer.registry.get(
+                "REVEAL_PANEL"
+            );
+
+
+        if (!revealPanelRenderer) {
+
+            return;
+
+        }
+
+
+        for (const component of revealPanelQueue) {
+
+
+            const lineContext =
+                new RenderContext();
+
+
+            revealPanelRenderer.render(
+                component,
+                lineContext
+            );
+
+
+            slot.innerHTML +=
+                lineContext.flush();
+
+
+            if (typeof revealPanelRenderer.bind === "function") {
+
+                revealPanelRenderer.bind(
                     slot,
                     component,
                     this
