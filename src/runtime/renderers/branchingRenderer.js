@@ -64,6 +64,7 @@ export default class BranchingRenderer {
 class="branch-option"
 data-branching-id="${component.id}"
 data-option-index="${index}">
+<span class="branch-option-label">Option ${index + 1}</span>
 ${option.text ?? ""}
 </button>
 

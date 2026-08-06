@@ -588,6 +588,30 @@ body {
 
     gap:14px;
 
+    background:#ffffff;
+
+    border-radius:20px;
+
+    padding:20px;
+
+}
+
+
+
+.branch-option-label {
+
+    font-size:14px;
+
+    font-weight:700;
+
+    color:#d71920;
+
+    text-transform:uppercase;
+
+    letter-spacing:0.5px;
+
+    margin-bottom:6px;
+
 }
 
 
