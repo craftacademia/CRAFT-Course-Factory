@@ -87,7 +87,10 @@ ${option.text ?? ""}
     name="mcq-${component.id}"
     data-branching-id="${component.id}"
     data-option-index="${index}">
-    <span>${option.text ?? ""}</span>
+    <span>
+        <span class="branch-option-label">Option ${index + 1}</span>
+        ${option.text ?? ""}
+    </span>
 </label>
 
 `)
@@ -182,6 +185,80 @@ data-option-index="${index}">
                 option
             }
         );
+
+
+        // Correctness here means "picked the higher-scored option" —
+        // only one feedback line plays, matching whichever it was.
+        const allOptions =
+            component.properties?.options ?? [];
+
+        const maxScore =
+            Math.max(
+                ...allOptions.map(
+                    o => Number(o.score) || 0
+                )
+            );
+
+        const isCorrect =
+            (Number(option.score) || 0) >= maxScore;
+
+
+        const feedback =
+            component.properties?.feedback;
+
+        const feedbackLine =
+            isCorrect
+            ? feedback?.correct
+            : feedback?.incorrect;
+
+
+        if (feedbackLine) {
+
+
+            const audioAsset =
+                typeof runtime.findDialogueAudio === "function"
+                ? runtime.findDialogueAudio(feedbackLine.voiceId)
+                : null;
+
+
+            if (audioAsset) {
+
+                await new Promise(
+                    resolve => {
+
+
+                        const audio =
+                            new Audio(
+                                `./${audioAsset.src}`
+                            );
+
+
+                        runtime.currentAudio =
+                            audio;
+
+
+                        audio.onended =
+                            resolve;
+
+                        audio.onerror =
+                            resolve;
+
+                        audio.onpause =
+                            resolve;
+
+
+                        audio.play()
+                        .catch(
+                            resolve
+                        );
+
+
+                    }
+                );
+
+            }
+
+        }
 
 
         // NEXT_SCREEN is a real keyword, not a page ID — it means "this

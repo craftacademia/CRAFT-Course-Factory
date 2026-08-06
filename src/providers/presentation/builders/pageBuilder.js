@@ -99,7 +99,13 @@ export default class PageBuilder {
 
 
 
-            if (screenImage) {
+            // MCQ screens are intentionally clean — no background
+            // image at all, just the question and options on white.
+            const isMcqScreen =
+                (screen.type ?? "").toUpperCase() === "MCQ";
+
+
+            if (screenImage && !isMcqScreen) {
 
 
                 components.push(
@@ -128,9 +134,15 @@ export default class PageBuilder {
 
 
 
-            const dragDropFeedbackVoiceIds =
+            const feedbackVoiceIds =
                 new Set(
-                    (screen.dragDrop?.feedbackLines ?? [])
+                    [
+                        screen.dragDrop?.feedback?.correct,
+                        screen.dragDrop?.feedback?.incorrect,
+                        screen.branching?.feedback?.correct,
+                        screen.branching?.feedback?.incorrect
+                    ]
+                    .filter(Boolean)
                     .map(
                         line =>
                         line.voiceId
@@ -159,7 +171,7 @@ export default class PageBuilder {
                 .filter(
                     item =>
                     item.screenId === screen.id &&
-                    !dragDropFeedbackVoiceIds.has(item.voiceId) &&
+                    !feedbackVoiceIds.has(item.voiceId) &&
                     !scoreBranchVoiceIds.has(item.voiceId)
                 );
 
@@ -231,6 +243,10 @@ export default class PageBuilder {
 
                                 style:
                                 screen.branching.style ?? "instant",
+
+
+                                feedback:
+                                screen.branching.feedback ?? null,
 
 
                                 options:
@@ -407,8 +423,8 @@ export default class PageBuilder {
                                 screen.dragDrop.zones,
 
 
-                                feedbackLines:
-                                screen.dragDrop.feedbackLines ?? []
+                                feedback:
+                                screen.dragDrop.feedback ?? null
 
                             }
 

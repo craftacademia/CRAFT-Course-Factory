@@ -361,61 +361,62 @@ data-correct-zone="${card.correctZone ?? ""}">
                     submitButton.disabled = true;
 
 
-                    // Both feedback lines always play, regardless of the
-                    // result — they're two parts of one explanation, not
-                    // a correct/incorrect branch.
-                    const feedbackLines =
-                        component.properties?.feedbackLines ?? [];
+                    // Only one feedback line plays, based on whether
+                    // the learner placed every card correctly.
+                    const feedback =
+                        component.properties?.feedback;
+
+                    const feedbackLine =
+                        allCorrect
+                        ? feedback?.correct
+                        : feedback?.incorrect;
 
 
-                    for (const line of feedbackLines) {
+                    if (feedbackLine) {
 
 
                         const audioAsset =
                             typeof runtime.findDialogueAudio === "function"
-                            ? runtime.findDialogueAudio(line.voiceId)
+                            ? runtime.findDialogueAudio(feedbackLine.voiceId)
                             : null;
 
 
-                        if (!audioAsset) {
+                        if (audioAsset) {
 
-                            continue;
-
-                        }
-
-
-                        await new Promise(
-                            resolve => {
+                            await new Promise(
+                                resolve => {
 
 
-                                const audio =
-                                    new Audio(
-                                        `./${audioAsset.src}`
+                                    const audio =
+                                        new Audio(
+                                            `./${audioAsset.src}`
+                                        );
+
+
+                                    runtime.currentAudio =
+                                        audio;
+
+
+                                    audio.onended =
+                                        resolve;
+
+                                    audio.onerror =
+                                        resolve;
+
+                                    audio.onpause =
+                                        resolve;
+
+
+                                    audio.play()
+                                    .catch(
+                                        resolve
                                     );
 
 
-                                runtime.currentAudio =
-                                    audio;
+                                }
+                            );
 
-
-                                audio.onended =
-                                    resolve;
-
-                                audio.onerror =
-                                    resolve;
-
-                                audio.onpause =
-                                    resolve;
-
-
-                                audio.play()
-                                .catch(
-                                    resolve
-                                );
-
-
-                            }
-                        );
+                        }
 
                     }
 

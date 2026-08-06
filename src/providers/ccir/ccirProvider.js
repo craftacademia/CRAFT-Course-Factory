@@ -272,43 +272,49 @@ export default class CCIRProvider {
 
 
 
-    collectLinesAfterDragDrop(
-        screenNode
+    collectConditionalFeedback(
+        screenNode,
+        afterTypes
     ) {
 
         const children =
             screenNode.children ?? [];
 
 
-        let lastCardOrZoneIndex = -1;
+        let markerIndex = -1;
 
 
         for (let i = 0; i < children.length; i++) {
 
-            if (
-                children[i].type === "CARD" ||
-                children[i].type === "ZONE"
-            ) {
+            if (afterTypes.includes(children[i].type)) {
 
-                lastCardOrZoneIndex = i;
+                markerIndex = i;
 
             }
 
         }
 
 
-        if (lastCardOrZoneIndex === -1) {
+        if (markerIndex === -1) {
 
-            return [];
+            return {
+
+                correct: null,
+
+                incorrect: null
+
+            };
 
         }
 
 
-        const feedbackLines = [];
+        let correct = null;
+
+        let incorrect = null;
 
 
         for (
-            let i = lastCardOrZoneIndex + 1;
+            let i = markerIndex + 1;
             i < children.length;
             i++
         ) {
@@ -323,6 +329,20 @@ export default class CCIRProvider {
             }
 
 
+            const result =
+                this.attr(child, "result", "RESULT");
+
+
+            if (!result) {
+
+                // A LINE with no RESULT= isn't feedback — it's regular
+                // post-branch dialogue (e.g. S15's consequence lines
+                // after the mismatch is corrected). Stop collecting.
+                break;
+
+            }
+
+
             const textNode =
                 (child.children ?? [])
                 .find(
@@ -331,29 +351,43 @@ export default class CCIRProvider {
                 );
 
 
-            feedbackLines.push({
+            const line = {
 
                 text:
                 (textNode?.value ?? "").trim(),
 
-
                 speaker:
                 this.attr(child, "speaker", "SPEAKER"),
-
 
                 voiceId:
                 this.attr(child, "vo_id", "VO_ID"),
 
-
                 expression:
                 this.attr(child, "expression", "EXPRESSION")
 
-            });
+            };
+
+
+            if (result.toUpperCase() === "CORRECT") {
+
+                correct = line;
+
+            } else if (result.toUpperCase() === "INCORRECT") {
+
+                incorrect = line;
+
+            }
 
         }
 
 
-        return feedbackLines;
+        return {
+
+            correct,
+
+            incorrect
+
+        };
 
     }
 
@@ -689,10 +723,12 @@ export default class CCIRProvider {
                     // Lines that appear AFTER the last CARD/ZONE tag are
                     // post-submission feedback, not intro narration — they
                     // must not play before the interaction like regular
-                    // dialogue does.
-                    feedbackLines:
-                    this.collectLinesAfterDragDrop(
-                        node
+                    // dialogue does. Only one plays, based on whether the
+                    // learner got every card right.
+                    feedback:
+                    this.collectConditionalFeedback(
+                        node,
+                        ["CARD", "ZONE"]
                     )
 
                 }
@@ -751,6 +787,15 @@ export default class CCIRProvider {
                     options:
                     this.buildOptionsFromBranchPoint(
                         branchPointNode
+                    ),
+
+
+                    // Only one plays, based on whether the learner's
+                    // chosen option was the higher-scored (correct) one.
+                    feedback:
+                    this.collectConditionalFeedback(
+                        node,
+                        ["BRANCH_POINT"]
                     )
 
                 }

@@ -628,6 +628,22 @@ body {
 
 
 
+.branch-options--mcq {
+
+    top:12%;
+
+    bottom:12%;
+
+    left:10%;
+
+    right:10%;
+
+    justify-content:center;
+
+}
+
+
+
 .branch-option {
 
     font-size:24px;
