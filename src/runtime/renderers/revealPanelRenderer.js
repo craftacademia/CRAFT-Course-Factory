@@ -2,14 +2,7 @@ export default class RevealPanelRenderer {
 
     tabContentHtml(tab) {
 
-        const imageHtml =
-            tab.image
-            ? `<img class="reveal-content-icon" src="./${tab.image.src}" alt="">`
-            : "";
-
-
         return `
-${imageHtml}
 <h3 class="reveal-content-title">${tab.title ?? ""}</h3>
 <p class="reveal-content-text">${tab.text ?? ""}</p>
 `;
