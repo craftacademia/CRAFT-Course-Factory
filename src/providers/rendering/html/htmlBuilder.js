@@ -600,6 +600,8 @@ body {
 
 .branch-option-label {
 
+    display:block;
+
     font-size:14px;
 
     font-weight:700;
@@ -611,6 +613,16 @@ body {
     letter-spacing:0.5px;
 
     margin-bottom:6px;
+
+}
+
+
+
+.branch-options--locked {
+
+    pointer-events:none;
+
+    opacity:0.55;
 
 }
 

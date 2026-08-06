@@ -742,6 +742,24 @@ export default class BrowserRuntime {
 
             }
 
+
+            // Only make the options clickable once every option's own
+            // voice-over has actually finished — this removes the
+            // possibility of interrupting mid-VO entirely, rather than
+            // trying to handle that interruption cleanly.
+            const wrapper =
+                slot.querySelector(
+                    `[data-component-id="${component.id}"]`
+                );
+
+            if (wrapper) {
+
+                wrapper.classList.remove(
+                    "branch-options--locked"
+                );
+
+            }
+
         }
 
     }

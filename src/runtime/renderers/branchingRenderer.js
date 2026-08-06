@@ -43,7 +43,7 @@ export default class BranchingRenderer {
         if (context && typeof context.append === "function") {
 
             context.append(
-                `<div class="branch-options branch-options--${style}" data-component-id="${component.id}">${html}</div>`
+                `<div class="branch-options branch-options--${style} branch-options--locked" data-component-id="${component.id}">${html}</div>`
             );
 
         }
