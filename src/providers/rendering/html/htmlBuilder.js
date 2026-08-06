@@ -414,9 +414,13 @@ body {
 
     right:10%;
 
-    bottom:8%;
+    bottom:2%;
 
     width:auto;
+
+    max-height:22%;
+
+    overflow-y:auto;
 
     margin:0;
 
@@ -424,9 +428,9 @@ body {
 
     border:3px solid #d71920;
 
-    border-radius:20px;
+    border-radius:16px;
 
-    padding:25px;
+    padding:14px 18px;
 
     z-index:10;
 
@@ -439,13 +443,13 @@ body {
 
 .dialogue-speaker {
 
-    font-size:28px;
+    font-size:18px;
 
     font-weight:700;
 
     color:#d71920;
 
-    margin-bottom:12px;
+    margin-bottom:6px;
 
 }
 
@@ -453,9 +457,9 @@ body {
 
 .dialogue-text {
 
-    font-size:28px;
+    font-size:18px;
 
-    line-height:1.5;
+    line-height:1.4;
 
     color:#222;
 
