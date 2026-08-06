@@ -134,6 +134,46 @@ function currentPageHasUnreadRevealPanel() {
 
 
 
+function currentPageHasUnresolvedDragDrop() {
+
+    const currentPage =
+        runtime.navigation.current();
+
+
+    for (const layer of currentPage?.layers ?? []) {
+
+        for (const component of layer.components ?? []) {
+
+            if (component.type !== "DRAG_DROP") {
+
+                continue;
+
+            }
+
+
+            const isResolved =
+                runtime.state.variables.get(
+                    `dragDrop.${component.id}`
+                )?.resolved === true;
+
+
+            if (!isResolved) {
+
+                return true;
+
+            }
+
+        }
+
+    }
+
+
+    return false;
+
+}
+
+
+
 function currentPageHasUnresolvedBranching() {
 
     const currentPage =
@@ -244,6 +284,7 @@ function updateChrome() {
             currentPageHasUnresolvedBranching() ||
             currentPageHasUnreadTabPanel() ||
             currentPageHasUnreadRevealPanel() ||
+            currentPageHasUnresolvedDragDrop() ||
             !runtime.navigation.hasNext();
 
     }

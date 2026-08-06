@@ -432,6 +432,70 @@ export default class CCIRProvider {
 
 
 
+            const cardNodes =
+                (node.children ?? [])
+                .filter(
+                    child =>
+                    child.type === "CARD"
+                );
+
+
+            const zoneNodes =
+                (node.children ?? [])
+                .filter(
+                    child =>
+                    child.type === "ZONE"
+                );
+
+
+            const dragDrop =
+                cardNodes.length > 0
+                ? {
+
+                    cards:
+                    cardNodes.map(
+                        cardNode => ({
+
+                            id:
+                            this.attr(cardNode, "id", "ID"),
+
+                            assetRef:
+                            this.attr(cardNode, "asset_ref", "ASSET_REF"),
+
+                            label:
+                            this.attr(cardNode, "label", "LABEL") ?? "",
+
+                            subtext:
+                            this.attr(cardNode, "subtext", "SUBTEXT") ?? "",
+
+                            zone:
+                            this.attr(cardNode, "zone", "ZONE")
+
+                        })
+                    ),
+
+
+                    zones:
+                    zoneNodes.map(
+                        zoneNode => ({
+
+                            id:
+                            this.attr(zoneNode, "id", "ID"),
+
+                            label:
+                            this.attr(zoneNode, "label", "LABEL") ?? "",
+
+                            color:
+                            this.attr(zoneNode, "color", "COLOR") ?? "green"
+
+                        })
+                    )
+
+                }
+                : null;
+
+
+
             const branchPointNode =
                 (node.children ?? [])
                 .find(
@@ -486,6 +550,9 @@ export default class CCIRProvider {
 
 
                 revealTabs,
+
+
+                dragDrop,
 
 
                 // Named propRef, not assetRef, to avoid colliding with

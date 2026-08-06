@@ -1042,6 +1042,243 @@ body {
 }
 
 
+
+
+.dragdrop-panel {
+
+    position:absolute;
+
+    left:5%;
+
+    right:5%;
+
+    top:8%;
+
+    bottom:8%;
+
+    z-index:12;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:16px;
+
+}
+
+
+
+.dragdrop-tray {
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:14px;
+
+    justify-content:center;
+
+    padding:14px;
+
+    background:rgba(255,255,255,0.6);
+
+    border-radius:16px;
+
+    min-height:110px;
+
+}
+
+
+
+.dragdrop-card {
+
+    width:130px;
+
+    height:110px;
+
+    touch-action:none;
+
+    cursor:grab;
+
+    user-select:none;
+
+}
+
+
+
+.dragdrop-card img {
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:contain;
+
+    display:block;
+
+    pointer-events:none;
+
+}
+
+
+
+.dragdrop-card--dragging {
+
+    z-index:50;
+
+    cursor:grabbing;
+
+    filter:drop-shadow(0 8px 14px rgba(0,0,0,0.35));
+
+}
+
+
+
+.dragdrop-card--correct img {
+
+    outline:4px solid #2e9e4f;
+
+    border-radius:8px;
+
+}
+
+
+
+.dragdrop-card--incorrect img {
+
+    outline:4px solid #d71920;
+
+    border-radius:8px;
+
+}
+
+
+
+.dragdrop-card--locked {
+
+    cursor:default;
+
+}
+
+
+
+.dragdrop-zones {
+
+    display:flex;
+
+    gap:16px;
+
+    flex:1;
+
+}
+
+
+
+.dragdrop-zone {
+
+    flex:1;
+
+    display:flex;
+
+    flex-direction:column;
+
+    border-radius:16px;
+
+    padding:12px;
+
+    border:3px solid;
+
+}
+
+
+
+.dragdrop-zone--green {
+
+    border-color:#2e9e4f;
+
+    background:rgba(46,158,79,0.08);
+
+}
+
+
+
+.dragdrop-zone--red {
+
+    border-color:#d71920;
+
+    background:rgba(215,25,32,0.08);
+
+}
+
+
+
+.dragdrop-zone-label {
+
+    font-size:16px;
+
+    font-weight:700;
+
+    text-align:center;
+
+    color:#222;
+
+    margin-bottom:10px;
+
+}
+
+
+
+.dragdrop-zone-dropspace {
+
+    flex:1;
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    justify-content:center;
+
+    align-content:flex-start;
+
+}
+
+
+
+.dragdrop-submit-btn {
+
+    align-self:center;
+
+    font-size:20px;
+
+    font-weight:700;
+
+    padding:14px 40px;
+
+    border-radius:16px;
+
+    border:3px solid #d71920;
+
+    background:#d71920;
+
+    color:#ffffff;
+
+    cursor:pointer;
+
+}
+
+
+
+.dragdrop-submit-btn:disabled {
+
+    opacity:0.4;
+
+    cursor:default;
+
+}
+
+
 </style>
 
 

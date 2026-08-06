@@ -331,6 +331,63 @@ export default class PageBuilder {
 
 
 
+            if (
+                screen.dragDrop &&
+                screen.dragDrop.cards?.length > 0
+            ) {
+
+
+                components.push(
+                    this.componentBuilder.build(
+                        "DRAG_DROP",
+                        {
+
+                            id:
+                            `DRAG_DROP_${screen.id}`,
+
+
+                            properties:{
+
+                                cards:
+                                screen.dragDrop.cards.map(
+                                    card => ({
+
+                                        id:
+                                        card.id,
+
+                                        label:
+                                        card.label,
+
+                                        subtext:
+                                        card.subtext,
+
+                                        correctZone:
+                                        card.zone,
+
+
+                                        image:
+                                        this.findImageByRef(
+                                            images,
+                                            card.assetRef
+                                        )
+
+                                    })
+                                ),
+
+
+                                zones:
+                                screen.dragDrop.zones
+
+                            }
+
+                        }
+                    )
+                );
+
+            }
+
+
+
             pages.push({
 
                 id:

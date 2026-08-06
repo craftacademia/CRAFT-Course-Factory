@@ -11,6 +11,7 @@ import AudioRenderer from "./renderers/audioRenderer.js";
 import BranchingRenderer from "./renderers/branchingRenderer.js";
 import TabPanelRenderer from "./renderers/tabPanelRenderer.js";
 import RevealPanelRenderer from "./renderers/revealPanelRenderer.js";
+import DragDropRenderer from "./renderers/dragDropRenderer.js";
 
 
 export default function registerDefaultRenderers(registry) {
@@ -91,6 +92,12 @@ export default function registerDefaultRenderers(registry) {
     registry.register(
         "REVEAL_PANEL",
         new RevealPanelRenderer()
+    );
+
+
+    registry.register(
+        "DRAG_DROP",
+        new DragDropRenderer()
     );
 
 }

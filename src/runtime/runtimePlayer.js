@@ -31,6 +31,8 @@ export default class RuntimePlayer {
 
         this.revealPanelQueue = [];
 
+        this.dragDropQueue = [];
+
         this.buildComponentIndex();
 
     }
@@ -70,6 +72,8 @@ export default class RuntimePlayer {
         this.tabPanelQueue = [];
 
         this.revealPanelQueue = [];
+
+        this.dragDropQueue = [];
 
         while (this.scheduler.hasNext()) {
 
@@ -124,6 +128,14 @@ export default class RuntimePlayer {
 
             }
 
+            if (component.type === "DRAG_DROP") {
+
+                this.dragDropQueue.push(component);
+
+                continue;
+
+            }
+
             const renderer = this.registry.get(component.type);
 
             if (!renderer || typeof renderer.render !== "function") {
@@ -162,6 +174,12 @@ export default class RuntimePlayer {
         // after the dialogue sequence above finishes.
         this.context.append(
             `<div id="reveal-panel-slot"></div>`
+        );
+
+        // Reserve a stable slot for the drag-and-drop panel, revealed
+        // only after the dialogue sequence above finishes.
+        this.context.append(
+            `<div id="dragdrop-slot"></div>`
         );
 
         return this.context.flush();

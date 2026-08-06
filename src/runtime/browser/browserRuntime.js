@@ -194,6 +194,8 @@ export default class BrowserRuntime {
 
         this.renderRevealPanel(page);
 
+        this.renderDragDrop(page);
+
     }
 
 
@@ -836,6 +838,78 @@ export default class BrowserRuntime {
             if (typeof revealPanelRenderer.bind === "function") {
 
                 revealPanelRenderer.bind(
+                    slot,
+                    component,
+                    this
+                );
+
+            }
+
+        }
+
+    }
+
+
+
+    renderDragDrop(page) {
+
+        const dragDropQueue =
+            this.currentPlayer?.dragDropQueue ?? [];
+
+
+        if (dragDropQueue.length === 0) {
+
+            return;
+
+        }
+
+
+        const slot =
+            this.rootElement.querySelector(
+                "#dragdrop-slot"
+            );
+
+
+        if (!slot) {
+
+            return;
+
+        }
+
+
+        const dragDropRenderer =
+            this.currentPlayer.registry.get(
+                "DRAG_DROP"
+            );
+
+
+        if (!dragDropRenderer) {
+
+            return;
+
+        }
+
+
+        for (const component of dragDropQueue) {
+
+
+            const lineContext =
+                new RenderContext();
+
+
+            dragDropRenderer.render(
+                component,
+                lineContext
+            );
+
+
+            slot.innerHTML +=
+                lineContext.flush();
+
+
+            if (typeof dragDropRenderer.bind === "function") {
+
+                dragDropRenderer.bind(
                     slot,
                     component,
                     this
