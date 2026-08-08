@@ -9,7 +9,6 @@ import TextRenderer from "./renderers/textRenderer.js";
 import ImageRenderer from "./renderers/imageRenderer.js";
 import AudioRenderer from "./renderers/audioRenderer.js";
 import BranchingRenderer from "./renderers/branchingRenderer.js";
-import MCQRenderer from "./renderers/mcqRenderer.js";
 import TabPanelRenderer from "./renderers/tabPanelRenderer.js";
 import RevealPanelRenderer from "./renderers/revealPanelRenderer.js";
 import DragDropRenderer from "./renderers/dragDropRenderer.js";
@@ -82,12 +81,6 @@ export default function registerDefaultRenderers(registry) {
     registry.register(
         "BRANCHING",
         new BranchingRenderer()
-    );
-
-
-    registry.register(
-        "MCQ_FLOW",
-        new MCQRenderer()
     );
 
 
