@@ -191,12 +191,20 @@ export default class PresentationProvider {
 
 
 
-                const screenId =
-                    page.id
-                    ?.toLowerCase()
-                    ?? "";
-
-
+                // Strict match only. The previous version also matched
+                // "any audio file belonging to this scene" as a fallback
+                // (filename.startsWith("vo-" + screenId)) — since .find()
+                // stops at the first item satisfying EITHER condition,
+                // and every file in a scene satisfies the loose clause,
+                // this caused every dialogue line in a scene to silently
+                // receive whichever file was alphabetically first for
+                // that scene, regardless of whose line it actually was.
+                // A line with no exact audio match should get no audio,
+                // not the wrong one.
+                const normalizedVoiceId =
+                    voiceId
+                    .toLowerCase()
+                    .replace("_","-");
 
                 const audio =
                     audioAssets.find(
@@ -208,17 +216,8 @@ export default class PresentationProvider {
                                 ?? "";
 
 
-                            return (
-                                filename.includes(
-                                    voiceId
-                                    .toLowerCase()
-                                    .replace("_","-")
-                                )
-                                ||
-                                filename.startsWith(
-                                    "vo-" +
-                                    screenId
-                                )
+                            return filename.includes(
+                                normalizedVoiceId
                             );
 
                         }

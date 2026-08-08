@@ -205,49 +205,182 @@ export default class RuntimeBuilder {
 
 
         const runtimeEntry = `
+import BrowserRuntime from "./browser/browserRuntime.js";
 
-import "./componentRegistry.js";
-import "./registerDefaultRenderers.js";
+console.log("CRAFT Runtime Loaded");
 
-import "./navigation.js";
-import "./branching.js";
-import "./assessment.js";
-import "./variables.js";
+const app = document.getElementById("app");
 
-import RuntimeOrchestrator from "./runtimeOrchestrator.js";
+app.innerHTML = \`
+<div class="craft-player-header">
+    <div class="craft-header-left">
+        <div class="craft-logo" id="craft-logo"></div>
+        <div class="craft-header-text">
+            <div class="craft-course-title" id="craft-course-title">Course</div>
+            <div class="craft-scene-counter" id="craft-scene-counter">Scene 1 of 1</div>
+        </div>
+    </div>
+    <div class="craft-score-display" id="craft-score-display">Score: 0</div>
+    <div class="craft-actions">
+        <span class="craft-icon-btn" title="Menu">&#9776;</span>
+        <span class="craft-icon-btn" title="Help">?</span>
+        <span class="craft-icon-btn" title="Exit">&times;</span>
+    </div>
+</div>
 
+<div class="craft-progress-track">
+    <div class="craft-progress-fill" id="craft-progress-fill"></div>
+</div>
 
-window.addEventListener(
-    "DOMContentLoaded",
-    async () => {
+<div class="craft-player-stage" id="craft-stage"></div>
 
-        console.log(
-            "CRAFT Runtime Loaded"
-        );
+<div class="craft-player-footer">
+    <button class="craft-nav-btn" id="craft-back-btn">&larr; Back</button>
+    <button class="craft-nav-btn" id="craft-pause-btn">&#10073;&#10073; Pause</button>
+    <button class="craft-nav-btn" id="craft-next-btn">Next &rarr;</button>
+</div>
+\`;
 
+const stage = document.getElementById("craft-stage");
 
-        const app =
-            document.getElementById(
-                "app"
-            );
+const runtime = new BrowserRuntime(stage);
 
-
-        const orchestrator =
-            new RuntimeOrchestrator(
-                app
-            );
-
-
-        await orchestrator.initialize(
-            window.PIR
-        );
-
-
-        await orchestrator.start();
-
+function currentPageHasUnreadTabPanel() {
+    const currentPage = runtime.navigation.current();
+    for (const layer of currentPage?.layers ?? []) {
+        for (const component of layer.components ?? []) {
+            if (component.type !== "TAB_PANEL") continue;
+            const isRead = runtime.state.variables.get(\`tabPanel.\${component.id}\`) === true;
+            if (!isRead) return true;
+        }
     }
-);
+    return false;
+}
 
+function currentPageHasUnreadRevealPanel() {
+    const currentPage = runtime.navigation.current();
+    for (const layer of currentPage?.layers ?? []) {
+        for (const component of layer.components ?? []) {
+            if (component.type !== "REVEAL_PANEL") continue;
+            const isRead = runtime.state.variables.get(\`revealPanel.\${component.id}\`) === true;
+            if (!isRead) return true;
+        }
+    }
+    return false;
+}
+
+function currentPageHasUnresolvedDragDrop() {
+    const currentPage = runtime.navigation.current();
+    for (const layer of currentPage?.layers ?? []) {
+        for (const component of layer.components ?? []) {
+            if (component.type !== "DRAG_DROP") continue;
+            const isResolved = runtime.state.variables.get(\`dragDrop.\${component.id}\`)?.resolved === true;
+            if (!isResolved) return true;
+        }
+    }
+    return false;
+}
+
+function computeTotalScore() {
+    const allVars = runtime.state.variables.all();
+    let total = 0;
+    for (const [key, value] of Object.entries(allVars)) {
+        if (key.startsWith("branching.")) {
+            total += Number(value?.option?.score) || 0;
+        } else if (key.startsWith("dragDrop.")) {
+            total += Number(value?.score) || 0;
+        }
+    }
+    return total;
+}
+
+function computeOverallMaxScore() {
+    let total = 0;
+    for (const page of runtime.course?.pages ?? []) {
+        for (const layer of page.layers ?? []) {
+            for (const component of layer.components ?? []) {
+                if (component.type === "SCORE_CHECKPOINT") {
+                    total += Number(component.properties?.max) || 0;
+                }
+            }
+        }
+    }
+    return total;
+}
+
+function currentPageHasUnresolvedBranching() {
+    const currentPage = runtime.navigation.current();
+    for (const layer of currentPage?.layers ?? []) {
+        for (const component of layer.components ?? []) {
+            if (component.type !== "BRANCHING") continue;
+            const alreadyChosen = runtime.state.variables.has(\`branching.\${component.id}\`);
+            if (!alreadyChosen) return true;
+        }
+    }
+    return false;
+}
+
+function updateChrome() {
+    const total = runtime.navigation.totalPages();
+    const index = runtime.navigation.currentIndex();
+    const progress = runtime.navigation.progress();
+
+    const counterEl = document.getElementById("craft-scene-counter");
+    if (counterEl) counterEl.textContent = \`Scene \${index + 1} of \${total}\`;
+
+    const fillEl = document.getElementById("craft-progress-fill");
+    if (fillEl) fillEl.style.width = \`\${progress}%\`;
+
+    const scoreEl = document.getElementById("craft-score-display");
+    if (scoreEl) scoreEl.textContent = \`Score: \${computeTotalScore()}/\${computeOverallMaxScore()}\`;
+
+    const backBtn = document.getElementById("craft-back-btn");
+    if (backBtn) {
+        backBtn.disabled = !runtime.dialogueComplete || !runtime.navigation.hasPrevious();
+    }
+
+    const nextBtn = document.getElementById("craft-next-btn");
+    if (nextBtn) {
+        nextBtn.disabled =
+            !runtime.dialogueComplete ||
+            currentPageHasUnresolvedBranching() ||
+            currentPageHasUnreadTabPanel() ||
+            currentPageHasUnreadRevealPanel() ||
+            currentPageHasUnresolvedDragDrop() ||
+            !runtime.navigation.hasNext();
+    }
+}
+
+runtime.onStateChange = updateChrome;
+runtime.computeTotalScore = computeTotalScore;
+
+document.getElementById("craft-back-btn").addEventListener("click", () => runtime.previous());
+document.getElementById("craft-next-btn").addEventListener("click", () => runtime.next());
+
+const course = window.PIR;
+
+const titleEl = document.getElementById("craft-course-title");
+if (titleEl) titleEl.textContent = course?.course?.title ?? "Course";
+
+const logoEl = document.getElementById("craft-logo");
+const logoSrc = course?.branding?.logo?.src;
+if (logoEl) {
+    if (logoSrc) {
+        logoEl.innerHTML = \`<img src="./\${logoSrc}" alt="">\`;
+    } else {
+        logoEl.textContent = "LOGO";
+    }
+}
+
+const mountPromise = runtime.mount(course);
+
+runtime.navigation.on("afterNavigate", updateChrome);
+
+updateChrome();
+
+mountPromise.catch(
+    error => console.error(error)
+);
 `;
 
 

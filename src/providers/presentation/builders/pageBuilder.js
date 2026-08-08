@@ -99,13 +99,20 @@ export default class PageBuilder {
 
 
 
-            // MCQ screens are intentionally clean — no background
-            // image at all, just the question and options on white.
-            const isMcqScreen =
-                (screen.type ?? "").toUpperCase() === "MCQ";
+            // MCQ and Hotspot are standalone decision screens with no
+            // surrounding scene narrative — clean white panel, no image,
+            // even if the script provides a SCENE=/LOCATION=/ASSET_REF=.
+            // instant-style branching is different: it is a choice
+            // presented mid-conversation, layered over dialogue that is
+            // still playing out in the scene, so the background image
+            // stays for that style.
+            const isStandaloneDecisionScreen =
+                ["mcq", "hotspot"].includes(
+                    screen.branching?.style ?? ""
+                );
 
 
-            if (screenImage && !isMcqScreen) {
+            if (screenImage && !isStandaloneDecisionScreen) {
 
 
                 components.push(
