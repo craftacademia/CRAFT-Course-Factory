@@ -209,6 +209,8 @@ export default class BrowserRuntime {
 
         await this.renderBranchingOptions(page);
 
+        await this.renderHotspotPanel(page);
+
         this.renderTabPanel(page);
 
         this.renderRevealPanel(page);
@@ -779,6 +781,32 @@ export default class BrowserRuntime {
 
             }
 
+        }
+
+    }
+
+
+
+    async renderHotspotPanel(page) {
+
+        // HOTSPOT_PANEL_ROUTED
+        const hotspotQueue =
+            (this.currentPlayer?.componentIndex ?? new Map())
+            .values
+            ? [...(this.currentPlayer?.componentIndex?.values() ?? [])]
+              .filter(c => c.type === "HOTSPOT_PANEL")
+            : [];
+
+        if (hotspotQueue.length === 0) return;
+
+        const slot = this.rootElement.querySelector("#branching-slot");
+        if (!slot) return;
+
+        const renderer = this.currentPlayer.registry.get("HOTSPOT_PANEL");
+        if (!renderer) return;
+
+        for (const component of hotspotQueue) {
+            await renderer.bind(slot, component, this);
         }
 
     }

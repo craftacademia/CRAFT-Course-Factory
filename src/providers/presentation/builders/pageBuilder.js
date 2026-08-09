@@ -230,9 +230,17 @@ export default class PageBuilder {
 
 
 
+            // Suppress the standalone BRANCHING component for HOTSPOT screens —
+            // the branching data is already embedded inside HOTSPOT_PANEL.properties.branching
+            // and handled entirely by HotspotRenderer. Emitting it here would cause
+            // renderBranchingOptions to fire the option VOs before the hotspot panel appears.
+            const isHotspotScreen =
+                (screen.hotspotItems?.length ?? 0) > 0;
+
             if (
                 screen.branching &&
-                screen.branching.options?.length > 0
+                screen.branching.options?.length > 0 &&
+                !isHotspotScreen
             ) {
 
 
@@ -371,6 +379,61 @@ export default class PageBuilder {
 
                                     })
                                 )
+
+                            }
+
+                        }
+                    )
+                );
+
+            }
+
+
+
+            if (
+                screen.hotspotItems &&
+                screen.hotspotItems.length > 0
+            ) {
+
+
+                components.push(
+                    this.componentBuilder.build(
+                        "HOTSPOT_PANEL",
+                        {
+
+                            id:
+                            `HOTSPOT_PANEL_${screen.id}`,
+
+
+                            properties:{
+
+                                items:
+                                screen.hotspotItems.map(
+                                    item => ({
+
+                                        id:
+                                        item.id,
+
+                                        title:
+                                        item.title,
+
+                                        subtitle:
+                                        item.subtitle,
+
+                                        text:
+                                        item.text,
+
+                                        image:
+                                        this.findImageByRef(
+                                            images,
+                                            item.assetRef
+                                        )
+
+                                    })
+                                ),
+
+                                branching:
+                                screen.branching ?? null
 
                             }
 
