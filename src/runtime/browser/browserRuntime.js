@@ -658,6 +658,25 @@ export default class BrowserRuntime {
                 lineContext.flush();
 
 
+            // MCQ uses its own 3-step renderer.
+            // instant and hotspot use branchingRenderer as before.
+            // MCQ_RENDERER_ROUTED
+            const componentStyle = component.properties?.style ?? "instant";
+
+            if (componentStyle === "mcq") {
+
+                const mcqRenderer = this.currentPlayer.registry.get("MCQ");
+
+                if (mcqRenderer && typeof mcqRenderer.bind === "function") {
+
+                    await mcqRenderer.bind(slot, component, this);
+
+                    continue;
+
+                }
+
+            }
+
             if (typeof branchingRenderer.bind === "function") {
 
                 branchingRenderer.bind(
