@@ -19,6 +19,11 @@ export default class MCQRenderer {
 
     async bind(slot, component, runtime) {
 
+        // Hide the scene image when options panel takes over —
+        // Step 1 (question VO) shows it; Step 2 onwards is white panel only.
+        const sceneImage = document.querySelector("#craft-stage .image-component");
+        if (sceneImage) sceneImage.style.display = "none";
+
         const options  = component.properties?.options  ?? [];
         const feedback = component.properties?.feedback ?? {};
 
