@@ -660,52 +660,6 @@ export default class CCIRProvider {
 
 
 
-            const hotspotItemNodes =
-                (node.children ?? [])
-                .filter(
-                    child =>
-                    child.type === "HOTSPOT_ITEM"
-                );
-
-
-            const hotspotItems =
-                hotspotItemNodes.length > 0
-                ? hotspotItemNodes.map(
-                    itemNode => {
-
-                        const textNode =
-                            (itemNode.children ?? [])
-                            .find(
-                                child =>
-                                child.type === "TEXT"
-                            );
-
-
-                        return {
-
-                            id:
-                            this.attr(itemNode, "id", "ID"),
-
-                            title:
-                            this.attr(itemNode, "title", "TITLE") ?? "",
-
-                            subtitle:
-                            this.attr(itemNode, "subtitle", "SUBTITLE") ?? "",
-
-                            assetRef:
-                            this.attr(itemNode, "asset_ref", "ASSET_REF"),
-
-                            text:
-                            (textNode?.value ?? "").trim()
-
-                        };
-
-                    }
-                )
-                : null;
-
-
-
             const cardNodes =
                 (node.children ?? [])
                 .filter(
@@ -866,9 +820,6 @@ export default class CCIRProvider {
 
 
                 revealTabs,
-
-
-                hotspotItems,
 
 
                 dragDrop,
