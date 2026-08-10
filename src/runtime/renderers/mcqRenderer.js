@@ -19,10 +19,11 @@ export default class MCQRenderer {
 
     async bind(slot, component, runtime) {
 
-        // Hide the scene image when options panel takes over —
-        // Step 1 (question VO) shows it; Step 2 onwards is white panel only.
+        // Hide the scene image and set white background for Steps 2 and 3.
         const sceneImage = document.querySelector("#craft-stage .image-component");
         if (sceneImage) sceneImage.style.display = "none";
+        const stage = document.querySelector("#craft-stage");
+        if (stage) stage.style.background = "#ffffff";
 
         const options  = component.properties?.options  ?? [];
         const feedback = component.properties?.feedback ?? {};
@@ -145,9 +146,11 @@ export default class MCQRenderer {
         const feedbackLine = isCorrect ? feedback.correct : feedback.incorrect;
 
         slot.innerHTML = feedbackLine
-            ? `<div class="dialogue-box" style="position:relative;bottom:auto;left:auto;right:auto;width:90%;margin:30px auto 0 auto;box-sizing:border-box;">
-                   <div class="dialogue-speaker">${feedbackLine.speaker ?? "NAR"}</div>
-                   <div class="dialogue-text">${feedbackLine.text ?? ""}</div>
+            ? `<div style="position:absolute;inset:0;background:#ffffff;display:flex;align-items:center;justify-content:center;padding:40px;">
+                   <div class="dialogue-box" style="position:relative;bottom:auto;left:auto;right:auto;width:90%;max-width:800px;box-sizing:border-box;">
+                       <div class="dialogue-speaker">${feedbackLine.speaker ?? "NAR"}</div>
+                       <div class="dialogue-text">${feedbackLine.text ?? ""}</div>
+                   </div>
                </div>`
             : "";
 
