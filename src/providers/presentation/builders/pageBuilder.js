@@ -107,9 +107,8 @@ export default class PageBuilder {
             // still playing out in the scene, so the background image
             // stays for that style.
             const isStandaloneDecisionScreen =
-                ["hotspot"].includes(
-                    screen.branching?.style ?? ""
-                );
+                false; // Hotspot shows location image during question VO (Step 1)
+                // Image is hidden by hotspotRenderer.bind() for Steps 2-4
 
 
             if (screenImage && !isStandaloneDecisionScreen) {
@@ -141,13 +140,16 @@ export default class PageBuilder {
 
 
 
+            console.log("[PAGEBUILDER] hotspotItems:", screen.hotspotItems?.length, "branching feedback:", screen.branching?.feedback?.correct?.voiceId);
             const feedbackVoiceIds =
                 new Set(
                     [
                         screen.dragDrop?.feedback?.correct,
                         screen.dragDrop?.feedback?.incorrect,
                         screen.branching?.feedback?.correct,
-                        screen.branching?.feedback?.incorrect
+                        screen.branching?.feedback?.incorrect,
+                        screen.hotspotItems?.length > 0 ? screen.branching?.feedback?.correct  : null,
+                        screen.hotspotItems?.length > 0 ? screen.branching?.feedback?.incorrect : null
                     ]
                     .filter(Boolean)
                     .map(
@@ -230,9 +232,12 @@ export default class PageBuilder {
 
 
 
+            const isHotspotScreen = (screen.hotspotItems?.length ?? 0) > 0;
+
             if (
                 screen.branching &&
-                screen.branching.options?.length > 0
+                screen.branching.options?.length > 0 &&
+                !isHotspotScreen
             ) {
 
 
@@ -380,6 +385,28 @@ export default class PageBuilder {
 
             }
 
+
+
+            if (screen.hotspotItems && screen.hotspotItems.length > 0) {
+
+                components.push(
+                    this.componentBuilder.build("HOTSPOT_PANEL", {
+                        id: `HOTSPOT_PANEL_${screen.id}`,
+                        properties: {
+                            locationImage: screenImage ?? null,
+                            items: screen.hotspotItems.map(item => ({
+                                id:       item.id,
+                                title:    item.title,
+                                subtitle: item.subtitle,
+                                text:     item.text,
+                                image:    this.findImageByRef(images, item.assetRef)
+                            })),
+                            branching: screen.branching ?? null
+                        }
+                    })
+                );
+
+            }
 
 
             if (
