@@ -238,7 +238,7 @@ body {
 
     height:100%;
 
-    object-fit:contain;
+    object-fit:cover;
 
 }
 
@@ -396,7 +396,7 @@ body {
 
     height:100%;
 
-    object-fit:contain;
+    object-fit:cover;
 
     display:block;
 
