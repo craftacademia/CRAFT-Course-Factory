@@ -142,6 +142,8 @@ export default class RuntimeBuilder {
         );
 
 
+
+
         await fs.copyFile(
             path.resolve(
                 "src/runtime/browser/browserRuntime.js"
@@ -209,6 +211,15 @@ import BrowserRuntime from "./browser/browserRuntime.js";
 
 console.log("CRAFT Runtime Loaded");
 
+const course  = window.PIR;
+const config  = course?.course?.config ?? {};
+const BACK        = config.back       !== false;
+const REPLAY      = config.replay     !== false;
+const SPEED       = config.speed      !== false;
+const VOLUME      = config.volume     !== false;
+const FULLSCREEN  = config.fullscreen !== false;
+const PAUSE       = config.pause      !== false;
+
 const app = document.getElementById("app");
 
 app.innerHTML = \`
@@ -222,9 +233,9 @@ app.innerHTML = \`
     </div>
     <div class="craft-score-display" id="craft-score-display">Score: 0</div>
     <div class="craft-actions">
-        <span class="craft-icon-btn" title="Menu">&#9776;</span>
-        <span class="craft-icon-btn" title="Help">?</span>
-        <span class="craft-icon-btn" title="Exit">&times;</span>
+        \${FULLSCREEN  ? '<button class="craft-icon-btn" id="craft-fullscreen-btn" title="Fullscreen">&#x26F6;</button>' : ''}
+        \${SPEED       ? '<select class="craft-icon-btn" id="craft-speed-select" title="Speed"><option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="2">2x</option></select>' : ''}
+        \${VOLUME      ? '<input type="range" id="craft-volume-slider" min="0" max="1" step="0.05" value="1" title="Volume" style="width:80px;">' : ''}
     </div>
 </div>
 
@@ -235,15 +246,102 @@ app.innerHTML = \`
 <div class="craft-player-stage" id="craft-stage"></div>
 
 <div class="craft-player-footer">
-    <button class="craft-nav-btn" id="craft-back-btn">&larr; Back</button>
-    <button class="craft-nav-btn" id="craft-pause-btn">&#10073;&#10073; Pause</button>
+    \${BACK   ? '<button class="craft-nav-btn" id="craft-back-btn">&larr; Back</button>'       : '<span></span>'}
+    <div style="display:flex;gap:8px;">
+        \${REPLAY ? '<button class="craft-nav-btn" id="craft-replay-btn">&#8635; Replay</button>' : ''}
+        \${PAUSE  ? '<button class="craft-nav-btn" id="craft-pause-btn">&#10073;&#10073; Pause</button>' : ''}
+    </div>
     <button class="craft-nav-btn" id="craft-next-btn">Next &rarr;</button>
 </div>
 \`;
 
 const stage = document.getElementById("craft-stage");
-
 const runtime = new BrowserRuntime(stage);
+
+// ── Control handlers ──────────────────────────────────────────────────────────
+
+// Pause / Play
+let isPaused = false;
+const pauseBtn = document.getElementById("craft-pause-btn");
+if (pauseBtn) {
+    pauseBtn.addEventListener("click", () => {
+        isPaused = !isPaused;
+        if (isPaused) {
+            if (runtime.currentAudio) runtime.currentAudio.pause();
+            pauseBtn.innerHTML = "&#9654; Play";
+        } else {
+            if (runtime.currentAudio) runtime.currentAudio.play().catch(() => {});
+            pauseBtn.innerHTML = "&#10073;&#10073; Pause";
+        }
+    });
+}
+
+// Speed
+const speedSelect = document.getElementById("craft-speed-select");
+if (speedSelect) {
+    speedSelect.addEventListener("change", () => {
+        const rate = parseFloat(speedSelect.value);
+        if (runtime.currentAudio) runtime.currentAudio.playbackRate = rate;
+        // Store for future audio
+        runtime._playbackRate = rate;
+    });
+}
+
+// Volume
+const volumeSlider = document.getElementById("craft-volume-slider");
+if (volumeSlider) {
+    volumeSlider.addEventListener("input", () => {
+        const vol = parseFloat(volumeSlider.value);
+        if (runtime.currentAudio) runtime.currentAudio.volume = vol;
+        runtime._volume = vol;
+    });
+}
+
+// Replay — restart current page
+const replayBtn = document.getElementById("craft-replay-btn");
+if (replayBtn) {
+    replayBtn.addEventListener("click", () => {
+        isPaused = false;
+        if (pauseBtn) pauseBtn.innerHTML = "&#10073;&#10073; Pause";
+        if (runtime.currentAudio) { runtime.currentAudio.pause(); runtime.currentAudio = null; }
+        runtime.renderCurrentPage();
+    });
+}
+
+// Fullscreen
+const fullscreenBtn = document.getElementById("craft-fullscreen-btn");
+if (fullscreenBtn) {
+    fullscreenBtn.addEventListener("click", () => {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch(() => {});
+            fullscreenBtn.innerHTML = "&#x2715;";
+        } else {
+            document.exitFullscreen().catch(() => {});
+            fullscreenBtn.innerHTML = "&#x26F6;";
+        }
+    });
+}
+
+// Apply playback rate and volume to each new audio element
+const origFindDialogueAudio = runtime.findDialogueAudio.bind(runtime);
+runtime.findDialogueAudio = function(voiceId) {
+    const asset = origFindDialogueAudio(voiceId);
+    return asset;
+};
+
+// Patch currentAudio setter to apply rate/volume
+const _runtimeAudioProxy = new Proxy(runtime, {
+    set(target, prop, value) {
+        if (prop === 'currentAudio' && value instanceof Audio) {
+            if (target._playbackRate) value.playbackRate = target._playbackRate;
+            if (target._volume !== undefined) value.volume = target._volume;
+        }
+        target[prop] = value;
+        return true;
+    }
+});
+
+// ── Gating functions ──────────────────────────────────────────────────────────
 
 function currentPageHasUnreadTabPanel() {
     const currentPage = runtime.navigation.current();
@@ -321,8 +419,8 @@ function currentPageHasUnresolvedBranching() {
 }
 
 function updateChrome() {
-    const total = runtime.navigation.totalPages();
-    const index = runtime.navigation.currentIndex();
+    const total    = runtime.navigation.totalPages();
+    const index    = runtime.navigation.currentIndex();
     const progress = runtime.navigation.progress();
 
     const counterEl = document.getElementById("craft-scene-counter");
@@ -354,10 +452,11 @@ function updateChrome() {
 runtime.onStateChange = updateChrome;
 runtime.computeTotalScore = computeTotalScore;
 
-document.getElementById("craft-back-btn").addEventListener("click", () => runtime.previous());
+if (BACK) {
+    const backBtn = document.getElementById("craft-back-btn");
+    if (backBtn) backBtn.addEventListener("click", () => runtime.previous());
+}
 document.getElementById("craft-next-btn").addEventListener("click", () => runtime.next());
-
-const course = window.PIR;
 
 const titleEl = document.getElementById("craft-course-title");
 if (titleEl) titleEl.textContent = course?.course?.title ?? "Course";
@@ -372,9 +471,77 @@ if (logoEl) {
     }
 }
 
+// ── SCORM integration ──────────────────────────────────────────────────────────
+
+const scorm = window.CRAFT_SCORM;
+
+if (scorm && scorm.isActive()) {
+    const learnerName = scorm.getLearnerName();
+    if (learnerName && titleEl) {
+        console.log('[SCORM] Learner:', learnerName, scorm.getLearnerId());
+    }
+}
+
+const savedLocation = scorm ? scorm.getLocation() : null;
+const suspendRaw    = scorm ? scorm.getSuspendData() : null;
+let   suspendData   = null;
+try { suspendData = suspendRaw ? JSON.parse(suspendRaw) : null; } catch(e) {}
+
 const mountPromise = runtime.mount(course);
 
-runtime.navigation.on("afterNavigate", updateChrome);
+mountPromise.then(() => {
+    if (scorm && scorm.isResume() && savedLocation) {
+        runtime.navigate(savedLocation).catch(() => {});
+    }
+    if (suspendData && suspendData.variables && runtime.state && runtime.state.variables) {
+        for (const [key, val] of Object.entries(suspendData.variables)) {
+            runtime.state.variables.set(key, val);
+        }
+    }
+}).catch(e => console.error(e));
+
+runtime.navigation.on("afterNavigate", () => {
+    updateChrome();
+    if (!scorm || !scorm.isActive()) return;
+    const currentPage = runtime.navigation.current();
+    if (!currentPage) return;
+    scorm.setLocation(currentPage.id);
+    const allVars = runtime.state && runtime.state.variables && typeof runtime.state.variables.all === 'function'
+        ? runtime.state.variables.all() : {};
+    const scored = {};
+    for (const [k, v] of Object.entries(allVars)) {
+        if (k.startsWith('branching.') || k.startsWith('dragDrop.')) scored[k] = v;
+    }
+    scorm.setSuspendData({ variables: scored, location: currentPage.id });
+    const total    = computeTotalScore();
+    const maxScore = computeOverallMaxScore();
+    scorm.setScore(total, maxScore);
+    if (!runtime.navigation.hasNext()) {
+        const passScore = course.passScore || 70;
+        const pct       = maxScore > 0 ? (total / maxScore) * 100 : 0;
+        scorm.complete(pct >= passScore, total, maxScore);
+    }
+});
+
+const origOnStateChange = updateChrome;
+runtime.onStateChange = function() {
+    origOnStateChange();
+    if (!scorm || !scorm.isActive()) return;
+    const allVars = runtime.state && runtime.state.variables && typeof runtime.state.variables.all === 'function'
+        ? runtime.state.variables.all() : {};
+    for (const [key, val] of Object.entries(allVars)) {
+        if (!key.startsWith('branching.') && !key.startsWith('dragDrop.')) continue;
+        if (val && !val._scormRecorded) {
+            val._scormRecorded = true;
+            const response = val.option ? (val.option.letter || val.option.text || '') : String(val);
+            const score    = val.option ? Number(val.option.score || 0) : (val.score || 0);
+            const maxOpt   = 10;
+            const correct  = score >= maxOpt ? (val.option ? val.option.letter : '') : '';
+            const result   = score >= maxOpt ? 'correct' : 'incorrect';
+            scorm.recordInteraction(key, 'choice', response, correct, result);
+        }
+    }
+};
 
 updateChrome();
 
