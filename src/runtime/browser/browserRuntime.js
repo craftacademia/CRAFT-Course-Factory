@@ -209,6 +209,8 @@ export default class BrowserRuntime {
 
         await this.renderBranchingOptions(page);
 
+        await this.renderCourseAnalytics(page);
+
         await this.renderHotspotPanel(page);
 
         this.renderTabPanel(page);
@@ -219,6 +221,15 @@ export default class BrowserRuntime {
 
         this.renderScoreCheckpoint(page);
 
+    }
+
+
+
+    createAudio(src) {
+        const audio = new Audio(src);
+        if (this._playbackRate) audio.playbackRate = this._playbackRate;
+        if (this._volume !== undefined) audio.volume = this._volume;
+        return audio;
     }
 
 
@@ -470,7 +481,7 @@ export default class BrowserRuntime {
 
 
                         const audio =
-                            new Audio(
+                            this.createAudio(
                                 `./${audioAsset.src}`
                             );
 
@@ -718,7 +729,7 @@ export default class BrowserRuntime {
 
 
                         const audio =
-                            new Audio(
+                            this.createAudio(
                                 `./${audioAsset.src}`
                             );
 
@@ -781,6 +792,34 @@ export default class BrowserRuntime {
 
             }
 
+        }
+
+    }
+
+
+
+    async renderCourseAnalytics(page) {
+
+        // COURSE_ANALYTICS_ROUTED
+        const analyticsQueue = [...(this.currentPlayer?.componentIndex?.values() ?? [])]
+            .filter(c => c.type === "COURSE_ANALYTICS");
+
+        if (analyticsQueue.length === 0) return;
+
+        const slot = this.rootElement.querySelector("#branching-slot");
+        if (!slot) return;
+
+        const renderer = this.currentPlayer.registry.get("COURSE_ANALYTICS");
+        if (!renderer) return;
+
+        // Hide scene image, set white background
+        const sceneImage = document.querySelector("#craft-stage .image-component");
+        if (sceneImage) sceneImage.style.display = "none";
+        const stage = document.querySelector("#craft-stage");
+        if (stage) stage.style.background = "#f0f4f8";
+
+        for (const component of analyticsQueue) {
+            await renderer.bind(slot, component, this);
         }
 
     }
@@ -1230,7 +1269,7 @@ export default class BrowserRuntime {
 
 
                         const audio =
-                            new Audio(
+                            this.createAudio(
                                 `./${audioAsset.src}`
                             );
 

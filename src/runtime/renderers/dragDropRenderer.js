@@ -404,7 +404,7 @@ data-correct-zone="${card.correctZone ?? ""}">
 
 
                                     const audio =
-                                        new Audio(
+                                        runtime.createAudio(
                                             `./${audioAsset.src}`
                                         );
 

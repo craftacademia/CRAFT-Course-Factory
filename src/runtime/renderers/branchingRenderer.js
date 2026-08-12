@@ -228,7 +228,7 @@ data-option-index="${index}">
 
 
                         const audio =
-                            new Audio(
+                            runtime.createAudio(
                                 `./${audioAsset.src}`
                             );
 

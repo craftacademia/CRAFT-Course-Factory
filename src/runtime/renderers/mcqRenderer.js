@@ -72,7 +72,7 @@ export default class MCQRenderer {
             if (!audioAsset) continue;
 
             await new Promise(resolve => {
-                const audio = new Audio(`./${audioAsset.src}`);
+                const audio = runtime.createAudio(`./${audioAsset.src}`);
                 runtime.currentAudio        = audio;
                 runtime.currentAudioResolve = resolve;
                 audio.onended = resolve;
@@ -166,7 +166,7 @@ export default class MCQRenderer {
             if (feedbackAudio) {
 
                 await new Promise(resolve => {
-                    const audio = new Audio(`./${feedbackAudio.src}`);
+                    const audio = runtime.createAudio(`./${feedbackAudio.src}`);
                     runtime.currentAudio        = audio;
                     runtime.currentAudioResolve = resolve;
                     audio.onended = resolve;
