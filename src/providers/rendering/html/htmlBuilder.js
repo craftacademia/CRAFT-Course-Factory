@@ -413,95 +413,24 @@ body {
 }
 
 
-
-.dialogue-box--plain {
+#dialogue-slot {
     position:absolute;
-    left:10%;
-    right:10%;
-    bottom:2%;
-    background:#ffffff;
-    border:3px solid #d71920;
-    border-radius:16px;
-    padding:14px 18px;
+    inset:0;
+    pointer-events:none;
     z-index:10;
-    box-shadow:0 4px 16px rgba(0,0,0,0.25);
 }
 
-.speech-bubble {
+.dialogue-box {
     position:absolute;
-    bottom:8%;
-    width:55%;
+    left:0;
+    right:0;
+    bottom:0;
     background:#ffffff;
-    border:3px solid #d71920;
-    border-radius:50%;
-    padding:28px 40px;
-    z-index:10;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    min-height:90px;
+    border-top:4px solid #f59e0b;
+    padding:14px 24px;
+    pointer-events:all;
     box-sizing:border-box;
-}
-
-.speech-bubble--right {
-    right:3%;
-    left:auto;
-}
-
-.speech-bubble--left {
-    left:3%;
-    right:auto;
-}
-
-.speech-bubble--right::before {
-    content:'';
-    position:absolute;
-    left:-32px;
-    top:50%;
-    transform:translateY(-50%);
-    border-width:14px 32px 14px 0;
-    border-style:solid;
-    border-color:transparent #d71920 transparent transparent;
-}
-
-.speech-bubble--right::after {
-    content:'';
-    position:absolute;
-    left:-26px;
-    top:50%;
-    transform:translateY(-50%);
-    border-width:11px 26px 11px 0;
-    border-style:solid;
-    border-color:transparent #ffffff transparent transparent;
-}
-
-.speech-bubble--left::before {
-    content:'';
-    position:absolute;
-    right:-32px;
-    top:50%;
-    transform:translateY(-50%);
-    border-width:14px 0 14px 32px;
-    border-style:solid;
-    border-color:transparent transparent transparent #d71920;
-}
-
-.speech-bubble--left::after {
-    content:'';
-    position:absolute;
-    right:-26px;
-    top:50%;
-    transform:translateY(-50%);
-    border-width:11px 0 11px 26px;
-    border-style:solid;
-    border-color:transparent transparent transparent #ffffff;
-}
-
-.speech-bubble-text {
-    font-size:17px;
-    line-height:1.5;
-    color:#222;
-    text-align:center;
+    z-index:2;
 }
 
 
@@ -1476,6 +1405,122 @@ body {
 
     color:#d71920;
 
+}
+
+
+
+
+/* ── Mobile Adaptive ─────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+
+    #craft-app {
+        max-width: 100vw;
+        max-height: 100vh;
+    }
+
+    .craft-player-header {
+        height: auto;
+        min-height: 44px;
+        padding: 6px 10px;
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .craft-course-title {
+        font-size: 13px;
+    }
+
+    .craft-scene-counter {
+        font-size: 10px;
+    }
+
+    .craft-score-display {
+        font-size: 12px;
+    }
+
+    .craft-icon-btn {
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+
+    .craft-player-footer {
+        height: auto;
+        min-height: 44px;
+        padding: 6px 10px;
+    }
+
+    .craft-nav-btn {
+        font-size: 12px;
+        padding: 8px 14px;
+        border-radius: 6px;
+    }
+
+    .speech-bubble {
+        width: 70%;
+        padding: 16px 20px;
+        min-height: 60px;
+        border-radius: 40%;
+    }
+
+    .speech-bubble-text {
+        font-size: 13px;
+        line-height: 1.4;
+    }
+
+    .branch-options {
+        left: 2%;
+        right: 2%;
+        bottom: 15%;
+    }
+
+    .branch-option {
+        font-size: 14px;
+        padding: 10px 14px;
+    }
+
+    .mcq-submit-btn {
+        font-size: 14px;
+        padding: 10px 24px;
+    }
+
+}
+
+/* ── Tilt overlay ────────────────────────────────────────────────────────── */
+
+#craft-tilt-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #1e3a8a;
+    z-index: 9999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+    padding: 40px;
+}
+
+#craft-tilt-overlay.visible {
+    display: flex;
+}
+
+.craft-tilt-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    animation: tiltRotate 2s ease-in-out infinite;
+}
+
+.craft-tilt-text {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+@keyframes tiltRotate {
+    0%, 100% { transform: rotate(0deg); }
+    50%       { transform: rotate(90deg); }
 }
 
 

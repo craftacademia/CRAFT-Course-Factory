@@ -57,6 +57,26 @@ loadCourse().then(course => {
 </div>
 `;
 
+    // Tilt overlay for portrait phones
+    const tiltOverlay = document.createElement('div');
+    tiltOverlay.id = 'craft-tilt-overlay';
+    tiltOverlay.innerHTML = '<div class="craft-tilt-icon">📱</div><div class="craft-tilt-text">Please rotate your device<br>for the best experience</div>';
+    document.body.appendChild(tiltOverlay);
+
+    function checkOrientation() {
+        const isPhone   = window.innerWidth < 768 || window.innerHeight < 768;
+        const isPortrait = window.innerHeight > window.innerWidth;
+        if (isPhone && isPortrait) {
+            tiltOverlay.classList.add('visible');
+        } else {
+            tiltOverlay.classList.remove('visible');
+        }
+    }
+
+    checkOrientation();
+    window.addEventListener('resize', checkOrientation);
+    window.addEventListener('orientationchange', checkOrientation);
+
     const stage   = document.getElementById("craft-stage");
     const runtime = new BrowserRuntime(stage);
     window.__craftRuntime = runtime;
