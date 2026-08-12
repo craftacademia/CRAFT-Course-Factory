@@ -192,10 +192,10 @@ export default class NavigationEngine {
 
         if (this.hasPrevious()) {
 
-            return this.navigate(
-                this.currentPage - 1
-            );
-
+            const prevIndex =
+                this.history[this.history.length - 2];
+            this.history.splice(-2, 2);
+            return this.navigate(prevIndex);
         }
 
 
