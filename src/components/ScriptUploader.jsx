@@ -21,6 +21,7 @@ export default function ScriptUploader({ onScriptParsed }) {
   const [loading, setLoading]             = useState(false);
   const [error, setError]                 = useState('');
   const [config, setConfig]               = useState(DEFAULT_CONFIG);
+  const [courseTitle, setCourseTitle]      = useState('');
 
   const toggleConfig = (key) => setConfig(prev => ({ ...prev, [key]: !prev[key] }));
 
@@ -40,6 +41,7 @@ export default function ScriptUploader({ onScriptParsed }) {
       const formData = new FormData();
       formData.append('script', file);
       formData.append('courseConfig', JSON.stringify(config));
+      if (courseTitle) formData.append('courseTitle', courseTitle);
       images.forEach((img) => formData.append('images', img));
       narration.forEach((a) => formData.append('narration', a));
       dialogueAudio.forEach((a) => formData.append('dialogueAudio', a));
@@ -103,6 +105,19 @@ export default function ScriptUploader({ onScriptParsed }) {
           />
           <span>%</span>
         </div>
+      </div>
+
+      <div style={{marginBottom:'16px'}}>
+        <label style={{display:'block',fontWeight:'600',fontSize:'14px',color:'#222',marginBottom:'6px'}}>
+          Course Title
+        </label>
+        <input
+          type="text"
+          placeholder="e.g. Document & Eligibility"
+          value={courseTitle}
+          onChange={e => setCourseTitle(e.target.value)}
+          style={{width:'100%',padding:'8px 12px',borderRadius:'8px',border:'1px solid #ccc',fontSize:'14px',boxSizing:'border-box'}}
+        />
       </div>
 
       <form onSubmit={handleUpload}>

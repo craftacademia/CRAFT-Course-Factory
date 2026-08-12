@@ -46,6 +46,7 @@ export default class Html5Builder {
         );
 
 
+        await this.copyBranding(pir, outputDirectory);
         await this.copyRuntimeTree(
             outputDirectory
         );
@@ -55,6 +56,15 @@ export default class Html5Builder {
 
     }
 
+
+
+    async copyBranding(pir, outputDirectory) {
+        const logo = pir && pir.branding && pir.branding.logo;
+        if (!logo || !logo.uploadPath) return;
+        const assetsDir = path.join(outputDirectory, "assets");
+        await fs.mkdir(assetsDir, { recursive: true });
+        await fs.copyFile(logo.uploadPath, path.join(assetsDir, logo.name));
+    }
 
 
     async copyRuntimeTree(

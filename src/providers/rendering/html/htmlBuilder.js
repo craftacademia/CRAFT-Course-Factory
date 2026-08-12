@@ -171,72 +171,72 @@ body {
 
 
 .craft-player-header {
-
-    height:64px;
-
-    flex-shrink:0;
-
     display:flex;
-
     align-items:center;
-
     justify-content:space-between;
-
-    padding:0 20px;
-
+    height:64px;
+    padding:0 16px;
     background:#ffffff;
-
-    border-bottom:1px solid #e0e0e0;
-
+    border-bottom:1px solid #eee;
+    gap:12px;
 }
-
-
 
 .craft-header-left {
-
     display:flex;
-
     align-items:center;
-
-    gap:12px;
-
+    flex-shrink:0;
 }
 
-
-
-.craft-logo {
-
-    width:40px;
-
-    height:40px;
-
-    border-radius:6px;
-
-    background:#d71920;
-
-    color:#ffffff;
-
+.craft-header-centre {
+    flex:1;
     display:flex;
-
     align-items:center;
-
     justify-content:center;
-
-    font-size:12px;
-
-    font-weight:700;
-
+    min-width:0;
     overflow:hidden;
+    padding:0 12px;
+}
 
+.craft-header-right {
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-shrink:0;
+}
+
+.craft-course-title {
+    font-size:16px;
+    font-weight:700;
+    color:#1e3a8a;
+    text-align:center;
+    overflow:hidden;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    line-height:1.3;
+    max-height:42px;
+}
+
+.craft-scene-counter {
+    font-size:11px;
+    color:#777;
+    white-space:nowrap;
+}
+.craft-logo {
+    height:44px;
+    max-width:120px;
+    display:flex;
+    align-items:center;
+    overflow:hidden;
 }
 
 
 
 .craft-logo img {
-
-    width:100%;
-
     height:100%;
+    width:auto;
+    max-width:120px;
+    object-fit:contain;
 
     object-fit:cover;
 

@@ -28,16 +28,18 @@ loadCourse().then(course => {
 <div class="craft-player-header">
     <div class="craft-header-left">
         <div class="craft-logo" id="craft-logo"></div>
-        <div class="craft-header-text">
-            <div class="craft-course-title" id="craft-course-title">Course</div>
-            <div class="craft-scene-counter" id="craft-scene-counter">Scene 1 of 1</div>
-        </div>
     </div>
-    <div class="craft-score-display" id="craft-score-display">Score: 0</div>
-    <div class="craft-actions">
-        ${FULLSCREEN ? '<button class="craft-icon-btn" id="craft-fullscreen-btn" title="Fullscreen">&#x26F6;</button>' : ''}
-        ${SPEED      ? '<select class="craft-icon-btn" id="craft-speed-select" title="Speed"><option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="2">2x</option></select>' : ''}
-        ${VOLUME     ? '<input type="range" id="craft-volume-slider" min="0" max="1" step="0.05" value="1" title="Volume" style="width:80px;cursor:pointer;">' : ''}
+    <div class="craft-header-centre">
+        <div class="craft-course-title" id="craft-course-title">Course</div>
+    </div>
+    <div class="craft-header-right">
+        <div class="craft-scene-counter" id="craft-scene-counter">Scene 1 of 1</div>
+        <div class="craft-score-display" id="craft-score-display">Score: 0/0</div>
+        <div class="craft-actions">
+            ${FULLSCREEN ? '<button class="craft-icon-btn" id="craft-fullscreen-btn" title="Fullscreen">&#x26F6;</button>' : ''}
+            ${SPEED ? '<select class="craft-icon-btn" id="craft-speed-select" title="Speed"><option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="2">2x</option></select>' : ''}
+            ${VOLUME ? '<input type="range" id="craft-volume-slider" min="0" max="1" step="0.05" value="1" title="Volume" style="width:80px;cursor:pointer;">' : ''}
+        </div>
     </div>
 </div>
 
@@ -254,13 +256,12 @@ loadCourse().then(course => {
     // ── Branding ───────────────────────────────────────────────────────────────
 
     const titleEl = document.getElementById("craft-course-title");
-    if (titleEl) titleEl.textContent = course?.course?.title ?? "Course";
+    if (titleEl) titleEl.textContent = window.PIR?.course?.title || course?.course?.title || "Course";
 
     const logoEl  = document.getElementById("craft-logo");
     const logoSrc = course?.branding?.logo?.src;
     if (logoEl) {
         if (logoSrc) logoEl.innerHTML = `<img src="./${logoSrc}" alt="">`;
-        else logoEl.textContent = "LOGO";
     }
 
     // ── SCORM ──────────────────────────────────────────────────────────────────

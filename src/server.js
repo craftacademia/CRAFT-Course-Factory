@@ -401,13 +401,13 @@ console.log(
 
 
                 fs.copyFileSync(
-                    logo.path,
-                    path.join(
-                        assetsDir,
-                        "branding",
-                        logo.originalname
-                    )
-                );
+                        logo.path,
+                        path.join(
+                            assetsDir,
+                            'branding',
+                            logo.originalname
+                        )
+                    );
 
 
 
@@ -422,6 +422,8 @@ console.log(
 
 
                     src:
+                        `assets/${logo.originalname}`,
+                    uploadPath:
                         logo.path
 
                 };
@@ -467,6 +469,11 @@ console.log(
 
 
             // Inject course config from UI into PIR and rewrite index.html
+            const courseTitle = req.body?.courseTitle;
+            if (courseTitle && pir && pir.course) {
+                pir.course.title = courseTitle;
+            }
+
             const courseConfig = req.body?.courseConfig;
             if (courseConfig) {
                 try {
