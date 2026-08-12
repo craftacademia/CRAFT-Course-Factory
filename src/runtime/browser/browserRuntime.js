@@ -225,6 +225,35 @@ export default class BrowserRuntime {
 
 
 
+    // ── Pause / Resume ────────────────────────────────────────────────────────
+
+    pause() {
+        this._paused = true;
+        if (this.currentAudio) this.currentAudio.pause();
+    }
+
+    resume() {
+        this._paused = false;
+        if (this.currentAudio) {
+            this.currentAudio.play().catch(() => {});
+        }
+        // Resolve all waiting promises
+        const callbacks = this._pauseCallbacks ?? [];
+        this._pauseCallbacks = [];
+        callbacks.forEach(cb => cb());
+    }
+
+    async waitIfPaused() {
+        while (this._paused) {
+            await new Promise(resolve => {
+                if (!this._pauseCallbacks) this._pauseCallbacks = [];
+                this._pauseCallbacks.push(resolve);
+            });
+        }
+    }
+
+
+
     createAudio(src) {
         const audio = new Audio(src);
         if (this._playbackRate) audio.playbackRate = this._playbackRate;
@@ -439,6 +468,9 @@ export default class BrowserRuntime {
         for (const component of dialogueQueue) {
 
 
+            await this.waitIfPaused();
+
+
             const dialogueRenderer =
                 this.currentPlayer.registry.get(
                     "DIALOGUE"
@@ -513,7 +545,7 @@ export default class BrowserRuntime {
                         // option mid-playback) leaves this promise pending
                         // forever, permanently freezing navigation.
                         audio.onpause =
-                            resolve;
+                            () => { if (!this._paused) resolve(); };
 
 
                         audio.play()
@@ -760,7 +792,7 @@ export default class BrowserRuntime {
                         // .pause() must also resolve this promise, or
                         // clicking an option mid-VO freezes navigation.
                         audio.onpause =
-                            resolve;
+                            () => { if (!this._paused) resolve(); };
 
 
                         audio.play()
@@ -1295,7 +1327,7 @@ export default class BrowserRuntime {
                             resolve;
 
                         audio.onpause =
-                            resolve;
+                            () => { if (!this._paused) resolve(); };
 
 
                         audio.play()

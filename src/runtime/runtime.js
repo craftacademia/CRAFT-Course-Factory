@@ -66,9 +66,15 @@ loadCourse().then(course => {
     // Pausing mid-sequence causes VO jumbling across interactions
     const pauseBtn = document.getElementById("craft-pause-btn");
     if (pauseBtn) {
-        pauseBtn.style.opacity = '0.4';
-        pauseBtn.style.cursor = 'not-allowed';
-        pauseBtn.title = 'Coming soon';
+        pauseBtn.addEventListener("click", () => {
+            if (runtime._paused) {
+                runtime.resume();
+                pauseBtn.innerHTML = "&#10073;&#10073; Pause";
+            } else {
+                runtime.pause();
+                pauseBtn.innerHTML = "&#9654; Play";
+            }
+        });
     }
 
     // ── Speed ──────────────────────────────────────────────────────────────────
