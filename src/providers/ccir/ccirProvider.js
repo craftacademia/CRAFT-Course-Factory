@@ -25,6 +25,17 @@ export default class CCIRProvider {
             );
 
 
+        // Parse COURSE_CONFIG tag
+        const configNode = (ast.children ?? []).find(c => c.type === 'COURSE_CONFIG');
+        const courseConfig = configNode ? {
+            back:       (this.attr(configNode, 'back',       'BACK')       ?? 'true') !== 'false',
+            replay:     (this.attr(configNode, 'replay',     'REPLAY')     ?? 'true') !== 'false',
+            speed:      (this.attr(configNode, 'speed',      'SPEED')      ?? 'true') !== 'false',
+            volume:     (this.attr(configNode, 'volume',     'VOLUME')     ?? 'true') !== 'false',
+            fullscreen: (this.attr(configNode, 'fullscreen', 'FULLSCREEN') ?? 'true') !== 'false',
+            pause:      (this.attr(configNode, 'pause',      'PAUSE')      ?? 'true') !== 'false',
+        } : { back:true, replay:true, speed:true, volume:true, fullscreen:true, pause:true };
+
         const ccir = {
 
             version:"1.0",
@@ -40,7 +51,9 @@ export default class CCIRProvider {
                 title:
                 this.findTitle(ast),
 
-                version:null
+                version:null,
+
+                config: courseConfig
 
             },
 
@@ -788,6 +801,27 @@ export default class CCIRProvider {
                 : null;
 
 
+            // COURSE_ANALYTICS screen
+            const isCourseAnalytics =
+                (screenType ?? "").toUpperCase() === "COURSE_ANALYTICS";
+
+            const courseAnalyticsBands =
+                isCourseAnalytics
+                ? (node.children ?? [])
+                    .filter(c => c.type === "SCORE_BAND")
+                    .map(b => ({
+                        min:    Number(this.attr(b, "min", "MIN") ?? 0),
+                        max:    Number(this.attr(b, "max", "MAX") ?? 100),
+                        remark: this.attr(b, "remark", "REMARK") ?? ""
+                    }))
+                : null;
+
+            const courseAnalyticsPassScore =
+                isCourseAnalytics
+                ? Number(this.attr(node, "pass_score", "PASS_SCORE") ?? 70)
+                : null;
+
+
             const branching =
                 branchPointNode
                 ? {
@@ -848,6 +882,11 @@ export default class CCIRProvider {
 
 
                 scoreCheckpoint,
+
+                courseAnalytics: isCourseAnalytics ? {
+                    passScore: courseAnalyticsPassScore,
+                    bands: courseAnalyticsBands
+                } : null,
 
 
                 scoreBranch:

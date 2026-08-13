@@ -137,10 +137,6 @@ export default class PageBuilder {
                 );
 
             }
-
-
-
-            console.log("[PAGEBUILDER] hotspotItems:", screen.hotspotItems?.length, "branching feedback:", screen.branching?.feedback?.correct?.voiceId);
             const feedbackVoiceIds =
                 new Set(
                     [
@@ -385,6 +381,21 @@ export default class PageBuilder {
 
             }
 
+
+
+            if (screen.courseAnalytics) {
+
+                components.push(
+                    this.componentBuilder.build("COURSE_ANALYTICS", {
+                        id: `COURSE_ANALYTICS_${screen.id}`,
+                        properties: {
+                            passScore: screen.courseAnalytics.passScore,
+                            bands:     screen.courseAnalytics.bands ?? []
+                        }
+                    })
+                );
+
+            }
 
 
             if (screen.hotspotItems && screen.hotspotItems.length > 0) {

@@ -1,0 +1,292 @@
+diff --git a/src/providers/presentation/builders/pageBuilder.js b/src/providers/presentation/builders/pageBuilder.js
+index f0b1449..b1b1625 100644
+--- a/src/providers/presentation/builders/pageBuilder.js
++++ b/src/providers/presentation/builders/pageBuilder.js
+@@ -99,13 +99,17 @@ export default class PageBuilder {
+ 
+ 
+ 
+-            // MCQ screens are intentionally clean — no background
+-            // image at all, just the question and options on white.
+-            const isMcqScreen =
+-                (screen.type ?? "").toUpperCase() === "MCQ";
++            // Any screen presenting an options-selection interaction
++            // (Branching, in any of its "instant"/"mcq"/"hotspot"
++            // styles) is intentionally clean — no background image,
++            // just the question and options on white. This applies
++            // even if the script provides a SCENE=/LOCATION=/ASSET_REF=
++            // for that screen — the reference is deliberately ignored.
++            const hasOptionsSelection =
++                (screen.branching?.options?.length ?? 0) > 0;
+ 
+ 
+-            if (screenImage && !isMcqScreen) {
++            if (screenImage && !hasOptionsSelection) {
+ 
+ 
+                 components.push(
+diff --git a/src/providers/presentation/presentationProvider.js b/src/providers/presentation/presentationProvider.js
+index 5c5cbb6..ac5b921 100644
+--- a/src/providers/presentation/presentationProvider.js
++++ b/src/providers/presentation/presentationProvider.js
+@@ -191,12 +191,20 @@ export default class PresentationProvider {
+ 
+ 
+ 
+-                const screenId =
+-                    page.id
+-                    ?.toLowerCase()
+-                    ?? "";
+-
+-
++                // Strict match only. The previous version also matched
++                // "any audio file belonging to this scene" as a fallback
++                // (filename.startsWith("vo-" + screenId)) — since .find()
++                // stops at the first item satisfying EITHER condition,
++                // and every file in a scene satisfies the loose clause,
++                // this caused every dialogue line in a scene to silently
++                // receive whichever file was alphabetically first for
++                // that scene, regardless of whose line it actually was.
++                // A line with no exact audio match should get no audio,
++                // not the wrong one.
++                const normalizedVoiceId =
++                    voiceId
++                    .toLowerCase()
++                    .replace("_","-");
+ 
+                 const audio =
+                     audioAssets.find(
+@@ -208,17 +216,8 @@ export default class PresentationProvider {
+                                 ?? "";
+ 
+ 
+-                            return (
+-                                filename.includes(
+-                                    voiceId
+-                                    .toLowerCase()
+-                                    .replace("_","-")
+-                                )
+-                                ||
+-                                filename.startsWith(
+-                                    "vo-" +
+-                                    screenId
+-                                )
++                            return filename.includes(
++                                normalizedVoiceId
+                             );
+ 
+                         }
+diff --git a/src/providers/rendering/runtime/runtimeBuilder.js b/src/providers/rendering/runtime/runtimeBuilder.js
+index 82202b9..1f45748 100644
+--- a/src/providers/rendering/runtime/runtimeBuilder.js
++++ b/src/providers/rendering/runtime/runtimeBuilder.js
+@@ -205,49 +205,182 @@ export default class RuntimeBuilder {
+ 
+ 
+         const runtimeEntry = `
++import BrowserRuntime from "./browser/browserRuntime.js";
++
++console.log("CRAFT Runtime Loaded");
++
++const app = document.getElementById("app");
++
++app.innerHTML = \`
++<div class="craft-player-header">
++    <div class="craft-header-left">
++        <div class="craft-logo" id="craft-logo"></div>
++        <div class="craft-header-text">
++            <div class="craft-course-title" id="craft-course-title">Course</div>
++            <div class="craft-scene-counter" id="craft-scene-counter">Scene 1 of 1</div>
++        </div>
++    </div>
++    <div class="craft-score-display" id="craft-score-display">Score: 0</div>
++    <div class="craft-actions">
++        <span class="craft-icon-btn" title="Menu">&#9776;</span>
++        <span class="craft-icon-btn" title="Help">?</span>
++        <span class="craft-icon-btn" title="Exit">&times;</span>
++    </div>
++</div>
++
++<div class="craft-progress-track">
++    <div class="craft-progress-fill" id="craft-progress-fill"></div>
++</div>
++
++<div class="craft-player-stage" id="craft-stage"></div>
++
++<div class="craft-player-footer">
++    <button class="craft-nav-btn" id="craft-back-btn">&larr; Back</button>
++    <button class="craft-nav-btn" id="craft-pause-btn">&#10073;&#10073; Pause</button>
++    <button class="craft-nav-btn" id="craft-next-btn">Next &rarr;</button>
++</div>
++\`;
++
++const stage = document.getElementById("craft-stage");
++
++const runtime = new BrowserRuntime(stage);
++
++function currentPageHasUnreadTabPanel() {
++    const currentPage = runtime.navigation.current();
++    for (const layer of currentPage?.layers ?? []) {
++        for (const component of layer.components ?? []) {
++            if (component.type !== "TAB_PANEL") continue;
++            const isRead = runtime.state.variables.get(\`tabPanel.\${component.id}\`) === true;
++            if (!isRead) return true;
++        }
++    }
++    return false;
++}
++
++function currentPageHasUnreadRevealPanel() {
++    const currentPage = runtime.navigation.current();
++    for (const layer of currentPage?.layers ?? []) {
++        for (const component of layer.components ?? []) {
++            if (component.type !== "REVEAL_PANEL") continue;
++            const isRead = runtime.state.variables.get(\`revealPanel.\${component.id}\`) === true;
++            if (!isRead) return true;
++        }
++    }
++    return false;
++}
++
++function currentPageHasUnresolvedDragDrop() {
++    const currentPage = runtime.navigation.current();
++    for (const layer of currentPage?.layers ?? []) {
++        for (const component of layer.components ?? []) {
++            if (component.type !== "DRAG_DROP") continue;
++            const isResolved = runtime.state.variables.get(\`dragDrop.\${component.id}\`)?.resolved === true;
++            if (!isResolved) return true;
++        }
++    }
++    return false;
++}
++
++function computeTotalScore() {
++    const allVars = runtime.state.variables.all();
++    let total = 0;
++    for (const [key, value] of Object.entries(allVars)) {
++        if (key.startsWith("branching.")) {
++            total += Number(value?.option?.score) || 0;
++        } else if (key.startsWith("dragDrop.")) {
++            total += Number(value?.score) || 0;
++        }
++    }
++    return total;
++}
++
++function computeOverallMaxScore() {
++    let total = 0;
++    for (const page of runtime.course?.pages ?? []) {
++        for (const layer of page.layers ?? []) {
++            for (const component of layer.components ?? []) {
++                if (component.type === "SCORE_CHECKPOINT") {
++                    total += Number(component.properties?.max) || 0;
++                }
++            }
++        }
++    }
++    return total;
++}
++
++function currentPageHasUnresolvedBranching() {
++    const currentPage = runtime.navigation.current();
++    for (const layer of currentPage?.layers ?? []) {
++        for (const component of layer.components ?? []) {
++            if (component.type !== "BRANCHING") continue;
++            const alreadyChosen = runtime.state.variables.has(\`branching.\${component.id}\`);
++            if (!alreadyChosen) return true;
++        }
++    }
++    return false;
++}
+ 
+-import "./componentRegistry.js";
+-import "./registerDefaultRenderers.js";
++function updateChrome() {
++    const total = runtime.navigation.totalPages();
++    const index = runtime.navigation.currentIndex();
++    const progress = runtime.navigation.progress();
+ 
+-import "./navigation.js";
+-import "./branching.js";
+-import "./assessment.js";
+-import "./variables.js";
++    const counterEl = document.getElementById("craft-scene-counter");
++    if (counterEl) counterEl.textContent = \`Scene \${index + 1} of \${total}\`;
+ 
+-import RuntimeOrchestrator from "./runtimeOrchestrator.js";
++    const fillEl = document.getElementById("craft-progress-fill");
++    if (fillEl) fillEl.style.width = \`\${progress}%\`;
+ 
++    const scoreEl = document.getElementById("craft-score-display");
++    if (scoreEl) scoreEl.textContent = \`Score: \${computeTotalScore()}/\${computeOverallMaxScore()}\`;
+ 
+-window.addEventListener(
+-    "DOMContentLoaded",
+-    async () => {
++    const backBtn = document.getElementById("craft-back-btn");
++    if (backBtn) {
++        backBtn.disabled = !runtime.dialogueComplete || !runtime.navigation.hasPrevious();
++    }
+ 
+-        console.log(
+-            "CRAFT Runtime Loaded"
+-        );
++    const nextBtn = document.getElementById("craft-next-btn");
++    if (nextBtn) {
++        nextBtn.disabled =
++            !runtime.dialogueComplete ||
++            currentPageHasUnresolvedBranching() ||
++            currentPageHasUnreadTabPanel() ||
++            currentPageHasUnreadRevealPanel() ||
++            currentPageHasUnresolvedDragDrop() ||
++            !runtime.navigation.hasNext();
++    }
++}
+ 
++runtime.onStateChange = updateChrome;
++runtime.computeTotalScore = computeTotalScore;
+ 
+-        const app =
+-            document.getElementById(
+-                "app"
+-            );
++document.getElementById("craft-back-btn").addEventListener("click", () => runtime.previous());
++document.getElementById("craft-next-btn").addEventListener("click", () => runtime.next());
+ 
++const course = window.PIR;
+ 
+-        const orchestrator =
+-            new RuntimeOrchestrator(
+-                app
+-            );
++const titleEl = document.getElementById("craft-course-title");
++if (titleEl) titleEl.textContent = course?.course?.title ?? "Course";
+ 
++const logoEl = document.getElementById("craft-logo");
++const logoSrc = course?.branding?.logo?.src;
++if (logoEl) {
++    if (logoSrc) {
++        logoEl.innerHTML = \`<img src="./\${logoSrc}" alt="">\`;
++    } else {
++        logoEl.textContent = "LOGO";
++    }
++}
+ 
+-        await orchestrator.initialize(
+-            window.PIR
+-        );
++const mountPromise = runtime.mount(course);
+ 
++runtime.navigation.on("afterNavigate", updateChrome);
+ 
+-        await orchestrator.start();
++updateChrome();
+ 
+-    }
++mountPromise.catch(
++    error => console.error(error)
+ );
+-
+ `;
+ 
+ 

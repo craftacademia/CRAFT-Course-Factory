@@ -158,34 +158,18 @@ app.use(
 
 app.post(
     "/api/build",
-    upload.fields(
-        [
-            {
-                name:"script",
-                maxCount:1
-            },
-            {
-                name:"images",
-                maxCount:100
-            },
-            {
-                name:"narration",
-                maxCount:100
-            },
-            {
-                name:"dialogueAudio",
-                maxCount:200
-            },
-            {
-                name:"backgroundMusic",
-                maxCount:10
-            },
-            {
-                name:"logo",
-                maxCount:1
-            }
-        ]
-    ),
+    upload.any(),
+    (req, res, next) => {
+        if (Array.isArray(req.files)) {
+            const obj = {};
+            req.files.forEach(f => {
+                if (!obj[f.fieldname]) obj[f.fieldname] = [];
+                obj[f.fieldname].push(f);
+            });
+            req.files = obj;
+        }
+        next();
+    },
     async(
         req,
         res

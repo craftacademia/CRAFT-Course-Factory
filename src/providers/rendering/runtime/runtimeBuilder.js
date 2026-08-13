@@ -261,19 +261,9 @@ const runtime = new BrowserRuntime(stage);
 // ── Control handlers ──────────────────────────────────────────────────────────
 
 // Pause / Play
-let isPaused = false;
 const pauseBtn = document.getElementById("craft-pause-btn");
 if (pauseBtn) {
-    pauseBtn.addEventListener("click", () => {
-        isPaused = !isPaused;
-        if (isPaused) {
-            if (runtime.currentAudio) runtime.currentAudio.pause();
-            pauseBtn.innerHTML = "&#9654; Play";
-        } else {
-            if (runtime.currentAudio) runtime.currentAudio.play().catch(() => {});
-            pauseBtn.innerHTML = "&#10073;&#10073; Pause";
-        }
-    });
+    pauseBtn.addEventListener("click", () => {    });
 }
 
 // Speed
@@ -300,9 +290,7 @@ if (volumeSlider) {
 // Replay — restart current page
 const replayBtn = document.getElementById("craft-replay-btn");
 if (replayBtn) {
-    replayBtn.addEventListener("click", () => {
-        isPaused = false;
-        if (pauseBtn) pauseBtn.innerHTML = "&#10073;&#10073; Pause";
+    replayBtn.addEventListener("click", () => {        if (pauseBtn) pauseBtn.innerHTML = "&#10073;&#10073; Pause";
         if (runtime.currentAudio) { runtime.currentAudio.pause(); runtime.currentAudio = null; }
         runtime.renderCurrentPage();
     });

@@ -40,13 +40,13 @@ export default function ScriptUploader({ onScriptParsed }) {
     try {
       const formData = new FormData();
       formData.append('script', file);
-      formData.append('courseConfig', JSON.stringify(config));
-      if (courseTitle) formData.append('courseTitle', courseTitle);
       images.forEach((img) => formData.append('images', img));
       narration.forEach((a) => formData.append('narration', a));
       dialogueAudio.forEach((a) => formData.append('dialogueAudio', a));
       backgroundMusic.forEach((a) => formData.append('backgroundMusic', a));
       if (logo) formData.append('logo', logo);
+      formData.append('courseConfig', JSON.stringify(config));
+      if (courseTitle) formData.append('courseTitle', courseTitle);
 
       const response = await axios.post('/api/build', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
